@@ -3,11 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-  .nav-link {
-    @apply p-4 hover:bg-[#04293A] rounded-full;
-  }
-
   body {
     font-family: 'Quicksand', sans-serif;
+  }
+
+  .nav-link {
+    @apply p-4 hover:bg-[#51C4D3] hover:text-black rounded-full;
+  }
+
+  .form__element {
+    @apply my-8;
+  }
+
+  input {
+    @apply p-2 mt-1 rounded-md;
+  }
+
+  button {
+    @apply p-2 rounded-md hover:bg-[#126E82] text-white;
   }
 }

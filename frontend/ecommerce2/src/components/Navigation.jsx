@@ -9,7 +9,7 @@ function Navigation() {
   return (
     <Container>
       <Row>
-        <ul className="justify-around bg-[#064663] p-4  flex">
+        <ul className="justify-around bg-[#126E82] p-4  flex">
           <Col className="w-2/12">
             <Link className="h-10" to="/">
               Brand

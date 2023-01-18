@@ -33,13 +33,18 @@ function Signup() {
   }
   return (
     <Container>
-      <Row>
-        <Col md={6}>
-          <form onSubmit={submitHandler} className="bg-[#ECB365]">
+      <Row className="flex flex-row w-full justify-center">
+        <Col className="w-3/12 px-2 py-4">
+          <form
+            onSubmit={submitHandler}
+            className="bg-[#51C4D3] p-4 rounded-xl h-full"
+          >
+            <div className="text-5xl text-center mb-8">Đăng ký</div>
             <div>
               <label htmlFor="name">Tên</label>
               <br />
               <input
+                className="w-full"
                 type="name"
                 id="name"
                 name="name"
@@ -48,10 +53,12 @@ function Signup() {
                 required
               ></input>
             </div>
-            <div>
+            <div></div>
+            <div className="form__element">
               <label htmlFor="email">Email</label>
               <br />
               <input
+                className="w-full"
                 type="email"
                 id="email"
                 name="email"
@@ -60,11 +67,12 @@ function Signup() {
                 required
               ></input>
             </div>
-            <div style={{ position: 'relative' }}>
+            <div className="relative form__element">
               <label htmlFor="password">Mật khẩu</label>
               <br />
               <div className="flex flex-row">
                 <input
+                  className="w-full"
                   type={showPassword === true ? 'password' : 'text'}
                   id="password"
                   name="password"
@@ -87,6 +95,7 @@ function Signup() {
               <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
               <br />
               <input
+                className="w-full"
                 type={showPassword === true ? 'password' : 'text'}
                 id="confirmPassword"
                 name="confirmPassword"
@@ -97,18 +106,29 @@ function Signup() {
                 required
               ></input>
             </div>
-            <div>
+            <div className="form__element">
               <label />
-              <button type="submit">Xác Nhận</button>
+              <button type="submit" className="w-full bg-[#132C33]">
+                Xác Nhận
+              </button>
             </div>
             <div>
-              Chưa có tài khoản? {''}
-              <Link to="/register">Đăng ký</Link>
-            </div>
-            <div style={{ cursor: 'pointer' }}>
-              <h4 onClick={openPopup}>Quên mật khẩu? {''} </h4>
+              <div className="form__element">
+                Đã có tài khoản? {''}
+                <Link to="/login">Đăng nhập</Link>
+              </div>
+              <div className="form__element pointer">
+                <h4 onClick={openPopup}>Quên mật khẩu? {''} </h4>
+              </div>
             </div>
           </form>
+        </Col>
+        <Col className="px-2 py-4">
+          <img
+            className="rounded-xl h-full"
+            src="https://www.hepper.com/wp-content/uploads/2021/08/golden-british-shorthair-cat-lying-on-a-blue-sofa_SunRay-BRI-Cattery-RU_Shutterstock.webp"
+            alt="banner"
+          />
         </Col>
       </Row>
     </Container>
