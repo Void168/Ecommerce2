@@ -11,17 +11,21 @@ function Navigation() {
       <Row>
         <ul className="justify-around bg-[#064663] p-4  flex">
           <Col className="w-2/12">
-            <Link className="h-10">Brand</Link>
+            <Link className="h-10" to="/">
+              Brand
+            </Link>
           </Col>
           <Col className="flex justify-evenly w-8/12">
             <ul className="w-full">
               <li className="text-white flex justify-between  text-xl">
-                <NavLink className="nav-link">Danh muc</NavLink>
-                <NavLink className="nav-link">Ve chung toi</NavLink>
-                <NavLink className="nav-link">Ket noi</NavLink>
-                <NavLink className="nav-link">Thanh toan</NavLink>
-                <NavLink className="nav-link">Van chuyen</NavLink>
-                <NavLink className="nav-link">Dang nhap</NavLink>
+                <NavLink className="nav-link">Danh mục</NavLink>
+                <NavLink className="nav-link">Về chúng tôi</NavLink>
+                <NavLink className="nav-link">Kết nối</NavLink>
+                <NavLink className="nav-link">Thanh toán</NavLink>
+                <NavLink className="nav-link">Vận chuyển</NavLink>
+                <NavLink className="nav-link" to="/login">
+                  Đăng nhập
+                </NavLink>
               </li>
               <li className="items-center flex flex-row">
                 <Col className="w-6/12">
@@ -30,17 +34,17 @@ function Navigation() {
 
                 <Col className="w-6/12 pl-8">
                   <ul className="flex flex-row justify-around">
-                    <li>SDT: 0123456789</li>
-                    <li>Tuyen dung</li>
-                    <li>Khuyen mai</li>
-                    <li>Chinh sach</li>
+                    <li>SĐT: 0123456789</li>
+                    <li>Tuyển dụng</li>
+                    <li>Khuyến mãi</li>
+                    <li>Chính sách</li>
                   </ul>
                 </Col>
               </li>
             </ul>
           </Col>
           <Col>
-            <NavLink className="nav-link">Gio hang</NavLink>
+            <NavLink className="nav-link">Giỏ hàng</NavLink>
           </Col>
         </ul>
       </Row>
