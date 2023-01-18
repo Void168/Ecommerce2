@@ -1,10 +1,10 @@
 {
-  "name": "ecommerce-2",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "",
@@ -16,7 +16,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.8.4",
-    "nodemon": "^2.0.20",
     "socket.io": "^4.5.4",
     "stripe": "^11.6.0",
     "validator": "^13.7.0"
