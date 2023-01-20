@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import { Link } from 'react-router-dom'
-import { Col } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { Button, Col } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { logout } from '../features/userSlice.js'
 
 function Navigation() {
+  const navigate = useNavigate()
   const [navbar, setNavbar] = useState(false)
   const user = useSelector((state) => state.user)
+  const dispatch = useDispatch()
 
-  const signoutHandler = () => {}
+  const signoutHandler = () => {
+    dispatch(logout())
+    navigate('/login')
+  }
 
   const setFixed = () => {
     if (window.scrollY >= 200) {
@@ -49,21 +55,21 @@ function Navigation() {
                       to="/"
                     >
                       {user.name}{' '}
-                      <FontAwesomeIcon icon="fa-solid fa-caret-down" />
+                      {/* <FontAwesomeIcon icon="fa-solid fa-caret-down" /> */}
                     </NavLink>
                     <ul className="flex flex-col text-black absolute z-10">
                       <div className="bg-[#51C4D3] rounded-b-3xl p-2">
                         <li>
-                          <NavLink>Sản phẩm</NavLink>
+                          <Link>Sản phẩm</Link>
                         </li>
                         <li>
-                          <NavLink>Người dùng</NavLink>
+                          <Link>Người dùng</Link>
                         </li>
                         <li>
-                          <NavLink>Báo cáo</NavLink>
+                          <Link>Báo cáo</Link>
                         </li>
                         <li>
-                          <NavLink onClick={signoutHandler}>Đăng xuất</NavLink>
+                          <Button onClick={signoutHandler}>Đăng xuất</Button>
                         </li>
                       </div>
                     </ul>

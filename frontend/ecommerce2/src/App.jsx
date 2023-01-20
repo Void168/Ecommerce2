@@ -4,8 +4,10 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Footer from './components/Footer'
+import { useSelector } from 'react-redux'
 
 function App() {
+  const user = useSelector((state) => state.user)
   return (
     <div className="App bg-[#D8E3E7] h-max">
       <BrowserRouter>
@@ -15,9 +17,14 @@ function App() {
         <main>
           <Routes>
             <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            {!user && (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Signup />} />
+              </>
+            )}
+
             <Route path="*" element={<Home />} />
-            <Route path="/register" element={<Signup />} />
           </Routes>
         </main>
         <footer>

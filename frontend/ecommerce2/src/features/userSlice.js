@@ -8,7 +8,9 @@ const initialState = null
 export const userSlice = createSlice({
   name: 'users',
   initialState,
-  reducer: {},
+  reducers: {
+    logout: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addMatcher(
       appApi.endpoints.signup.matchFulfilled,
@@ -21,9 +23,5 @@ export const userSlice = createSlice({
   },
 })
 
-export const {
-  logout,
-  addNotifications,
-  resetNotifications,
-} = userSlice.actions
+export const { logout } = userSlice.actions
 export default userSlice.reducer

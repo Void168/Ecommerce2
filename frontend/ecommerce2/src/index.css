@@ -20,7 +20,7 @@
   }
 
   button {
-    @apply p-2 rounded-md hover:bg-[#126E82] text-white;
+    @apply p-2 rounded-md hover:bg-[#126E82] text-white shadow-sm;
   }
 }
 

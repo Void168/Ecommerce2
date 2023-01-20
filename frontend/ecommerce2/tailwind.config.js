@@ -8,6 +8,9 @@ module.exports = {
         'dark-light-blue': '#04293A',
         'light-blue': '#064663',
       },
+      boxShadow: {
+        sm: '2px 4px 5px rgba(0, 0, 0, 0.25);',
+      },
     },
   },
   variants: {

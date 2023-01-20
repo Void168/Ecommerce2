@@ -2,16 +2,23 @@ import React from 'react'
 import { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import Signup from './Signup'
+import { useLoginMutation } from '../services/appApi'
+import { useNavigate } from 'react-router-dom'
 
-function Login() {
+function Login(props) {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [emailReset, setEmailReset] = useState('')
   const [password, setPassword] = useState('')
+  const [login, { isError, isLoading, error }] = useLoginMutation()
+
   const [showPassword, setShowPassword] = useState(true)
   const [showPopup, setShowPopup] = useState(false)
+
   const submitHandler = (e) => {
     e.preventDefault()
+    login({ email, password })
+    navigate('/')
   }
 
   const ShowHidePassword = () => {
@@ -39,6 +46,7 @@ function Login() {
             className="bg-[#51C4D3] p-4 rounded-xl h-full"
           >
             <div className="text-5xl text-center mb-8">Đăng nhập</div>
+            {isError && <h1>{error.data}</h1>}
             <div className="form__element">
               <label htmlFor="email">Email</label>
               <br />
