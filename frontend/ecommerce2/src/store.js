@@ -5,7 +5,7 @@ import appApi from './services/appApi.js'
 
 // persit store
 import storage from 'redux-persist/lib/storage'
-import { combineReducers } from 'reduxjs'
+import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import Signup from './Signup'
 
 function Login() {
   const [email, setEmail] = useState('')

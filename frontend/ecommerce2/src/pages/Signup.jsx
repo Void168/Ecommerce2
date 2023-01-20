@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useSignupMutation } from '../services/appApi'
 
 function Signup() {
   const [name, setName] = useState('')
@@ -10,8 +11,15 @@ function Signup() {
   const [comfirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(true)
   const [showPopup, setShowPopup] = useState(false)
+
+  const [signUp, { error, isLoading, isError }] = useSignupMutation()
   const submitHandler = (e) => {
     e.preventDefault()
+    if (password !== comfirmPassword) {
+      alert('Mật khẩu xác nhận không đúng!')
+    } else {
+      signUp({ name, email, password })
+    }
   }
 
   const ShowHidePassword = () => {
