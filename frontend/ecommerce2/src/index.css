@@ -23,3 +23,18 @@
     @apply p-2 rounded-md hover:bg-[#126E82] text-white;
   }
 }
+
+.dropdown__profile ul div {
+  display: none;
+}
+
+.dropdown__profile:hover ul div {
+  display: block;
+}
+
+.navbar.active {
+  width: 100%;
+  position: fixed;
+  z-index: 10000;
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+}
