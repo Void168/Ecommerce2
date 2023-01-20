@@ -9,14 +9,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { logout } from '../features/userSlice.js'
 
 function Navigation() {
-  const navigate = useNavigate()
   const [navbar, setNavbar] = useState(false)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
   const signoutHandler = () => {
     dispatch(logout())
-    navigate('/login')
+    document.location.href = '/login'
   }
 
   const setFixed = () => {

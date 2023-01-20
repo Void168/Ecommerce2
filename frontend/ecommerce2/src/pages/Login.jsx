@@ -18,7 +18,7 @@ function Login(props) {
   const submitHandler = (e) => {
     e.preventDefault()
     login({ email, password })
-    navigate('/')
+    document.location.href = '/'
   }
 
   const ShowHidePassword = () => {
