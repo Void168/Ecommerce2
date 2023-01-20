@@ -1,9 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLoginMutation } from '../services/appApi'
-import { useNavigate } from 'react-router-dom'
 
 function Login(props) {
   const navigate = useNavigate()

@@ -14,8 +14,8 @@ function Navigation() {
   const dispatch = useDispatch()
 
   const signoutHandler = () => {
-    dispatch(logout())
     document.location.href = '/login'
+    dispatch(logout())
   }
 
   const setFixed = () => {
