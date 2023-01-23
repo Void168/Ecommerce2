@@ -1,7 +1,7 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Alert, Col, Container, Row, Form } from 'react-bootstrap'
-import { useNavigation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import axios from '../axios'
 import { useCreateProductMutation } from '../services/appApi'
 
 function NewProducts() {
@@ -10,8 +10,8 @@ function NewProducts() {
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
   const [images, setImages] = useState([])
-  const [imgToRemove, setImageToRemove] = useState(null)
-  // const navigate = useNavigation()
+  const [imageToRemove, setImageToRemove] = useState(null)
+  const navigate = useNavigate()
   const [
     createProduct,
     { isError, error, isLoading, isSuccess },
@@ -19,16 +19,28 @@ function NewProducts() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!name || !description || !price || !category || !images.length) {
+      return alert('Please fill out all the fields')
+    }
+    createProduct({ name, description, price, category, images }).then(
+      ({ data }) => {
+        if (data.length > 0) {
+          setTimeout(() => {
+            navigate('/')
+          }, 1500)
+        }
+      },
+    )
   }
 
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
-        cloudName: '',
-        uploadPreset: '',
+        cloudName: 'dzttab71p',
+        uploadPreset: 'fw0qtksm',
       },
       (error, result) => {
-        if (!error && result.event === 'sucess') {
+        if (!error && result.event === 'success') {
           setImages((prev) => [
             ...prev,
             { url: result.info.url, public_id: result.info.public_id },
@@ -38,18 +50,36 @@ function NewProducts() {
     )
     widget.open()
   }
+
+  const handleRemoveImg = (imgObj) => {
+    setImageToRemove(imgObj.public_id)
+    axios
+      .delete(`/images/${imgObj.public_id}/`)
+      .then((res) => {
+        setImageToRemove(null)
+        setImages((prev) =>
+          prev.filter((img) => img.public_id !== imgObj.public_id),
+        )
+      })
+      .catch((e) => console.log(e))
+  }
+
   return (
     <Container>
       <Row>
         <Col>
-          <Form onSubmit={handleSubmit}>
-            <h1>Tạo sản phẩm mới</h1>
+          <Form
+            onSubmit={handleSubmit}
+            className="form__create--product p-2 w-6/12 "
+          >
+            <strong className="text-3xl">Tạo sản phẩm mới</strong>
             {isSuccess && (
               <Alert variant="sucess">Tạo sản phẩm thành công</Alert>
             )}
             {isError && <Alert variant="error">Tạo sản phẩm thất bại</Alert>}
             <div>
               <label>Tên sản phẩm</label>
+              <br />
               <input
                 type="text"
                 placeholder="Nhập tên sản phẩm"
@@ -60,6 +90,7 @@ function NewProducts() {
             </div>
             <div>
               <label>Mô tả</label>
+              <br />
               <input
                 as="textarea"
                 placeholder="Nhập mô tả"
@@ -70,6 +101,7 @@ function NewProducts() {
             </div>
             <div>
               <label>Giá tiền</label>
+              <br />
               <input
                 type="text"
                 placeholder="Nhập tên sản phẩm"
@@ -80,7 +112,8 @@ function NewProducts() {
             </div>
             <div onChange={(e) => setCategory(e.target.value)}>
               <label>Danh mục</label>
-              <select>
+              <br />
+              <select className="ml-2 p-2 rounded-md">
                 <option disabled>Chọn một</option>
                 <option value=""></option>
                 <option value=""></option>
@@ -88,16 +121,32 @@ function NewProducts() {
               </select>
             </div>
             <div>
-              <button onClick={showWidget}>Chọn ảnh</button>
+              <button onClick={showWidget} className="bg-[#132C33]">
+                Chọn ảnh
+              </button>
               <div>
                 {images.map((image) => (
-                  <div>
-                    <img src={images.url} alt="" />
+                  <div className="p-4 border-spacing-1 border-cyan-700 border-2">
+                    <img
+                      src={image.url}
+                      alt=""
+                      className="w-64 h-64 shadow-sm rounded-lg"
+                    />
+                    {imageToRemove !== image.public_id && (
+                      <i
+                        className="fa fa-times-circle"
+                        onClick={() => handleRemoveImg(image)}
+                      ></i>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
-            <button type="submit" disabled={isLoading || isSuccess}>
+            <button
+              type="submit"
+              disabled={isLoading || isSuccess}
+              className="bg-[#132C33]"
+            >
               Xác nhận
             </button>
           </Form>

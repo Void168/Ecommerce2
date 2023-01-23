@@ -8,7 +8,7 @@
   }
 
   .nav-link {
-    @apply p-4 hover:bg-[#51C4D3] hover:text-black rounded-full;
+    @apply p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm;
   }
 
   .form__element {
@@ -16,11 +16,23 @@
   }
 
   input {
-    @apply p-2 mt-1 rounded-md;
+    @apply p-2 mt-1 rounded-md shadow-sm;
+  }
+
+  label {
+    @apply p-2;
   }
 
   button {
     @apply p-2 rounded-md hover:bg-[#126E82] text-white shadow-sm;
+  }
+
+  .form__create--product div {
+    @apply my-4;
+  }
+
+  .form__create--product div input {
+    @apply ml-2;
   }
 }
 
