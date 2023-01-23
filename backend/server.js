@@ -13,6 +13,7 @@ const io = new Server(server, {
 const User = require('./models/userModel.js')
 const userRoutes = require('./routes/userRoutes.js')
 const productRoutes = require('./routes/productRoutes.js')
+const imagesRoutes = require('./routes/imagesRoutes.js')
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 // Use routes
 app.use('/users', userRoutes)
 app.use('/products', productRoutes)
+app.use('/images', imagesRoutes)
 
 server.listen(8080, () => {
   console.log('listening on port', 8080)
