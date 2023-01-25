@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Col, Container, Row, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from '../axios'
+import categories from '../categories'
 import { useCreateProductMutation } from '../services/appApi'
 
 function NewProducts() {
@@ -74,7 +75,7 @@ function NewProducts() {
           >
             <strong className="text-3xl">Tạo sản phẩm mới</strong>
             {isSuccess && (
-              <Alert variant="sucess">Tạo sản phẩm thành công</Alert>
+              <Alert variant="success">Tạo sản phẩm thành công</Alert>
             )}
             {isError && <Alert variant="error">Tạo sản phẩm thất bại</Alert>}
             <div>
@@ -115,9 +116,9 @@ function NewProducts() {
               <br />
               <select className="ml-2 p-2 rounded-md">
                 <option disabled>Chọn một</option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
+                {categories.map((category) => (
+                  <option value={category.name}>{category.name}</option>
+                ))}
               </select>
             </div>
             <div>

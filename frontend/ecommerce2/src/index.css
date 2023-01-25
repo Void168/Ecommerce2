@@ -36,17 +36,23 @@
   }
 }
 
-.dropdown__profile ul div {
-  display: none;
-}
-
-.dropdown__profile:hover ul div {
-  display: block;
-}
-
 .navbar.active {
   width: 100%;
   position: fixed;
   z-index: 10000;
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.dropdown__profile ul div {
+  display: none;
+}
+.dropdown__profile:hover ul div {
+  display: block;
+}
+.dropdown__categories .dropdown__categories--element {
+  display: none;
+}
+
+.dropdown__categories:hover .dropdown__categories--element {
+  display: block;
 }

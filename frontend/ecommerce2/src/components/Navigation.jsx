@@ -7,6 +7,7 @@ import { Button, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { logout } from '../features/userSlice.js'
+import categories from '../categories.js'
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false)
@@ -27,7 +28,7 @@ function Navigation() {
   }
   window.addEventListener('scroll', setFixed)
   return (
-    <Container className={navbar ? 'navbar active w-full' : 'navbar w-full'}>
+    <div className={navbar ? 'navbar active w-full' : 'navbar w-full'}>
       <Row>
         <ul className="justify-around bg-[#126E82] p-4 flex">
           <Col className="w-2/12">
@@ -37,8 +38,30 @@ function Navigation() {
           </Col>
           <Col className="flex justify-evenly w-8/12">
             <ul className="w-full">
-              <li className="text-white flex justify-between  text-xl">
-                <NavLink className="nav-link">Danh mục</NavLink>
+              <li className="text-white flex justify-between text-xl">
+                <div className="mt-4 dropdown__categories">
+                  <NavLink className="p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm hover:rounded-b-sm hover:rounded-t-3xl">
+                    Danh mục
+                  </NavLink>
+                  <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl">
+                    {categories.map((category) => (
+                      <Link
+                        to={`/category/${category.name.toLocaleLowerCase()}`}
+                        className="dropdown__categories--element"
+                      >
+                        <div className="mt-2 p-6 text-center">
+                          <img
+                            src={category.img}
+                            alt="category"
+                            className="w-32 h-32 rounded-lg shadow-sm ml-2 "
+                          ></img>
+                          <h1 className="mt-1">{category.name}</h1>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
                 <NavLink className="nav-link">Về chúng tôi</NavLink>
                 <NavLink className="nav-link">Kết nối</NavLink>
                 <NavLink className="nav-link">Thanh toán</NavLink>
@@ -96,7 +119,7 @@ function Navigation() {
           </Col>
         </ul>
       </Row>
-    </Container>
+    </div>
   )
 }
 
