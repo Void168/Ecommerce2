@@ -14,13 +14,13 @@ function Home() {
     axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
   }, [dispatch])
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<h1>Đang tải...</h1>}>
       <div className=" container mx-auto">
         <h2 className="text-2xl">Sản phẩm đã xem</h2>
         {/* last products */}
         <div className="flex flex-wrap bg-[#132C33] p-4 my-4 justify-between">
           {lastProducts?.map((product) => (
-            <ProductPreview {...product} key={product} />
+            <ProductPreview {...product} key={product} product={product} />
           ))}
         </div>
         <div>

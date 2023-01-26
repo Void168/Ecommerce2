@@ -43,7 +43,7 @@ function Navigation() {
                   <NavLink className="p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm hover:rounded-b-sm hover:rounded-t-3xl">
                     Danh mục
                   </NavLink>
-                  <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl">
+                  <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50">
                     {categories.map((category) => (
                       <Link
                         to={`/category/${category.name.toLocaleLowerCase()}`}

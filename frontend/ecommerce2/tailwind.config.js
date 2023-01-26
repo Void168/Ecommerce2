@@ -11,6 +11,9 @@ module.exports = {
       boxShadow: {
         sm: '2px 4px 5px rgba(0, 0, 0, 0.25);',
       },
+      maxWidth: {
+        xsm: '22rem',
+      },
     },
   },
   variants: {

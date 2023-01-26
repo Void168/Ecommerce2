@@ -56,3 +56,8 @@
 .dropdown__categories:hover .dropdown__categories--element {
   display: block;
 }
+
+.alice-carousel__prev-btn,
+.alice-carousel__next-btn {
+  display: none !important;
+}

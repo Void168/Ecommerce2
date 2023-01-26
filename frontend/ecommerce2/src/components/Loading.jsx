@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Loading() {
-  return <div>Loading</div>
+  return <div>Đang tải...</div>
 }
 
 export default Loading

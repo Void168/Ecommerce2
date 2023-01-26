@@ -3,19 +3,20 @@ import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
-function ProductPreview({ _id, name, category, pictures }) {
+function ProductPreview(props) {
+  const { product } = props
   return (
-    <Link to={`/product/${_id}`}>
-      <div className="p-2 shadow-sm rounded-lg bg-[#D8E3E7]">
+    <Link to={`/product/${product._id}`}>
+      <div className="p-3 shadow-sm rounded-lg bg-[#D8E3E7]">
         <img
           variant="top"
           className="max-w-xs shadow-sm max-h-72 rounded-lg ml-1"
-          src={pictures[0].url}
+          src={product.pictures[0].url}
           alt="product-pic"
         />
-        <h1 className="font-bold">{name}</h1>
+        <h1 className="font-bold">{product.name}</h1>
         <div bg="warning" text="dark">
-          {category}
+          {product.category}
         </div>
       </div>
     </Link>
