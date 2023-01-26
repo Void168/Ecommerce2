@@ -54,7 +54,7 @@ function Navigation() {
                             src={category.img}
                             alt="category"
                             className="w-32 h-32 rounded-lg shadow-sm ml-2 "
-                          ></img>
+                          />
                           <h1 className="mt-1">{category.name}</h1>
                         </div>
                       </Link>

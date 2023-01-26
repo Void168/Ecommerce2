@@ -8,21 +8,19 @@ import { Link } from 'react-router-dom'
 function Home() {
   const dispatch = useDispatch()
   const products = useSelector((state) => state.products)
-  const lastProducts = products?.slice(0, 8)
+  const lastProducts = products.slice(0, 8)
 
   useEffect(() => {
     axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
-  }, [])
-
-  console.log(products)
+  }, [dispatch])
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-      <div className="">
-        <h2>Sản phẩm đã xem</h2>
+      <div className=" container mx-auto">
+        <h2 className="text-2xl">Sản phẩm đã xem</h2>
         {/* last products */}
-        <div className="flex justify-center flex-wrap">
+        <div className="flex flex-wrap bg-[#132C33] p-4 my-4 justify-between">
           {lastProducts?.map((product) => (
-            <ProductPreview {...product} />
+            <ProductPreview {...product} key={product} />
           ))}
         </div>
         <div>
