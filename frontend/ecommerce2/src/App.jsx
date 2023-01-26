@@ -6,6 +6,7 @@ import Signup from './pages/Signup'
 import Footer from './components/Footer'
 import { useSelector } from 'react-redux'
 import NewProducts from './pages/NewProducts'
+import Product from './pages/Product'
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -24,7 +25,7 @@ function App() {
                 <Route path="/register" element={<Signup />} />
               </>
             )}
-
+            <Route path="/product/:id" element={<Product />} />
             <Route path="/new-product" element={<NewProducts />} />
             <Route path="*" element={<Home />} />
           </Routes>

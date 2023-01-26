@@ -1,11 +1,9 @@
 import React from 'react'
-import Badge from 'react-bootstrap/Badge'
-import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
-function ProductPreview({ _id, name, category, pictures }) {
+function SimilarProduct({ _id, name, category, pictures }) {
   return (
-    <Link to={`/product/${_id}`}>
+    <Link to={`/products/${_id}`}>
       <div className="p-2 shadow-sm rounded-lg bg-[#D8E3E7]">
         <img
           variant="top"
@@ -22,4 +20,4 @@ function ProductPreview({ _id, name, category, pictures }) {
   )
 }
 
-export default ProductPreview
+export default SimilarProduct
