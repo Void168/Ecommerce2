@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import NewProducts from './pages/NewProducts'
 import Product from './pages/Product'
 import Category from './pages/Category'
+import Cart from './pages/Cart'
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -23,11 +24,14 @@ function App() {
             {!user && (
               <>
                 <Route path="/login" element={<Login />} />
+                {user && <Route path="/login" element={<Home />} />}
                 <Route path="/register" element={<Signup />} />
               </>
             )}
             <Route path="/product/:id" element={<Product />} />
             <Route path="/category/:category" element={<Category />} />
+            {user && <Route path="/cart" element={<Cart />} />}
+
             <Route path="/new-product" element={<NewProducts />} />
             <Route path="*" element={<Home />} />
           </Routes>

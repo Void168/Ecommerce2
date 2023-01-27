@@ -115,7 +115,11 @@ function Navigation() {
             </ul>
           </Col>
           <Col>
-            <NavLink>Giỏ hàng</NavLink>
+            <NavLink to="/cart">
+              <i class="fas fa-shopping-cart  " />
+              {user?.cart.count > 0 && <span>{user.cart.count}</span>}
+              Giỏ hàng
+            </NavLink>
           </Col>
         </ul>
       </Row>

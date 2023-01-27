@@ -18,6 +18,12 @@ function ProductPreview(props) {
         <div bg="warning" text="dark">
           {product.category}
         </div>
+        <div>
+          {product.price.toLocaleString('it-IT', {
+            style: 'currency',
+            currency: 'VND',
+          })}
+        </div>
       </div>
     </Link>
   )

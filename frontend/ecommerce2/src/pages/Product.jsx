@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
@@ -7,13 +7,16 @@ import { useEffect } from 'react'
 import axios from '../axios'
 import Loading from '../components/Loading'
 import SimilarProduct from '../components/SimilarProduct'
+import { useAddToCartMutation } from '../services/appApi'
+import ToastMessage from '../components/ToastMessage'
 
 function Product() {
   const { id } = useParams()
   const user = useSelector((state) => state.user)
   const [product, setProduct] = useState(null)
   const [similar, setSimilar] = useState(null)
-
+  const [addToCart, { isSuccess }] = useAddToCartMutation()
+  const navigate = useNavigate()
   const handleDragStart = (e) => {
     e.preventDefault()
   }
@@ -62,7 +65,12 @@ function Product() {
           <div className="text-center">
             <p>{product.name}</p>
             <p>{product.category}</p>
-            <p>{product.price}</p>
+            <p>
+              {product.price.toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND',
+              })}
+            </p>
             <strong>{product.description}</strong>
           </div>
           <div className="flex justify-around">
@@ -73,12 +81,31 @@ function Product() {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            <button className="w-3/12 bg-[#132C33]">Thêm vào giỏ</button>
+            <button
+              className="w-3/12 bg-[#132C33]"
+              onClick={(e) =>
+                addToCart({
+                  userId: user._id,
+                  productId: id,
+                  price: product.price,
+                  image: product.pictures[0].url,
+                })
+              }
+            >
+              Thêm vào giỏ
+            </button>
           </div>
           {user && user.isAdmin && (
             <Link to={`/product/${product.id}/edit`}>
               <button>Sửa thông tin sản phẩm</button>
             </Link>
+          )}
+          {isSuccess && (
+            <ToastMessage
+              bg="info"
+              title="Thêm vào giỏ"
+              body={`${product.name} đã được thêm vào giỏ hàng`}
+            />
           )}
         </div>
       </div>

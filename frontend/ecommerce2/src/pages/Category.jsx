@@ -25,9 +25,13 @@ function Category() {
     product.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  if (!products) {
-    return <Loading />
-  }
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 300)
+  }, [])
+
   return (
     <div className="container mx-auto">
       <div>
@@ -41,21 +45,29 @@ function Category() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      {productsSearch.length === 0 ? (
-        <p>Không tìm thấy sản phẩm phù hợp</p>
+      {loading ? (
+        <Loading />
       ) : (
-        <Suspense fallback={<div>Đang tải...</div>}>
-          <div className="my-8 max-w-xsm">
-            {productsSearch
-              .filter((product) => product.category === categoryName)
-              .map((filteredProduct) => (
-                <ProductPreview
-                  key={filteredProduct}
-                  product={filteredProduct}
-                />
-              ))}
-          </div>
-        </Suspense>
+        <>
+          {productsSearch.length === 0 ? (
+            loading ? (
+              <Loading />
+            ) : (
+              <p>Không tìm thấy sản phẩm phù hợp</p>
+            )
+          ) : (
+            <div className="my-8 max-w-xsm">
+              {productsSearch
+                .filter((product) => product.category === categoryName)
+                .map((filteredProduct) => (
+                  <ProductPreview
+                    key={filteredProduct}
+                    product={filteredProduct}
+                  />
+                ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function SimilarProduct({ _id, name, category, pictures }) {
   return (
-    <Link to={`/products/${_id}`}>
+    <Link to={`/product/${_id}`}>
       <div className="p-2 shadow-sm rounded-lg bg-[#D8E3E7]">
         <img
           variant="top"
