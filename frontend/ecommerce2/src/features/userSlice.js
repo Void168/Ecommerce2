@@ -28,6 +28,14 @@ export const userSlice = createSlice({
       appApi.endpoints.removeFromCart.matchFulfilled,
       (_, { payload }) => payload,
     )
+    builder.addMatcher(
+      appApi.endpoints.increaseCartProduct.matchFulfilled,
+      (_, { payload }) => payload,
+    )
+    builder.addMatcher(
+      appApi.endpoints.decreaseCartProduct.matchFulfilled,
+      (_, { payload }) => payload,
+    )
   },
 })
 

@@ -44,20 +44,22 @@ function Navigation() {
                     Danh mục
                   </NavLink>
                   <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
-                    {categories.map((category) => (
-                      <Link
-                        to={`/category/${category.name.toLocaleLowerCase()}`}
-                        className="dropdown__categories--element"
-                      >
-                        <div className="mt-2 p-6 text-center">
-                          <img
-                            src={category.img}
-                            alt="category"
-                            className="w-32 h-32 rounded-lg shadow-sm ml-2 "
-                          />
-                          <h1 className="mt-1">{category.name}</h1>
-                        </div>
-                      </Link>
+                    {categories.map((category, product_id) => (
+                      <div key={product_id}>
+                        <Link
+                          to={`/category/${category.name.toLocaleLowerCase()}`}
+                          className="dropdown__categories--element"
+                        >
+                          <div className="mt-2 p-6 text-center">
+                            <img
+                              src={category.img}
+                              alt="category"
+                              className="w-32 h-32 rounded-lg shadow-sm ml-2 "
+                            />
+                            <h1 className="mt-1">{category.name}</h1>
+                          </div>
+                        </Link>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -124,7 +126,7 @@ function Navigation() {
                   {user.cart.count}
                 </span>
               )}
-              <i class="fas fa-shopping-cart text-3xl" />
+              <i className="fas fa-shopping-cart text-3xl" />
               <span className="text-white ml-2 text-xl">Giỏ hàng</span>
             </NavLink>
           </Col>

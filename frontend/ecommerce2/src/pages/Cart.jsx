@@ -3,21 +3,33 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Loading from '../components/Loading'
-import { useRemoveFromCartMutation } from '../services/appApi'
+import {
+  useIncreaseCartProductMutation,
+  useDecreaseCartProductMutation,
+  useRemoveFromCartMutation,
+} from '../services/appApi'
 
 function Cart() {
   const user = useSelector((state) => state.user)
   const products = useSelector((state) => state.products)
   const [loading, setLoading] = useState(false)
-  const [product, setProduct] = useState(null)
   const userCartObj = user.cart
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation()
+  const [increaseCart] = useIncreaseCartProductMutation()
+  const [decreaseCart] = useDecreaseCartProductMutation()
+
   let cart = products.filter((product) => userCartObj[product._id] != null)
 
   const subTotal = user.cart.total.toLocaleString('it-IT', {
     style: 'currency',
     currency: 'VND',
   })
+
+  const handleDecrease = (product) => {
+    const quantity = user.cart.count
+    if (quantity <= 0) return alert('Số lượng phải lớn hơn 0')
+    decreaseCart(product)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -56,7 +68,7 @@ function Cart() {
                   <tbody>
                     {/* loop through cart products */}
                     {cart.map((item) => (
-                      <tr>
+                      <tr key={item}>
                         <td>
                           <img
                             src={item.pictures[0].url}
@@ -72,9 +84,27 @@ function Cart() {
                         </td>
                         <td>
                           <span className="flex justify-around">
-                            <i className="fa fa-minus-circle pt-1"></i>
+                            <i
+                              className="fa fa-minus-circle pt-1 cursor-pointer"
+                              onClick={() =>
+                                handleDecrease({
+                                  productId: item._id,
+                                  price: item.price,
+                                  userId: user._id,
+                                })
+                              }
+                            ></i>
                             <span>{user.cart[item._id]}</span>
-                            <i className="fa fa-plus-circle pt-1"></i>
+                            <i
+                              className="fa fa-plus-circle pt-1 cursor-pointer"
+                              onClick={() =>
+                                increaseCart({
+                                  productId: item._id,
+                                  price: item.price,
+                                  userId: user._id,
+                                })
+                              }
+                            ></i>
                           </span>
                         </td>
                         <td>

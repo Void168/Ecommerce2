@@ -44,15 +44,15 @@ function Product() {
   let similarProducts = []
   if (similar) {
     similarProducts = similar.map((product, index) => (
-      <div className="" data-value={index} key={product}>
+      <div className="container mx-auto" data-value={index} key={product}>
         <SimilarProduct {...product} />
       </div>
     ))
   }
 
   return (
-    <>
-      <div className="container mx-auto my-8 grid grid-cols-2">
+    <div className="container mx-auto">
+      <div className="my-8 grid grid-cols-2">
         <div>
           <AliceCarousel
             mouseTracking
@@ -74,13 +74,6 @@ function Product() {
             <strong>{product.description}</strong>
           </div>
           <div className="flex justify-around">
-            <select className="w-3/12 px-2 rounded-md">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
             <button
               className="w-3/12 bg-[#132C33]"
               onClick={(e) =>
@@ -103,7 +96,7 @@ function Product() {
           {isSuccess && (
             <ToastMessage
               bg="info"
-              title="Thêm vào giỏ"
+              title="Thông báo"
               body={`${product.name} đã được thêm vào giỏ hàng`}
             />
           )}
@@ -120,7 +113,7 @@ function Product() {
           />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
