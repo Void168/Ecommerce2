@@ -32,7 +32,7 @@ function Home() {
         <Loading />
       ) : (
         <>
-          <div className="flex flex-wrap bg-[#132C33] p-4 my-4 justify-between">
+          <div className="flex flex-wrap bg-[#126E82] p-4 my-4 justify-between">
             {lastProducts?.map((product) => (
               <ProductPreview {...product} key={product} product={product} />
             ))}

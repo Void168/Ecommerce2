@@ -18,7 +18,7 @@ function App() {
         <header className="App-header">
           <Navigation />
         </header>
-        <main>
+        <main className="h-screen">
           <Routes>
             <Route index element={<Home />} />
             {!user && (

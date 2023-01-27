@@ -43,7 +43,7 @@ function Navigation() {
                   <NavLink className="p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm hover:rounded-b-sm hover:rounded-t-3xl">
                     Danh mục
                   </NavLink>
-                  <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50">
+                  <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
                     {categories.map((category) => (
                       <Link
                         to={`/category/${category.name.toLocaleLowerCase()}`}
@@ -104,7 +104,7 @@ function Navigation() {
                 </Col>
 
                 <Col className="w-6/12 pl-8">
-                  <ul className="flex flex-row justify-around">
+                  <ul className="flex flex-row justify-around text-white">
                     <li>SĐT: 0123456789</li>
                     <li>Tuyển dụng</li>
                     <li>Khuyến mãi</li>
@@ -114,11 +114,18 @@ function Navigation() {
               </li>
             </ul>
           </Col>
-          <Col>
+          <Col className="relative p-4">
             <NavLink to="/cart">
-              <i class="fas fa-shopping-cart  " />
-              {user?.cart.count > 0 && <span>{user.cart.count}</span>}
-              Giỏ hàng
+              {user?.cart.count > 0 && (
+                <span
+                  className="
+              bg-[#51C4D3] px-3 py-1 rounded-full absolute z-10 top-0 left-8"
+                >
+                  {user.cart.count}
+                </span>
+              )}
+              <i class="fas fa-shopping-cart text-3xl" />
+              <span className="text-white ml-2 text-xl">Giỏ hàng</span>
             </NavLink>
           </Col>
         </ul>

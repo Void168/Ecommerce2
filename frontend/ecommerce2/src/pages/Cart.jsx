@@ -27,55 +27,40 @@ function Cart() {
   }, [])
 
   return (
-    <div className="container">
-      <div>
-        <p className="text-3xl">Giỏ hảng</p>
-        {loading ? (
-          <Loading />
-        ) : (
-          <>
-            {cart.length === 0 ? (
-              <p className="text-xl">
-                Giỏ hàng trống. <Link to="/">Tiếp tục mua hàng</Link>
-              </p>
-            ) : (
-              <>
-                <table responsive="sm" className="cart-table">
+    <div className="container mx-auto">
+      <p className="text-3xl my-4">Giỏ hàng</p>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {cart.length === 0 ? (
+            <p className="text-xl">
+              Giỏ hàng trống. <Link to="/">Tiếp tục mua hàng</Link>
+            </p>
+          ) : (
+            <div className="flex flex-row">
+              <div className="w-8/12">
+                <table
+                  responsive="sm"
+                  className="cart-table shadow-sm w-10/12 my-4"
+                >
                   <thead>
-                    <tr>
-                      <th>&nbsp;</th>
+                    <tr className="text-xl">
                       <th>Sản phẩm</th>
                       <th>Giá tiền</th>
                       <th>Số lượng</th>
-                      <th>Tổng cộng</th>
+                      <th>Tổng giá</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     {/* loop through cart products */}
                     {cart.map((item) => (
                       <tr>
-                        <td>&nbsp;</td>
                         <td>
-                          {!isLoading && (
-                            <i
-                              className="fa fa-times"
-                              style={{ marginRight: 10, cursor: 'pointer' }}
-                              onClick={() =>
-                                removeFromCart({
-                                  productId: item._id,
-                                  price: item.price,
-                                  userId: user._id,
-                                })
-                              }
-                            ></i>
-                          )}
                           <img
                             src={item.pictures[0].url}
-                            style={{
-                              width: 100,
-                              height: 100,
-                              objectFit: 'cover',
-                            }}
+                            className="ml-10 shadow-sm w-24 h-24 object-cover"
                             alt="cart-item"
                           />
                         </td>
@@ -86,10 +71,10 @@ function Cart() {
                           })}
                         </td>
                         <td>
-                          <span className="quantity-indicator">
-                            <i className="fa fa-minus-circle"></i>
+                          <span className="flex justify-around">
+                            <i className="fa fa-minus-circle pt-1"></i>
                             <span>{user.cart[item._id]}</span>
-                            <i className="fa fa-plus-circle"></i>
+                            <i className="fa fa-plus-circle pt-1"></i>
                           </span>
                         </td>
                         <td>
@@ -101,18 +86,51 @@ function Cart() {
                             },
                           )}
                         </td>
+                        <td>
+                          {!isLoading && (
+                            <button
+                              onClick={() =>
+                                removeFromCart({
+                                  productId: item._id,
+                                  price: item.price,
+                                  userId: user._id,
+                                })
+                              }
+                              className="bg-[#132C33]"
+                            >
+                              Hủy bỏ
+                            </button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <div>
-                  <h3 className="h4 pt-4">Tổng trả: {subTotal}</h3>
-                </div>
-              </>
-            )}{' '}
-          </>
-        )}
-      </div>
+                <Link to="/" className="text-[#126E82] mb-4">
+                  Tiếp tục mua hàng
+                </Link>
+              </div>
+              <div className="w-4/12 relative">
+                <span className="absolute">
+                  <img src="/images/pencil.png" alt="pencil" />
+                </span>
+                <ul className="shadow-sm mb-8 ">
+                  <li className="h4 pt-4 text-3xl text-center pb-4 bg-[#132C33] text-white">
+                    Tổng cộng
+                  </li>
+                  <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
+                    Tổng giá: {subTotal}
+                  </li>
+                  <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
+                    Số sản phẩm: {cart.length}
+                  </li>
+                  <li className="p-2 border-b-2 border-[#132C33] h-32"></li>
+                </ul>
+              </div>
+            </div>
+          )}{' '}
+        </>
+      )}
     </div>
   )
 }
