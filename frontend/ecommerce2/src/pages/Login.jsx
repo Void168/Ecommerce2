@@ -16,7 +16,6 @@ function Login(props) {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    login({ email, password })
   }
 
   const ShowHidePassword = () => {
@@ -33,6 +32,14 @@ function Login(props) {
     } else {
       setShowPopup(false)
     }
+  }
+
+  const checkUser = (e) => {
+    e.preventDefault()
+    if (email && password) {
+      navigate(-1)
+    }
+    login({ email, password })
   }
 
   return (
@@ -85,7 +92,11 @@ function Login(props) {
               </div>
               <div className="form__element">
                 <label />
-                <button type="submit" className="w-full bg-[#132C33]">
+                <button
+                  type="submit"
+                  className="w-full bg-[#132C33]"
+                  onClick={checkUser}
+                >
                   Xác Nhận
                 </button>
               </div>

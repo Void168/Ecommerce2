@@ -19,7 +19,7 @@ function ProductPreview(props) {
           {product.category}
         </div>
         <div>
-          {product.price.toLocaleString('it-IT', {
+          {(product.price * 24000).toLocaleString('it-IT', {
             style: 'currency',
             currency: 'VND',
           })}

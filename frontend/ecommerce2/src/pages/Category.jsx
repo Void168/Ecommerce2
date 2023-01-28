@@ -48,26 +48,28 @@ function Category() {
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <Suspense fallback={<Loading />}>
           {productsSearch.length === 0 ? (
-            loading ? (
-              <Loading />
-            ) : (
-              <p>Không tìm thấy sản phẩm phù hợp</p>
-            )
+            <p>Không tìm thấy sản phẩm phù hợp</p>
           ) : (
-            <div className="my-8 max-w-xsm">
-              {productsSearch
-                .filter((product) => product.category === categoryName)
-                .map((filteredProduct) => (
-                  <ProductPreview
-                    key={filteredProduct}
-                    product={filteredProduct}
-                  />
-                ))}
-            </div>
+            <>
+              {loading ? (
+                <Loading />
+              ) : (
+                <div className="my-8 max-w-xsm">
+                  {productsSearch
+                    .filter((product) => product.category === categoryName)
+                    .map((filteredProduct) => (
+                      <ProductPreview
+                        key={filteredProduct}
+                        product={filteredProduct}
+                      />
+                    ))}
+                </div>
+              )}
+            </>
           )}
-        </>
+        </Suspense>
       )}
     </div>
   )

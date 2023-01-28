@@ -47,6 +47,7 @@
   position: fixed;
   z-index: 10000;
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+  top: 0;
 }
 
 .dropdown__profile ul div {

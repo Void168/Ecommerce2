@@ -13,9 +13,10 @@ function Navigation() {
   const [navbar, setNavbar] = useState(false)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const signoutHandler = () => {
-    document.location.href = '/login'
+    navigate('/login')
     dispatch(logout())
   }
 

@@ -28,7 +28,11 @@ function Product() {
   }, [id])
 
   if (!product) {
-    return <Loading />
+    return (
+      <div className="container mx-auto">
+        <Loading />
+      </div>
+    )
   }
 
   const responsive = {
@@ -50,6 +54,10 @@ function Product() {
     ))
   }
 
+  const navigateToLogin = () => {
+    navigate('/login')
+  }
+
   return (
     <div className="container mx-auto">
       <div className="my-8 grid grid-cols-2">
@@ -66,7 +74,7 @@ function Product() {
             <p>{product.name}</p>
             <p>{product.category}</p>
             <p>
-              {product.price.toLocaleString('it-IT', {
+              {(product.price * 24000).toLocaleString('it-IT', {
                 style: 'currency',
                 currency: 'VND',
               })}
@@ -74,19 +82,25 @@ function Product() {
             <strong>{product.description}</strong>
           </div>
           <div className="flex justify-around">
-            <button
-              className="w-3/12 bg-[#132C33]"
-              onClick={(e) =>
-                addToCart({
-                  userId: user._id,
-                  productId: id,
-                  price: product.price,
-                  image: product.pictures[0].url,
-                })
-              }
-            >
-              Thêm vào giỏ
-            </button>
+            {!user ? (
+              <button className="bg-[#132C33]" onClick={navigateToLogin}>
+                Đăng nhập để mua hàng
+              </button>
+            ) : (
+              <button
+                className="w-3/12 bg-[#132C33]"
+                onClick={(e) =>
+                  addToCart({
+                    userId: user._id,
+                    productId: id,
+                    price: product.price,
+                    image: product.pictures[0].url,
+                  })
+                }
+              >
+                Thêm vào giỏ
+              </button>
+            )}
           </div>
           {user && user.isAdmin && (
             <Link to={`/product/${product.id}/edit`}>

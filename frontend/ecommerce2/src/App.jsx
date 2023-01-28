@@ -9,16 +9,17 @@ import NewProducts from './pages/NewProducts'
 import Product from './pages/Product'
 import Category from './pages/Category'
 import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
 
 function App() {
   const user = useSelector((state) => state.user)
   return (
     <div className="App bg-[#D8E3E7] h-max">
       <BrowserRouter>
-        <header className="App-header">
+        <header>
           <Navigation />
         </header>
-        <main className="h-screen">
+        <main className="h-screen my-8">
           <Routes>
             <Route index element={<Home />} />
             {!user && (
@@ -34,6 +35,7 @@ function App() {
 
             <Route path="/new-product" element={<NewProducts />} />
             <Route path="*" element={<Home />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </main>
         <footer>

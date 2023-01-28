@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Loading from '../components/Loading'
 import {
   useIncreaseCartProductMutation,
@@ -9,7 +9,7 @@ import {
   useRemoveFromCartMutation,
 } from '../services/appApi'
 
-function Cart() {
+function Cart(props) {
   const user = useSelector((state) => state.user)
   const products = useSelector((state) => state.products)
   const [loading, setLoading] = useState(false)
@@ -17,10 +17,11 @@ function Cart() {
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation()
   const [increaseCart] = useIncreaseCartProductMutation()
   const [decreaseCart] = useDecreaseCartProductMutation()
+  const navigate = useNavigate()
 
   let cart = products.filter((product) => userCartObj[product._id] != null)
 
-  const subTotal = user.cart.total.toLocaleString('it-IT', {
+  const subTotal = (user.cart.total - 18000).toLocaleString('it-IT', {
     style: 'currency',
     currency: 'VND',
   })
@@ -29,6 +30,14 @@ function Cart() {
     const quantity = user.cart.count
     if (quantity <= 0) return alert('Số lượng phải lớn hơn 0')
     decreaseCart(product)
+  }
+
+  const checkoutHandler = () => {
+    if (!user) {
+      navigate('/login')
+    } else {
+      navigate('/checkout')
+    }
   }
 
   useEffect(() => {
@@ -40,7 +49,7 @@ function Cart() {
 
   return (
     <div className="container mx-auto">
-      <p className="text-3xl my-4">Giỏ hàng</p>
+      <p className="text-3xl">Giỏ hàng</p>
       {loading ? (
         <Loading />
       ) : (
@@ -77,7 +86,7 @@ function Cart() {
                           />
                         </td>
                         <td>
-                          {item.price.toLocaleString('it-IT', {
+                          {(item.price * 24000).toLocaleString('it-IT', {
                             style: 'currency',
                             currency: 'VND',
                           })}
@@ -108,13 +117,14 @@ function Cart() {
                           </span>
                         </td>
                         <td>
-                          {(item.price * user.cart[item._id]).toLocaleString(
-                            'it-IT',
-                            {
-                              style: 'currency',
-                              currency: 'VND',
-                            },
-                          )}
+                          {(
+                            item.price *
+                            24000 *
+                            user.cart[item._id]
+                          ).toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND',
+                          })}
                         </td>
                         <td>
                           {!isLoading && (
@@ -151,14 +161,24 @@ function Cart() {
                   <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
                     Tổng giá: {subTotal}
                   </li>
-                  <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
-                    Số sản phẩm: {cart.length}
-                  </li>
+                  {cart.map((item) => (
+                    <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
+                      Số sản phẩm: {user.cart[item._id]}
+                    </li>
+                  ))}
+
                   <li className="p-2 border-b-2 border-[#132C33] h-32"></li>
                 </ul>
+                <button
+                  type="button"
+                  onClick={checkoutHandler}
+                  disabled={cart.length === 0}
+                >
+                  Tiến hành kiểm tra
+                </button>
               </div>
             </div>
-          )}{' '}
+          )}
         </>
       )}
     </div>
