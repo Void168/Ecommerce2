@@ -11,15 +11,16 @@ function Order() {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`users/${user._id}/orders`).then(
-      (({ data }) => {
+    axios
+      .get(`/users/${user._id}/orders`)
+      .then(({ data }) => {
         setLoading(false)
         setOrders(data)
-      }).catch((e) => {
+      })
+      .catch((e) => {
         setLoading(false)
         console.log(e)
-      }),
-    )
+      })
   }, [user._id])
 
   if (orders.length === 0) {

@@ -1,6 +1,5 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import React, { useState } from 'react'
-import { Alert, Button, Col, Form, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useCreateOrderMutation } from '../services/appApi'
@@ -36,7 +35,7 @@ function Checkout() {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ',
         },
-        body: JSON.stringify({ amount: user.cart.total }),
+        body: JSON.stringify({ amount: Math.round(user.cart.total / 24000) }),
       },
     ).then((res) => res.json())
 
@@ -51,10 +50,10 @@ function Checkout() {
       createOrder({ userId: user._id, cart: user.cart, address, phone }).then(
         (res) => {
           if (!isLoading && !isError) {
-            setAlertMessage(`Payment ${paymentIntent.status}`)
+            setAlertMessage(`Thanh toán ${paymentIntent.status}`)
             setTimeout(() => {
-              // navigate("/orders");
-            }, 3000)
+              navigate('/orders')
+            }, 2000)
           }
         },
       )

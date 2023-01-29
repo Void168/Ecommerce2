@@ -7,15 +7,17 @@ const http = require('http')
 const stripe = require('stripe')(process.env.CLIENT_STRIPE_SECRET)
 const server = http.createServer(app)
 const { Server } = require('socket.io')
+
 const io = new Server(server, {
-  cors: 'http://localhost:3001',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  cors: '*',
+  methods: '*',
 })
 
 const User = require('./models/userModel.js')
 const userRoutes = require('./routes/userRoutes.js')
 const productRoutes = require('./routes/productRoutes.js')
 const imagesRoutes = require('./routes/imagesRoutes.js')
+const orderRoutes = require('./routes/orderRoutes.js')
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -28,6 +30,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoutes)
 app.use('/products', productRoutes)
 app.use('/images', imagesRoutes)
+app.use('/orders', orderRoutes)
 
 app.post('/create-payment', async (req, res) => {
   const { amount } = req.body
@@ -48,3 +51,5 @@ app.post('/create-payment', async (req, res) => {
 server.listen(8080, () => {
   console.log('listening on port', 8080)
 })
+
+app.set('socketio', io)
