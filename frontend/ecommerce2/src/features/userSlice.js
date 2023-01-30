@@ -6,7 +6,7 @@ import appApi from '../services/appApi.js'
 const initialState = null
 
 export const userSlice = createSlice({
-  name: 'users',
+  name: 'products',
   initialState,
   reducers: {
     logout: () => initialState,

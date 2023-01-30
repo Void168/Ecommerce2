@@ -4,16 +4,16 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const http = require('http')
-const stripe = require('stripe')(process.env.CLIENT_STRIPE_SECRET)
+
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 
 const io = new Server(server, {
-  cors: '*',
-  methods: '*',
+  cors: 'http://localhost:3001',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 })
+const stripe = require('stripe')(process.env.CLIENT_STRIPE_SECRET)
 
-const User = require('./models/userModel.js')
 const userRoutes = require('./routes/userRoutes.js')
 const productRoutes = require('./routes/productRoutes.js')
 const imagesRoutes = require('./routes/imagesRoutes.js')
@@ -32,9 +32,8 @@ app.use('/products', productRoutes)
 app.use('/images', imagesRoutes)
 app.use('/orders', orderRoutes)
 
-app.post('/create-payment', async (req, res) => {
+app.post('/create-payment', cors(), async (req, res) => {
   const { amount } = req.body
-  console.log(amount)
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,

@@ -112,7 +112,9 @@ function Product() {
               bg="info"
               title="Thông báo"
               body={`${product.name} đã được thêm vào giỏ hàng`}
-            />
+            >
+              <Link to="/cart"></Link>
+            </ToastMessage>
           )}
         </div>
       </div>

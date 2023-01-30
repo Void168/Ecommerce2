@@ -36,4 +36,14 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/:id/orders', async (req, res) => {
+  const { id } = req.params
+  try {
+    const user = await User.findById(id).populate('orders')
+    res.json(user.orders)
+  } catch (e) {
+    res.status(400).send(e.message)
+  }
+})
+
 module.exports = router

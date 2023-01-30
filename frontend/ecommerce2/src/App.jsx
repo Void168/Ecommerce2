@@ -9,7 +9,6 @@ import NewProducts from './pages/NewProducts'
 import Product from './pages/Product'
 import Category from './pages/Category'
 import Cart from './pages/Cart'
-import Checkout from './pages/Checkout'
 import Order from './pages/Order'
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
 
             <Route path="/new-product" element={<NewProducts />} />
             <Route path="*" element={<Home />} />
-            <Route path="/checkout" element={<Checkout />} />
             {user && <Route path="/orders" element={<Order />} />}
           </Routes>
         </main>

@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
   const { userId, cart, phone, address } = req.body
   try {
     const user = await User.findById(userId)
-    const order = await Order.create({
+    const order = new Order({
       owner: user._id,
       products: cart,
       phone,
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     user.cart = { total: 0, count: 0 }
     user.orders.push(order)
     const notification = {
-      status: 'unread',
+      status: 'Chưa xem',
       message: `Có đơn hàng mới của ${user.name}`,
       time: new Date(),
     }

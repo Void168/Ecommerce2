@@ -9,7 +9,13 @@ import {
   useRemoveFromCartMutation,
 } from '../services/appApi'
 
-function Cart(props) {
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+import CheckoutForm from '../components/CheckoutForm'
+
+const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_KEY}`)
+
+function Cart() {
   const user = useSelector((state) => state.user)
   const products = useSelector((state) => state.products)
   const [loading, setLoading] = useState(false)
@@ -21,7 +27,7 @@ function Cart(props) {
 
   let cart = products.filter((product) => userCartObj[product._id] != null)
 
-  const subTotal = (user.cart.total - 18000).toLocaleString('it-IT', {
+  const subTotal = user.cart.total.toLocaleString('it-IT', {
     style: 'currency',
     currency: 'VND',
   })
@@ -30,14 +36,6 @@ function Cart(props) {
     const quantity = user.cart.count
     if (quantity <= 0) return alert('Số lượng phải lớn hơn 0')
     decreaseCart(product)
-  }
-
-  const checkoutHandler = () => {
-    if (!user) {
-      navigate('/login')
-    } else {
-      navigate('/checkout')
-    }
   }
 
   useEffect(() => {
@@ -59,6 +57,11 @@ function Cart(props) {
               Giỏ hàng trống. <Link to="/">Tiếp tục mua hàng</Link>
             </p>
           ) : (
+            <Elements stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          )}
+          {cart.length > 0 && (
             <div className="flex flex-row">
               <div className="w-8/12">
                 <table
@@ -162,20 +165,16 @@ function Cart(props) {
                     Tổng giá: {subTotal}
                   </li>
                   {cart.map((item) => (
-                    <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
+                    <li
+                      className="py-2 px-4 border-b-2 border-[#132C33] text-xl"
+                      key={item}
+                    >
                       Số sản phẩm: {user.cart[item._id]}
                     </li>
                   ))}
 
                   <li className="p-2 border-b-2 border-[#132C33] h-32"></li>
                 </ul>
-                <button
-                  type="button"
-                  onClick={checkoutHandler}
-                  disabled={cart.length === 0}
-                >
-                  Tiến hành kiểm tra
-                </button>
               </div>
             </div>
           )}
