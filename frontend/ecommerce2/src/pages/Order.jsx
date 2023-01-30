@@ -47,14 +47,14 @@ function Order() {
               <tr>
                 <td>{order._id}</td>
                 <td>
-                  <badge
+                  <div
                     bg={`${
                       order.status === 'đang xử lý' ? 'lỗi' : 'đã thanh toán'
                     }`}
                     text="white"
                   >
                     {order.status}
-                  </badge>
+                  </div>
                 </td>
                 <td>{order.date}</td>
 

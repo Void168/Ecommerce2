@@ -10,6 +10,7 @@ import Product from './pages/Product'
 import Category from './pages/Category'
 import Cart from './pages/Cart'
 import Order from './pages/Order'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -36,6 +37,11 @@ function App() {
             <Route path="/new-product" element={<NewProducts />} />
             <Route path="*" element={<Home />} />
             {user && <Route path="/orders" element={<Order />} />}
+            {user && user.isAdmin && (
+              <>
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+              </>
+            )}
           </Routes>
         </main>
         <footer>
