@@ -45,4 +45,28 @@ router.get('/', async (req, res) => {
   }
 })
 
+//shipping order
+
+router.patch('/:id/mark-shipped', async (req, res) => {
+  const io = req.app.get('socketio')
+  const { ownerId } = req.body
+  const { id } = req.params
+  try {
+    const user = await User.findById(ownerId)
+    await Order.findByIdAndUpdate(id, { status: 'Đã giao hàng' })
+    const orders = await Order.find().populate('owner', ['email', 'name'])
+    const notification = {
+      status: 'chưa đọc',
+      message: `Đơn hàng ${id} đã vận chuyển thành công`,
+      time: new Date(),
+    }
+    io.sockets.emit('notification', notification, ownerId)
+    user.notifications.push(notification)
+    await user.save()
+    res.status(200).json(orders)
+  } catch (e) {
+    res.status(400).json(e.message)
+  }
+})
+
 module.exports = router

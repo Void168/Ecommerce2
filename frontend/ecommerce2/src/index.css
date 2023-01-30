@@ -40,6 +40,16 @@
   th {
     @apply border-2 border-[#132C33] p-4 text-center;
   }
+
+  #vertical-tabpanel-0,
+  #vertical-tabpanel-1,
+  #vertical-tabpanel-2 {
+    @apply mx-auto w-full text-center;
+  }
+
+  img {
+    @apply shadow-sm;
+  }
 }
 
 .navbar.active {
@@ -67,4 +77,9 @@
 .alice-carousel__prev-btn,
 .alice-carousel__next-btn {
   display: none !important;
+}
+
+.MuiTab-root,
+.css-ahj2mt-MuiTypography-root {
+  font-family: 'Quicksand', sans-serif !important;
 }

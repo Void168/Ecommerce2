@@ -9,7 +9,7 @@ const server = http.createServer(app)
 const { Server } = require('socket.io')
 
 const io = new Server(server, {
-  cors: 'http://localhost:3001',
+  cors: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 })
 const stripe = require('stripe')(process.env.CLIENT_STRIPE_SECRET)

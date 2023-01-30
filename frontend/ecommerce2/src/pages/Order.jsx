@@ -58,7 +58,12 @@ function Order() {
                 </td>
                 <td>{order.date}</td>
 
-                <td>${order.total}</td>
+                <td>
+                  {order.total.toLocaleString('it-IT', {
+                    style: 'currency',
+                    currency: 'VND',
+                  })}
+                </td>
               </tr>
             ))}
           </tbody>
