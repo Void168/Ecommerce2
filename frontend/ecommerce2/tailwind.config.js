@@ -13,6 +13,7 @@ module.exports = {
       },
       maxWidth: {
         xsm: '22rem',
+        vs: '16rem',
       },
     },
   },

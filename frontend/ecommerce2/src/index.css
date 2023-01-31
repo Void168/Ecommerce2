@@ -15,7 +15,8 @@
     @apply my-8;
   }
 
-  input {
+  input,
+  select {
     @apply p-2 mt-1 rounded-md shadow-sm;
   }
 

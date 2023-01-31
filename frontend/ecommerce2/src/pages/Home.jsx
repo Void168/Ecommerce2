@@ -11,7 +11,13 @@ function Home() {
   const dispatch = useDispatch()
   const products = useSelector((state) => state.products)
   const lastProducts = products.slice(0, 8)
+  const [visible, setVisible] = useState(12)
   const [loading, setLoading] = useState(false)
+
+  const showMoreItems = () => {
+    setVisible((prevValue) => prevValue + 12)
+    return <Loading />
+  }
 
   useEffect(() => {
     axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
@@ -32,11 +38,43 @@ function Home() {
         <Loading />
       ) : (
         <>
-          <div className="flex flex-wrap bg-[#126E82] p-4 my-4 justify-between">
-            {lastProducts?.map((product) => (
-              <ProductPreview {...product} key={product} product={product} />
-            ))}
+          <div className="container mx-auto">
+            <div className="grid lg:grid-cols-4 gap-4 bg-[#126E82] p-4 my-4 sm:grid-cols-3">
+              {loading ? (
+                <Loading />
+              ) : (
+                <>
+                  {lastProducts?.map((product) => (
+                    <ProductPreview
+                      {...product}
+                      key={product}
+                      product={product}
+                    />
+                  ))}
+                </>
+              )}
+            </div>
+            <h2 className="text-2xl">Sản phẩm mới</h2>
+            <div className="grid lg:grid-cols-4 gap-4 bg-[#126E82] p-4 my-4 sm:grid-cols-3">
+              {loading ? (
+                <Loading />
+              ) : (
+                <>
+                  {products.slice(0, visible).map((newProduct) => (
+                    <ProductPreview
+                      {...newProduct}
+                      key={newProduct}
+                      product={newProduct}
+                    />
+                  ))}
+                </>
+              )}
+            </div>
           </div>
+          {products.length <= visible ? null : (
+            <button onClick={showMoreItems}>Xem thêm</button>
+          )}
+
           <div>
             <Link to="/category/all">Xem thêm {'>>'}</Link>
           </div>

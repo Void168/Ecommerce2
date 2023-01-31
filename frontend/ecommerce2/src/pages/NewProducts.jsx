@@ -21,7 +21,7 @@ function NewProducts() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!name || !description || !price || !category || !images.length) {
-      return alert('Please fill out all the fields')
+      return alert('Vui lòng điền vào form hoặc quay lại')
     }
     createProduct({ name, description, price, category, images }).then(
       ({ data }) => {
@@ -105,7 +105,7 @@ function NewProducts() {
               <br />
               <input
                 type="text"
-                placeholder="Nhập tên sản phẩm"
+                placeholder="Nhập giá sản phẩm"
                 value={price}
                 required
                 onChange={(e) => setPrice(e.target.value)}

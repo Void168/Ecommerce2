@@ -103,7 +103,7 @@ function Product() {
             )}
           </div>
           {user && user.isAdmin && (
-            <Link to={`/product/${product.id}/edit`}>
+            <Link to={`/product/${product._id}/edit`}>
               <button>Sửa thông tin sản phẩm</button>
             </Link>
           )}

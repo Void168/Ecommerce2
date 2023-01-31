@@ -40,7 +40,7 @@ function App() {
         <header>
           <Navigation />
         </header>
-        <main className="h-screen my-8">
+        <main className="min-h-screen my-8">
           <Routes>
             <Route index element={<Home />} />
             {!user && (
@@ -65,7 +65,7 @@ function App() {
             )}
           </Routes>
         </main>
-        <footer className="bottom-0">
+        <footer>
           <Footer />
         </footer>
       </BrowserRouter>

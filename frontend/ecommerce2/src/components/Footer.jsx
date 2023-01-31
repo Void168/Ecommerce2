@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className="bg-[#126E82] ">
+    <div className="bg-[#126E82]">
       <div className="container">
         <div>
           <div xl={3} lg={3} md={12}>

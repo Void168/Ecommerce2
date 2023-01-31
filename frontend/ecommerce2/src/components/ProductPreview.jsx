@@ -7,11 +7,11 @@ function ProductPreview(props) {
   const { product } = props
   return (
     <Link to={`/product/${product._id}`}>
-      <div className="p-3 shadow-sm rounded-lg bg-[#D8E3E7]">
+      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full min-h-full">
         <img
           variant="top"
-          className="max-w-xs shadow-sm max-h-72 rounded-lg ml-1"
-          src={product.pictures[0].url}
+          className="shadow-sm rounded-lg max-h-84 mb-4 w-full"
+          src={product.pictures[0]?.url}
           alt="product-pic"
         />
         <h1 className="font-bold">{product.name}</h1>
