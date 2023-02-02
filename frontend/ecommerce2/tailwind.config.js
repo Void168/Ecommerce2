@@ -15,6 +15,12 @@ module.exports = {
         xsm: '22rem',
         vs: '16rem',
       },
+      minHeight: {
+        xl: '24rem',
+      },
+      height: {
+        '256': '50rem',
+      },
     },
   },
   variants: {

@@ -12,7 +12,11 @@ function Category() {
   const { category } = useParams()
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
-  const [listProducts, setListProducts] = useState([])
+  const [visible, setVisible] = useState(4)
+  const showMoreItems = () => {
+    setVisible((prevValue) => prevValue + 4)
+    return <Loading />
+  }
   const products = useSelector((state) => state.products)
   const [searchTerm, setSearchTerm] = useState('')
   const categoryName = category.charAt(0).toUpperCase() + category.slice(1)
@@ -56,7 +60,7 @@ function Category() {
               {loading ? (
                 <Loading />
               ) : (
-                <div className="my-8 max-w-xsm">
+                <div className="my-8 grid lg:grid-cols-4 gap-4 bg-[#126E82] p-4 sm:grid-cols-3">
                   {productsSearch
                     .filter((product) => product.category === categoryName)
                     .map((filteredProduct) => (
@@ -68,6 +72,9 @@ function Category() {
                 </div>
               )}
             </>
+          )}
+          {products.length <= visible ? null : (
+            <button onClick={showMoreItems}>Xem thêm</button>
           )}
         </Suspense>
       )}

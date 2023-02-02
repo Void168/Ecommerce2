@@ -1,13 +1,11 @@
 import React from 'react'
-import Badge from 'react-bootstrap/Badge'
-import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 
-function ProductPreview(props) {
+function WatchedProduct(props) {
   const { product } = props
   return (
     <Link to={`/product/${product._id}`}>
-      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full min-h-xl">
+      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full">
         <img
           variant="top"
           className="shadow-sm rounded-lg max-h-84 mb-4 w-full"
@@ -29,4 +27,4 @@ function ProductPreview(props) {
   )
 }
 
-export default ProductPreview
+export default WatchedProduct

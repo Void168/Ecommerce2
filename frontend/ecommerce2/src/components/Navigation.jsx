@@ -164,21 +164,20 @@ function Navigation() {
       </ul>
       {/* notifications */}
       <div className="notifications-container" ref={notificationRef}>
-        {user?.notifications.length > 0 ? (
-          user?.notifications.map((notification) => (
-            <p className={`notification-${notification.status}`}>
-              {notification.message}
-              <br />
-              <span>
-                {notification.time.split('T')[0] +
-                  ' ' +
-                  notification.time.split('T')[1]}
-              </span>
-            </p>
-          ))
-        ) : (
-          <p>Không có thông báo mới</p>
-        )}
+        {user?.notifications.length > 0
+          ? user?.notifications.map((notification) => (
+              <p className={`notification-${notification.status}`}>
+                {notification.message}
+                <br />
+                <span>
+                  {notification.time.split('T')[0] +
+                    ' ' +
+                    notification.time.split('T')[1]}
+                </span>
+              </p>
+            ))
+          : // <span>Không có thông báo mới</span>
+            null}
       </div>
     </div>
   )

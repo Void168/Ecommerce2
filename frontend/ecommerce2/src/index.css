@@ -5,6 +5,12 @@
 @layer components {
   body {
     font-family: 'Quicksand', sans-serif;
+    background: url('https://img.freepik.com/free-vector/white-technology-background_23-2148390329.jpg?w=2000');
+  }
+
+  main {
+    background: url('./background/background.jpg');
+    background-size: 100%;
   }
 
   .nav-link {
@@ -53,7 +59,8 @@
   }
 }
 
-.navbar.active {
+.navbar.active,
+.filter.active {
   width: 100%;
   position: fixed;
   z-index: 10000;
@@ -83,4 +90,12 @@
 .MuiTab-root,
 .css-ahj2mt-MuiTypography-root {
   font-family: 'Quicksand', sans-serif !important;
+}
+
+.css-wjh20t-MuiPagination-ul li button {
+  background-color: #d8e3e7;
+}
+.css-wjh20t-MuiPagination-ul li button:hover {
+  background-color: #1976d2;
+  color: white;
 }
