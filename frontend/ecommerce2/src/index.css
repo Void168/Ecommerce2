@@ -56,6 +56,10 @@
   img {
     @apply shadow-sm rounded-lg;
   }
+
+  form div {
+    @apply my-2;
+  }
 }
 
 .navbar.active,
@@ -97,4 +101,10 @@
 .css-wjh20t-MuiPagination-ul li button:hover {
   background-color: #1976d2;
   color: white;
+}
+
+.cart-payment {
+  background-image: url('./background/background1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }

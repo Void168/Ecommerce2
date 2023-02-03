@@ -60,52 +60,70 @@ function CheckoutForm() {
     }
   }
   return (
-    <div className="cart-payment-container">
-      <form onSubmit={handlePay} className="flex flex-col w-6/12">
+    <div className="my-4 p-2 mr-8">
+      <form
+        onSubmit={handlePay}
+        className="flex flex-col w-full px-8 shadow-sm rounded-lg cart-payment"
+      >
         {alertMessage && <p>{alertMessage}</p>}
         <div md={6}>
           <label>Họ tên</label>
+          <br />
           <input
             type="text"
             placeholder="First Name"
             value={user.name}
             disabled
+            className="w-6/12 bg-white"
           />
         </div>
         <div md={6}>
           <label>Email</label>
-          <input type="text" placeholder="Email" value={user.email} disabled />
+          <br />
+          <input
+            type="text"
+            placeholder="Email"
+            value={user.email}
+            disabled
+            className="w-6/12 bg-white"
+          />
         </div>
-        <div md={7}>
+        <div>
           <label>Địa chỉ</label>
+          <br />
           <input
             type="text"
             placeholder="Địa chỉ"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
+            className="w-6/12"
           />
         </div>
         <div md={5}>
           <label>Điện thoại</label>
+          <br />
           <input
             type="phone"
             placeholder="Số điện thoại"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
+            className="w-6/12"
           />
         </div>
         <label htmlFor="card-element">Thông tin thanh toán</label>
-        <CardElement className="w-full" />
+        <CardElement className="w-6/12 shadow-sm p-2 rounded-md bg-white" />
         {user ? (
-          <button
-            className="mt-3"
-            type="submit"
-            disabled={user.cart.count <= 0 || paying || isSuccess}
-          >
-            {paying ? 'Đang tiến hành...' : 'Thanh toán'}
-          </button>
+          <div className="text-center">
+            <button
+              className="mt-3 bg-[#132C33] w-4/12"
+              type="submit"
+              disabled={user.cart.count <= 0 || paying || isSuccess}
+            >
+              {paying ? 'Đang tiến hành...' : 'Thanh toán'}
+            </button>
+          </div>
         ) : (
           <button className="mt-3">
             <Link to="/login">Đăng nhập để thanh toán.</Link>

@@ -48,18 +48,51 @@ function Cart() {
   return (
     <div className="container mx-auto">
       <p className="text-3xl">Giỏ hàng</p>
+
       {loading ? (
         <Loading />
       ) : (
         <>
           {cart.length === 0 ? (
-            <p className="text-xl">
-              Giỏ hàng trống. <Link to="/">Tiếp tục mua hàng</Link>
+            <p className="text-xl mt-8">
+              Giỏ hàng trống.{' '}
+              <Link to="/" className="text-[#126E82]">
+                Tiếp tục mua hàng
+              </Link>
             </p>
           ) : (
-            <Elements stripe={stripePromise}>
-              <CheckoutForm />
-            </Elements>
+            <div className=" grid grid-cols-3">
+              <div className="col-span-2">
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm />
+                </Elements>
+              </div>
+              <div className="col-span-1">
+                <div className="relative">
+                  <span className="absolute">
+                    <img src="/images/pencil.png" alt="pencil" />
+                  </span>
+                  <ul className="shadow-sm mb-8 ">
+                    <li className="h4 pt-4 text-3xl text-center pb-4 bg-[#132C33] text-white">
+                      Tổng cộng
+                    </li>
+                    <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
+                      Tổng giá: {subTotal}
+                    </li>
+                    {cart.map((item) => (
+                      <li
+                        className="py-2 px-4 border-b-2 border-[#132C33] text-xl"
+                        key={item}
+                      >
+                        Số sản phẩm: {user.cart[item._id]}
+                      </li>
+                    ))}
+
+                    <li className="p-2 border-b-2 border-[#132C33] h-32"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           )}
           {cart.length > 0 && (
             <div className="flex flex-row">
@@ -152,29 +185,6 @@ function Cart() {
                 <Link to="/" className="text-[#126E82] mb-4">
                   Tiếp tục mua hàng
                 </Link>
-              </div>
-              <div className="w-4/12 relative">
-                <span className="absolute">
-                  <img src="/images/pencil.png" alt="pencil" />
-                </span>
-                <ul className="shadow-sm mb-8 ">
-                  <li className="h4 pt-4 text-3xl text-center pb-4 bg-[#132C33] text-white">
-                    Tổng cộng
-                  </li>
-                  <li className="py-2 px-4 border-b-2 border-[#132C33] text-xl">
-                    Tổng giá: {subTotal}
-                  </li>
-                  {cart.map((item) => (
-                    <li
-                      className="py-2 px-4 border-b-2 border-[#132C33] text-xl"
-                      key={item}
-                    >
-                      Số sản phẩm: {user.cart[item._id]}
-                    </li>
-                  ))}
-
-                  <li className="p-2 border-b-2 border-[#132C33] h-32"></li>
-                </ul>
               </div>
             </div>
           )}
