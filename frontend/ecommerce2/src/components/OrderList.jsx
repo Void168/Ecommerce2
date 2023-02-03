@@ -6,7 +6,6 @@ function OrderList() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
   const products = useSelector((state) => state.products)
-  const [orderToShow, setOrderToShow] = useState([])
 
   useEffect(() => {
     setLoading(true)
@@ -31,6 +30,7 @@ function OrderList() {
   const showOrder = (e) => {
     e.preventDefault()
   }
+  console.log(orders)
 
   return (
     <>

@@ -112,22 +112,37 @@ function Navigation() {
                     {user.name}{' '}
                     {/* <FontAwesomeIcon icon="fa-solid fa-caret-down" /> */}
                   </NavLink>
-                  <ul className="flex flex-col text-black absolute z-10">
-                    <div className="bg-[#51C4D3] rounded-b-3xl p-2">
-                      <li>
-                        <Link>Sản phẩm</Link>
-                      </li>
-                      <li>
-                        <Link>Người dùng</Link>
-                      </li>
-                      <li>
-                        <Link>Báo cáo</Link>
-                      </li>
-                      <li>
-                        <Button onClick={signoutHandler}>Đăng xuất</Button>
-                      </li>
-                    </div>
-                  </ul>
+                  {user.isAdmin ? (
+                    <ul className="flex flex-col text-black absolute z-10 w-48">
+                      <div className="bg-[#51C4D3] rounded-b-3xl p-2">
+                        <li className="my-1">
+                          <Link to="/orders">Lịch sử mua hàng</Link>
+                        </li>
+                        <li className="my-1">
+                          <Link to="/dashboard">Quản lý</Link>
+                        </li>
+                        <li className=" text-center">
+                          <button
+                            onClick={signoutHandler}
+                            className="bg-[#132C33]"
+                          >
+                            Đăng xuất
+                          </button>
+                        </li>
+                      </div>
+                    </ul>
+                  ) : (
+                    <ul className="flex flex-col text-black absolute z-10">
+                      <div className="bg-[#51C4D3] rounded-b-3xl p-2">
+                        <li>
+                          <Link to="/orders">Lịch sử mua hàng</Link>
+                        </li>
+                        <li>
+                          <Button onClick={signoutHandler}>Đăng xuất</Button>
+                        </li>
+                      </div>
+                    </ul>
+                  )}
                 </div>
               )}
             </li>

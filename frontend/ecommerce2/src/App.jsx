@@ -16,6 +16,7 @@ import { useEffect } from 'react'
 import { io } from 'socket.io-client'
 import { addNotification } from './features/userSlice'
 import ScrollToTop from './components/ScrollToTop'
+import OrderDetail from './pages/OrderDetail'
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0)
@@ -38,7 +39,7 @@ function App() {
         dispatch(addNotification(msgObj))
       }
     })
-  }, [dispatch, user._id, user.isAdmin])
+  }, [dispatch])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -64,6 +65,7 @@ function App() {
             <Route path="/product/:id" element={<Product />} />
             <Route path="/category/:category" element={<Category />} />
             {user && <Route path="/cart" element={<Cart />} />}
+            <Route path="/order/:id" element={<OrderDetail />}></Route>
 
             <Route path="/new-product" element={<NewProducts />} />
             <Route path="*" element={<Home />} />
