@@ -30,10 +30,15 @@ function Home() {
 
   return (
     <>
-      <img
-        src="https://wallpapers.com/images/featured/oculus-quest-2-ra1bss24xaa87lrh.jpg"
-        alt="banner"
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <img
+          src="https://wallpapers.com/images/featured/oculus-quest-2-ra1bss24xaa87lrh.jpg"
+          alt="banner"
+        />
+      )}
+
       <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
         <div className="w-full bg-[#126E82] col-span-1 rounded-lg"></div>
         {/* last products */}
@@ -50,16 +55,13 @@ function Home() {
                     <>
                       {page === 1 ? (
                         <>
-                          {products
-                            .slice(0, 8)
-                            .map((newProduct) => (
-                              <ProductPreview
-                                {...newProduct}
-                                key={newProduct}
-                                product={newProduct}
-                              />
-                            ))
-                            .reverse()}
+                          {products.slice(0, 8).map((newProduct) => (
+                            <ProductPreview
+                              {...newProduct}
+                              key={newProduct}
+                              product={newProduct}
+                            />
+                          ))}
                         </>
                       ) : (
                         <>
@@ -71,8 +73,7 @@ function Home() {
                                 key={newProduct}
                                 product={newProduct}
                               />
-                            ))
-                            .reverse()}
+                            ))}
                         </>
                       )}
                     </>

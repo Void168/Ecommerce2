@@ -15,6 +15,11 @@ import EditProduct from './pages/EditProduct'
 import { useEffect } from 'react'
 import { io } from 'socket.io-client'
 import { addNotification } from './features/userSlice'
+import ScrollToTop from './components/ScrollToTop'
+
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0)
+}
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -34,13 +39,19 @@ function App() {
       }
     })
   }, [dispatch, user._id, user.isAdmin])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className="bg-[#D8E3E7]">
       <BrowserRouter>
+        <ScrollToTop />
         <header>
           <Navigation />
         </header>
-        <main className="min-h-screen my-8">
+        <main className="min-h-screen py-8">
           <Routes>
             <Route index element={<Home />} />
             {!user && (

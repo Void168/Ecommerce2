@@ -5,7 +5,6 @@
 @layer components {
   body {
     font-family: 'Quicksand', sans-serif;
-    background: url('https://img.freepik.com/free-vector/white-technology-background_23-2148390329.jpg?w=2000');
   }
 
   main {
@@ -55,7 +54,7 @@
   }
 
   img {
-    @apply shadow-sm;
+    @apply shadow-sm rounded-lg;
   }
 }
 
