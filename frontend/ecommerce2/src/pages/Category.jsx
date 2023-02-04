@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { Suspense } from 'react'
+import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,16 +7,15 @@ import { useParams } from 'react-router-dom'
 import Loading from '../components/Loading'
 import ProductPreview from '../components/ProductPreview'
 import { updateProducts } from '../features/productSlice'
+import Stack from '@mui/material/Stack'
+import Pagination from '@mui/material/Pagination'
 
 function Category() {
   const { category } = useParams()
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
-  const [visible, setVisible] = useState(4)
-  const showMoreItems = () => {
-    setVisible((prevValue) => prevValue + 4)
-    return <Loading />
-  }
+  const [page, setPage] = useState(1)
+
   const products = useSelector((state) => state.products)
   const [searchTerm, setSearchTerm] = useState('')
   const categoryName = category.charAt(0).toUpperCase() + category.slice(1)
@@ -29,54 +28,89 @@ function Category() {
     product.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
+  const handleSearch = (e) => {
+    e.preventDefault()
+    setSearchTerm(e.target.value)
+    console.log(searchTerm)
+  }
+
   useEffect(() => {
     setLoading(true)
+    setPage(1)
     setTimeout(() => {
       setLoading(false)
-    }, 300)
-  }, [])
+    }, 500)
+  }, [categoryName])
 
   return (
     <div className="container mx-auto">
-      <div>
-        <p className="text-center font-bold text-3xl my-2">{categoryName}</p>
-      </div>
-      <div className="text-center">
-        <input
-          className="w-6/12 px-4"
-          type="search"
-          placeholder="Tìm kiếm"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
       {loading ? (
         <Loading />
       ) : (
-        <Suspense fallback={<Loading />}>
-          {productsSearch.length === 0 ? (
-            <p>Không tìm thấy sản phẩm phù hợp</p>
+        <>
+          <div>
+            <p className="text-center font-bold text-3xl my-2">
+              {categoryName}
+            </p>
+          </div>
+          <div className="text-center">
+            <input
+              value={searchTerm}
+              className="w-6/12 px-4"
+              type="search"
+              placeholder="Tìm kiếm"
+              onChange={handleSearch}
+            />
+          </div>
+          {loading ? (
+            <Loading />
           ) : (
             <>
-              {loading ? (
-                <Loading />
+              {productsSearch.length === 0 ? (
+                <p>Không tìm thấy sản phẩm phù hợp</p>
               ) : (
-                <div className="my-8 grid lg:grid-cols-4 gap-4 bg-[#126E82] p-4 sm:grid-cols-3">
-                  {productsSearch
-                    .filter((product) => product.category === categoryName)
-                    .map((filteredProduct) => (
-                      <ProductPreview
-                        key={filteredProduct}
-                        product={filteredProduct}
-                      />
-                    ))}
-                </div>
+                <>
+                  {page === 1 ? (
+                    <div className="my-8 grid lg:grid-cols-4 gap-4 bg-[#126E82] p-4 sm:grid-cols-3">
+                      {productsSearch
+                        .filter((product) => product.category === categoryName)
+                        .slice(0, 8)
+                        .map((filteredProduct) => (
+                          <ProductPreview
+                            key={filteredProduct}
+                            product={filteredProduct}
+                          />
+                        ))}
+                    </div>
+                  ) : (
+                    <div className="my-8 grid lg:grid-cols-4 gap-4 bg-[#126E82] p-4 sm:grid-cols-3">
+                      {productsSearch
+                        .filter((product) => product.category === categoryName)
+                        .slice(8 * (page - 1), 8 * page)
+                        .map((filteredProduct) => (
+                          <ProductPreview
+                            key={filteredProduct}
+                            product={filteredProduct}
+                          />
+                        ))}
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}
-          {products.length <= visible ? null : (
-            <button onClick={showMoreItems}>Xem thêm</button>
-          )}
-        </Suspense>
+          <Stack spacing={2} className="p-1 rounded-lg">
+            <Pagination
+              count={Math.round(
+                productsSearch.filter(
+                  (product) => product.category === categoryName,
+                ).length / 8,
+              )}
+              color="primary"
+              onChange={(e, value) => setPage(value)}
+            />
+          </Stack>
+        </>
       )}
     </div>
   )

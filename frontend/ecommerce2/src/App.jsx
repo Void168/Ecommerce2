@@ -17,6 +17,7 @@ import { io } from 'socket.io-client'
 import { addNotification } from './features/userSlice'
 import ScrollToTop from './components/ScrollToTop'
 import OrderDetail from './pages/OrderDetail'
+import ScrollToTopButton from './components/ScrollToTopButton'
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0)
@@ -77,6 +78,7 @@ function App() {
               </>
             )}
           </Routes>
+          <ScrollToTopButton />
         </main>
         <footer>
           <Footer />

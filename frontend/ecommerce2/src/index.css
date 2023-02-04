@@ -13,7 +13,7 @@
   }
 
   .nav-link {
-    @apply p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm;
+    @apply p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm ease-in-out duration-300;
   }
 
   .form__element {
@@ -73,6 +73,7 @@
 
 .dropdown__profile ul div {
   display: none;
+  transition: display 1s linear;
 }
 .dropdown__profile:hover ul div {
   display: block;

@@ -22,6 +22,9 @@ function Order() {
         setLoading(false)
         console.log(e)
       })
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
   }, [user._id])
 
   if (orders.length === 0) {

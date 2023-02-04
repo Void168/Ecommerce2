@@ -106,7 +106,7 @@ function Navigation() {
               ) : (
                 <div className="mt-4 dropdown__profile relative">
                   <NavLink
-                    className="nav-link hover:bg-[#51C4D3] hover:rounded-b-sm hover:rounded-t-3xl w-full text-white"
+                    className="nav-link hover:bg-[#51C4D3] hover:rounded-b-sm hover:rounded-t-3xl w-full duration-0 text-white"
                     to="/"
                   >
                     {user.name}{' '}

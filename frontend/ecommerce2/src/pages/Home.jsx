@@ -41,60 +41,59 @@ function Home() {
 
       <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
         <div className="w-full bg-[#126E82] col-span-1 rounded-lg"></div>
-        {/* last products */}
-        {loading ? (
-          <Loading />
-        ) : (
-          <div className="col-span-3 px-4">
-            <div className="container mx-auto">
-              <div className="bg-[#126E82] p-4 rounded-lg shadow-sm">
-                <div className="grid lg:grid-cols-4 gap-4 my-4 sm:grid-cols-3 h-256">
-                  {loading ? (
+
+        <div className="col-span-3 px-4">
+          <div className="container mx-auto">
+            <div className="bg-[#126E82] p-4 rounded-lg shadow-sm">
+              <div className="grid lg:grid-cols-4 gap-4 my-4 sm:grid-cols-3 h-256">
+                {loading ? (
+                  <div className=" col-span-4 relative h-screen flex justify-center items-center text-center w-full">
                     <Loading />
-                  ) : (
-                    <>
-                      {page === 1 ? (
-                        <>
-                          {products.slice(0, 8).map((newProduct) => (
+                  </div>
+                ) : (
+                  <>
+                    {page === 1 ? (
+                      <>
+                        {products.slice(0, 8).map((newProduct) => (
+                          <ProductPreview
+                            {...newProduct}
+                            key={newProduct}
+                            product={newProduct}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {products
+                          .slice(8 * (page - 1), 8 * page)
+                          .map((newProduct) => (
                             <ProductPreview
                               {...newProduct}
                               key={newProduct}
                               product={newProduct}
                             />
                           ))}
-                        </>
-                      ) : (
-                        <>
-                          {products
-                            .slice(8 * (page - 1), 8 * page)
-                            .map((newProduct) => (
-                              <ProductPreview
-                                {...newProduct}
-                                key={newProduct}
-                                product={newProduct}
-                              />
-                            ))}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-                <Stack spacing={2} className="p-1 rounded-lg">
-                  <Pagination
-                    count={Math.round(products.length / 8)}
-                    color="primary"
-                    onChange={(e, value) => setPage(value)}
-                  />
-                </Stack>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
+              <Stack spacing={2} className="p-1 rounded-lg">
+                <Pagination
+                  count={Math.round(products.length / 8)}
+                  color="primary"
+                  onChange={(e, value) => setPage(value)}
+                />
+              </Stack>
             </div>
+          </div>
 
-            {/* <div>
+          {/* <div>
               <Link to="/category/all">Xem thêm {'>>'}</Link>
             </div> */}
-          </div>
-        )}
+        </div>
       </div>
+      {/* last products */}
       <div className="container mx-auto">
         <h2 className="text-2xl">Sản phẩm đã xem</h2>
         <div className="grid lg:grid-cols-8 gap-4 bg-[#126E82] p-4 my-4 sm:grid-cols-4 rounded-lg shadow-sm">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductList from '../components/ProductList'
 import OrderList from '../components/OrderList'
 import PropTypes from 'prop-types'
@@ -7,6 +7,7 @@ import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import UserList from '../components/UserList'
+import Loading from '../components/Loading'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -42,11 +43,19 @@ function a11yProps(index) {
 }
 
 function Dashboard() {
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [])
 
   return (
     <Box
@@ -69,15 +78,23 @@ function Dashboard() {
         <Tab label="Đơn hàng" {...a11yProps(1)} />
         <Tab label="Khách hàng" {...a11yProps(2)} />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <ProductList />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <OrderList />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <UserList />
-      </TabPanel>
+      {loading ? (
+        <div className="relative h-screen flex justify-center items-center text-center w-full">
+          <Loading />
+        </div>
+      ) : (
+        <>
+          <TabPanel value={value} index={0}>
+            <ProductList />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <OrderList />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <UserList />
+          </TabPanel>
+        </>
+      )}
     </Box>
   )
 }
