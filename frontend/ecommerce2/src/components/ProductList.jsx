@@ -18,6 +18,9 @@ function ProductList() {
   }
   return (
     <div className="container mx-auto">
+      <button className="bg-[#132C33]">
+        <Link to="/new-product">Tạo sản phẩm mới</Link>
+      </button>
       <table className="w-full my-4">
         <thead>
           <tr>
