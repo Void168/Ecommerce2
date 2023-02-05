@@ -35,7 +35,7 @@ function Navigation() {
     const position = bellRef.current.getBoundingClientRect()
     setBellPos(position)
     notificationRef.current.style.display =
-      notificationRef.current.style.display === 'block' ? 'none' : 'block'
+      notificationRef.current.style.display === 'none' ? 'block' : 'none'
     dispatch(resetNotifications())
     if (unreadNotifications > 0)
       axios.post(`/users/${user._id}/updateNotifications`)
@@ -61,12 +61,15 @@ function Navigation() {
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
               <div className="mt-4 dropdown__categories">
-                <NavLink className="p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm hover:rounded-b-sm hover:rounded-t-3xl">
+                <NavLink
+                  to="/category/tất cả"
+                  className="p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm hover:rounded-b-sm hover:rounded-t-3xl"
+                >
                   Danh mục
                 </NavLink>
                 <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
-                  {categories.map((category, product_id) => (
-                    <div key={product_id}>
+                  {categories.map((category) => (
+                    <div key={category._id}>
                       <Link
                         to={`/category/${category.name.toLocaleLowerCase()}`}
                         className="dropdown__categories--element"
@@ -85,19 +88,47 @@ function Navigation() {
                 </div>
               </div>
 
-              <NavLink className="nav-link">Về chúng tôi</NavLink>
-              <NavLink className="nav-link">Kết nối</NavLink>
-              <NavLink className="nav-link">Thanh toán</NavLink>
-              <NavLink className="nav-link">Vận chuyển</NavLink>
-              <NavLink
-                style={{ position: 'relative' }}
-                onClick={handleToggleNotifications}
-              >
+              <NavLink className="nav-link" to="/about">
+                Về chúng tôi
+              </NavLink>
+              <NavLink className="nav-link" to="/connect">
+                Kết nối
+              </NavLink>
+              <NavLink className="nav-link" to="/payment">
+                Thanh toán
+              </NavLink>
+              <NavLink className="nav-link" to="/shipping">
+                Vận chuyển
+              </NavLink>
+              <NavLink onClick={handleToggleNotifications}>
                 <i
-                  className="fas fa-bell"
+                  className="fas fa-bell mt-5"
                   ref={bellRef}
                   data-count={unreadNotifications || null}
                 ></i>
+                {/* notifications */}
+                <div
+                  className="container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm"
+                  ref={notificationRef}
+                >
+                  {user?.notifications.length > 0
+                    ? user?.notifications.map((notification) => (
+                        <p
+                          className={`notification-${notification.status}`}
+                          key={notification._id}
+                        >
+                          {notification.message}
+                          <br />
+                          <span>
+                            {notification.time.split('T')[0] +
+                              ' ' +
+                              notification.time.split('T')[1]}
+                          </span>
+                        </p>
+                      ))
+                    : // <span>Không có thông báo mới</span>
+                      null}
+                </div>
               </NavLink>
               {!user ? (
                 <NavLink className="nav-link" to="/login">
@@ -177,23 +208,6 @@ function Navigation() {
           </NavLink>
         </div>
       </ul>
-      {/* notifications */}
-      <div className="notifications-container" ref={notificationRef}>
-        {user?.notifications.length > 0
-          ? user?.notifications.map((notification) => (
-              <p className={`notification-${notification.status}`}>
-                {notification.message}
-                <br />
-                <span>
-                  {notification.time.split('T')[0] +
-                    ' ' +
-                    notification.time.split('T')[1]}
-                </span>
-              </p>
-            ))
-          : // <span>Không có thông báo mới</span>
-            null}
-      </div>
     </div>
   )
 }

@@ -57,7 +57,7 @@ function Home() {
                         {products.slice(0, 8).map((newProduct) => (
                           <ProductPreview
                             {...newProduct}
-                            key={newProduct}
+                            key={newProduct._id}
                             product={newProduct}
                           />
                         ))}
@@ -69,7 +69,7 @@ function Home() {
                           .map((newProduct) => (
                             <ProductPreview
                               {...newProduct}
-                              key={newProduct}
+                              key={newProduct._id}
                               product={newProduct}
                             />
                           ))}
@@ -104,7 +104,7 @@ function Home() {
               {lastProducts?.map((product) => (
                 <WatchedProduct
                   {...product}
-                  key={product}
+                  key={product._id}
                   product={product}
                   className="min-h-max"
                 />

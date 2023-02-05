@@ -75,7 +75,6 @@ function NewProducts() {
 
   return (
     <div className="container mx-auto">
-      '
       {loading ? (
         <Loading />
       ) : (

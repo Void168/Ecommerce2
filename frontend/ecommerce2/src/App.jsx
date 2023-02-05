@@ -18,6 +18,10 @@ import { addNotification } from './features/userSlice'
 import ScrollToTop from './components/ScrollToTop'
 import OrderDetail from './pages/OrderDetail'
 import ScrollToTopButton from './components/ScrollToTopButton'
+import About from './pages/About'
+import Connect from './pages/Connect'
+import Payment from './pages/Payment'
+import Shipping from './pages/Shipping'
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0)
@@ -56,6 +60,10 @@ function App() {
         <main className="min-h-screen py-8">
           <Routes>
             <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/connect" element={<Connect />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/shipping" element={<Shipping />} />
             {!user && (
               <>
                 <Route path="/login" element={<Login />} />
