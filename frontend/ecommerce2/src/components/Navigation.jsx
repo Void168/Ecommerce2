@@ -15,8 +15,8 @@ function Navigation() {
   const navigate = useNavigate()
 
   const bellRef = useRef(null)
-  const notificationRef = useRef(null)
   const [bellPos, setBellPos] = useState({})
+  const [display, setDisplay] = useState(false)
 
   const signoutHandler = () => {
     navigate('/login')
@@ -34,8 +34,11 @@ function Navigation() {
   const handleToggleNotifications = () => {
     const position = bellRef.current.getBoundingClientRect()
     setBellPos(position)
-    notificationRef.current.style.display =
-      notificationRef.current.style.display === 'none' ? 'block' : 'none'
+    if (display) {
+      setDisplay(false)
+    } else {
+      setDisplay(true)
+    }
     dispatch(resetNotifications())
     if (unreadNotifications > 0)
       axios.post(`/users/${user._id}/updateNotifications`)
@@ -49,6 +52,8 @@ function Navigation() {
     }
   }
   window.addEventListener('scroll', setFixed)
+
+  console.log(display)
   return (
     <div className={navbar ? 'navbar active w-full' : 'navbar w-full'}>
       <ul className="justify-around bg-[#126E82] p-4 flex">
@@ -108,8 +113,11 @@ function Navigation() {
                 ></i>
                 {/* notifications */}
                 <div
-                  className="container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm"
-                  ref={notificationRef}
+                  className={
+                    !display
+                      ? 'container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm hidden'
+                      : 'container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm'
+                  }
                 >
                   {user?.notifications.length > 0
                     ? user?.notifications.map((notification) => (
