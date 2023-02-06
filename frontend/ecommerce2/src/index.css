@@ -21,7 +21,8 @@
   }
 
   input,
-  select {
+  select,
+  textarea {
     @apply p-2 mt-1 rounded-md shadow-sm;
   }
 
@@ -30,7 +31,7 @@
   }
 
   button {
-    @apply p-2 rounded-md hover:bg-[#126E82] text-white shadow-sm ease-in-out duration-200;
+    @apply bg-[#132C33]  p-2 rounded-md hover:bg-[#126E82] text-white shadow-sm ease-in-out duration-200;
   }
 
   .form__create--product div {
@@ -92,7 +93,8 @@
 }
 
 .MuiTab-root,
-.css-ahj2mt-MuiTypography-root {
+.css-ahj2mt-MuiTypography-root,
+.react-calendar {
   font-family: 'Quicksand', sans-serif !important;
 }
 
@@ -108,4 +110,50 @@
   background-image: url('./background/background1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.react-calendar {
+  background-color: #d8e3e7 !important;
+  border: none !important;
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem;
+}
+
+.react-date-picker__wrapper {
+  border: none !important;
+  padding: 0.5rem;
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  border-radius: 0.5rem;
+}
+
+.react-date-picker__clear-button,
+.react-date-picker__calendar-button {
+  background-color: #d8e3e7 !important;
+  margin: 0 0.5rem 0 0.5rem;
+}
+
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__label,
+.react-calendar__navigation__next-button,
+.react-calendar__navigation__next2-button,
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__month-view__days__day {
+  background-color: #132c33 !important;
+}
+
+.react-calendar__navigation__prev-button:hover,
+.react-calendar__navigation__prev2-button:hover,
+.react-calendar__navigation__label:hover,
+.react-calendar__navigation__next-button:hover,
+.react-calendar__navigation__next2-button:hover,
+.react-calendar__month-view__days__day--neighboringMonth:hover,
+.react-calendar__month-view__days__day:hover {
+  background-color: #126e82 !important;
+}
+
+.react-calendar__month-view__weekdays {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }

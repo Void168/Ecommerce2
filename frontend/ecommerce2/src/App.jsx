@@ -22,6 +22,7 @@ import About from './pages/About'
 import Promo from './pages/Promo'
 import Payment from './pages/Payment'
 import Shipping from './pages/Shipping'
+import NewAriticles from './pages/NewArticles'
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0)
@@ -77,6 +78,7 @@ function App() {
             <Route path="/order/:id" element={<OrderDetail />}></Route>
 
             <Route path="/new-product" element={<NewProducts />} />
+            <Route path="/new-article" element={<NewAriticles />} />
             <Route path="*" element={<Home />} />
             {user && <Route path="/orders" element={<Order />} />}
             {user && user.isAdmin && (

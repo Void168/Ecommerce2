@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import 'react-alice-carousel/lib/alice-carousel.css'
 import { useEffect } from 'react'
 import axios from '../axios'
 import Loading from '../components/Loading'
