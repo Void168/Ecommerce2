@@ -21,6 +21,10 @@ const ArticleSchema = mongoose.Schema(
       type: String,
       default: new Date().toISOString().split('T')[0],
     },
+    expire: {
+      type: String,
+      default: new Date().toISOString().split('T')[0],
+    },
   },
   { minimize: false },
 )

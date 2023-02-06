@@ -15,13 +15,21 @@ router.get('/', async (req, res) => {
 // create Articles
 router.post('/', async (req, res) => {
   try {
-    const { title, description, images: pictures } = req.body
+    const {
+      title,
+      description,
+      images: pictures,
+      content,
+      date,
+      expire,
+    } = req.body
     const article = await Article.create({
       title,
       description,
-      price,
-      category,
       pictures,
+      content,
+      date,
+      expire,
     })
     const articles = await Article.find()
     res.status(200).json(articles)
@@ -34,12 +42,20 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const { name, description, price, category, images: pictures } = req.body
-    const article = await Article.findByIdAndUpdate(id, {
-      name,
+    const {
+      title,
       description,
-      price,
-      category,
+      content,
+      date,
+      expire,
+      images: pictures,
+    } = req.body
+    const article = await Article.findByIdAndUpdate(id, {
+      title,
+      description,
+      content,
+      date,
+      expire,
       pictures,
     })
     const articles = await Article.find()
