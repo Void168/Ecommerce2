@@ -97,6 +97,35 @@ export const appApi = createApi({
         method: 'PATCH',
       }),
     }),
+
+    // create article
+    createArticle: builder.mutation({
+      query: (article) => ({
+        url: '/articles',
+        body: article,
+        method: 'POST',
+      }),
+    }),
+
+    // delete article
+    deleteArticle: builder.mutation({
+      query: ({ article_id, user_id }) => ({
+        url: `/articles/${article_id}`,
+        body: {
+          user_id,
+        },
+        method: 'DELETE',
+      }),
+    }),
+
+    // create article
+    updateArticle: builder.mutation({
+      query: (article) => ({
+        url: `/articles/${article.id}`,
+        body: article,
+        method: 'PATCH',
+      }),
+    }),
   }),
 })
 
@@ -111,6 +140,9 @@ export const {
   useCreateOrderMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useCreateArticleMutation,
+  useDeleteArticleMutation,
+  useUpdateArticleMutation,
 } = appApi
 
 export default appApi

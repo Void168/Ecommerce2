@@ -18,6 +18,7 @@ const userRoutes = require('./routes/userRoutes.js')
 const productRoutes = require('./routes/productRoutes.js')
 const imagesRoutes = require('./routes/imagesRoutes.js')
 const orderRoutes = require('./routes/orderRoutes.js')
+const articleRoutes = require('./routes/articleRoutes.js')
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
@@ -31,6 +32,7 @@ app.use('/users', userRoutes)
 app.use('/products', productRoutes)
 app.use('/images', imagesRoutes)
 app.use('/orders', orderRoutes)
+app.use('/articles', articleRoutes)
 
 app.post('/create-payment', cors(), async (req, res) => {
   const { amount } = req.body

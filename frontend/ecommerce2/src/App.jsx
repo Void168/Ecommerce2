@@ -19,7 +19,7 @@ import ScrollToTop from './components/ScrollToTop'
 import OrderDetail from './pages/OrderDetail'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import About from './pages/About'
-import Connect from './pages/Connect'
+import Promo from './pages/Promo'
 import Payment from './pages/Payment'
 import Shipping from './pages/Shipping'
 
@@ -61,7 +61,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/connect" element={<Connect />} />
+            <Route path="/promo" element={<Promo />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/shipping" element={<Shipping />} />
             {!user && (

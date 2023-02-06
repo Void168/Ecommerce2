@@ -96,8 +96,8 @@ function Navigation() {
               <NavLink className="nav-link" to="/about">
                 Về chúng tôi
               </NavLink>
-              <NavLink className="nav-link" to="/connect">
-                Kết nối
+              <NavLink className="nav-link" to="/promo">
+                Khuyến mãi
               </NavLink>
               <NavLink className="nav-link" to="/payment">
                 Thanh toán
