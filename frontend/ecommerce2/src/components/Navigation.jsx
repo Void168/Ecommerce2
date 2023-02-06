@@ -53,7 +53,6 @@ function Navigation() {
   }
   window.addEventListener('scroll', setFixed)
 
-  console.log(display)
   return (
     <div className={navbar ? 'navbar active w-full' : 'navbar w-full'}>
       <ul className="justify-around bg-[#126E82] p-4 flex">

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import productSlice from './features/productSlice.js'
 import userSlice from './features/userSlice.js'
+import articleSlice from './features/articleSlice.js'
 import appApi from './services/appApi.js'
 
 // persit store
@@ -13,13 +14,14 @@ import thunk from 'redux-thunk'
 const reducer = combineReducers({
   user: userSlice,
   products: productSlice,
+  articles: articleSlice,
   [appApi.reducerPath]: appApi.reducer,
 })
 
 const persistConfig = {
   key: 'root',
   storage,
-  blackList: [appApi.reducerPath, 'products'],
+  blackList: [appApi.reducerPath, 'products', 'articles'],
 }
 
 // persist store

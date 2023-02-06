@@ -9,7 +9,7 @@ export const articleSlice = createSlice({
   name: 'articles',
   initialState,
   reducers: {
-    updatearticles: (_, action) => {
+    updateArticles: (_, action) => {
       return action.payload
     },
   },
