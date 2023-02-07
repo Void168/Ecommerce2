@@ -114,27 +114,37 @@ function Navigation() {
                 <div
                   className={
                     !display
-                      ? 'container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm hidden'
-                      : 'container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm'
+                      ? 'hidden'
+                      : 'container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64'
                   }
                 >
-                  {user?.notifications.length > 0
-                    ? user?.notifications.map((notification) => (
+                  {user?.notifications.length > 0 ? (
+                    user?.notifications.map((notification) => (
+                      <div className="border-b border-[#132C33] py-2">
                         <p
                           className={`notification-${notification.status}`}
                           key={notification._id}
-                        >
-                          {notification.message}
-                          <br />
-                          <span>
-                            {notification.time.split('T')[0] +
-                              ' ' +
-                              notification.time.split('T')[1]}
-                          </span>
+                        ></p>
+                        {notification.message}
+                        <br />
+                        <p>
+                          vào lúc{' '}
+                          {notification.time.split('T')[1].slice(0, 8) +
+                            ' ' +
+                            'ngày' +
+                            ' ' +
+                            notification.time
+                              .slice(0, 10)
+                              .toString()
+                              .split('-')
+                              .reverse()
+                              .join('-')}
                         </p>
-                      ))
-                    : // <span>Không có thông báo mới</span>
-                      null}
+                      </div>
+                    ))
+                  ) : (
+                    <span>Không có thông báo mới</span>
+                  )}
                 </div>
               </NavLink>
               {!user ? (
@@ -147,8 +157,7 @@ function Navigation() {
                     className="nav-link hover:bg-[#51C4D3] hover:rounded-b-sm hover:rounded-t-3xl w-full duration-0 text-white"
                     to="/"
                   >
-                    {user.name}{' '}
-                    {/* <FontAwesomeIcon icon="fa-solid fa-caret-down" /> */}
+                    {user.name} <i class="fa-solid fa-caret-down" />
                   </NavLink>
                   {user.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48">

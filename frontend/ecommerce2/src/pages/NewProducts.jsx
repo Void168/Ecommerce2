@@ -28,7 +28,7 @@ function NewProducts() {
       ({ data }) => {
         if (data.length > 0) {
           setTimeout(() => {
-            navigate('/')
+            navigate('/dashboard')
           }, 1500)
         }
       },

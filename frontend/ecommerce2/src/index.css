@@ -157,3 +157,8 @@
   border-top: 1px solid;
   border-bottom: 1px solid;
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #132c33 !important;
+}

@@ -10,7 +10,7 @@ function ProductPreview(props) {
       <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full min-h-xl">
         <img
           variant="top"
-          className="shadow-sm rounded-lg max-h-84 mb-4 w-full"
+          className="shadow-sm rounded-lg max-h-84 mb-4 w-full hover:scale-105 ease-in-out duration-300 "
           src={product.pictures[0]?.url}
           alt="product-pic"
         />

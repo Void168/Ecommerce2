@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function SimilarProduct({ _id, name, category, pictures }) {
   return (
     <Link to={`/product/${_id}`}>
-      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full">
+      <div className="p-4 shadow-sm bg-[#D8E3E7] w-8/12 flex flex-col justify-center">
         <img
           variant="top"
           className="shadow-sm rounded-lg max-h-56 mb-4 max-w-xs"

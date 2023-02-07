@@ -82,7 +82,7 @@ function Product() {
                 <img
                   src={product.pictures[0].url}
                   alt={product.name}
-                  className="w-full bg-[#fff]"
+                  className="w-full bg-[#fff] hover:scale-105 ease-in-out duration-300"
                 />
                 <div className="flex flex-row justify-between my-8">
                   {Image.map((img, index) => (
@@ -163,7 +163,7 @@ function Product() {
             <div className="flex justify-center items-center flex-wrap w-full">
               <Swiper
                 watchSlidesProgress={true}
-                slidesPerView={5}
+                slidesPerView={4}
                 autoplay={{
                   delay: 2500,
                   disableOnInteraction: false,
@@ -173,7 +173,7 @@ function Product() {
                 }}
                 navigation={true}
                 modules={[Autoplay, Pagination, Navigation]}
-                className="shadow-sm"
+                className="shadow-sm outline-0"
               >
                 {similarProducts.map((product) => (
                   <SwiperSlide key={product.id}>{product}</SwiperSlide>

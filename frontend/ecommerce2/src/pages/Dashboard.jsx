@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import UserList from '../components/UserList'
 import Loading from '../components/Loading'
+import ArticleList from '../components/ArticleList'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -77,6 +78,7 @@ function Dashboard() {
         <Tab label="Sản phẩm" {...a11yProps(0)} />
         <Tab label="Đơn hàng" {...a11yProps(1)} />
         <Tab label="Khách hàng" {...a11yProps(2)} />
+        <Tab label="Bài viết" {...a11yProps(3)} />
       </Tabs>
       {loading ? (
         <div className="relative h-screen flex justify-center items-center text-center w-full">
@@ -92,6 +94,9 @@ function Dashboard() {
           </TabPanel>
           <TabPanel value={value} index={2}>
             <UserList />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <ArticleList />
           </TabPanel>
         </>
       )}

@@ -4,6 +4,8 @@ import axios from '../axios'
 import Article from '../components/Article'
 import { updateArticles } from '../features/articleSlice'
 import Loading from '../components/Loading'
+import Stack from '@mui/material/Stack'
+import Pagination from '@mui/material/Pagination'
 
 function Promo() {
   const dispatch = useDispatch()
@@ -24,11 +26,44 @@ function Promo() {
 
   console.log(articles)
   return (
-    <>
-      {articles.slice(0, 8).map((newArticle) => (
-        <Article {...newArticle} key={newArticle._id} article={newArticle} />
-      ))}
-    </>
+    <div className="container mx-auto">
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="grid grid-cols-3">
+          {page === 1 ? (
+            <>
+              {articles.slice(0, 6).map((newArticle) => (
+                <Article
+                  {...newArticle}
+                  key={newArticle._id}
+                  article={newArticle}
+                  className="col-span-1"
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {articles.slice(6 * (page - 1), 6 * page).map((newArticle) => (
+                <Article
+                  {...newArticle}
+                  key={newArticle._id}
+                  article={newArticle}
+                  className="col-span-1"
+                />
+              ))}
+            </>
+          )}
+        </div>
+      )}
+      <Stack spacing={2} className="p-1 rounded-lg mt-4">
+        <Pagination
+          count={Math.round(articles.length / 6)}
+          color="primary"
+          onChange={(e, value) => setPage(value)}
+        />
+      </Stack>
+    </div>
   )
 }
 
