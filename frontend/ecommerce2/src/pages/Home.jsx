@@ -8,13 +8,33 @@ import Loading from '../components/Loading'
 import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import WatchedProduct from '../components/WatchedProduct'
+import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
+
+function valuetext(value) {
+  return value
+}
+const minDistance = 100000
 
 function Home() {
   const dispatch = useDispatch()
   const products = useSelector((state) => state.products)
   const lastProducts = products.slice(0, 8)
   const [page, setPage] = useState(1)
+  const [value, setValue] = useState([0, 100000000])
   const [loading, setLoading] = useState(false)
+
+  const handleChange = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return
+    }
+
+    if (activeThumb === 0) {
+      setValue([Math.min(newValue[0], value[1] - minDistance), value[1]])
+    } else {
+      setValue([value[0], Math.max(newValue[1], value[0] + minDistance)])
+    }
+  }
 
   useEffect(() => {
     axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
@@ -26,6 +46,7 @@ function Home() {
       setLoading(false)
     }, 300)
   }, [])
+  console.log(value[1])
 
   return (
     <>
@@ -39,7 +60,106 @@ function Home() {
       )}
 
       <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
-        <div className="w-full bg-[#126E82] col-span-1 rounded-lg"></div>
+        <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm">
+          <p className="text-3xl text-center mt-4 text-white">Sắp xếp</p>
+          <div className="container mx-auto my-8 rounded-lg">
+            <div className="container mx-auto flex flex-col">
+              <input
+                className="sort__radio"
+                type="radio"
+                name="myRadio"
+                value="newest"
+                id="myRadio5"
+              />
+              <label for="myRadio5" className="sort__label">
+                Mới nhất
+              </label>
+              <input
+                className="sort__radio"
+                type="radio"
+                name="myRadio"
+                value="oldest"
+                id="myRadio6"
+              />
+              <label for="myRadio6" className="sort__label">
+                Cũ nhất
+              </label>
+              <input
+                className="sort__radio"
+                type="radio"
+                name="myRadio"
+                value="lowtohigh"
+                id="myRadio1"
+              />
+              <label for="myRadio1" className="sort__label">
+                Từ thấp đến cao
+              </label>
+              <input
+                className="sort__radio"
+                type="radio"
+                name="myRadio"
+                value="hightolow"
+                id="myRadio2"
+              />
+              <label for="myRadio2" className="sort__label">
+                Từ cao đến thấp
+              </label>
+              <input
+                className="sort__radio"
+                type="radio"
+                name="myRadio"
+                value="atoz"
+                id="myRadio3"
+              />
+              <label for="myRadio3" className="sort__label">
+                Từ A đến Z
+              </label>
+              <input
+                className="sort__radio"
+                type="radio"
+                name="myRadio"
+                value="ztoa"
+                id="myRadio4"
+              />
+              <label for="myRadio4" className="sort__label">
+                Từ Z đến A
+              </label>
+            </div>
+          </div>
+          <p className="text-2xl text-center my-4 text-white">
+            Kéo để chọn mức giá
+          </p>
+          <Box className="bg-[#D8E3E7] p-4 w-full my-4">
+            <Slider
+              max={100000000}
+              step={10000}
+              getAriaLabel={() => 'Minimum distance'}
+              value={value}
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              getAriaValueText={valuetext}
+              disableSwap
+            />
+          </Box>
+          <div className="flex flex-row justify-around text-white">
+            <input
+              type="text"
+              disabled
+              value={value[0].toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND',
+              })}
+            />
+            <input
+              type="text"
+              disabled
+              value={value[1].toLocaleString('it-IT', {
+                style: 'currency',
+                currency: 'VND',
+              })}
+            />
+          </div>
+        </div>
 
         <div className="col-span-3 px-4">
           <div className="container mx-auto">

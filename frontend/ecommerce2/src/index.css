@@ -158,3 +158,29 @@
 .swiper-button-next {
   color: #132c33 !important;
 }
+
+.sort__radio {
+  display: none;
+}
+
+.sort__label {
+  padding: 1rem 2rem;
+  color: #000;
+  background: #d8e3e7;
+  cursor: pointer;
+  transition: background ease-in-out 0.1s;
+}
+
+.sort__label:not(:last-of-type) {
+  border-bottom: 1px solid #132c33;
+}
+
+.sort__radio:checked + .sort__label {
+  background: #126e82;
+  color: #fff;
+  box-shadow: 2px 4px 5px rgba(18, 110, 130, 1);
+}
+
+.css-187mznn-MuiSlider-root {
+  color: #132c33 !important;
+}
