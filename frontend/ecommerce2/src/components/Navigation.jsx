@@ -30,6 +30,9 @@ function Navigation() {
     },
     0,
   )
+  const activeLink = 'bg-[#51C4D3] text-black p-4 rounded-full'
+  const normalLink =
+    'p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm ease-in-out duration-300'
 
   const handleToggleNotifications = () => {
     const position = bellRef.current.getBoundingClientRect()
@@ -67,7 +70,11 @@ function Navigation() {
               <div className="mt-4 dropdown__categories">
                 <NavLink
                   to="/category/tất cả"
-                  className="p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm hover:rounded-b-sm hover:rounded-t-3xl"
+                  className={({ isActive }) =>
+                    isActive
+                      ? activeLink
+                      : 'p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm ease-in-out duration-300'
+                  }
                 >
                   Danh mục
                 </NavLink>
@@ -92,16 +99,36 @@ function Navigation() {
                 </div>
               </div>
 
-              <NavLink className="nav-link" to="/about">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+                to="/about"
+              >
                 Về chúng tôi
               </NavLink>
-              <NavLink className="nav-link" to="/promo">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+                to="/promo"
+              >
                 Khuyến mãi
               </NavLink>
-              <NavLink className="nav-link" to="/payment">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+                to="/payment"
+              >
                 Thanh toán
               </NavLink>
-              <NavLink className="nav-link" to="/shipping">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+                to="/shipping"
+              >
                 Vận chuyển
               </NavLink>
               <NavLink onClick={handleToggleNotifications}>
@@ -148,15 +175,17 @@ function Navigation() {
                 </div>
               </NavLink>
               {!user ? (
-                <NavLink className="nav-link" to="/login">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                  to="/login"
+                >
                   Đăng nhập
                 </NavLink>
               ) : (
                 <div className="mt-4 dropdown__profile relative">
-                  <NavLink
-                    className="nav-link hover:bg-[#51C4D3] hover:rounded-b-sm hover:rounded-t-3xl w-full duration-0 text-white"
-                    to="/"
-                  >
+                  <NavLink className={normalLink} to="/">
                     {user.name} <i class="fa-solid fa-caret-down" />
                   </NavLink>
                   {user.isAdmin ? (
