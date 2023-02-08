@@ -33,7 +33,6 @@ function OrderList() {
   const showOrder = (e) => {
     e.preventDefault()
   }
-  console.log(orders)
 
   return (
     <>

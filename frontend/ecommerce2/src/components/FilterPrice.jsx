@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
@@ -9,25 +9,27 @@ function valuetext(value) {
 }
 
 function FilterPrice() {
-  const { value, handleChange } = useContext(AppContext)
+  const { value, handleChange, isChecked } = useContext(AppContext)
+
   return (
     <>
       <p className="text-3xl text-center mt-4 text-white">Sắp xếp</p>
       <div className="container mx-auto my-8 rounded-lg">
         <div className="container mx-auto flex flex-col">
           {sort.map((radio) => (
-            <div key={radio.id}>
+            <>
               <input
                 className="sort__radio"
                 type="radio"
-                name={radio.name}
+                name="gender"
                 value={radio.value}
                 id={radio.id}
+                onChange={isChecked}
               />
               <label htmlFor={radio.id} className="sort__label">
                 {radio.title}
               </label>
-            </div>
+            </>
           ))}
         </div>
       </div>

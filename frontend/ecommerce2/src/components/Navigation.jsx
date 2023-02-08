@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import Row from 'react-bootstrap/Row'
 import { Link } from 'react-router-dom'
-import { Button, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, resetNotifications } from '../features/userSlice.js'
 import categories from '../categories.js'
@@ -25,7 +23,7 @@ function Navigation() {
 
   const unreadNotifications = user?.notifications?.reduce(
     (account, current) => {
-      if (current.status === 'chưa đọc') return account + 1
+      if (current.status === 'chưa đọc') return account
       return account
     },
     0,
@@ -131,7 +129,10 @@ function Navigation() {
               >
                 Vận chuyển
               </NavLink>
-              <NavLink onClick={handleToggleNotifications}>
+              <NavLink onClick={handleToggleNotifications} className="relative">
+                <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
+                  {unreadNotifications}
+                </span>
                 <i
                   className="fas fa-bell mt-5"
                   ref={bellRef}
@@ -214,7 +215,7 @@ function Navigation() {
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
                         <li>
-                          <Button onClick={signoutHandler}>Đăng xuất</Button>
+                          <button onClick={signoutHandler}>Đăng xuất</button>
                         </li>
                       </div>
                     </ul>

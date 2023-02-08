@@ -6,8 +6,7 @@ import ProductPreview from '../components/ProductPreview'
 import { updateProducts } from '../features/productSlice'
 import { useState } from 'react'
 import Loading from '../components/Loading'
-import Stack from '@mui/material/Stack'
-import Pagination from '@mui/material/Pagination'
+import Paginate from '../components/Paginate'
 import WatchedProduct from '../components/WatchedProduct'
 import FilterPrice from '../components/FilterPrice'
 
@@ -16,17 +15,9 @@ function Home() {
   const products = useSelector((state) => state.products)
   const lastProducts = products.slice(0, 8)
   const [loading, setLoading] = useState(false)
-  const { value, page, count, changeIndex } = useContext(AppContext)
-
-  const sortPrice = (a, b) => {
-    if (a.price < b.price) {
-      return -1
-    }
-    if (a.price > b.price) {
-      return 1
-    }
-    return 0
-  }
+  const { value, page, gender, sortPrice, sortAlphabet } = useContext(
+    AppContext,
+  )
 
   useEffect(() => {
     axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
@@ -78,20 +69,116 @@ function Home() {
                   <>
                     {page === 1 ? (
                       <>
-                        {products
-                          .filter(
-                            (filteredProduct) =>
-                              value[0] / 24000 <= filteredProduct.price &&
-                              filteredProduct.price <= value[1] / 24000,
-                          )
-                          .slice(0, 8)
-                          .map((product) => (
-                            <ProductPreview
-                              {...product}
-                              key={product._id}
-                              product={product}
-                            />
-                          ))}
+                        {gender === 'newest' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .slice(0, 8)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'oldest' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .slice(0, 8)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))
+                              .reverse()}
+                          </>
+                        ) : gender === 'lowtohigh' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortPrice)
+                              .slice(0, 8)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'hightolow' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortPrice)
+                              .reverse()
+                              .slice(0, 8)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'atoz' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortAlphabet)
+                              .slice(0, 8)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'ztoa' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .slice(0, 8)
+                              .sort(sortAlphabet)
+                              .reverse()
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : null}
                       </>
                     ) : products.filter(
                         (filteredProduct) =>
@@ -102,32 +189,122 @@ function Home() {
                       <div>Bạn hãy điều chỉnh lại giá nhé</div>
                     ) : (
                       <>
-                        {products
-                          .filter(
-                            (filteredProduct) =>
-                              value[0] / 24000 <= filteredProduct.price &&
-                              filteredProduct.price <= value[1] / 24000,
-                          )
-                          .slice(8 * (page - 1), 8 * page)
-                          .map((product) => (
-                            <ProductPreview
-                              {...product}
-                              key={product._id}
-                              product={product}
-                            />
-                          ))}
+                        {gender === 'newest' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .slice(8 * (page - 1), 8 * page)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'oldest' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .slice(8 * (page - 1), 8 * page)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))
+                              .reverse()}
+                          </>
+                        ) : gender === 'lowtohigh' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortPrice)
+                              .slice(8 * (page - 1), 8 * page)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'hightolow' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortPrice)
+                              .reverse()
+                              .slice(8 * (page - 1), 8 * page)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'atoz' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortAlphabet)
+                              .slice(8 * (page - 1), 8 * page)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : gender === 'ztoa' ? (
+                          <>
+                            {products
+                              .filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000,
+                              )
+                              .sort(sortAlphabet)
+                              .reverse()
+                              .slice(8 * (page - 1), 8 * page)
+                              .map((product) => (
+                                <ProductPreview
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                          </>
+                        ) : null}
                       </>
                     )}
                   </>
                 )}
               </div>
-              <Stack spacing={2} className="p-1 rounded-lg">
-                <Pagination
-                  count={count}
-                  color="primary"
-                  onChange={changeIndex}
-                />
-              </Stack>
+              <Paginate />
             </div>
           </div>
         </div>

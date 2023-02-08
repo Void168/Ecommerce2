@@ -7,6 +7,11 @@ export const AppProvider = ({ children }) => {
   const [value, setValue] = useState([0, 100000000])
   const [page, setPage] = useState(1)
   const products = useSelector((state) => state.products)
+  const [gender, setGender] = useState('newest')
+
+  const isChecked = (e) => {
+    setGender(e.target.value)
+  }
 
   const count = Math.ceil(
     products.filter(
@@ -36,9 +41,44 @@ export const AppProvider = ({ children }) => {
     if (page - count === 1) setPage(count)
   }
 
+  const resetPage = () => {
+    setPage(1)
+  }
+
+  const sortPrice = (a, b) => {
+    if (a.price < b.price) {
+      return -1
+    }
+    if (a.price > b.price) {
+      return 1
+    }
+    return 0
+  }
+
+  const sortAlphabet = (a, b) => {
+    if (a.name < b.name) {
+      return -1
+    }
+    if (a.name > b.name) {
+      return 1
+    }
+    return 0
+  }
+
   return (
     <AppContext.Provider
-      value={{ value, handleChange, page, changeIndex, count }}
+      value={{
+        value,
+        handleChange,
+        page,
+        changeIndex,
+        count,
+        resetPage,
+        gender,
+        isChecked,
+        sortPrice,
+        sortAlphabet,
+      }}
     >
       {children}
     </AppContext.Provider>

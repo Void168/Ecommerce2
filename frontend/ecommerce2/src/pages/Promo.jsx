@@ -24,7 +24,6 @@ function Promo() {
     }, 500)
   }, [])
 
-  console.log(articles)
   return (
     <div className="container mx-auto">
       {loading ? (
