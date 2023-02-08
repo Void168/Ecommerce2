@@ -1,5 +1,6 @@
 import Navigation from './components/Navigation'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AppProvider } from './context/AppContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -58,38 +59,40 @@ function App() {
         <header>
           <Navigation />
         </header>
-        <main className="min-h-screen py-8">
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/promo" element={<Promo />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/shipping" element={<Shipping />} />
-            {!user && (
-              <>
-                <Route path="/login" element={<Login />} />
-                {user && <Route path="/login" element={<Home />} />}
-                <Route path="/register" element={<Signup />} />
-              </>
-            )}
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/category/:category" element={<Category />} />
-            {user && <Route path="/cart" element={<Cart />} />}
-            <Route path="/order/:id" element={<OrderDetail />}></Route>
+        <AppProvider>
+          <main className="min-h-screen py-8">
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/promo" element={<Promo />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/shipping" element={<Shipping />} />
+              {!user && (
+                <>
+                  <Route path="/login" element={<Login />} />
+                  {user && <Route path="/login" element={<Home />} />}
+                  <Route path="/register" element={<Signup />} />
+                </>
+              )}
+              <Route path="/product/:id" element={<Product />} />
+              <Route path="/category/:category" element={<Category />} />
+              {user && <Route path="/cart" element={<Cart />} />}
+              <Route path="/order/:id" element={<OrderDetail />}></Route>
 
-            <Route path="/new-product" element={<NewProducts />} />
-            <Route path="/new-article" element={<NewAriticles />} />
-            <Route path="*" element={<Home />} />
-            {user && <Route path="/orders" element={<Order />} />}
-            {user && user.isAdmin && (
-              <>
-                <Route path="/dashboard" element={<Dashboard />}></Route>
-                <Route path="/product/:id/edit" element={<EditProduct />} />
-              </>
-            )}
-          </Routes>
-          <ScrollToTopButton />
-        </main>
+              <Route path="/new-product" element={<NewProducts />} />
+              <Route path="/new-article" element={<NewAriticles />} />
+              <Route path="*" element={<Home />} />
+              {user && <Route path="/orders" element={<Order />} />}
+              {user && user.isAdmin && (
+                <>
+                  <Route path="/dashboard" element={<Dashboard />}></Route>
+                  <Route path="/product/:id/edit" element={<EditProduct />} />
+                </>
+              )}
+            </Routes>
+            <ScrollToTopButton />
+          </main>
+        </AppProvider>
         <footer>
           <Footer />
         </footer>

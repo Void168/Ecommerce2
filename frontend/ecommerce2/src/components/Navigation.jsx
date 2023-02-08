@@ -80,7 +80,7 @@ function Navigation() {
                 </NavLink>
                 <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
                   {categories.map((category) => (
-                    <div key={category._id}>
+                    <div key={category.id}>
                       <Link
                         to={`/category/${category.name.toLocaleLowerCase()}`}
                         className="dropdown__categories--element"
@@ -150,7 +150,7 @@ function Navigation() {
                       <div className="border-b border-[#132C33] py-2">
                         <p
                           className={`notification-${notification.status}`}
-                          key={notification._id}
+                          key={notification.id}
                         ></p>
                         {notification.message}
                         <br />
@@ -186,7 +186,7 @@ function Navigation() {
               ) : (
                 <div className="mt-4 dropdown__profile relative">
                   <NavLink className={normalLink} to="/">
-                    {user.name} <i class="fa-solid fa-caret-down" />
+                    {user.name} <i className="fa-solid fa-caret-down" />
                   </NavLink>
                   {user.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48">

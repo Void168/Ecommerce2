@@ -178,7 +178,7 @@
 .sort__radio:checked + .sort__label {
   background: #126e82;
   color: #fff;
-  box-shadow: 2px 4px 5px rgba(18, 110, 130, 1);
+  box-shadow: 2px 2px 5px rgba(23, 173, 206, 1);
 }
 
 .css-187mznn-MuiSlider-root {

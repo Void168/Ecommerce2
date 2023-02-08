@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { AppContext } from '../context/AppContext'
 import axios from '../axios'
 import ProductPreview from '../components/ProductPreview'
 import { updateProducts } from '../features/productSlice'
@@ -8,32 +9,23 @@ import Loading from '../components/Loading'
 import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import WatchedProduct from '../components/WatchedProduct'
-import Box from '@mui/material/Box'
-import Slider from '@mui/material/Slider'
-
-function valuetext(value) {
-  return value
-}
-const minDistance = 100000
+import FilterPrice from '../components/FilterPrice'
 
 function Home() {
   const dispatch = useDispatch()
   const products = useSelector((state) => state.products)
   const lastProducts = products.slice(0, 8)
-  const [page, setPage] = useState(1)
-  const [value, setValue] = useState([0, 100000000])
   const [loading, setLoading] = useState(false)
+  const { value, page, count, changeIndex } = useContext(AppContext)
 
-  const handleChange = (event, newValue, activeThumb) => {
-    if (!Array.isArray(newValue)) {
-      return
+  const sortPrice = (a, b) => {
+    if (a.price < b.price) {
+      return -1
     }
-
-    if (activeThumb === 0) {
-      setValue([Math.min(newValue[0], value[1] - minDistance), value[1]])
-    } else {
-      setValue([value[0], Math.max(newValue[1], value[0] + minDistance)])
+    if (a.price > b.price) {
+      return 1
     }
+    return 0
   }
 
   useEffect(() => {
@@ -46,7 +38,6 @@ function Home() {
       setLoading(false)
     }, 300)
   }, [])
-  console.log(value[1])
 
   return (
     <>
@@ -61,104 +52,18 @@ function Home() {
 
       <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
         <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm">
-          <p className="text-3xl text-center mt-4 text-white">Sắp xếp</p>
-          <div className="container mx-auto my-8 rounded-lg">
-            <div className="container mx-auto flex flex-col">
-              <input
-                className="sort__radio"
-                type="radio"
-                name="myRadio"
-                value="newest"
-                id="myRadio5"
-              />
-              <label for="myRadio5" className="sort__label">
-                Mới nhất
-              </label>
-              <input
-                className="sort__radio"
-                type="radio"
-                name="myRadio"
-                value="oldest"
-                id="myRadio6"
-              />
-              <label for="myRadio6" className="sort__label">
-                Cũ nhất
-              </label>
-              <input
-                className="sort__radio"
-                type="radio"
-                name="myRadio"
-                value="lowtohigh"
-                id="myRadio1"
-              />
-              <label for="myRadio1" className="sort__label">
-                Từ thấp đến cao
-              </label>
-              <input
-                className="sort__radio"
-                type="radio"
-                name="myRadio"
-                value="hightolow"
-                id="myRadio2"
-              />
-              <label for="myRadio2" className="sort__label">
-                Từ cao đến thấp
-              </label>
-              <input
-                className="sort__radio"
-                type="radio"
-                name="myRadio"
-                value="atoz"
-                id="myRadio3"
-              />
-              <label for="myRadio3" className="sort__label">
-                Từ A đến Z
-              </label>
-              <input
-                className="sort__radio"
-                type="radio"
-                name="myRadio"
-                value="ztoa"
-                id="myRadio4"
-              />
-              <label for="myRadio4" className="sort__label">
-                Từ Z đến A
-              </label>
-            </div>
-          </div>
-          <p className="text-2xl text-center my-4 text-white">
-            Kéo để chọn mức giá
+          <FilterPrice />
+          <p className="text-white px-4 mt-8 text-2xl text-center">
+            Có{' '}
+            {
+              products.filter(
+                (filteredProduct) =>
+                  value[0] / 24000 <= filteredProduct.price &&
+                  filteredProduct.price <= value[1] / 24000,
+              ).length
+            }{' '}
+            sản phẩm
           </p>
-          <Box className="bg-[#D8E3E7] p-4 w-full my-4">
-            <Slider
-              max={100000000}
-              step={10000}
-              getAriaLabel={() => 'Minimum distance'}
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              getAriaValueText={valuetext}
-              disableSwap
-            />
-          </Box>
-          <div className="flex flex-row justify-around text-white">
-            <input
-              type="text"
-              disabled
-              value={value[0].toLocaleString('it-IT', {
-                style: 'currency',
-                currency: 'VND',
-              })}
-            />
-            <input
-              type="text"
-              disabled
-              value={value[1].toLocaleString('it-IT', {
-                style: 'currency',
-                currency: 'VND',
-              })}
-            />
-          </div>
         </div>
 
         <div className="col-span-3 px-4">
@@ -173,23 +78,42 @@ function Home() {
                   <>
                     {page === 1 ? (
                       <>
-                        {products.slice(0, 8).map((newProduct) => (
-                          <ProductPreview
-                            {...newProduct}
-                            key={newProduct._id}
-                            product={newProduct}
-                          />
-                        ))}
+                        {products
+                          .filter(
+                            (filteredProduct) =>
+                              value[0] / 24000 <= filteredProduct.price &&
+                              filteredProduct.price <= value[1] / 24000,
+                          )
+                          .slice(0, 8)
+                          .map((product) => (
+                            <ProductPreview
+                              {...product}
+                              key={product._id}
+                              product={product}
+                            />
+                          ))}
                       </>
+                    ) : products.filter(
+                        (filteredProduct) =>
+                          value[0] / 24000 <=
+                          filteredProduct.price <=
+                          value[1] / 24000,
+                      ).length === 0 ? (
+                      <div>Bạn hãy điều chỉnh lại giá nhé</div>
                     ) : (
                       <>
                         {products
+                          .filter(
+                            (filteredProduct) =>
+                              value[0] / 24000 <= filteredProduct.price &&
+                              filteredProduct.price <= value[1] / 24000,
+                          )
                           .slice(8 * (page - 1), 8 * page)
-                          .map((newProduct) => (
+                          .map((product) => (
                             <ProductPreview
-                              {...newProduct}
-                              key={newProduct._id}
-                              product={newProduct}
+                              {...product}
+                              key={product._id}
+                              product={product}
                             />
                           ))}
                       </>
@@ -199,17 +123,13 @@ function Home() {
               </div>
               <Stack spacing={2} className="p-1 rounded-lg">
                 <Pagination
-                  count={Math.round(products.length / 8)}
+                  count={count}
                   color="primary"
-                  onChange={(e, value) => setPage(value)}
+                  onChange={changeIndex}
                 />
               </Stack>
             </div>
           </div>
-
-          {/* <div>
-              <Link to="/category/all">Xem thêm {'>>'}</Link>
-            </div> */}
         </div>
       </div>
       {/* last products */}
@@ -220,11 +140,11 @@ function Home() {
             <Loading />
           ) : (
             <>
-              {lastProducts?.map((product) => (
+              {lastProducts?.map((lastProduct) => (
                 <WatchedProduct
-                  {...product}
-                  key={product._id}
-                  product={product}
+                  {...lastProduct}
+                  key={lastProduct._id}
+                  product={lastProduct}
                   className="min-h-max"
                 />
               ))}
