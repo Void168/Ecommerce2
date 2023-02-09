@@ -55,7 +55,13 @@ function Navigation() {
   window.addEventListener('scroll', setFixed)
 
   return (
-    <div className={navbar ? 'navbar active w-full' : 'navbar w-full'}>
+    <div
+      className={
+        navbar
+          ? 'fixed bg-[#126E82] shadow-sm top-0 w-full z-50'
+          : 'w-full sticky z-50'
+      }
+    >
       <ul className="justify-around bg-[#126E82] p-4 flex">
         <div className="w-2/12">
           <Link className="h-10" to="/">
@@ -66,14 +72,7 @@ function Navigation() {
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
               <div className="mt-4 dropdown__categories">
-                <NavLink
-                  to="/category/tất cả"
-                  className={({ isActive }) =>
-                    isActive
-                      ? activeLink
-                      : 'p-4 hover:bg-[#132C33] rounded-full hover:shadow-sm ease-in-out duration-300'
-                  }
-                >
+                <NavLink className="p-4 hover:bg-[#132C33] rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none">
                   Danh mục
                 </NavLink>
                 <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
@@ -186,7 +185,10 @@ function Navigation() {
                 </NavLink>
               ) : (
                 <div className="mt-4 dropdown__profile relative">
-                  <NavLink className={normalLink} to="/">
+                  <NavLink
+                    className="p-4 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none"
+                    to="/"
+                  >
                     {user.name} <i className="fa-solid fa-caret-down" />
                   </NavLink>
                   {user.isAdmin ? (

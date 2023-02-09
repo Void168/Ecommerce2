@@ -20,7 +20,7 @@ function Category() {
   const products = useSelector((state) => state.products)
   const [searchTerm, setSearchTerm] = useState('')
   const categoryName = category.charAt(0).toUpperCase() + category.slice(1)
-  const { value, page, count, changeIndex, resetPage } = useContext(AppContext)
+  const { value, page, changeIndex, resetPage } = useContext(AppContext)
 
   useEffect(() => {
     axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
@@ -67,17 +67,32 @@ function Category() {
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
             <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm">
               <FilterPrice />
-              <p className="text-white px-4 mt-8 text-2xl text-center">
-                Có{' '}
-                {
-                  products.filter(
-                    (filteredProduct) =>
-                      value[0] / 24000 <= filteredProduct.price &&
-                      filteredProduct.price <= value[1] / 24000,
-                  ).length
-                }{' '}
-                sản phẩm
-              </p>
+              {categoryName === 'Tất cả' ? (
+                <p className="text-white px-4 mt-8 text-2xl text-center">
+                  Có{' '}
+                  {
+                    products.filter(
+                      (filteredProduct) =>
+                        value[0] / 24000 <= filteredProduct.price &&
+                        filteredProduct.price <= value[1] / 24000,
+                    ).length
+                  }{' '}
+                  sản phẩm
+                </p>
+              ) : (
+                <p className="text-white px-4 mt-8 text-2xl text-center">
+                  Có{' '}
+                  {
+                    products.filter(
+                      (filteredProduct) =>
+                        value[0] / 24000 <= filteredProduct.price &&
+                        filteredProduct.price <= value[1] / 24000 &&
+                        filteredProduct.category === categoryName,
+                    ).length
+                  }{' '}
+                  sản phẩm
+                </p>
+              )}
             </div>
             <div className="container mx-auto col-span-3 px-4">
               <div className="">
@@ -94,8 +109,10 @@ function Category() {
                             <>
                               {productsSearch
                                 .filter(
-                                  (product) =>
-                                    product.category === categoryName,
+                                  (filteredProduct) =>
+                                    filteredProduct.category === categoryName &&
+                                    value[0] / 24000 <= filteredProduct.price &&
+                                    filteredProduct.price <= value[1] / 24000,
                                 )
                                 .slice(0, 8)
                                 .map((filteredProduct) => (
@@ -109,8 +126,10 @@ function Category() {
                             <>
                               {productsSearch
                                 .filter(
-                                  (product) =>
-                                    product.category === categoryName,
+                                  (filteredProduct) =>
+                                    filteredProduct.category === categoryName &&
+                                    value[0] / 24000 <= filteredProduct.price &&
+                                    filteredProduct.price <= value[1] / 24000,
                                 )
                                 .slice(8 * (page - 1), 8 * page)
                                 .map((filteredProduct) => (
@@ -126,7 +145,8 @@ function Category() {
                           <Pagination
                             count={Math.round(
                               productsSearch.filter(
-                                (product) => product.category === categoryName,
+                                (filteredProduct) =>
+                                  filteredProduct.category === categoryName,
                               ).length / 8,
                             )}
                             color="primary"

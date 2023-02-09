@@ -1,8 +1,102 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Loading from '../components/Loading'
 
 function Shipping() {
   const [loading, setLoading] = useState(false)
+  const [navbar, setNavbar] = useState(false)
+  const shippingPolicy = useRef(null)
+  const deliveryService = useRef(null)
+  const setupService = useRef(null)
+  const receiveAtStore = useRef(null)
+  const noteReceipt = useRef(null)
+  const cod = useRef(null)
+  const priceList1 = useRef(null)
+  const priceList2 = useRef(null)
+  const scopeDelivery = useRef(null)
+  const installationOnsite = useRef(null)
+  const cameraSetup = useRef(null)
+
+  const endPoint = useRef(null)
+
+  const gotoShippingPolicySection = () => {
+    window.scrollTo({
+      top: shippingPolicy.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+
+  const gotoDeliveryService = () => {
+    window.scrollTo({
+      top: deliveryService.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+
+  const gotoSetupService = () => {
+    window.scrollTo({
+      top: setupService.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+
+  const gotoReceiveAtStore = () => {
+    window.scrollTo({
+      top: receiveAtStore.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoNoteReceipt = () => {
+    window.scrollTo({
+      top: noteReceipt.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoCod = () => {
+    window.scrollTo({
+      top: cod.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoPriceList1 = () => {
+    window.scrollTo({
+      top: priceList1.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoPriceList2 = () => {
+    window.scrollTo({
+      top: priceList2.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoScopeDelivery = () => {
+    window.scrollTo({
+      top: scopeDelivery.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoInstallationOnsite = () => {
+    window.scrollTo({
+      top: installationOnsite.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+  const gotoCameraSetup = () => {
+    window.scrollTo({
+      top: cameraSetup.current.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+
+  const setFixed = () => {
+    if (window.scrollY >= 200) {
+      setNavbar(true)
+    } else {
+      setNavbar(false)
+    }
+  }
+  window.addEventListener('scroll', setFixed)
+  console.log(window.scrollY)
 
   useEffect(() => {
     setLoading(true)
@@ -18,7 +112,72 @@ function Shipping() {
         </div>
       ) : (
         <>
-          <div className="col-span-1 bg-slate-500 shadow-sm p-4"></div>
+          <div className="col-span-1  text-white">
+            <div
+              className={
+                navbar
+                  ? 'sticky bg-[#126E82] shadow-sm p-4 h-256 bottom-8 top-36'
+                  : 'bg-[#126E82] shadow-sm p-4 h-256'
+              }
+            >
+              <p
+                onClick={gotoShippingPolicySection}
+                className="text-xl cursor-pointer"
+              >
+                Chính sách vận chuyển
+              </p>
+              <ul className="p-4">
+                <li
+                  onClick={gotoReceiveAtStore}
+                  className="cursor-pointer my-4"
+                >
+                  - Nhận hàng tại Cửa hàng
+                </li>
+                <li onClick={gotoCod} className="cursor-pointer my-4">
+                  - Giao hàng tận nơi
+                </li>
+                <li onClick={gotoPriceList1} className="cursor-pointer my-4">
+                  - Bảng giá dịch vụ vận chuyển hàng hóa
+                </li>
+                <li onClick={gotoNoteReceipt} className="cursor-pointer my-4">
+                  - Một số lưu ý khi nhận hàng
+                </li>
+              </ul>
+
+              <p
+                className="text-xl cursor-pointer"
+                onClick={gotoDeliveryService}
+              >
+                Dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản phẩm
+              </p>
+              <ul className="p-4">
+                <li onClick={gotoPriceList2} className="cursor-pointer my-4">
+                  - Bảng giá dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng
+                  sản phẩm
+                </li>
+                <li onClick={gotoScopeDelivery} className="cursor-pointer my-4">
+                  - Phạm vi của dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng
+                  sản phẩm
+                </li>
+              </ul>
+
+              <p className="text-xl cursor-pointer" onClick={gotoSetupService}>
+                Dịch vụ giao hàng cùng thi công, lắp đặt tận nơi và chính sách
+                lắp đặt camera
+              </p>
+              <ul className="p-4">
+                <li
+                  onClick={gotoInstallationOnsite}
+                  className="cursor-pointer my-4"
+                >
+                  - Dịch vụ giao hàng cùng thi công, lắp đặt tận nơi
+                </li>
+                <li onClick={gotoCameraSetup} className="cursor-pointer my-4">
+                  - Chính sách lắp đặt Camera
+                </li>
+              </ul>
+            </div>
+          </div>
           <div className="col-span-4 p-12">
             <p className="text-4xl mb-4">
               Vận chuyển, lắp đặt, thi công và hỗ trợ kỹ thuật tận nơi
@@ -27,9 +186,13 @@ function Shipping() {
               Biểu phí vận chuyển và lắp đặt cụ thể cho ngành hàng ICT và Ngành
               hàng điện máy tại WeirdShop
             </p>
-            <p className="text-2xl my-8">Chính sách vận chuyển</p>
+            <p className="text-2xl my-8" ref={shippingPolicy}>
+              Chính sách vận chuyển
+            </p>
             <div className="pl-4">
-              <p className="text-xl mb-2">Nhận hàng tại Cửa hàng</p>
+              <p className="text-xl mb-2" ref={receiveAtStore}>
+                Nhận hàng tại Cửa hàng
+              </p>
               <p>
                 Sau khi đặt hàng Online tại website https://weirdshop.vn, Quý
                 khách có thể lựa chọn nhận hàng tại cửa hàng của WeirdShop mà
@@ -38,7 +201,9 @@ function Shipping() {
                 hàng về tới cửa hàng, WeirdShop sẽ báo cho Quý khách và hướng
                 dẫn đầu mối tiếp đón khách hàng tại cửa hàng.
               </p>
-              <p className="text-xl mt-4 mb-2">Giao hàng tận nơi</p>
+              <p className="text-xl mt-4 mb-2" ref={cod}>
+                Giao hàng tận nơi
+              </p>
               <p>
                 Giao hàng tận nơi: WeirdShop cung cấp dịch vụ giao hàng toàn
                 quốc, gửi hàng tận nơi đến địa chỉ cung cấp của Quý khách. Thời
@@ -129,7 +294,7 @@ function Shipping() {
                 thêm cho việc lấy hàng. Ngày làm việc là từ thứ hai đến thứ sau,
                 không tính thứ bảy, chủ nhật và ngày nghỉ lễ, tết, nghỉ bù...
               </p>
-              <p className="my-4 text-xl">
+              <p className="my-4 text-xl" ref={priceList1}>
                 Bảng giá dịch vụ vận chuyển hàng hóa
               </p>
               <div className="flex justify-center">
@@ -154,7 +319,9 @@ function Shipping() {
                 </table>
               </div>
 
-              <p className="my-4 text-xl">Một số lưu ý khi nhận hàng</p>
+              <p className="my-4 text-xl" ref={noteReceipt}>
+                Một số lưu ý khi nhận hàng
+              </p>
               <p className="px-12">
                 Nếu Quý khách không thể có mặt trong đợt nhận hàng thứ nhất,
                 WeirdShop sẽ liên lạc lại để sắp xếp thời gian giao hàng hoặc
@@ -205,12 +372,12 @@ function Shipping() {
               </p>
             </div>
 
-            <p className="text-2xl my-8">
+            <p className="text-2xl my-8" ref={deliveryService}>
               Dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản phẩm
             </p>
 
             <div className=" pl-4">
-              <p className="text-xl my-8">
+              <p className="text-xl my-8" ref={priceList2}>
                 Bảng giá dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản
                 phẩm
               </p>
@@ -259,7 +426,7 @@ function Shipping() {
                   </tr>
                 </tbody>
               </table>
-              <p className="text-xl my-8">
+              <p className="text-xl my-8" ref={scopeDelivery}>
                 Phạm vi của dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản
                 phẩm
               </p>
@@ -385,11 +552,11 @@ function Shipping() {
               </table>
             </div>
 
-            <p className="text-2xl my-8">
+            <p className="text-2xl my-8" ref={setupService}>
               Dịch vụ giao hàng cùng thi công, lắp đặt tận nơi và chính sách lắp
               đặt camera
             </p>
-            <p className="text-xl my-8">
+            <p className="text-xl my-8" ref={installationOnsite}>
               Dịch vụ giao hàng cùng thi công, lắp đặt tận nơi
             </p>
             <p>
@@ -421,7 +588,9 @@ function Shipping() {
               WeirdShop, Quý khách liên hệ với nhân viên bán hàng để được tư vấn
               cụ thể và báo giá.
             </p>
-            <p className="text-xl my-8">Chính sách lắp đặt Camera</p>
+            <p className="text-xl my-8" ref={cameraSetup}>
+              Chính sách lắp đặt Camera
+            </p>
             <table className="my-4">
               <thead>
                 <th>Sản phẩm áp dụng lắp đặt tận nơi</th>
@@ -480,7 +649,7 @@ function Shipping() {
               201200662). - Đối với các yêu cầu đặc biệt khác, vui lòng liên hệ
               nhân viên bán hàng để được hỗ trợ
             </p>
-            <p>
+            <p ref={endPoint}>
               Trường hợp khách hàng có nhu cầu hỗ trợ tận nơi ngoài những nội
               dung trên đây, vui lòng tham khảo thêm Dịch vụ sửa chữa và bảo trì{' '}
             </p>
