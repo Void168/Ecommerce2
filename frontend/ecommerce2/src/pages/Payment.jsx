@@ -11,15 +11,14 @@ function Payment() {
     }, 500)
   }, [])
   return (
-    <div className="container mx-auto grid grid-cols-5">
+    <div className="container mx-auto">
       {loading ? (
         <div className="h-screen flex justify-center items-center absolute text-center w-full">
           <Loading />
         </div>
       ) : (
         <>
-          <div className="col-span-1 bg-slate-500 shadow-sm p-4"></div>
-          <div className="col-span-4 p-12">
+          <div className="p-12">
             <p className="text-4xl my-4">Phương thức thanh toán</p>
             <p>
               Với tiêu chí không ngừng nỗ lực để trải nghiệm mua hàng của Quý

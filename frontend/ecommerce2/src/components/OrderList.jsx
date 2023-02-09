@@ -56,83 +56,91 @@ function OrderList() {
             <tbody>
               {page === 1 ? (
                 <>
-                  {orders.slice(0, 8).map((order) => (
-                    <tr key={order}>
-                      <td>{order._id}</td>
-                      <td>{order.owner?.name}</td>
-                      <td>{order.count}</td>
-                      <td>
-                        {order.total.toLocaleString('it-IT', {
-                          style: 'currency',
-                          currency: 'VND',
-                        })}
-                      </td>
-                      <td>{order.address}</td>
-                      <td>
-                        {order.status === 'Đang xử lý' ? (
-                          <button
-                            size="sm"
-                            onClick={() =>
-                              markShipped(order._id, order.owner?._id)
-                            }
-                            className="bg-[#132C33]"
+                  {orders
+                    .slice(orders.length - 8, orders.length)
+                    .map((order) => (
+                      <tr key={order}>
+                        <td>{order._id}</td>
+                        <td>{order.owner?.name}</td>
+                        <td>{order.count}</td>
+                        <td>
+                          {order.total.toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND',
+                          })}
+                        </td>
+                        <td>{order.address}</td>
+                        <td>
+                          {order.status === 'Đang xử lý' ? (
+                            <button
+                              size="sm"
+                              onClick={() =>
+                                markShipped(order._id, order.owner?._id)
+                              }
+                              className="bg-[#132C33]"
+                            >
+                              Đánh giấu đã vận chuyển
+                            </button>
+                          ) : (
+                            <div bg="success">Đã giao hàng</div>
+                          )}
+                        </td>
+                        <td>
+                          <span
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => showOrder(products)}
                           >
-                            Đánh giấu đã vận chuyển
-                          </button>
-                        ) : (
-                          <div bg="success">Đã giao hàng</div>
-                        )}
-                      </td>
-                      <td>
-                        <span
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => showOrder(products)}
-                        >
-                          Xem đơn hàng <i className="fa fa-eye"></i>
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                            Xem đơn hàng <i className="fa fa-eye"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
                 </>
               ) : (
                 <>
-                  {orders.slice(8 * (page - 1), 8 * page).map((order) => (
-                    <tr key={order}>
-                      <td>{order._id}</td>
-                      <td>{order.owner?.name}</td>
-                      <td>{order.count}</td>
-                      <td>
-                        {order.total.toLocaleString('it-IT', {
-                          style: 'currency',
-                          currency: 'VND',
-                        })}
-                      </td>
-                      <td>{order.address}</td>
-                      <td>
-                        {order.status === 'Đang xử lý' ? (
-                          <button
-                            size="sm"
-                            onClick={() =>
-                              markShipped(order._id, order.owner?._id)
-                            }
-                            className="bg-[#132C33]"
+                  {orders
+                    .slice(
+                      8 * (Math.round(orders.length / 8) - page),
+                      8 * (Math.round(orders.length / 8) - page + 1),
+                    )
+                    .map((order) => (
+                      <tr key={order}>
+                        <td>{order._id}</td>
+                        <td>{order.owner?.name}</td>
+                        <td>{order.count}</td>
+                        <td>
+                          {order.total.toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND',
+                          })}
+                        </td>
+                        <td>{order.address}</td>
+                        <td>
+                          {order.status === 'Đang xử lý' ? (
+                            <button
+                              size="sm"
+                              onClick={() =>
+                                markShipped(order._id, order.owner?._id)
+                              }
+                              className="bg-[#132C33]"
+                            >
+                              Đánh giấu đã vận chuyển
+                            </button>
+                          ) : (
+                            <div bg="success">Đã giao hàng</div>
+                          )}
+                        </td>
+                        <td>
+                          <span
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => showOrder(products)}
                           >
-                            Đánh giấu đã vận chuyển
-                          </button>
-                        ) : (
-                          <div bg="success">Đã giao hàng</div>
-                        )}
-                      </td>
-                      <td>
-                        <span
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => showOrder(products)}
-                        >
-                          Xem đơn hàng <i className="fa fa-eye"></i>
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                            Xem đơn hàng <i className="fa fa-eye"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                    .reverse()}
                 </>
               )}
             </tbody>

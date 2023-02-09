@@ -94,7 +94,7 @@ function Home() {
                                   value[0] / 24000 <= filteredProduct.price &&
                                   filteredProduct.price <= value[1] / 24000,
                               )
-                              .slice(0, 8)
+                              .slice(products.length - 8, products.length)
                               .map((product) => (
                                 <ProductPreview
                                   {...product}
@@ -214,7 +214,11 @@ function Home() {
                                   value[0] / 24000 <= filteredProduct.price &&
                                   filteredProduct.price <= value[1] / 24000,
                               )
-                              .slice(8 * (page - 1), 8 * page)
+                              .slice(
+                                8 * (Math.round(products.length / 8) - page),
+                                8 *
+                                  (Math.round(products.length / 8) - page + 1),
+                              )
                               .map((product) => (
                                 <ProductPreview
                                   {...product}

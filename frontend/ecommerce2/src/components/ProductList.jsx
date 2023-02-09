@@ -16,6 +16,10 @@ function ProductList() {
       deleteProduct({ product_id: id, user_id: user._id })
     }
   }
+  console.log(8 * (products.length / 8 - page))
+  console.log(8 * (products.length / 8 - page + 1))
+  console.log(page)
+  console.log(products.length / 8)
   return (
     <div className="container mx-auto">
       <button className="bg-[#132C33]">
@@ -33,73 +37,82 @@ function ProductList() {
         <tbody>
           {page === 1 ? (
             <>
-              {products.slice(0, 8).map((product) => (
-                <tr key={product}>
-                  <td>
-                    <img
-                      src={product.pictures[0].url}
-                      alt="product-pic"
-                      className="w-32 h-32 mx-auto"
-                    />
-                  </td>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>
-                    <div className="flex flex-col">
-                      <button
-                        onClick={() =>
-                          handleDeleteProduct(product._id, user._id)
-                        }
-                        disabled={isLoading}
-                        className="bg-[#132C33]"
-                      >
-                        Xóa sản phẩm
-                      </button>
-                      <button className="bg-[#132C33] mt-6">
-                        <Link to={`/product/${product._id}/edit`}>
-                          Chỉnh sửa
-                        </Link>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {products
+                .slice(products.length - 8, products.length)
+                .reverse()
+                .map((product) => (
+                  <tr key={product}>
+                    <td>
+                      <img
+                        src={product.pictures[0].url}
+                        alt="product-pic"
+                        className="w-32 h-32 mx-auto"
+                      />
+                    </td>
+                    <td>{product._id}</td>
+                    <td>{product.name}</td>
+                    <td>{product.price}</td>
+                    <td>
+                      <div className="flex flex-col">
+                        <button
+                          onClick={() =>
+                            handleDeleteProduct(product._id, user._id)
+                          }
+                          disabled={isLoading}
+                          className="bg-[#132C33]"
+                        >
+                          Xóa sản phẩm
+                        </button>
+                        <button className="bg-[#132C33] mt-6">
+                          <Link to={`/product/${product._id}/edit`}>
+                            Chỉnh sửa
+                          </Link>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </>
           ) : (
             <>
-              {products.slice(8 * (page - 1), 8 * page).map((product) => (
-                <tr key={product}>
-                  <td>
-                    <img
-                      src={product.pictures[0].url}
-                      alt="product-pic"
-                      className="w-32 h-32 mx-auto"
-                    />
-                  </td>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>
-                    <div className="flex flex-col">
-                      <button
-                        onClick={() =>
-                          handleDeleteProduct(product._id, user._id)
-                        }
-                        disabled={isLoading}
-                        className="bg-[#132C33]"
-                      >
-                        Xóa sản phẩm
-                      </button>
-                      <button className="bg-[#132C33] mt-6">
-                        <Link to={`/product/${product._id}/edit`}>
-                          Chỉnh sửa
-                        </Link>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {products
+                .slice(
+                  8 * (Math.round(products.length / 8) - page),
+                  8 * (Math.round(products.length / 8) - page + 1),
+                )
+                .map((product) => (
+                  <tr key={product}>
+                    <td>
+                      <img
+                        src={product.pictures[0].url}
+                        alt="product-pic"
+                        className="w-32 h-32 mx-auto"
+                      />
+                    </td>
+                    <td>{product._id}</td>
+                    <td>{product.name}</td>
+                    <td>{product.price}</td>
+                    <td>
+                      <div className="flex flex-col">
+                        <button
+                          onClick={() =>
+                            handleDeleteProduct(product._id, user._id)
+                          }
+                          disabled={isLoading}
+                          className="bg-[#132C33]"
+                        >
+                          Xóa sản phẩm
+                        </button>
+                        <button className="bg-[#132C33] mt-6">
+                          <Link to={`/product/${product._id}/edit`}>
+                            Chỉnh sửa
+                          </Link>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+                .reverse()}
             </>
           )}
         </tbody>
