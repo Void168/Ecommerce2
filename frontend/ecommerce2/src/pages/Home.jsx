@@ -42,7 +42,7 @@ function Home() {
       )}
 
       <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
-        <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm">
+        <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm h-256">
           <FilterPrice />
           <p className="text-white px-4 mt-8 text-2xl text-center">
             Có{' '}
@@ -60,7 +60,7 @@ function Home() {
         <div className="col-span-3 px-4">
           <div className="container mx-auto">
             <div className="bg-[#126E82] p-4 rounded-lg shadow-sm">
-              <div className="grid lg:grid-cols-4 gap-4 my-4 sm:grid-cols-3 h-256">
+              <div className="grid lg:grid-cols-4 gap-4 my-4 sm:grid-cols-3">
                 {loading ? (
                   <div className=" col-span-4 relative h-screen flex justify-center items-center text-center w-full">
                     <Loading />

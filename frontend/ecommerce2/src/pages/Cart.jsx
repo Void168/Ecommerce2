@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+// import { Navigate, useNavigate } from 'react-router-dom'
 import Loading from '../components/Loading'
 import {
   useIncreaseCartProductMutation,
@@ -23,7 +24,7 @@ function Cart() {
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation()
   const [increaseCart] = useIncreaseCartProductMutation()
   const [decreaseCart] = useDecreaseCartProductMutation()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   let cart = products.filter((product) => userCartObj[product._id] != null)
 

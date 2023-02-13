@@ -116,7 +116,7 @@ function Shipping() {
             <div
               className={
                 navbar
-                  ? 'sticky bg-[#126E82] shadow-sm p-4 h-256 bottom-8 top-36'
+                  ? 'sticky bg-[#126E82] shadow-sm p-4 h-256 bottom-8 top-40'
                   : 'bg-[#126E82] shadow-sm p-4 h-256'
               }
             >

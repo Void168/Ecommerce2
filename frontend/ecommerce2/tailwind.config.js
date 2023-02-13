@@ -1,12 +1,21 @@
 module.exports = {
   content: ['./src/**/*.{ts,js,jsx,tsx}'],
   theme: {
+    screens: {
+      'small-phone':'320px',
+      'big-phone':'540px',
+      'tablet': '640px',
+      'big-tablet': '820px',
+
+      'laptop': '1080px',
+
+      'desktop': '1280px',
+
+      'big-desktop':'1536px'
+    },
     extend: {
-      color: {
-        'dark-blue': '#041C32',
-        'light-orange': '#ECB365',
-        'dark-light-blue': '#04293A',
-        'light-blue': '#064663',
+      colors: {
+        'nav-color': 'linear-gradient(0deg, rgba(216,227,231,1) 0%, rgba(18,110,130,1) 35%, rgba(19,44,51,1) 100%)'
       },
       boxShadow: {
         sm: '2px 4px 5px rgba(0, 0, 0, 0.25);',
@@ -31,3 +40,4 @@ module.exports = {
   },
   plugins: [],
 }
+

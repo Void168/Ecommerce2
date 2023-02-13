@@ -1,48 +1,58 @@
-import axios from 'axios'
-import React from 'react'
-import { useEffect, useContext } from 'react'
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import Loading from '../components/Loading'
-import ProductPreview from '../components/ProductPreview'
-import { updateProducts } from '../features/productSlice'
-import Stack from '@mui/material/Stack'
-import Pagination from '@mui/material/Pagination'
-import FilterPrice from '../components/FilterPrice'
-import { AppContext } from '../context/AppContext'
+import axios from "axios";
+import React from "react";
+import { useEffect, useContext } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import Loading from "../components/Loading";
+import ProductPreview from "../components/ProductPreview";
+import { updateProducts } from "../features/productSlice";
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
+import FilterPrice from "../components/FilterPrice";
+import { AppContext } from "../context/AppContext";
 
 function Category() {
-  const { category } = useParams()
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false)
+  const { category } = useParams();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-  const products = useSelector((state) => state.products)
-  const [searchTerm, setSearchTerm] = useState('')
-  const categoryName = category.charAt(0).toUpperCase() + category.slice(1)
-  const { value, page, changeIndex, resetPage } = useContext(AppContext)
+  const products = useSelector((state) => state.products);
+  const [searchTerm, setSearchTerm] = useState("");
+  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+  const {
+    value,
+    page,
+    changeIndex,
+    gender,
+    resetPage,
+    sortPrice,
+    sortAlphabet,
+  } = useContext(AppContext);
 
   useEffect(() => {
-    axios.get('/products').then(({ data }) => dispatch(updateProducts(data)))
-  }, [dispatch])
+    axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
+  }, [dispatch]);
 
-  const productsSearch = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  const productsSearch = products.filter(
+    (product) =>
+      product.category === categoryName &&
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleSearch = (e) => {
-    e.preventDefault()
-    setSearchTerm(e.target.value)
-    console.log(searchTerm)
-  }
+    e.preventDefault();
+    setSearchTerm(e.target.value);
+    console.log(searchTerm);
+  };
 
   useEffect(() => {
-    setLoading(true)
-    resetPage()
+    setLoading(true);
+    resetPage();
     setTimeout(() => {
-      setLoading(false)
-    }, 500)
-  }, [categoryName])
+      setLoading(false);
+    }, 500);
+  }, [categoryName]);
 
   return (
     <div className="container mx-auto">
@@ -67,32 +77,25 @@ function Category() {
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
             <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm">
               <FilterPrice />
-              {categoryName === 'Tất cả' ? (
+              {productsSearch.filter(
+                (filteredProduct) =>
+                  value[0] / 24000 <= filteredProduct.price &&
+                  filteredProduct.price <= value[1] / 24000 &&
+                  filteredProduct.category === categoryName
+              ).length > 0 ? (
                 <p className="text-white px-4 mt-8 text-2xl text-center">
-                  Có{' '}
+                  Có{" "}
                   {
-                    products.filter(
-                      (filteredProduct) =>
-                        value[0] / 24000 <= filteredProduct.price &&
-                        filteredProduct.price <= value[1] / 24000,
-                    ).length
-                  }{' '}
-                  sản phẩm
-                </p>
-              ) : (
-                <p className="text-white px-4 mt-8 text-2xl text-center">
-                  Có{' '}
-                  {
-                    products.filter(
+                    productsSearch.filter(
                       (filteredProduct) =>
                         value[0] / 24000 <= filteredProduct.price &&
                         filteredProduct.price <= value[1] / 24000 &&
-                        filteredProduct.category === categoryName,
+                        filteredProduct.category === categoryName
                     ).length
-                  }{' '}
+                  }{" "}
                   sản phẩm
                 </p>
-              )}
+              ) : null}
             </div>
             <div className="container mx-auto col-span-3 px-4">
               <div className="">
@@ -105,49 +108,315 @@ function Category() {
                     ) : (
                       <div className="rounded-lg shadow-sm bg-[#126E82] py-4">
                         <div className="grid lg:grid-cols-4 gap-4 p-4 sm:grid-cols-3 h-256">
-                          {page === 1 ? (
-                            <>
-                              {productsSearch
-                                .filter(
-                                  (filteredProduct) =>
-                                    filteredProduct.category === categoryName &&
-                                    value[0] / 24000 <= filteredProduct.price &&
-                                    filteredProduct.price <= value[1] / 24000,
-                                )
-                                .slice(0, 8)
-                                .map((filteredProduct) => (
-                                  <ProductPreview
-                                    key={filteredProduct}
-                                    product={filteredProduct}
-                                  />
-                                ))}
-                            </>
-                          ) : (
-                            <>
-                              {productsSearch
-                                .filter(
-                                  (filteredProduct) =>
-                                    filteredProduct.category === categoryName &&
-                                    value[0] / 24000 <= filteredProduct.price &&
-                                    filteredProduct.price <= value[1] / 24000,
-                                )
-                                .slice(8 * (page - 1), 8 * page)
-                                .map((filteredProduct) => (
-                                  <ProductPreview
-                                    key={filteredProduct}
-                                    product={filteredProduct}
-                                  />
-                                ))}
-                            </>
-                          )}
+                          <>
+                            {page === 1 ? (
+                              <>
+                                {gender === "newest" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .slice(0, 8)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "oldest" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .slice(
+                                        productsSearch.length - 8,
+                                        productsSearch.length
+                                      )
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))
+                                      .reverse()}
+                                  </>
+                                ) : gender === "lowtohigh" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortPrice)
+                                      .slice(0, 8)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "hightolow" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortPrice)
+                                      .reverse()
+                                      .slice(0, 8)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "atoz" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortAlphabet)
+                                      .slice(0, 8)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "ztoa" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .slice(0, 8)
+                                      .sort(sortAlphabet)
+                                      .reverse()
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : null}
+                              </>
+                            ) : productsSearch.filter(
+                                (filteredProduct) =>
+                                  value[0] / 24000 <=
+                                  filteredProduct.price <=
+                                  value[1] / 24000
+                              ).length === 0 ? (
+                              <div>Bạn hãy điều chỉnh lại giá nhé</div>
+                            ) : (
+                              <>
+                                {gender === "newest" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .slice(8 * (page - 1), 8 * page)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "oldest" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .slice(
+                                        8 *
+                                          (Math.round(
+                                            productsSearch.length / 8
+                                          ) -
+                                            page),
+                                        8 *
+                                          (Math.round(
+                                            productsSearch.length / 8
+                                          ) -
+                                            page +
+                                            1)
+                                      )
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))
+                                      .reverse()}
+                                  </>
+                                ) : gender === "lowtohigh" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortPrice)
+                                      .slice(8 * (page - 1), 8 * page)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "hightolow" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortPrice)
+                                      .reverse()
+                                      .slice(8 * (page - 1), 8 * page)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "atoz" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortAlphabet)
+                                      .slice(8 * (page - 1), 8 * page)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : gender === "ztoa" ? (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000
+                                      )
+                                      .sort(sortAlphabet)
+                                      .reverse()
+                                      .slice(8 * (page - 1), 8 * page)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                ) : null}
+                              </>
+                            )}
+                          </>
                         </div>
                         <Stack spacing={2} className="p-4 rounded-lg">
                           <Pagination
-                            count={Math.round(
+                            count={Math.ceil(
                               productsSearch.filter(
                                 (filteredProduct) =>
-                                  filteredProduct.category === categoryName,
-                              ).length / 8,
+                                  filteredProduct.category === categoryName &&
+                                  value[0] / 24000 <= filteredProduct.price &&
+                                  filteredProduct.price <= value[1] / 24000
+                              ).length / 8
                             )}
                             color="primary"
                             onChange={changeIndex}
@@ -163,7 +432,7 @@ function Category() {
         </>
       )}
     </div>
-  )
+  );
 }
 
-export default Category
+export default Category;

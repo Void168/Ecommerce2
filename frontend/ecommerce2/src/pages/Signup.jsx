@@ -51,6 +51,9 @@ function Signup() {
   return (
     <div className="container mx-auto">
       <div className="flex flex-row w-full justify-center">
+        {
+          error && (<Loading />)
+        }
         {loading ? (
           <Loading />
         ) : (

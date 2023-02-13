@@ -75,6 +75,9 @@ function NewProducts() {
 
   return (
     <div className="container mx-auto">
+      {
+        error && <Loading />
+      }
       {loading ? (
         <Loading />
       ) : (

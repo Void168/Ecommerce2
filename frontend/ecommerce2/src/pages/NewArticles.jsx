@@ -83,6 +83,9 @@ function NewArticles() {
 
   return (
     <div className="container mx-auto">
+      {
+        error && <Loading />
+      }
       {loading ? (
         <Loading />
       ) : (

@@ -175,3 +175,26 @@
 .css-187mznn-MuiSlider-root {
   color: #132c33 !important;
 }
+
+.menu__bar{
+  background-color: #fff;
+  width: 100%;
+  height: 3px;
+}
+
+.MuiButtonBase-root{
+  box-shadow: none !important;
+}
+
+.MuiBottomNavigationAction-label{
+  font-family: 'Quicksand', sans-serif !important;
+}
+
+.MuiButtonBase-root:hover {
+background: white !important;
+}
+
+.css-2s90m6-MuiAvatar-root{
+  width: 6rem !important;
+  height: 6rem !important;
+}

@@ -1,78 +1,78 @@
-import React, { useRef, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout, resetNotifications } from '../features/userSlice.js'
-import categories from '../categories.js'
-import axios from '../axios'
+import React, { useRef, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, resetNotifications } from "../features/userSlice.js";
+import categories from "../categories.js";
+import axios from "../axios";
 
 function Navigation() {
-  const [navbar, setNavbar] = useState(false)
-  const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [navbar, setNavbar] = useState(false);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const bellRef = useRef(null)
-  const [bellPos, setBellPos] = useState({})
-  const [display, setDisplay] = useState(false)
+  const bellRef = useRef(null);
+  const [bellPos, setBellPos] = useState({});
+  const [display, setDisplay] = useState(false);
 
   const signoutHandler = () => {
-    navigate('/login')
-    dispatch(logout())
-  }
+    navigate("/login");
+    dispatch(logout());
+  };
 
   const unreadNotifications = user?.notifications?.reduce(
     (account, current) => {
-      if (current.status === 'chưa đọc') return account
-      return account
+      if (current.status === "chưa đọc") return account;
+      return account;
     },
-    0,
-  )
-  const activeLink = 'bg-[#51C4D3] text-black p-4 rounded-full'
+    0
+  );
+  const activeLink = "bg-[#51C4D3] text-black desktop:p-4 big-tablet:px-2 big-tablet:py-4 rounded-full desktop:text-lg big-tablet:text-base";
   const normalLink =
-    'p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm ease-in-out duration-300'
+    "p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm ease-in-out duration-300 desktop:text-lg big-tablet:text-base";
 
   const handleToggleNotifications = () => {
-    const position = bellRef.current.getBoundingClientRect()
-    setBellPos(position)
+    const position = bellRef.current.getBoundingClientRect();
+    setBellPos(position);
     if (display) {
-      setDisplay(false)
+      setDisplay(false);
     } else {
-      setDisplay(true)
+      setDisplay(true);
     }
-    dispatch(resetNotifications())
+    dispatch(resetNotifications());
     if (unreadNotifications > 0)
-      axios.post(`/users/${user._id}/updateNotifications`)
-  }
+      axios.post(`/users/${user._id}/updateNotifications`);
+  };
 
   const setFixed = () => {
     if (window.scrollY >= 200) {
-      setNavbar(true)
+      setNavbar(true);
     } else {
-      setNavbar(false)
+      setNavbar(false);
     }
-  }
-  window.addEventListener('scroll', setFixed)
+  };
+  window.addEventListener("scroll", setFixed);
 
   return (
     <div
       className={
         navbar
-          ? 'fixed bg-[#126E82] shadow-sm top-0 w-full z-50'
-          : 'w-full sticky z-50'
+          ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-90 small-phone:hidden big-tablet:block"
+          : "w-full sticky z-50 small-phone:hidden big-tablet:block"
       }
     >
       <ul className="justify-around bg-[#126E82] p-4 flex">
-        <div className="w-2/12">
+        <div className="laptop:w-1/12 small-phone:w-0">
           <Link className="h-10" to="/">
-            Brand
+            <img src="../images/sfsff.png" alt="logo" />
           </Link>
         </div>
-        <div className="flex justify-evenly w-8/12">
+        <div className="flex justify-evenly big-desktop:w-8/12 laptop:w-9/12 big-tablet:w-full">
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
-              <div className="mt-4 dropdown__categories">
-                <NavLink className="p-4 hover:bg-[#132C33] rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none">
+              <div className="mt-3 dropdown__categories">
+                <NavLink className="p-4 mb-2 hover:bg-[#132C33] rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base">
                   Danh mục
                 </NavLink>
                 <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
@@ -141,8 +141,8 @@ function Navigation() {
                 <div
                   className={
                     !display
-                      ? 'hidden'
-                      : 'container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64'
+                      ? "hidden"
+                      : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
                   }
                 >
                   {user?.notifications.length > 0 ? (
@@ -155,17 +155,17 @@ function Navigation() {
                         {notification.message}
                         <br />
                         <p>
-                          vào lúc{' '}
-                          {notification.time.split('T')[1].slice(0, 8) +
-                            ' ' +
-                            'ngày' +
-                            ' ' +
+                          vào lúc{" "}
+                          {notification.time.split("T")[1].slice(0, 8) +
+                            " " +
+                            "ngày" +
+                            " " +
                             notification.time
                               .slice(0, 10)
                               .toString()
-                              .split('-')
+                              .split("-")
                               .reverse()
-                              .join('-')}
+                              .join("-")}
                         </p>
                       </div>
                     ))
@@ -186,7 +186,7 @@ function Navigation() {
               ) : (
                 <div className="mt-4 dropdown__profile relative">
                   <NavLink
-                    className="p-4 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none"
+                    className="p-4 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
                     to="/"
                   >
                     {user.name} <i className="fa-solid fa-caret-down" />
@@ -226,12 +226,12 @@ function Navigation() {
               )}
             </li>
             <li className="items-center flex flex-row">
-              <div className="w-6/12">
-                <input className="mt-2 mx-2 p-1 rounded w-full"></input>
+              <div className="desktop:w-6/12 big-tablet:w-5/12">
+                <input className="mt-2 mx-2 p-1 rounded w-full" placeholder="Tìm kiếm"></input>
               </div>
 
-              <div className="w-6/12 pl-8">
-                <ul className="flex flex-row justify-around text-white">
+              <div className="desktop:w-6/12 pl-8 laptop:w-7/12 big-tablet:w-8/12">
+                <ul className="flex flex-row justify-around text-white desktop:text-base laptop:text-sm big-tablet:text-xs">
                   <li>SĐT: 0123456789</li>
                   <li>Tuyển dụng</li>
                   <li>Khuyến mãi</li>
@@ -252,12 +252,12 @@ function Navigation() {
               </span>
             )}
             <i className="fas fa-shopping-cart text-3xl" />
-            <span className="text-white ml-2 text-xl">Giỏ hàng</span>
+            <span className="text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">Giỏ hàng</span>
           </NavLink>
         </div>
       </ul>
     </div>
-  )
+  );
 }
 
-export default Navigation
+export default Navigation;

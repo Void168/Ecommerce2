@@ -1,38 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import axios from '../axios'
-import Stack from '@mui/material/Stack'
-import Pagination from '@mui/material/Pagination'
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "../axios";
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
+import Loading from "./Loading";
 
 function OrderList() {
-  const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(false)
-  const products = useSelector((state) => state.products)
-  const [page, setPage] = useState(1)
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const products = useSelector((state) => state.products);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
-      .get('/orders')
+      .get("/orders")
       .then(({ data }) => {
-        setLoading(false)
-        setOrders(data)
+        setLoading(false);
+        setOrders(data);
       })
       .catch((e) => {
-        setLoading(false)
-      })
-  }, [])
+        setLoading(false);
+      });
+  }, []);
 
   const markShipped = (orderId, ownerId) => {
     axios
       .patch(`/orders/${orderId}/mark-shipped`, { ownerId })
       .then(({ data }) => setOrders(data))
-      .catch((e) => console.log(e))
-  }
+      .catch((e) => console.log(e));
+  };
 
   const showOrder = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -40,122 +41,128 @@ function OrderList() {
         <p className="text-center pt-4">Chưa có đơn hàng nào</p>
       ) : (
         <>
-          <div className="my-4">
-            <p className="text-3xl">Chi tiết đơn hàng</p>
-          </div>
-          <table className="w-full my-4">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Tên khách hàng</th>
-                <th>Số sản phẩm</th>
-                <th>Tổng cộng</th>
-                <th>Địa chỉ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {page === 1 ? (
-                <>
-                  {orders
-                    .slice(orders.length - 8, orders.length)
-                    .map((order) => (
-                      <tr key={order}>
-                        <td>{order._id}</td>
-                        <td>{order.owner?.name}</td>
-                        <td>{order.count}</td>
-                        <td>
-                          {order.total.toLocaleString('it-IT', {
-                            style: 'currency',
-                            currency: 'VND',
-                          })}
-                        </td>
-                        <td>{order.address}</td>
-                        <td>
-                          {order.status === 'Đang xử lý' ? (
-                            <button
-                              size="sm"
-                              onClick={() =>
-                                markShipped(order._id, order.owner?._id)
-                              }
-                              className="bg-[#132C33]"
-                            >
-                              Đánh giấu đã vận chuyển
-                            </button>
-                          ) : (
-                            <div bg="success">Đã giao hàng</div>
-                          )}
-                        </td>
-                        <td>
-                          <span
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => showOrder(products)}
-                          >
-                            Xem đơn hàng <i className="fa fa-eye"></i>
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                </>
-              ) : (
-                <>
-                  {orders
-                    .slice(
-                      8 * (Math.round(orders.length / 8) - page),
-                      8 * (Math.round(orders.length / 8) - page + 1),
-                    )
-                    .map((order) => (
-                      <tr key={order}>
-                        <td>{order._id}</td>
-                        <td>{order.owner?.name}</td>
-                        <td>{order.count}</td>
-                        <td>
-                          {order.total.toLocaleString('it-IT', {
-                            style: 'currency',
-                            currency: 'VND',
-                          })}
-                        </td>
-                        <td>{order.address}</td>
-                        <td>
-                          {order.status === 'Đang xử lý' ? (
-                            <button
-                              size="sm"
-                              onClick={() =>
-                                markShipped(order._id, order.owner?._id)
-                              }
-                              className="bg-[#132C33]"
-                            >
-                              Đánh giấu đã vận chuyển
-                            </button>
-                          ) : (
-                            <div bg="success">Đã giao hàng</div>
-                          )}
-                        </td>
-                        <td>
-                          <span
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => showOrder(products)}
-                          >
-                            Xem đơn hàng <i className="fa fa-eye"></i>
-                          </span>
-                        </td>
-                      </tr>
-                    ))
-                    .reverse()}
-                </>
-              )}
-            </tbody>
-          </table>
-          <Stack spacing={2} className="p-1 rounded-lg">
-            <Pagination
-              count={Math.round(orders.length / 8)}
-              color="primary"
-              onChange={(e, value) => setPage(value)}
-            />
-          </Stack>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <div className="my-4">
+                <p className="text-3xl">Chi tiết đơn hàng</p>
+              </div>
+              <table className="w-full my-4">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tên khách hàng</th>
+                    <th>Số sản phẩm</th>
+                    <th>Tổng cộng</th>
+                    <th>Địa chỉ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {page === 1 ? (
+                    <>
+                      {orders
+                        .slice(orders.length - 8, orders.length)
+                        .map((order) => (
+                          <tr key={order}>
+                            <td>{order._id}</td>
+                            <td>{order.owner?.name}</td>
+                            <td>{order.count}</td>
+                            <td>
+                              {order.total.toLocaleString("it-IT", {
+                                style: "currency",
+                                currency: "VND",
+                              })}
+                            </td>
+                            <td>{order.address}</td>
+                            <td>
+                              {order.status === "Đang xử lý" ? (
+                                <button
+                                  size="sm"
+                                  onClick={() =>
+                                    markShipped(order._id, order.owner?._id)
+                                  }
+                                  className="bg-[#132C33]"
+                                >
+                                  Đánh giấu đã vận chuyển
+                                </button>
+                              ) : (
+                                <div bg="success">Đã giao hàng</div>
+                              )}
+                            </td>
+                            <td>
+                              <span
+                                style={{ cursor: "pointer" }}
+                                onClick={() => showOrder(products)}
+                              >
+                                Xem đơn hàng <i className="fa fa-eye"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                    </>
+                  ) : (
+                    <>
+                      {orders
+                        .slice(
+                          8 * (Math.round(orders.length / 8) - page),
+                          8 * (Math.round(orders.length / 8) - page + 1)
+                        )
+                        .map((order) => (
+                          <tr key={order}>
+                            <td>{order._id}</td>
+                            <td>{order.owner?.name}</td>
+                            <td>{order.count}</td>
+                            <td>
+                              {order.total.toLocaleString("it-IT", {
+                                style: "currency",
+                                currency: "VND",
+                              })}
+                            </td>
+                            <td>{order.address}</td>
+                            <td>
+                              {order.status === "Đang xử lý" ? (
+                                <button
+                                  size="sm"
+                                  onClick={() =>
+                                    markShipped(order._id, order.owner?._id)
+                                  }
+                                  className="bg-[#132C33]"
+                                >
+                                  Đánh giấu đã vận chuyển
+                                </button>
+                              ) : (
+                                <div bg="success">Đã giao hàng</div>
+                              )}
+                            </td>
+                            <td>
+                              <span
+                                style={{ cursor: "pointer" }}
+                                onClick={() => showOrder(products)}
+                              >
+                                Xem đơn hàng <i className="fa fa-eye"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                        .reverse()}
+                    </>
+                  )}
+                </tbody>
+              </table>
+              <Stack spacing={2} className="p-1 rounded-lg">
+                <Pagination
+                  count={Math.round(orders.length / 8)}
+                  color="primary"
+                  onChange={(e, value) => setPage(value)}
+                />
+              </Stack>
+            </>
+          )}
         </>
       )}
     </>
-  )
+  );
 }
 
-export default OrderList
+export default OrderList;

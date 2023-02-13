@@ -24,6 +24,7 @@ import Promo from './pages/Promo'
 import Payment from './pages/Payment'
 import Shipping from './pages/Shipping'
 import NewAriticles from './pages/NewArticles'
+import NavigationResponsive from './components/NavigationResponsive'
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0)
@@ -46,7 +47,7 @@ function App() {
         dispatch(addNotification(msgObj))
       }
     })
-  }, [dispatch])
+  }, [dispatch, user._id, user.isAdmin])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -58,6 +59,7 @@ function App() {
         <ScrollToTop />
         <header>
           <Navigation />
+          <NavigationResponsive />
         </header>
         <AppProvider>
           <main className="min-h-screen py-8">
