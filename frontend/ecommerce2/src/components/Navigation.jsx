@@ -15,10 +15,18 @@ function Navigation() {
   const bellRef = useRef(null);
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const signoutHandler = () => {
     navigate("/login");
     dispatch(logout());
+  };
+  const handleOpen = () => {
+    if (open) setOpen(false);
+    else setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const unreadNotifications = user?.notifications?.reduce(
@@ -28,18 +36,17 @@ function Navigation() {
     },
     0
   );
-  const activeLink = "bg-[#51C4D3] text-black desktop:p-4 big-tablet:px-2 big-tablet:py-4 rounded-full desktop:text-lg big-tablet:text-base";
+  const activeLink =
+    "bg-[#51C4D3] text-black desktop:p-4 big-tablet:px-2 big-tablet:py-4 rounded-full desktop:text-lg big-tablet:text-base";
   const normalLink =
     "p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm ease-in-out duration-300 desktop:text-lg big-tablet:text-base";
 
   const handleToggleNotifications = () => {
     const position = bellRef.current.getBoundingClientRect();
     setBellPos(position);
-    if (display) {
-      setDisplay(false);
-    } else {
-      setDisplay(true);
-    }
+    if (display) setDisplay(false);
+    else setDisplay(true);
+
     dispatch(resetNotifications());
     if (unreadNotifications > 0)
       axios.post(`/users/${user._id}/updateNotifications`);
@@ -53,7 +60,7 @@ function Navigation() {
     }
   };
   window.addEventListener("scroll", setFixed);
-
+  console.log(open);
   return (
     <div
       className={
@@ -72,15 +79,25 @@ function Navigation() {
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
               <div className="mt-3 dropdown__categories">
-                <NavLink className="p-4 mb-2 hover:bg-[#132C33] rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base">
+                <NavLink
+                  onClick={handleOpen}
+                  className="p-4 mb-2 hover:bg-[#132C33] rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base"
+                >
                   Danh mục
                 </NavLink>
-                <div className="grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm">
+                <div
+                  className={
+                    !open
+                      ? "hidden"
+                      : "grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm"
+                  }
+                >
                   {categories.map((category) => (
                     <div key={category.id}>
                       <Link
                         to={`/category/${category.name.toLocaleLowerCase()}`}
                         className="dropdown__categories--element"
+                        onClick={handleClose}
                       >
                         <div className="mt-2 p-6 text-center">
                           <img
@@ -227,7 +244,10 @@ function Navigation() {
             </li>
             <li className="items-center flex flex-row">
               <div className="desktop:w-6/12 big-tablet:w-5/12">
-                <input className="mt-2 mx-2 p-1 rounded w-full" placeholder="Tìm kiếm"></input>
+                <input
+                  className="mt-2 mx-2 p-1 rounded w-full"
+                  placeholder="Tìm kiếm"
+                ></input>
               </div>
 
               <div className="desktop:w-6/12 pl-8 laptop:w-7/12 big-tablet:w-8/12">
@@ -252,7 +272,9 @@ function Navigation() {
               </span>
             )}
             <i className="fas fa-shopping-cart text-3xl" />
-            <span className="text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">Giỏ hàng</span>
+            <span className="text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">
+              Giỏ hàng
+            </span>
           </NavLink>
         </div>
       </ul>

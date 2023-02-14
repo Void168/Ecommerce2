@@ -155,7 +155,7 @@ function NavigationResponsive() {
         aria-describedby="modal-modal-description"
         className="duration-300"
       >
-        <Box className="transform -translate-y-full duration-300 absolute bg-[#D8E3E7] w-full tablet:top-64 big-phone:top-20 m-auto container tablet:inset-x-0 big-phone:left-1/4 galaxy-fold:inset-x-0 galaxy-fold:top-24 galaxy-fold:left-6 rounded-lg">
+        <Box className="duration-300 absolute bg-[#D8E3E7] w-full tablet:top-64 big-phone:top-20 tablet:inset-x-24 big-phone:left-1/4 galaxy-fold:inset-x-0 galaxy-fold:top-24 galaxy-fold:left-6 rounded-lg">
           <Typography id="modal-modal-description">
             <div className="grid tablet:grid-cols-4 big-phone:grid-cols-2 p-2 small-phone:grid-cols-3 absolute bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max ">
               {categories.map((category) => (

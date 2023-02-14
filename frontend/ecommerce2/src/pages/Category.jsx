@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import FilterPrice from "../components/FilterPrice";
 import { AppContext } from "../context/AppContext";
+import FilterPriceResponsive from "../components/FilterPriceResponsive";
 
 function Category() {
   const { category } = useParams();
@@ -75,7 +76,7 @@ function Category() {
             />
           </div>
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
-            <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm">
+            <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm h-256 laptop:block galaxy-fold:hidden">
               <FilterPrice />
               {productsSearch.filter(
                 (filteredProduct) =>
@@ -97,7 +98,10 @@ function Category() {
                 </p>
               ) : null}
             </div>
-            <div className="container mx-auto col-span-3 px-4">
+            <div className="container mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
+              <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
+                <FilterPriceResponsive />
+              </div>
               <div className="">
                 {loading ? (
                   <Loading />
@@ -107,7 +111,7 @@ function Category() {
                       <p>Không tìm thấy sản phẩm phù hợp</p>
                     ) : (
                       <div className="rounded-lg shadow-sm bg-[#126E82] py-4">
-                        <div className="grid lg:grid-cols-4 gap-4 p-4 sm:grid-cols-3 h-256">
+                        <div className="p-4 grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 max-h-max">
                           <>
                             {page === 1 ? (
                               <>

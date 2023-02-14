@@ -1,9 +1,6 @@
 module.exports = {
   content: ['./src/**/*.{ts,js,jsx,tsx}'],
   theme: {
-    fontSize:{
-      'ssm':'0.5rem'
-    },
     screens: {
       'galaxy-fold':'280px',
       'small-phone':'320px',
