@@ -25,7 +25,7 @@ import Payment from "./pages/Payment";
 import Shipping from "./pages/Shipping";
 import NewAriticles from "./pages/NewArticles";
 import NavigationResponsive from "./components/NavigationResponsive";
-import CartResponsive from "./components/CartResponsive";
+import CartButton from "./components/CartButton";
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="bg-[#D8E3E7]">
       <BrowserRouter>
-        <CartResponsive />
+        <CartButton />
         <ScrollToTop />
         <header>
           <Navigation />

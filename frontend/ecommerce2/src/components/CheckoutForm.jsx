@@ -60,7 +60,7 @@ function CheckoutForm() {
     }
   }
   return (
-    <div className="my-4 p-2 mr-8">
+    <div className="my-4 p-2">
       <form
         onSubmit={handlePay}
         className="flex flex-col w-full px-8 shadow-sm rounded-lg cart-payment"
@@ -74,7 +74,7 @@ function CheckoutForm() {
             placeholder="First Name"
             value={user.name}
             disabled
-            className="w-6/12 bg-white"
+            className="w-6/12 bg-white small-phone:w-full"
           />
         </div>
         <div md={6}>
@@ -85,7 +85,7 @@ function CheckoutForm() {
             placeholder="Email"
             value={user.email}
             disabled
-            className="w-6/12 bg-white"
+            className="w-6/12 bg-white small-phone:w-full"
           />
         </div>
         <div>
@@ -97,11 +97,11 @@ function CheckoutForm() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
-            className="w-6/12"
+            className="w-6/12 small-phone:w-full"
           />
         </div>
         <div md={5}>
-          <label>Điện thoại</label>
+          <label className="text-gray-400">Điện thoại</label>
           <br />
           <input
             type="phone"
@@ -109,15 +109,15 @@ function CheckoutForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
-            className="w-6/12"
+            className="w-6/12 small-phone:w-full"
           />
         </div>
-        <label htmlFor="card-element">Thông tin thanh toán</label>
-        <CardElement className="w-6/12 shadow-sm p-2 rounded-md bg-white" />
+        <label htmlFor="card-element" className="text-gray-400">Thông tin thanh toán</label>
+        <CardElement className="w-6/12 shadow-sm p-2 rounded-md bg-white small-phone:w-full" />
         {user ? (
           <div className="text-center">
             <button
-              className="mt-3 bg-[#132C33] w-4/12"
+              className="my-3 bg-[#132C33] big-phone:w-4/12 small-phone:w-/12"
               type="submit"
               disabled={user.cart.count <= 0 || paying || isSuccess}
             >

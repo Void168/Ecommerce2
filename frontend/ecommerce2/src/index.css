@@ -4,11 +4,11 @@
 
 @layer components {
   body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
   }
 
   main {
-    background: url('./background/background.jpg');
+    background: url("./background/background.jpg");
     background-size: 100%;
   }
 
@@ -42,6 +42,10 @@
   td,
   th {
     @apply border-2 border-[#132C33] p-4 text-center;
+  }
+
+  th{
+    @apply small-phone:p-0 big-phone:p-4
   }
 
   #vertical-tabpanel-0,
@@ -81,8 +85,11 @@
 
 .MuiTab-root,
 .css-ahj2mt-MuiTypography-root,
-.react-calendar {
-  font-family: 'Quicksand', sans-serif !important;
+.react-calendar,
+.MuiBottomNavigationAction-label,
+.MuiListSubheader-root,
+.MuiListItemText-primary {
+  font-family: "Quicksand", sans-serif !important;
 }
 
 .css-wjh20t-MuiPagination-ul li button {
@@ -94,7 +101,7 @@
 }
 
 .cart-payment {
-  background-image: url('./background/background1.jpg');
+  background-image: url("./background/background1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -176,35 +183,35 @@
   color: #132c33 !important;
 }
 
-.menu__bar{
+.menu__bar {
   background-color: #fff;
   width: 100%;
   height: 3px;
 }
 
-.MuiButtonBase-root{
+.MuiButtonBase-root {
   box-shadow: none !important;
 }
 
-.MuiBottomNavigationAction-label{
-  font-family: 'Quicksand', sans-serif !important;
-}
-
 @media (min-width: 280px) {
-  .MuiBottomNavigationAction-label{
+  .MuiBottomNavigationAction-label {
     font-size: 12px !important;
   }
 }
 
 .MuiButtonBase-root:hover {
-background: white !important;
+  background: white !important;
 }
 
-.css-2s90m6-MuiAvatar-root{
+.css-2s90m6-MuiAvatar-root {
   width: 6rem !important;
   height: 6rem !important;
 }
 
-.css-wjh20t-MuiPagination-ul li{
-  padding: 5px
+.css-wjh20t-MuiPagination-ul li {
+  padding: 5px;
+}
+
+.item__name {
+  font-family: "Gruppo", cursive;
 }
