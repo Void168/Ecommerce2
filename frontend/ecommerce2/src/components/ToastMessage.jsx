@@ -5,7 +5,7 @@ import ToastContainer from 'react-bootstrap/ToastContainer'
 function ToastMessage({ bg, title, body }) {
   const [show, setShow] = useState(true)
   return (
-    <ToastContainer className="absolute z-50 right-4 bottom-4 text-white w-2/12">
+    <ToastContainer className="fixed z-50 small-phone:right-4 big-tablet:bottom-4 small-phone:bottom-32 text-white big-tablet:w-3/12 small-phone:w-5/12">
       <Toast
         bg={bg}
         onClose={() => setShow(false)}
