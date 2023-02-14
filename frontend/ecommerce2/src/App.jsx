@@ -62,7 +62,7 @@ function App() {
           <NavigationResponsive />
         </header>
         <AppProvider>
-          <main className="min-h-screen py-8">
+          <main className="min-h-screen laptop:py-8 laptop:px-4">
             <Routes>
               <Route index element={<Home />} />
               <Route path="/about" element={<About />} />

@@ -58,12 +58,12 @@ function Navigation() {
     <div
       className={
         navbar
-          ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-90 small-phone:hidden big-tablet:block"
-          : "w-full sticky z-50 small-phone:hidden big-tablet:block"
+          ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-90 galaxy-fold:hidden big-tablet:block"
+          : "w-full sticky z-50 galaxy-fold:hidden big-tablet:block"
       }
     >
       <ul className="justify-around bg-[#126E82] p-4 flex">
-        <div className="laptop:w-1/12 small-phone:w-0">
+        <div className="laptop:w-1/12 galaxy-fold:w-0">
           <Link className="h-10" to="/">
             <img src="../images/sfsff.png" alt="logo" />
           </Link>

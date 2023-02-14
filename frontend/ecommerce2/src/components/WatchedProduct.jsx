@@ -5,10 +5,10 @@ function WatchedProduct(props) {
   const { product } = props
   return (
     <Link to={`/product/${product._id}`}>
-      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full">
+      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] max-w-full">
         <img
           variant="top"
-          className="shadow-sm rounded-lg mb-4 w-full"
+          className="shadow-sm rounded-lg mb-4 tablet:w-full tablet:h-full"
           src={product.pictures[0]?.url}
           alt="product-pic"
         />

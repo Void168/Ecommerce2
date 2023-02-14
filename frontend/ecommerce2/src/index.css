@@ -190,6 +190,12 @@
   font-family: 'Quicksand', sans-serif !important;
 }
 
+@media (min-width: 280px) {
+  .MuiBottomNavigationAction-label{
+    font-size: 12px !important;
+  }
+}
+
 .MuiButtonBase-root:hover {
 background: white !important;
 }
@@ -197,4 +203,8 @@ background: white !important;
 .css-2s90m6-MuiAvatar-root{
   width: 6rem !important;
   height: 6rem !important;
+}
+
+.css-wjh20t-MuiPagination-ul li{
+  padding: 5px
 }

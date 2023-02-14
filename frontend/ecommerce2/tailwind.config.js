@@ -1,7 +1,11 @@
 module.exports = {
   content: ['./src/**/*.{ts,js,jsx,tsx}'],
   theme: {
+    fontSize:{
+      'ssm':'0.5rem'
+    },
     screens: {
+      'galaxy-fold':'280px',
       'small-phone':'320px',
       'big-phone':'540px',
       'tablet': '640px',
@@ -24,7 +28,7 @@ module.exports = {
         xsm: '22rem',
         vs: '16rem',
       },
-      minHeight: {
+      maxHeight: {
         xl: '24rem',
       },
       height: {

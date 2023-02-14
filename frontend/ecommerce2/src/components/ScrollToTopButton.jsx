@@ -28,7 +28,7 @@ const ScrollToTopButton = () => {
       <img
         src="/images/top.png"
         alt="scrollToTop"
-        className="shadow-none w-12 h-12 right-4 fixed z-50 bottom-8 cursor-pointer animate-bounce opacity-70 hover:opacity-100 ease-in-out duration-300"
+        className="shadow-none w-12 h-12 fixed z-20 big-tablet:bottom-8 right-4 small-phone:bottom-16 cursor-pointer animate-bounce opacity-70 hover:opacity-100 ease-in-out duration-300"
       />
     </div>
   )

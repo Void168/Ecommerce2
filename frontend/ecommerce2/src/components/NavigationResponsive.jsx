@@ -107,67 +107,13 @@ function NavigationResponsive() {
     }
   };
 
-  window.addEventListener("scroll", setFixed);
-  console.log(openAccount + " " + openMore);
   return (
-    // <div
-    //   className={
-    //     navbar
-    //       ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-90 small-phone:block big-tablet:hidden"
-    //       : "w-full sticky z-50 big-tablet:hidden small-phone:block"
-    //   }
-    // >
-    //   <div className="w-full bg-[#126E82]">
-    //     <div className="text-center flex justify-between">
-    //       <Link className="w-6/12" to="/">
-    //         <img src="../images/sfsff.png" alt="logo" />
-    //       </Link>
-    //       <div className="h-10 w-6/12">
-    //         <span className="menu__bar"></span>
-    //         <span className="menu__bar"></span>
-    //         <span className="menu__bar"></span>
-    //       </div>
-    //     </div>
-
-    //   </div>
-    // </div>
     <>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        className="duration-300"
-      >
-        <Box className="transform -translate-y-full duration-300 absolute bg-[#D8E3E7] w-full tablet:top-72 big-phone:top-24 m-auto container tablet:inset-x-0 big-phone:left-1/4 small-phone:inset-x-0 small-phone:top-36 rounded-lg">
-          <Typography id="modal-modal-description">
-            <div className="grid tablet:grid-cols-4 small-phone:grid-cols-2 absolute bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white">
-              {categories.map((category) => (
-                <div key={category.id} onClick={handleClose}>
-                  <Link
-                    to={`/category/${category.name.toLocaleLowerCase()}`}
-                    className="dropdown__categories--element"
-                  >
-                    <div className="mt-2 p-6 text-center">
-                      <img
-                        src={category.img}
-                        alt="category"
-                        className="w-24 h-24 rounded-lg shadow-sm ml-2 "
-                      />
-                      <h1 className="mt-1">{category.name}</h1>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </Typography>
-        </Box>
-      </Modal>
-      <Box className="w-full fixed bottom-0 z-50">
+      <Box className="fixed shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0">
         <BottomNavigation
           showLabels
           value={value}
-          className="w-full"
+          className="w-full overscroll-x-auto galaxy-fold:py-8"
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
@@ -209,22 +155,25 @@ function NavigationResponsive() {
         aria-describedby="modal-modal-description"
         className="duration-300"
       >
-        <Box className="transform -translate-y-full duration-300 absolute bg-[#D8E3E7] w-full tablet:top-72 big-phone:top-24 m-auto container tablet:inset-x-0 big-phone:left-1/4 small-phone:inset-x-0 small-phone:top-36 rounded-lg">
+        <Box className="transform -translate-y-full duration-300 absolute bg-[#D8E3E7] w-full tablet:top-64 big-phone:top-20 m-auto container tablet:inset-x-0 big-phone:left-1/4 galaxy-fold:inset-x-0 galaxy-fold:top-24 galaxy-fold:left-6 rounded-lg">
           <Typography id="modal-modal-description">
-            <div className="grid tablet:grid-cols-4 small-phone:grid-cols-2 absolute bg-[#132C33] mt-3 border-none rounded-xl  z-50 shadow-sm text-white">
+            <div className="grid tablet:grid-cols-4 big-phone:grid-cols-2 p-2 small-phone:grid-cols-3 absolute bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max ">
               {categories.map((category) => (
                 <div key={category.id} onClick={handleClose}>
                   <Link
                     to={`/category/${category.name.toLocaleLowerCase()}`}
                     className="dropdown__categories--element"
                   >
-                    <div className="mt-2 p-6 text-center">
+                    <div className="mt-2 big-phone:p-4 galaxy-fold:p-2 text-center">
                       <img
                         src={category.img}
                         alt="category"
-                        className="w-24 h-24 rounded-lg shadow-sm ml-2 "
+                        className="big-phone:w-24 big-phone:h-24 galaxy-fold:h-16 galaxy-fold:w-16 rounded-lg shadow-sm ml-2 "
                       />
-                      <h1 className="mt-1">{category.name}</h1>
+                    </div>
+                    <div className="text-center mb-4">
+
+                      <h1 className="mt-1 galaxy-fold:text-xs">{category.name}</h1>
                     </div>
                   </Link>
                 </div>
@@ -244,7 +193,11 @@ function NavigationResponsive() {
           <ul className="flex flex-col justify-around p-2 h-screen absolute z-10 w-full bg-[#126E82] text-white">
             <div>
               <li>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className="mx-8"/>
+                <Avatar
+                  alt="Remy Sharp"
+                  src="/static/images/avatar/1.jpg"
+                  className="mx-8"
+                />
               </li>
               <li>
                 {!user ? (
@@ -377,7 +330,7 @@ function NavigationResponsive() {
       >
         {user?.notifications.length > 0 ? (
           user?.notifications.map((notification) => (
-            <div className="border-b border-[#D8E3E7] p-2 text-white h-24 text-xl">
+            <div className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base">
               <p
                 className={`notification-${notification.status}`}
                 key={notification.id}
