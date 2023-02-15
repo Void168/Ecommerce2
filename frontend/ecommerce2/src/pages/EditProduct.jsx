@@ -101,7 +101,9 @@ function EditProduct() {
             >
               <div className="laptop:col-span-2 small-phone:col-span-5 p-4">
                 <div className="small-phone:text-center laptop:text-left">
-                  <strong className="text-3xl">Điều chỉnh sản phẩm</strong>
+                  <strong className="text-3xl small-phone:text-2xl">
+                    Điều chỉnh sản phẩm
+                  </strong>
                 </div>
                 {isSuccess && (
                   <alert variant="success">Cập nhật thành công</alert>
