@@ -7,11 +7,6 @@
     font-family: "Quicksand", sans-serif;
   }
 
-  main {
-    background: url("./background/background.jpg");
-    background-size: 100%;
-  }
-
   .form__element {
     @apply my-8;
   }
@@ -88,7 +83,8 @@
 .react-calendar,
 .MuiBottomNavigationAction-label,
 .MuiListSubheader-root,
-.MuiListItemText-primary {
+.MuiListItemText-primary,
+.MuiInput-root {
   font-family: "Quicksand", sans-serif !important;
 }
 
@@ -219,7 +215,10 @@
 .react-date-picker__inputGroup__input{
   box-shadow: none;
 }
-
+.MuiInputBase-input{
+  padding: 0.5rem 1rem !important;
+  box-shadow: none;
+}
 .react-date-picker__clear-button{
   display: none !important;
 }

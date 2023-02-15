@@ -1,8 +1,16 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom';
 
 function Footer() {
+  const location = useLocation()
   return (
-    <div className="bg-[#126E82]">
+    <div
+      className={
+        location === "/login" || location === "/register"
+          ? "bg-[#126E82]"
+          : "bg-[#126E82] big-phone:block small-phone:hidden"
+      }
+    >
       <div className="container mx-auto">
         <div>
           <div xl={3} lg={3} md={12}>
@@ -47,14 +55,14 @@ function Footer() {
             lg={5}
             md={12}
             className="left-3"
-            style={{ textAlign: 'center' }}
+            style={{ textAlign: "center" }}
           >
             {/* <Map /> */}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Footer

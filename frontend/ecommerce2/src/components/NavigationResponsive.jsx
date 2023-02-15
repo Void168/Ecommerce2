@@ -15,9 +15,9 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Avatar from "@mui/material/Avatar";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 function NavigationResponsive() {
-  const [navbar, setNavbar] = useState(false);
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [openAccount, setOpenAccount] = useState(false);
@@ -99,14 +99,6 @@ function NavigationResponsive() {
       axios.post(`/users/${user._id}/updateNotifications`);
   };
 
-  const setFixed = () => {
-    if (window.scrollY >= 200) {
-      setNavbar(true);
-    } else {
-      setNavbar(false);
-    }
-  };
-
   return (
     <>
       <Box className="fixed shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0">
@@ -128,19 +120,35 @@ function NavigationResponsive() {
             icon={<CategoryIcon />}
             onClick={handleOpen}
           />
-          <BottomNavigationAction
-            label="Tài khoản"
-            icon={<AccountCircleIcon />}
-            onClick={handleOpenAccount}
-          />
-          <BottomNavigationAction
-            label="Thông báo"
-            icon={<AccountCircleIcon />}
-            onClick={handleOpenNoti}
-          />
-          <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-3/4 top-1 text-sm">
-            {unreadNotifications}
-          </span>
+          {user ? (
+            <BottomNavigationAction
+              label="Tài khoản"
+              icon={<AccountCircleIcon />}
+              onClick={handleOpenAccount}
+            />
+          ) : (
+            <BottomNavigationAction
+              label="Đăng nhập"
+              icon={<AccountCircleIcon />}
+              onClick={() => navigate("/login")}
+            />
+          )}
+
+          {user ? (
+            <>
+              <BottomNavigationAction
+                label="Thông báo"
+                icon={<NotificationsActiveIcon />}
+                onClick={handleOpenNoti}
+              />
+              <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute right-1/4 bottom-8 text-sm z-10">
+                {unreadNotifications}
+              </span>
+            </>
+          ) : (
+            null
+          )}
+
           <BottomNavigationAction
             label="Xem thêm"
             icon={<MoreHorizIcon />}
@@ -172,8 +180,9 @@ function NavigationResponsive() {
                       />
                     </div>
                     <div className="text-center mb-4">
-
-                      <h1 className="mt-1 galaxy-fold:text-xs">{category.name}</h1>
+                      <h1 className="mt-1 galaxy-fold:text-xs">
+                        {category.name}
+                      </h1>
                     </div>
                   </Link>
                 </div>
@@ -189,7 +198,7 @@ function NavigationResponsive() {
             : "fixed w-full translate-x-full duration-300"
         }
       >
-        {user.isAdmin ? (
+        {user?.isAdmin ? (
           <ul className="flex flex-col justify-around p-2 h-screen absolute z-10 w-full bg-[#126E82] text-white">
             <div>
               <li>
@@ -239,7 +248,7 @@ function NavigationResponsive() {
               </li>
             </div>
             <div>
-              <li className="text-center flex-end" onClick={handleClose}>
+              <li className="text-center flex-end mb-20" onClick={handleClose}>
                 <button
                   onClick={signoutHandler}
                   className="bg-[#132C33] text-xl"
@@ -279,7 +288,7 @@ function NavigationResponsive() {
         }
       >
         <ul className="bg-[#126E82] p-4 flex">
-          <ul className="w-full flex flex-col container mx-auto text-white h-screen">
+          <ul className="w-full flex flex-col container mx-auto text-white h-screen overflow-y-auto">
             <li className=" flex flex-col text-2xl">
               <NavLink
                 className={({ isActive }) =>

@@ -15,6 +15,10 @@ module.exports = {
       'big-desktop':'1536px'
     },
     extend: {
+      backgroundImage: {
+        'bg': "url('/src/background/bg-login.jpg')",
+        'main':"url('/src/background/bg-main.jpg')"
+      },
       colors: {
         'nav-color': 'linear-gradient(0deg, rgba(216,227,231,1) 0%, rgba(18,110,130,1) 35%, rgba(19,44,51,1) 100%)'
       },

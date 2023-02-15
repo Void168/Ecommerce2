@@ -144,52 +144,60 @@ function Navigation() {
               >
                 Vận chuyển
               </NavLink>
-              <NavLink onClick={handleToggleNotifications} className="relative">
-                <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
-                  {unreadNotifications}
-                </span>
-                <i
-                  className="fas fa-bell mt-5"
-                  ref={bellRef}
-                  data-count={unreadNotifications || null}
-                ></i>
-                {/* notifications */}
-                <div
-                  className={
-                    !display
-                      ? "hidden"
-                      : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
-                  }
+              {user ? (
+                <NavLink
+                  onClick={handleToggleNotifications}
+                  className="relative"
                 >
-                  {user?.notifications.length > 0 ? (
-                    user?.notifications.map((notification) => (
-                      <div className="border-b border-[#132C33] py-2">
-                        <p
-                          className={`notification-${notification.status}`}
-                          key={notification.id}
-                        ></p>
-                        {notification.message}
-                        <br />
-                        <p>
-                          vào lúc{" "}
-                          {notification.time.split("T")[1].slice(0, 8) +
-                            " " +
-                            "ngày" +
-                            " " +
-                            notification.time
-                              .slice(0, 10)
-                              .toString()
-                              .split("-")
-                              .reverse()
-                              .join("-")}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <span>Không có thông báo mới</span>
-                  )}
-                </div>
-              </NavLink>
+                  <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
+                    {unreadNotifications}
+                  </span>
+                  <i
+                    className="fas fa-bell mt-5"
+                    ref={bellRef}
+                    data-count={unreadNotifications || null}
+                  ></i>
+                  {/* notifications */}
+                  {user ? (
+                    <div
+                      className={
+                        !display
+                          ? "hidden"
+                          : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
+                      }
+                    >
+                      {user?.notifications.length > 0 ? (
+                        user?.notifications.map((notification) => (
+                          <div className="border-b border-[#132C33] py-2">
+                            <p
+                              className={`notification-${notification.status}`}
+                              key={notification.id}
+                            ></p>
+                            {notification.message}
+                            <br />
+                            <p>
+                              vào lúc{" "}
+                              {notification.time.split("T")[1].slice(0, 8) +
+                                " " +
+                                "ngày" +
+                                " " +
+                                notification.time
+                                  .slice(0, 10)
+                                  .toString()
+                                  .split("-")
+                                  .reverse()
+                                  .join("-")}
+                            </p>
+                          </div>
+                        ))
+                      ) : (
+                        <span>Không có thông báo mới</span>
+                      )}
+                    </div>
+                  ) : null}
+                </NavLink>
+              ) : null}
+
               {!user ? (
                 <NavLink
                   className={({ isActive }) =>
@@ -207,7 +215,7 @@ function Navigation() {
                   >
                     {user.name} <i className="fa-solid fa-caret-down" />
                   </NavLink>
-                  {user.isAdmin ? (
+                  {user?.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48">
                       <div className="bg-[#51C4D3] rounded-b-3xl p-2">
                         <li className="my-1">

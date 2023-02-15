@@ -1,5 +1,5 @@
 import Navigation from "./components/Navigation";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -34,6 +34,8 @@ window.onbeforeunload = function () {
 function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const location = useLocation();
+  
   useEffect(() => {
     const socket = io("http://localhost:8080");
     socket.off("notification").on("notification", (msgObj, user_id) => {
@@ -48,7 +50,7 @@ function App() {
         dispatch(addNotification(msgObj));
       }
     });
-  }, [dispatch, user._id, user.isAdmin]);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -56,51 +58,55 @@ function App() {
 
   return (
     <div className="bg-[#D8E3E7]">
-      <BrowserRouter>
-        <CartButton />
-        <ScrollToTop />
-        <header>
-          <Navigation />
-          <NavigationResponsive />
-        </header>
-        <AppProvider>
-          <main className="min-h-screen py-8 px-4">
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/promo" element={<Promo />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/shipping" element={<Shipping />} />
-              {!user && (
-                <>
-                  <Route path="/login" element={<Login />} />
-                  {user && <Route path="/login" element={<Home />} />}
-                  <Route path="/register" element={<Signup />} />
-                </>
-              )}
-              <Route path="/product/:id" element={<Product />} />
-              <Route path="/category/:category" element={<Category />} />
-              {user && <Route path="/cart" element={<Cart />} />}
-              <Route path="/order/:id" element={<OrderDetail />}></Route>
+      <CartButton />
+      <ScrollToTop />
+      <header>
+        <Navigation />
+        <NavigationResponsive />
+      </header>
+      <AppProvider>
+        <main
+          className={
+            location.pathname === "/login" || location.pathname === "/register"
+              ? "py-8 px-4 small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round h-screen"
+              : "py-8 px-4"
+          }
+        >
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/promo" element={<Promo />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/shipping" element={<Shipping />} />
+            {!user && (
+              <>
+                <Route path="/login" element={<Login />} />
+                {user && <Route path="/login" element={<Home />} />}
+                <Route path="/register" element={<Signup />} />
+              </>
+            )}
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/category/:category" element={<Category />} />
+            {user && <Route path="/cart" element={<Cart />} />}
+            <Route path="/order/:id" element={<OrderDetail />}></Route>
 
-              <Route path="/new-product" element={<NewProducts />} />
-              <Route path="/new-article" element={<NewAriticles />} />
-              <Route path="*" element={<Home />} />
-              {user && <Route path="/orders" element={<Order />} />}
-              {user && user.isAdmin && (
-                <>
-                  <Route path="/dashboard" element={<Dashboard />}></Route>
-                  <Route path="/product/:id/edit" element={<EditProduct />} />
-                </>
-              )}
-            </Routes>
-            <ScrollToTopButton />
-          </main>
-        </AppProvider>
-        <footer>
-          <Footer />
-        </footer>
-      </BrowserRouter>
+            <Route path="/new-product" element={<NewProducts />} />
+            <Route path="/new-article" element={<NewAriticles />} />
+            <Route path="*" element={<Home />} />
+            {user && <Route path="/orders" element={<Order />} />}
+            {user && user.isAdmin && (
+              <>
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/product/:id/edit" element={<EditProduct />} />
+              </>
+            )}
+          </Routes>
+          <ScrollToTopButton />
+        </main>
+      </AppProvider>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
