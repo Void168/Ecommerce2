@@ -6,9 +6,9 @@ function Footer() {
   return (
     <div
       className={
-        location === "/login" || location === "/register"
+        location === "/login" || location === "/register" || location === "/dashboard"
           ? "bg-[#126E82]"
-          : "bg-[#126E82] big-phone:block small-phone:hidden"
+          : "bg-[#126E82] big-tablet:block small-phone:hidden"
       }
     >
       <div className="container mx-auto">
