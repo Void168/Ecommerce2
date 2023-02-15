@@ -11,15 +11,14 @@ function About() {
     }, 500)
   }, [])
   return (
-    <div className="container mx-auto grid grid-cols-5">
+    <div className="big-phone:container big-phone:mx-auto">
       {loading ? (
         <div className="h-screen flex justify-center items-center absolute text-center w-full">
           <Loading />
         </div>
       ) : (
         <>
-          <div className="col-span-1 p-4 bg-slate-400 shadow-sm"></div>
-          <div className="col-span-4 p-12">
+          <div className="p-12">
             <p className="text-3xl text-center my-8">Giới thiệu WeirdShop</p>
             <p>
               Công Ty Cổ Phần Thương Mại Dịch Vụ WeirdShop Xuất thân từ cửa hàng
@@ -100,6 +99,6 @@ function About() {
         </>
       )}
     </div>
-  )
+  );
 }
 export default About

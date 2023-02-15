@@ -145,9 +145,7 @@ function NavigationResponsive() {
                 {unreadNotifications}
               </span>
             </>
-          ) : (
-            null
-          )}
+          ) : null}
 
           <BottomNavigationAction
             label="Xem thêm"
@@ -261,7 +259,7 @@ function NavigationResponsive() {
         ) : (
           <ul className="flex flex-col text-black absolute z-10">
             <li onClick={handleToggleNotifications} className="relative">
-              <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
+              <span className="bg-red-400 p6x-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
                 {unreadNotifications}
               </span>
               <i
@@ -291,6 +289,7 @@ function NavigationResponsive() {
           <ul className="w-full flex flex-col container mx-auto text-white h-screen overflow-y-auto">
             <li className=" flex flex-col text-2xl">
               <NavLink
+                onClick={handleOpenMore}
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
                 }
@@ -299,6 +298,7 @@ function NavigationResponsive() {
                 Về chúng tôi
               </NavLink>
               <NavLink
+                onClick={handleOpenMore}
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
                 }
@@ -307,6 +307,7 @@ function NavigationResponsive() {
                 Khuyến mãi
               </NavLink>
               <NavLink
+                onClick={handleOpenMore}
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
                 }
@@ -315,6 +316,7 @@ function NavigationResponsive() {
                 Thanh toán
               </NavLink>
               <NavLink
+                onClick={handleOpenMore}
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
                 }

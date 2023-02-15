@@ -11,7 +11,7 @@ function Payment() {
     }, 500)
   }, [])
   return (
-    <div className="container mx-auto">
+    <div className="big-phone:container big-phone:mx-auto">
       {loading ? (
         <div className="h-screen flex justify-center items-center absolute text-center w-full">
           <Loading />
@@ -73,7 +73,7 @@ function Payment() {
         </>
       )}
     </div>
-  )
+  );
 }
 
 export default Payment

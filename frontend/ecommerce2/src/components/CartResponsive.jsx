@@ -65,7 +65,7 @@ function CartResponsive() {
             >
               <Typography>Thông tin sản phẩm trong giỏ hàng</Typography>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className="overflow-y-auto h-96">
               <Typography>
                 {cart.length > 0 && (
                   <div className="px-2">
@@ -171,7 +171,7 @@ function CartResponsive() {
             >
               <Typography>Thông tin đơn hàng</Typography>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className="overflow-y-auto h-96">
               <Typography>
                 <div className="relative">
                   <span className="absolute">
@@ -231,7 +231,7 @@ function CartResponsive() {
             >
               <Typography>Thanh toán</Typography>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails className="overflow-y-auto h-96">
               <Typography>
                 <Elements stripe={stripePromise}>
                   <CheckoutForm />

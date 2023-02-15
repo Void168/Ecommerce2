@@ -96,7 +96,6 @@ function Shipping() {
     }
   }
   window.addEventListener('scroll', setFixed)
-  console.log(window.scrollY)
 
   useEffect(() => {
     setLoading(true)
@@ -105,80 +104,101 @@ function Shipping() {
     }, 500)
   }, [])
   return (
-    <div className="container mx-auto grid grid-cols-5">
+    <div className="big-phone:container big-phone:mx-auto grid grid-cols-5">
       {loading ? (
         <div className="h-screen flex justify-center items-center absolute text-center w-full">
           <Loading />
         </div>
       ) : (
         <>
-          <div className="col-span-1  text-white">
+          <div className="col-span-1 text-white big-tablet:block small-phone:hidden">
             <div
               className={
                 navbar
-                  ? 'sticky bg-[#126E82] shadow-sm p-4 h-256 bottom-8 top-40'
-                  : 'bg-[#126E82] shadow-sm p-4 h-256'
+                  ? "sticky bg-[#126E82] shadow-sm p-4 big-desktop:h-256 big-tablet:h-200 bottom-8 top-40 overflow-y-auto"
+                  : "bg-[#126E82] shadow-sm p-4 h-256 overflow-y-auto"
               }
             >
               <p
                 onClick={gotoShippingPolicySection}
-                className="text-xl cursor-pointer"
+                className="laptop:text-xl big-tablet:text-base cursor-pointer "
               >
                 Chính sách vận chuyển
               </p>
               <ul className="p-4">
                 <li
                   onClick={gotoReceiveAtStore}
-                  className="cursor-pointer my-4"
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
                 >
                   - Nhận hàng tại Cửa hàng
                 </li>
-                <li onClick={gotoCod} className="cursor-pointer my-4">
+                <li
+                  onClick={gotoCod}
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
+                >
                   - Giao hàng tận nơi
                 </li>
-                <li onClick={gotoPriceList1} className="cursor-pointer my-4">
+                <li
+                  onClick={gotoPriceList1}
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
+                >
                   - Bảng giá dịch vụ vận chuyển hàng hóa
                 </li>
-                <li onClick={gotoNoteReceipt} className="cursor-pointer my-4">
+                <li
+                  onClick={gotoNoteReceipt}
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
+                >
                   - Một số lưu ý khi nhận hàng
                 </li>
               </ul>
 
               <p
-                className="text-xl cursor-pointer"
+                className="laptop:text-xl big-tablet:text-base cursor-pointer"
                 onClick={gotoDeliveryService}
               >
                 Dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản phẩm
               </p>
               <ul className="p-4">
-                <li onClick={gotoPriceList2} className="cursor-pointer my-4">
+                <li
+                  onClick={gotoPriceList2}
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
+                >
                   - Bảng giá dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng
                   sản phẩm
                 </li>
-                <li onClick={gotoScopeDelivery} className="cursor-pointer my-4">
+                <li
+                  onClick={gotoScopeDelivery}
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
+                >
                   - Phạm vi của dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng
                   sản phẩm
                 </li>
               </ul>
 
-              <p className="text-xl cursor-pointer" onClick={gotoSetupService}>
+              <p
+                className="laptop:text-xl big-tablet:text-base cursor-pointer"
+                onClick={gotoSetupService}
+              >
                 Dịch vụ giao hàng cùng thi công, lắp đặt tận nơi và chính sách
                 lắp đặt camera
               </p>
               <ul className="p-4">
                 <li
                   onClick={gotoInstallationOnsite}
-                  className="cursor-pointer my-4"
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
                 >
                   - Dịch vụ giao hàng cùng thi công, lắp đặt tận nơi
                 </li>
-                <li onClick={gotoCameraSetup} className="cursor-pointer my-4">
+                <li
+                  onClick={gotoCameraSetup}
+                  className="cursor-pointer my-4 laptop:text-base big-tablet:text-sm"
+                >
                   - Chính sách lắp đặt Camera
                 </li>
               </ul>
             </div>
           </div>
-          <div className="col-span-4 p-12">
+          <div className="big-tablet:col-span-4 small-phone:col-span-5 p-12">
             <p className="text-4xl mb-4">
               Vận chuyển, lắp đặt, thi công và hỗ trợ kỹ thuật tận nơi
             </p>
@@ -210,8 +230,8 @@ function Shipping() {
                 gian giao hàng dự kiến phụ thuộc vào kho có hàng và địa chỉ nhận
                 hàng của Quý khách. Bảng thời gian dự kiến như sau:
               </p>
-              <div className="flex justify-center">
-                <table className="my-4">
+              <div className="flex justify-center overflow-auto">
+                <table className="my-4 table-fixed">
                   <thead>
                     <th>Tuyến</th>
                     <th>Khu vực</th>
@@ -297,7 +317,7 @@ function Shipping() {
               <p className="my-4 text-xl" ref={priceList1}>
                 Bảng giá dịch vụ vận chuyển hàng hóa
               </p>
-              <div className="flex justify-center">
+              <div className="flex justify-center overflow-auto">
                 <table className="my-4">
                   <thead>
                     <th>Giá trị đơn hàng</th>
@@ -322,7 +342,7 @@ function Shipping() {
               <p className="my-4 text-xl" ref={noteReceipt}>
                 Một số lưu ý khi nhận hàng
               </p>
-              <p className="px-12">
+              <p className="big-phone:px-12 small-phone:px-4">
                 Nếu Quý khách không thể có mặt trong đợt nhận hàng thứ nhất,
                 WeirdShop sẽ liên lạc lại để sắp xếp thời gian giao hàng hoặc
                 hướng dẫn Quý khách tới khu vực điều phối hàng của đơn vị vận
@@ -381,175 +401,181 @@ function Shipping() {
                 Bảng giá dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản
                 phẩm
               </p>
-              <table className="my-4">
-                <thead>
-                  <th>Giá trị đơn hàng</th>
-                  <th>Địa chỉ nhận hàng</th>
-                  <th>Phí vận chuyển</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Dưới 5.000.000đ</td>
-                    <td>Hà Nội, Hồ Chí Minh, Đà Nẵng</td>
-                    <td>55.000đ</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>
-                      Các khu vực mà WeirdShop có cửa hàng (chỉ tính trong bán
-                      kính 10km từ vị trí cửa hàng)
-                    </td>
-                    <td>55.000đ</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Khu vực còn lại</td>
-                    <td>Không áp dụng</td>
-                  </tr>
-                  <tr>
-                    <td>Từ 5.000.000đ trở lên</td>
-                    <td>Hà Nội, Hồ Chí Minh, Đà Nẵng</td>
-                    <td>Miễn phí</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>
-                      Các khu vực mà WeirdShop có cửa hàng (chỉ tính trong bán
-                      kính 10km từ vị trí cửa hàng)
-                    </td>
-                    <td>Miễn phí</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>Khu vực còn lại</td>
-                    <td>Không áp dụng</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="overflow-auto">
+                <table className="my-4">
+                  <thead>
+                    <th>Giá trị đơn hàng</th>
+                    <th>Địa chỉ nhận hàng</th>
+                    <th>Phí vận chuyển</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Dưới 5.000.000đ</td>
+                      <td>Hà Nội, Hồ Chí Minh, Đà Nẵng</td>
+                      <td>55.000đ</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        Các khu vực mà WeirdShop có cửa hàng (chỉ tính trong bán
+                        kính 10km từ vị trí cửa hàng)
+                      </td>
+                      <td>55.000đ</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>Khu vực còn lại</td>
+                      <td>Không áp dụng</td>
+                    </tr>
+                    <tr>
+                      <td>Từ 5.000.000đ trở lên</td>
+                      <td>Hà Nội, Hồ Chí Minh, Đà Nẵng</td>
+                      <td>Miễn phí</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        Các khu vực mà WeirdShop có cửa hàng (chỉ tính trong bán
+                        kính 10km từ vị trí cửa hàng)
+                      </td>
+                      <td>Miễn phí</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>Khu vực còn lại</td>
+                      <td>Không áp dụng</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               <p className="text-xl my-8" ref={scopeDelivery}>
                 Phạm vi của dịch vụ giao hàng cùng cài đặt và hỗ trợ sử dụng sản
                 phẩm
               </p>
-              <table className="my-4">
-                <thead>
-                  <th>Nhóm sản phẩm</th>
-                  <th>Nội dung thực hiện</th>
-                  <th>Ghi chú</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>PC / Laptop</td>
-                    <td>
-                      Kết nối với các thiết bị ngoại vi (*) Bung phần mềm mặc
-                      định cài sẵn trong máy Hỗ trợ cài đặt windows (bản nền)
-                      (nếu khách có yêu cầu), không crack phần mềm Hướng dẫn sử
-                      dụng cơ bản
-                    </td>
-                    <td>
-                      Kết nối với màn hình, máy in/máy quét, kết nối mạng
-                      Internet cho máy tính
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>LCD / Monitor</td>
-                    <td>
-                      Lắp ráp chân đế, kết nối với thiết bị phát, như PC /
-                      Laptop và cài đặt hiển thị.
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Máy in / Máy quét</td>
-                    <td>
-                      Kết nối với máy tính (hoặc mạng nếu máy in qua mạng) và
-                      cài đặt driver (nếu cần) để sử dụng. Hướng dẫn sử dụng cơ
-                      bản.
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Thiết bị ngoại vi (khác)</td>
-                    <td>
-                      Kết nối với thiết bị hiện có và hướng dẫn sử dụng cơ bản
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Linh kiện máy tính</td>
-                    <td>
-                      Lắp ráp vào với thiết bị hiện có và cài đặt driver (nếu
-                      cần)
-                    </td>
-                    <td>
-                      Không lắp ráp PC nguyên bộ tận nơi (WeirdShop sẽ lắp ráp
-                      nguyên bộ tại kho). Trường hợp Quý khách muốn lắp ráp PC
-                      nguyên bộ tại nhà,Quý khách có thể sử dụng dịch vụ Hỗ trợ
-                      tận nơi (WeirdShop sẽ cử nhân sự kỹ thuật chuyên trách đến
-                      hỗ trợ sau cho Quý khách). Không cài đặt lại phần mềm hoặc
-                      chuyển đổi dữ liệu từ ổ cứng cũ qua ổ cứng mới.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Router và các thiết bị bắt, phát lại mạng</td>
-                    <td>
-                      Cài đặt ban đầu nếu có đầy đủ thông tin về quyền truy cập
-                      và thông số của nhà mạng. Kết nối với một, hai thiết bị
-                      đang dùng sẵn để kiểm tra
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Thiết bị âm thanh</td>
-                    <td>
-                      Kết nối nguồn phát hiện có và hướng dẫn sử dụng cơ bản
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Điện máy, điện gia dụng</td>
-                    <td>
-                      Lắp ráp các bộ phận của thiết bị theo hướng dẫn của Nhà
-                      sản xuất và hướng dẫn sử dụng cơ bản
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Tivi</td>
-                    <td>Lắp ráp với chân đế và hướng dẫn sử dụng cơ bản</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Các thiết bị khác</td>
-                    <td>
-                      Lắp ráp các bộ phận của thiết bị theo hướng dẫn của Nhà
-                      sản xuất (nếu có) và hướng dẫn sử dụng cơ bản
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Phần mềm</td>
-                    <td>
-                      Cài đặt phần mềm vào thiết bị sử dụng phù hợp và hướng dẫn
-                      sử dụng cơ bản
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Không áp dụng</td>
-                    <td>
-                      Thiết bị mạng, thiết bị an ninh, Smart-home devices (robot
-                      lau kính), máy chấm công, máy chiếu, tổng đài điện thoại,
-                      các thiết bị phục vụ cho giải pháp doanh nghiệp (server,
-                      network, thiết bị hội nghị...).
-                    </td>
-                    <td>
-                      Quý khác có thể sử dụng gói dịch vụ riêng cho các sản phẩm
-                      này. Khi có nhu cầu, Quý khách liên hệ với nhân viên bán
-                      hàng để khảo sát phạm vi thi công và báo giá.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="overflow-auto">
+                <table className="my-4">
+                  <thead>
+                    <th>Nhóm sản phẩm</th>
+                    <th>Nội dung thực hiện</th>
+                    <th>Ghi chú</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>PC / Laptop</td>
+                      <td>
+                        Kết nối với các thiết bị ngoại vi (*) Bung phần mềm mặc
+                        định cài sẵn trong máy Hỗ trợ cài đặt windows (bản nền)
+                        (nếu khách có yêu cầu), không crack phần mềm Hướng dẫn
+                        sử dụng cơ bản
+                      </td>
+                      <td>
+                        Kết nối với màn hình, máy in/máy quét, kết nối mạng
+                        Internet cho máy tính
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>LCD / Monitor</td>
+                      <td>
+                        Lắp ráp chân đế, kết nối với thiết bị phát, như PC /
+                        Laptop và cài đặt hiển thị.
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Máy in / Máy quét</td>
+                      <td>
+                        Kết nối với máy tính (hoặc mạng nếu máy in qua mạng) và
+                        cài đặt driver (nếu cần) để sử dụng. Hướng dẫn sử dụng
+                        cơ bản.
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Thiết bị ngoại vi (khác)</td>
+                      <td>
+                        Kết nối với thiết bị hiện có và hướng dẫn sử dụng cơ bản
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Linh kiện máy tính</td>
+                      <td>
+                        Lắp ráp vào với thiết bị hiện có và cài đặt driver (nếu
+                        cần)
+                      </td>
+                      <td>
+                        Không lắp ráp PC nguyên bộ tận nơi (WeirdShop sẽ lắp ráp
+                        nguyên bộ tại kho). Trường hợp Quý khách muốn lắp ráp PC
+                        nguyên bộ tại nhà,Quý khách có thể sử dụng dịch vụ Hỗ
+                        trợ tận nơi (WeirdShop sẽ cử nhân sự kỹ thuật chuyên
+                        trách đến hỗ trợ sau cho Quý khách). Không cài đặt lại
+                        phần mềm hoặc chuyển đổi dữ liệu từ ổ cứng cũ qua ổ cứng
+                        mới.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Router và các thiết bị bắt, phát lại mạng</td>
+                      <td>
+                        Cài đặt ban đầu nếu có đầy đủ thông tin về quyền truy
+                        cập và thông số của nhà mạng. Kết nối với một, hai thiết
+                        bị đang dùng sẵn để kiểm tra
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Thiết bị âm thanh</td>
+                      <td>
+                        Kết nối nguồn phát hiện có và hướng dẫn sử dụng cơ bản
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Điện máy, điện gia dụng</td>
+                      <td>
+                        Lắp ráp các bộ phận của thiết bị theo hướng dẫn của Nhà
+                        sản xuất và hướng dẫn sử dụng cơ bản
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Tivi</td>
+                      <td>Lắp ráp với chân đế và hướng dẫn sử dụng cơ bản</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Các thiết bị khác</td>
+                      <td>
+                        Lắp ráp các bộ phận của thiết bị theo hướng dẫn của Nhà
+                        sản xuất (nếu có) và hướng dẫn sử dụng cơ bản
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Phần mềm</td>
+                      <td>
+                        Cài đặt phần mềm vào thiết bị sử dụng phù hợp và hướng
+                        dẫn sử dụng cơ bản
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Không áp dụng</td>
+                      <td>
+                        Thiết bị mạng, thiết bị an ninh, Smart-home devices
+                        (robot lau kính), máy chấm công, máy chiếu, tổng đài
+                        điện thoại, các thiết bị phục vụ cho giải pháp doanh
+                        nghiệp (server, network, thiết bị hội nghị...).
+                      </td>
+                      <td>
+                        Quý khác có thể sử dụng gói dịch vụ riêng cho các sản
+                        phẩm này. Khi có nhu cầu, Quý khách liên hệ với nhân
+                        viên bán hàng để khảo sát phạm vi thi công và báo giá.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <p className="text-2xl my-8" ref={setupService}>
@@ -591,54 +617,57 @@ function Shipping() {
             <p className="text-xl my-8" ref={cameraSetup}>
               Chính sách lắp đặt Camera
             </p>
-            <table className="my-4">
-              <thead>
-                <th>Sản phẩm áp dụng lắp đặt tận nơi</th>
-                <th>Phạm vi áp dụng</th>
-                <th>Mã dịch vụ</th>
-                <th>Đơn vị tính</th>
-                <th>Số lượng</th>
-                <th>Phí lắp đặt (VND)</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Đối với Camera Wifi</td>
-                  <td>Phạm vi dưới 10km</td>
-                  <td>201200658</td>
-                  <td>Cái</td>
-                  <td>1</td>
-                  <td>100.000</td>
-                </tr>
-                <tr>
-                  <td>Đối với Camera IP/ Analog</td>
-                  <td>
-                    Phạm vi dưới 10km tại Tp. Hồ Chí Minh, Hà Nội và Đà Nẵng
-                  </td>
-                  <td>201200659</td>
-                  <td>Cái</td>
-                  <td>1</td>
-                  <td>200.000</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>
-                    Phạm vi trên 10km tại Tp. Hồ Chí Minh, Hà Nội và Đà Nẵng
-                  </td>
-                  <td>201200660</td>
-                  <td>Cái</td>
-                  <td>1</td>
-                  <td>300.000</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Ngoài các tỉnh Tp. Hồ Chí Minh, Hà Nội và Đà Nẵng</td>
-                  <td>201200661</td>
-                  <td>Cái</td>
-                  <td>1</td>
-                  <td>400.000</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="overflow-auto">
+              <table className="my-4">
+                <thead>
+                  <th>Sản phẩm áp dụng lắp đặt tận nơi</th>
+                  <th>Phạm vi áp dụng</th>
+                  <th>Mã dịch vụ</th>
+                  <th>Đơn vị tính</th>
+                  <th>Số lượng</th>
+                  <th>Phí lắp đặt (VND)</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Đối với Camera Wifi</td>
+                    <td>Phạm vi dưới 10km</td>
+                    <td>201200658</td>
+                    <td>Cái</td>
+                    <td>1</td>
+                    <td>100.000</td>
+                  </tr>
+                  <tr>
+                    <td>Đối với Camera IP/ Analog</td>
+                    <td>
+                      Phạm vi dưới 10km tại Tp. Hồ Chí Minh, Hà Nội và Đà Nẵng
+                    </td>
+                    <td>201200659</td>
+                    <td>Cái</td>
+                    <td>1</td>
+                    <td>200.000</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      Phạm vi trên 10km tại Tp. Hồ Chí Minh, Hà Nội và Đà Nẵng
+                    </td>
+                    <td>201200660</td>
+                    <td>Cái</td>
+                    <td>1</td>
+                    <td>300.000</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Ngoài các tỉnh Tp. Hồ Chí Minh, Hà Nội và Đà Nẵng</td>
+                    <td>201200661</td>
+                    <td>Cái</td>
+                    <td>1</td>
+                    <td>400.000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <p className="my-4">
               Lưu ý: - Phạm vi áp dụng được tính từ cửa hàng hoặc Trung tâm Bảo
               hành gần nhất của WeirdShop trên toàn quốc. - Các chi phí trên
@@ -651,13 +680,13 @@ function Shipping() {
             </p>
             <p ref={endPoint}>
               Trường hợp khách hàng có nhu cầu hỗ trợ tận nơi ngoài những nội
-              dung trên đây, vui lòng tham khảo thêm Dịch vụ sửa chữa và bảo trì{' '}
+              dung trên đây, vui lòng tham khảo thêm Dịch vụ sửa chữa và bảo trì{" "}
             </p>
           </div>
         </>
       )}
     </div>
-  )
+  );
 }
 
 export default Shipping

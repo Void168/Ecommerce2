@@ -60,7 +60,7 @@ function CheckoutForm() {
     }
   }
   return (
-    <div className="my-4 p-2">
+    <div className="big-tablet:my-4 p-2">
       <form
         onSubmit={handlePay}
         className="flex flex-col w-full px-8 shadow-sm rounded-lg cart-payment"
@@ -112,7 +112,9 @@ function CheckoutForm() {
             className="w-6/12 small-phone:w-full"
           />
         </div>
-        <label htmlFor="card-element" className="text-gray-400">Thông tin thanh toán</label>
+        <label htmlFor="card-element" className="text-gray-400">
+          Thông tin thanh toán
+        </label>
         <CardElement className="w-6/12 shadow-sm p-2 rounded-md bg-white small-phone:w-full" />
         {user ? (
           <div className="text-center">
@@ -121,7 +123,7 @@ function CheckoutForm() {
               type="submit"
               disabled={user.cart.count <= 0 || paying || isSuccess}
             >
-              {paying ? 'Đang tiến hành...' : 'Thanh toán'}
+              {paying ? "Đang tiến hành..." : "Thanh toán"}
             </button>
           </div>
         ) : (
@@ -131,7 +133,7 @@ function CheckoutForm() {
         )}
       </form>
     </div>
-  )
+  );
 }
 
 export default CheckoutForm
