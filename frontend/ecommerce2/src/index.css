@@ -215,3 +215,11 @@
 .item__name {
   font-family: "Gruppo", cursive;
 }
+
+.react-date-picker__inputGroup__input{
+  box-shadow: none;
+}
+
+.react-date-picker__clear-button{
+  display: none !important;
+}

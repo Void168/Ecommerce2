@@ -60,7 +60,6 @@ function Navigation() {
     }
   };
   window.addEventListener("scroll", setFixed);
-  console.log(open);
   return (
     <div
       className={
