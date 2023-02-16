@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Avatar from "@mui/material/Avatar";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 
 function NavigationResponsive() {
   const [value, setValue] = useState(0);
@@ -101,11 +102,11 @@ function NavigationResponsive() {
 
   return (
     <>
-      <Box className="fixed shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0">
+      <Box className="fixed overscroll-x-auto shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0">
         <BottomNavigation
           showLabels
           value={value}
-          className="w-full overscroll-x-auto galaxy-fold:py-8"
+          className="w-full galaxy-fold:py-8"
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
@@ -135,16 +136,11 @@ function NavigationResponsive() {
           )}
 
           {user ? (
-            <>
-              <BottomNavigationAction
-                label="Thông báo"
-                icon={<NotificationsActiveIcon />}
-                onClick={handleOpenNoti}
-              />
-              <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute right-1/4 bottom-8 text-sm z-10">
-                {unreadNotifications}
-              </span>
-            </>
+            <BottomNavigationAction
+              label="Thông báo"
+              icon={<NotificationsActiveIcon />}
+              onClick={handleOpenNoti}
+            />
           ) : null}
 
           <BottomNavigationAction
@@ -153,6 +149,11 @@ function NavigationResponsive() {
             onClick={handleOpenMore}
           />
         </BottomNavigation>
+        {user ? (
+          <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute inset-x-3/4 bottom-8 text-sm z-50">
+            {unreadNotifications}
+          </span>
+        ) : null}
       </Box>
       <Modal
         open={open}
@@ -161,26 +162,28 @@ function NavigationResponsive() {
         aria-describedby="modal-modal-description"
         className="duration-300"
       >
-        <Box className="duration-300 absolute bg-[#D8E3E7] w-full tablet:top-64 big-phone:top-20 tablet:inset-x-24 big-phone:left-1/4 galaxy-fold:inset-x-0 galaxy-fold:top-24 galaxy-fold:left-6 rounded-lg">
+        <Box className=" container mx-auto w-full rounded-lg tablet:mt-16 small-phone:mt-24">
           <Typography id="modal-modal-description">
-            <div className="grid tablet:grid-cols-4 big-phone:grid-cols-2 p-2 small-phone:grid-cols-3 absolute bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max ">
+            <div className="grid tablet:grid-cols-4 big-phone:grid-cols-2 p-2 small-phone:grid-cols-3 bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max ">
               {categories.map((category) => (
                 <div key={category._id} onClick={handleClose}>
                   <Link
                     to={`/category/${category.name.toLocaleLowerCase()}`}
                     className="dropdown__categories--element"
                   >
-                    <div className="mt-2 big-phone:p-4 galaxy-fold:p-2 text-center">
-                      <img
-                        src={category.img}
-                        alt="category"
-                        className="big-phone:w-24 big-phone:h-24 galaxy-fold:h-16 galaxy-fold:w-16 rounded-lg shadow-sm ml-2 "
-                      />
-                    </div>
-                    <div className="text-center mb-4">
-                      <h1 className="mt-1 galaxy-fold:text-xs">
-                        {category.name}
-                      </h1>
+                    <div className="big-phone:p-4 galaxy-fold:p-2 flex flex-col justify-center">
+                      <div className="text-center">
+                        <img
+                          src={category.img}
+                          alt="category"
+                          className="big-phone:w-24 big-phone:h-24 galaxy-fold:h-16 galaxy-fold:w-16 rounded-lg shadow-sm tablet:mx-4 big-phone:mx-16 small-phone:mx-3"
+                        />
+                      </div>
+                      <div className="my-4 text-center">
+                        <h1 className="mt-1 galaxy-fold:text-xs">
+                          {category.name}
+                        </h1>
+                      </div>
                     </div>
                   </Link>
                 </div>
@@ -192,12 +195,18 @@ function NavigationResponsive() {
       <div
         className={
           openAccount
-            ? "fixed w-full z-40 duration-300 transition-transform ease-in-out"
-            : "fixed w-full translate-x-full duration-300"
+            ? "fixed w-full z-50 duration-300 transition-transform ease-in-out top-0"
+            : "fixed w-full translate-x-full duration-300 top-0"
         }
       >
         {user?.isAdmin ? (
-          <ul className="flex flex-col justify-around p-2 h-screen absolute z-10 w-full bg-[#126E82] text-white">
+          <ul className="p-4 flex flex-col justify-around h-screen absolute z-50 w-full bg-[#126E82] text-white">
+            <div className="mb-4">
+              <DoubleArrowIcon
+                onClick={handleOpenAccount}
+                className="text-white"
+              />
+            </div>
             <div>
               <li>
                 <Avatar
@@ -257,9 +266,9 @@ function NavigationResponsive() {
             </div>
           </ul>
         ) : (
-          <ul className="flex flex-col text-black absolute z-10">
+          <ul className="flex flex-col text-black absolute z-50">
             <li onClick={handleToggleNotifications} className="relative">
-              <span className="bg-red-400 p6x-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
+              <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
                 {unreadNotifications}
               </span>
               <i
@@ -281,12 +290,16 @@ function NavigationResponsive() {
       <div
         className={
           openMore
-            ? "fixed w-full z-40 duration-300 transition-transform ease-in-out"
-            : "fixed w-full translate-x-full duration-300"
+            ? "fixed w-full z-50 duration-300 transition-transform ease-in-out top-0"
+            : "fixed w-full translate-x-full duration-300 top-0"
         }
       >
-        <ul className="bg-[#126E82] p-4 flex">
-          <ul className="w-full flex flex-col container mx-auto text-white h-screen overflow-y-auto">
+        <ul className="bg-[#126E82] p-4 flex flex-col h-screen">
+          <div className="mb-4">
+            <DoubleArrowIcon onClick={handleOpenMore} className="text-white" />
+          </div>
+
+          <ul className="w-full flex flex-col container mx-auto text-white overflow-y-auto">
             <li className=" flex flex-col text-2xl">
               <NavLink
                 onClick={handleOpenMore}
@@ -335,17 +348,20 @@ function NavigationResponsive() {
       <div
         className={
           openNoti
-            ? "fixed w-full z-40 duration-300 transition-transform ease-in-out h-screen bg-[#126E82] scroll-auto"
-            : "fixed w-full translate-x-full duration-300 scroll-auto h-screen"
+            ? "fixed w-full p-4 z-50 duration-300 transition-transform ease-in-out h-screen bg-[#126E82] top-0 overflow-y-auto"
+            : "fixed w-full p-4 translate-x-full duration-300 scroll-auto h-screen top-0"
         }
       >
+        <div className="mb-4">
+          <DoubleArrowIcon onClick={handleOpenNoti} className="text-white" />
+        </div>
         {user?.notifications.length > 0 ? (
           user?.notifications.map((notification) => (
             <div className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base">
-              <p
+              {/* <p
                 className={`notification-${notification.status}`}
                 key={notification._id}
-              ></p>
+              ></p> */}
               {notification.message} vào lúc{" "}
               {notification.time.split("T")[1].slice(0, 8) +
                 " " +

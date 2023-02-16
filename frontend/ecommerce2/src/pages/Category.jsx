@@ -15,6 +15,7 @@ import FilterPriceResponsive from "../components/FilterPriceResponsive";
 
 function Category() {
   const { category } = useParams();
+  console.log(category)
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 

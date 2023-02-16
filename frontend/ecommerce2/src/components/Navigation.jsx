@@ -8,6 +8,7 @@ import axios from "../axios";
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
+  const inputRef = useRef(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,6 +61,28 @@ function Navigation() {
     }
   };
   window.addEventListener("scroll", setFixed);
+
+  const pressKey = (e) => {
+    e.preventDefault();
+    document.addEventListener("keydown", navigateSearch, true);
+  }
+  
+  const navigateSearch = (e) => {
+    if (e.key === "Enter" && inputRef.current.value !== null) {
+      navigate(`/search/${inputRef.current.value}`);
+    }
+    if (e.key === "Enter" && inputRef.current.value === null)
+      navigate('/');
+  };
+
+  const clickSearch = () => {
+    if (inputRef.current.value !== null)
+      navigate(`/search/${inputRef.current.value}`);
+    else {
+      navigate("/");
+    }
+  }
+
   return (
     <div
       className={
@@ -250,11 +273,16 @@ function Navigation() {
               )}
             </li>
             <li className="items-center flex flex-row">
-              <div className="desktop:w-6/12 big-tablet:w-5/12">
+              <div className="desktop:w-6/12 big-tablet:w-5/12 relative">
                 <input
                   className="mt-2 mx-2 p-1 rounded w-full"
                   placeholder="Tìm kiếm"
+                  onChange={pressKey}
+                  ref={inputRef}
                 ></input>
+                <span onClick={clickSearch}>
+                  <i className="fa-solid fa-magnifying-glass absolute right-1 top-4 cursor-pointer border-l-2 pl-2"></i>
+                </span>
               </div>
 
               <div className="desktop:w-6/12 pl-8 laptop:w-7/12 big-tablet:w-8/12">

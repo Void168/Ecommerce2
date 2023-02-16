@@ -27,7 +27,7 @@ function FilterPriceResponsive() {
         <Box>
           <div className="bg-[#126E82] p-8 container mx-auto shadow-sm rounded-lg absolute inset-x-0 small-phone:top-2">
             <p className="tablet:text-3xl text-center tablet:mt-4 text-white small-phone:text-xl small-phone:m-0">
-              Sắp xếp
+              Sắp xếp sản phẩm
             </p>
             <div className="container mx-auto big-phone:my-8 small-phone:my-4 rounded-lg">
               <div className="container mx-auto flex flex-col">

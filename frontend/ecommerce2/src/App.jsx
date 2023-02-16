@@ -26,6 +26,7 @@ import Shipping from "./pages/Shipping";
 import NewAriticles from "./pages/NewArticles";
 import NavigationResponsive from "./components/NavigationResponsive";
 import CartButton from "./components/CartButton";
+import SearchPage from "./pages/SearchPage";
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -85,6 +86,7 @@ function App() {
             <Route path="/promo" element={<Promo />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/shipping" element={<Shipping />} />
+            <Route path="/search/:searchName" element={<SearchPage />} />
             {!user && (
               <>
                 <Route path="/login" element={<Login />} />

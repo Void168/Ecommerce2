@@ -58,7 +58,7 @@
   }
 
   .neon__text {
-    @apply text-3xl bg-gradient-to-r from-sky-900 to-sky-700 shadow-sm text-[#D8E3E7] px-4 banner__titles big-phone:w-6/12 small-phone:w-10/12 shadow-cyan-500/50 my-8
+    @apply big-phone:text-3xl small-phone:text-2xl bg-gradient-to-r from-sky-900 to-sky-700 shadow-sm text-[#D8E3E7] px-4 banner__titles big-phone:w-6/12 small-phone:w-10/12 shadow-cyan-500/50 my-8
   }
 }
 
@@ -199,9 +199,9 @@
   }
 }
 
-.MuiButtonBase-root:hover {
+/* .MuiButtonBase-root:hover {
   background: white !important;
-}
+} */
 
 .css-2s90m6-MuiAvatar-root {
   width: 6rem !important;
