@@ -10,10 +10,13 @@ import Paginate from "../components/Paginate";
 import WatchedProduct from "../components/WatchedProduct";
 import FilterPrice from "../components/FilterPrice";
 import FilterPriceResponsive from "../components/FilterPriceResponsive";
+import Article from "../components/Article";
+import { Link } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const articles = useSelector((state) => state.articles);
   const lastProducts = products.slice(0, 8);
   const [loading, setLoading] = useState(false);
   const { value, page, gender, sortPrice, sortAlphabet } =
@@ -41,11 +44,57 @@ function Home() {
           className="w-full big-phone:h-96 laptop:h-full galaxy:h-full"
         />
       )}
-
+      {/* Promo */}
+      <p className="neon__text">
+        Tin công nghệ
+      </p>
+      <div className="grid-cols-4 big-phone:container big-phone:mx-auto my-4">
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 max-h-max bg-promo rounded-lg shadow-sm">
+              {page === 1 ? (
+                <>
+                  {articles.slice(0, 6).map((newArticle) => (
+                    <Article
+                      {...newArticle}
+                      key={newArticle._id}
+                      article={newArticle}
+                      className="col-span-1"
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  {articles
+                    .slice(6 * (page - 1), 6 * page)
+                    .map((newArticle) => (
+                      <Article
+                        {...newArticle}
+                        key={newArticle._id}
+                        article={newArticle}
+                        className="col-span-1"
+                      />
+                    ))}
+                </>
+              )}
+            </div>
+            <div className="text-center my-8">
+              <Link to="/promo">
+                <button>Xem thêm</button>
+              </Link>
+            </div>
+          </>
+        )}
+      </div>
+      <p className="neon__text">
+        Sản phẩm nổi bật
+      </p>
       <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">
-        <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm h-256 laptop:block galaxy-fold:hidden">
+        <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
           <FilterPrice />
-          <p className="text-white px-4 mt-8 text-2xl text-center">
+          <p className="text-white px-4 my-8  big-desktop:text-2xl desktop:text-xl text-center">
             Có{" "}
             {
               products.filter(
@@ -319,9 +368,11 @@ function Home() {
         </div>
       </div>
       {/* last products */}
+      <p className="neon__text">
+        Sản phẩm đã xem
+      </p>
       <div className="container mx-auto">
-        <h2 className="text-2xl">Sản phẩm đã xem</h2>
-        <div className="grid laptop:grid-cols-8 gap-4 bg-[#126E82] p-4 my-4 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+        <div className="grid laptop:grid-cols-8 gap-4 bg-[#126E82] px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
           {loading ? (
             <Loading />
           ) : (

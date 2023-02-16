@@ -1,14 +1,17 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 function Footer() {
-  const location = useLocation()
+  const location = useLocation();
   return (
     <div
       className={
-        location === "/login" || location === "/register" || location === "/dashboard"
-          ? "bg-[#126E82]"
-          : "bg-[#126E82] big-tablet:block small-phone:hidden"
+        location.pathname === "/login" ||
+        location.pathname === "/register" ||
+        location.pathname === "/dashboard" ||
+        location.pathname === "/cart"
+          ? "bg-[#126E82] big-tablet:block small-phone:hidden"
+          : "bg-[#126E82]"
       }
     >
       <div className="container mx-auto">
@@ -65,4 +68,4 @@ function Footer() {
   );
 }
 
-export default Footer
+export default Footer;

@@ -35,7 +35,7 @@ function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
-  
+
   useEffect(() => {
     const socket = io("http://localhost:8080");
     socket.off("notification").on("notification", (msgObj, user_id) => {
@@ -61,6 +61,13 @@ function App() {
       <CartButton />
       <ScrollToTop />
       <header>
+        <div className="flex justify-center">
+          <img
+            src="/images/logo.png"
+            alt="mini-logo"
+            className="big-tablet:hidden small-phone:block shadow-none"
+          />
+        </div>
         <Navigation />
         <NavigationResponsive />
       </header>

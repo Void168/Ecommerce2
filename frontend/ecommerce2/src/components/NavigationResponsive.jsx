@@ -165,7 +165,7 @@ function NavigationResponsive() {
           <Typography id="modal-modal-description">
             <div className="grid tablet:grid-cols-4 big-phone:grid-cols-2 p-2 small-phone:grid-cols-3 absolute bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max ">
               {categories.map((category) => (
-                <div key={category.id} onClick={handleClose}>
+                <div key={category._id} onClick={handleClose}>
                   <Link
                     to={`/category/${category.name.toLocaleLowerCase()}`}
                     className="dropdown__categories--element"
@@ -344,7 +344,7 @@ function NavigationResponsive() {
             <div className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base">
               <p
                 className={`notification-${notification.status}`}
-                key={notification.id}
+                key={notification._id}
               ></p>
               {notification.message} vào lúc{" "}
               {notification.time.split("T")[1].slice(0, 8) +

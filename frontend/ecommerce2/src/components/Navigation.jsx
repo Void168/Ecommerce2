@@ -64,7 +64,7 @@ function Navigation() {
     <div
       className={
         navbar
-          ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-90 galaxy-fold:hidden big-tablet:block"
+          ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-95 galaxy-fold:hidden big-tablet:block"
           : "w-full sticky z-50 galaxy-fold:hidden big-tablet:block"
       }
     >
@@ -171,7 +171,7 @@ function Navigation() {
                           <div className="border-b border-[#132C33] py-2">
                             <p
                               className={`notification-${notification.status}`}
-                              key={notification.id}
+                              key={user._id}
                             ></p>
                             {notification.message}
                             <br />

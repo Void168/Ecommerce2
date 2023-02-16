@@ -13,7 +13,9 @@ function FilterPrice() {
 
   return (
     <>
-      <p className="text-3xl text-center mt-4 text-white">Sắp xếp</p>
+      <p className="desktop:text-3xl laptop:text-xl text-center mt-4 text-white">
+        Sắp xếp
+      </p>
       <div className="container mx-auto my-8 rounded-lg">
         <div className="container mx-auto flex flex-col">
           {sort.map((radio) => (
@@ -25,22 +27,27 @@ function FilterPrice() {
                 value={radio.value}
                 id={radio.id}
                 onChange={isChecked}
+                key={radio.id}
               />
-              <label htmlFor={radio.id} className="sort__label">
+              <label
+                htmlFor={radio.id}
+                className="sort__label laptop:px-2 laptop:py-1 desktop:px-8 desktop:py-4"
+                key={radio._id}
+              >
                 {radio.title}
               </label>
             </>
           ))}
         </div>
       </div>
-      <p className="text-2xl text-center my-4 text-white">
+      <p className="desktop:text-2xl laptop:text-xl text-center my-4 text-white">
         Kéo để chọn mức giá
       </p>
       <Box className="bg-[#D8E3E7] p-4 w-full my-4">
         <Slider
           max={100000000}
           step={10000}
-          getAriaLabel={() => 'Minimum distance'}
+          getAriaLabel={() => "Minimum distance"}
           value={value}
           onChange={handleChange}
           valueLabelDisplay="auto"
@@ -54,9 +61,9 @@ function FilterPrice() {
           <input
             type="text"
             disabled
-            value={value[0].toLocaleString('it-IT', {
-              style: 'currency',
-              currency: 'VND',
+            value={value[0].toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
             })}
             className="w-8/12 text-right"
           />
@@ -66,16 +73,16 @@ function FilterPrice() {
           <input
             type="text"
             disabled
-            value={value[1].toLocaleString('it-IT', {
-              style: 'currency',
-              currency: 'VND',
+            value={value[1].toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
             })}
             className="w-8/12 text-right"
           />
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default FilterPrice

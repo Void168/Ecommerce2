@@ -16,7 +16,7 @@ function WatchedProduct(props) {
         <div bg="warning" text="dark">
           {product.category}
         </div>
-        <div>
+        <div className='truncate'>
           {(product.price * 24000).toLocaleString('it-IT', {
             style: 'currency',
             currency: 'VND',
