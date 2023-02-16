@@ -6,6 +6,7 @@ const UserSchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, 'Bắt buộc'],
+       max:32
     },
     email: {
       type: String,

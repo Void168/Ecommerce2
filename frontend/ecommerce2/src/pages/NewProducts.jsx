@@ -10,6 +10,8 @@ function NewProducts() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [discount, setDiscount] = useState(0);
   const [images, setImages] = useState([]);
   const [imageToRemove, setImageToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -19,10 +21,10 @@ function NewProducts() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !description || !price || !category || !images.length) {
+    if (!name || !description || !price || !category ||!brand || !images.length) {
       return alert("Vui lòng điền vào form hoặc quay lại");
     }
-    createProduct({ name, description, price, category, images }).then(
+    createProduct({ name, description, price, category, brand, discount, images }).then(
       ({ data }) => {
         if (data.length > 0) {
           setTimeout(() => {
@@ -85,7 +87,9 @@ function NewProducts() {
             >
               <div className="laptop:col-span-2 small-phone:col-span-5 p-4">
                 <div className="small-phone:text-center laptop:text-left">
-                  <strong className="big-phone:text-3xl small-phone:text-2xl">Tạo sản phẩm mới</strong>
+                  <strong className="big-phone:text-3xl small-phone:text-2xl">
+                    Tạo sản phẩm mới
+                  </strong>
                 </div>
                 {isSuccess && (
                   <alert variant="success">Tạo sản phẩm thành công</alert>
@@ -127,6 +131,30 @@ function NewProducts() {
                     value={price}
                     required
                     onChange={(e) => setPrice(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Thương hiệu</label>
+                  <br />
+                  <input
+                    className="w-full"
+                    type="text"
+                    placeholder="Nhập giá sản phẩm"
+                    value={brand}
+                    required
+                    onChange={(e) => setBrand(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label>Giảm giá</label>
+                  <br />
+                  <input
+                    className="w-full"
+                    type="text"
+                    placeholder="Nhập giá sản phẩm"
+                    value={discount}
+                    required
+                    onChange={(e) => setDiscount(e.target.value)}
                   />
                 </div>
                 <div onChange={(e) => setCategory(e.target.value)}>

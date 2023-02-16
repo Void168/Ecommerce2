@@ -27,13 +27,27 @@ router.get('/:id', async (req, res) => {
 // create products
 router.post('/', async (req, res) => {
   try {
-    const { name, description, price, category, images: pictures } = req.body
+    const {
+      name,
+      description,
+      price,
+      category,
+      brand,
+      discount,
+      rating,
+      numReview,
+      images: pictures,
+    } = req.body
     const product = await Product.create({
       name,
       description,
       price,
       category,
       pictures,
+      brand,
+      discount,
+      rating,
+      numReview,
     })
     const products = await Product.find()
     res.status(200).json(products)
@@ -147,6 +161,34 @@ router.post('/decrease-cart', async (req, res) => {
     res.status(200).json(user)
   } catch (e) {
     res.status(400).send(e.message)
+  }
+})
+
+router.post('/:id/reviews', async (req, res) => {
+  const productId = req.params.id
+  const product = await Product.findById(productId)
+  if (product) {
+    if (product.reviews.find((x) => x.name === req.user.name)) {
+      return res
+        .status(400)
+        .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' })
+    }
+    const review = {
+      name: req.user.name,
+      rating: Number(req.body.rating),
+      comment: req.body.comment,
+    }
+    product.reviews.push(review)
+    product.numReviews = product.reviews.length
+    product.rating =
+      product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length
+    const updatedProduct = await product.save()
+    res.status(201).send({
+      message: 'Đã nhận xét',
+      review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+    })
+  } else {
+    res.status(404).send({ message: 'Không tìm thấy sản phẩm' })
   }
 })
 

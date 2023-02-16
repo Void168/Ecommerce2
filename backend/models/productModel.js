@@ -1,4 +1,16 @@
 const mongoose = require('mongoose')
+
+const reviewSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    comment: { type: String, required: true },
+    rating: { type: Number, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const ProductSchema = mongoose.Schema(
   {
     name: {
@@ -21,6 +33,11 @@ const ProductSchema = mongoose.Schema(
       type: Array,
       require: true,
     },
+    brand: {type: String, required: true},
+    discount:{ type: Number, required: false, min: 0},
+    rating: { type: Number, required: false, min: 0},
+    numReview: { type: Number, required: false, min: 0 },
+    reviews: [reviewSchema],
   },
   { minimize: false },
 )
