@@ -60,13 +60,27 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const { name, description, price, category, images: pictures } = req.body
+    const {
+      name,
+      description,
+      price,
+      category,
+      brand,
+      discount,
+      rating,
+      numReview,
+      images: pictures,
+    } = req.body
     const product = await Product.findByIdAndUpdate(id, {
       name,
       description,
       price,
       category,
       pictures,
+      brand,
+      discount,
+      rating,
+      numReview,
     })
     const products = await Product.find()
     res.status(200).json(products)
