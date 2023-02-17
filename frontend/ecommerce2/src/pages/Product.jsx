@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import SimilarProduct from "../components/SimilarProduct";
-import Rating from '../components/Rating';
+import Rating from "../components/Rating";
 import {
   useAddToCartMutation,
   useCreateReviewMutation,
@@ -16,14 +16,16 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import Image from "../image";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+
 
 function Product() {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const [product, setProduct] = useState(null);
   const [similar, setSimilar] = useState(null);
-  const [selected, setSelected] = useState(Image[1]);
+  const [selected, setSelected] = useState();
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -36,9 +38,7 @@ function Product() {
   const submitHandler = (e) => {
     e.preventDefault();
     if (comment && rating) {
-      dispatch(
-        createReview({ rating, comment, name: user.name })
-      );
+      dispatch(createReview({ rating, comment, name: user.name }));
     } else {
       alert("Hãy bình luận và chọn số sao");
     }
@@ -86,6 +86,8 @@ function Product() {
     navigate("/login");
   };
 
+  const listPic = product.pictures;
+
   return (
     <div className="big-phone:container big-phone:mx-auto small-phone:mx-4">
       {loading ? (
@@ -120,26 +122,23 @@ function Product() {
               </div>
               <div>
                 <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
-                  <img
-                    src={product.pictures[0].url}
-                    alt={product.name}
-                    className="w-full bg-[#fff] hover:scale-105 ease-in-out duration-300 small-phone:col-span-4"
-                  />
                   <div className="flex big-phone:flex-row small-phone:flex-col justify-between my-8 small-phone:m-0 big-phone:col-span-4 small-phone:col-span-1 ">
-                    {Image.map((img, index) => (
-                      <div>
-                        <img
-                          key={index}
-                          src={img}
-                          alt="gallery"
-                          style={{
-                            border: selected === img ? "2px solid #132C33" : "",
-                          }}
-                          onClick={() => setSelected(img)}
-                          className="hover:cursor-pointer desktop:w-20 desktop:h-20 laptop:w-16 laptop:h-16 big-tablet:w-12 big-tablet:h-12 tablet:w-20 tablet:h-20 big-phone:w-16 big-phone:h-16 small-phone:w-12 small-phone:h-12"
-                        />
-                      </div>
-                    ))}
+                    <Carousel className="w-full">
+                      {listPic.map((img, index) => (
+                        <div>
+                          <img
+                            key={index}
+                            src={img.url}
+                            alt="gallery"
+                            style={{
+                              border:
+                                selected === img ? "2px solid #132C33" : "",
+                            }}
+                            className="w-full bg-[#fff] hover:scale-105 ease-in-out duration-300 small-phone:col-span-4"
+                          />
+                        </div>
+                      ))}
+                    </Carousel>
                   </div>
                 </div>
               </div>

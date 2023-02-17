@@ -1,8 +1,8 @@
-import express from 'express';
-const productRouter = express.Router();
+import express from 'express'
+const productRouter = express.Router()
 
-import Product from '../models/productModel.js';
-import User from '../models/userModel.js';
+import Product from '../models/productModel.js'
+import User from '../models/userModel.js'
 
 // Get Products
 productRouter.get('/', async (req, res) => {
@@ -183,32 +183,38 @@ productRouter.post('/decrease-cart', async (req, res) => {
 productRouter.post('/:id/reviews', async (req, res) => {
   const { id } = req.params
   const { userId } = req.body
-  console.log(userId)
-  const product = await Product.findById(id)
-  if (product) {
+  try {
     const user = await User.findById(userId)
-    if (product.reviews.find((x) => x.name === user.name)) {
-      return res
-        .status(400)
-        .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' })
+    console.log(user) 
+    const product = await Product.findById(id)
+    if (product) {
+      const user = await User.findById(userId)
+      if (product.reviews.find((x) => x.name === user.name)) {
+        return res
+          .status(400)
+          .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' })
+      }
+      const review = {
+        name: user.name,
+        rating: Number(req.body.rating),
+        comment: req.body.comment,
+      }
+      product.reviews.push(review)
+      product.numReviews = product.reviews.length
+      product.rating =
+        product.reviews.reduce((a, c) => c.rating + a, 0) /
+        product.reviews.length
+      const updatedProduct = await product.save()
+      res.status(201).send({
+        message: 'Đã nhận xét',
+        review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+      })
+    } else {
+      res.status(404).send({ message: 'Không tìm thấy sản phẩm' })
     }
-    const review = {
-      name: user.name,
-      rating: Number(req.body.rating),
-      comment: req.body.comment,
-    }
-    product.reviews.push(review)
-    product.numReviews = product.reviews.length
-    product.rating =
-      product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length
-    const updatedProduct = await product.save()
-    res.status(201).send({
-      message: 'Đã nhận xét',
-      review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
-    })
-  } else {
-    res.status(404).send({ message: 'Không tìm thấy sản phẩm' })
+  } catch (e) {
+    res.status(400).send(e.message)
   }
 })
 
-export default productRouter;
+export default productRouter
