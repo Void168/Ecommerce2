@@ -19,7 +19,6 @@ import "swiper/css/navigation";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
-
 function Product() {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
@@ -96,7 +95,7 @@ function Product() {
         <>
           <div className="my-8 grid grid-cols-5">
             <div className="big-tablet:col-span-2 galaxy-fold:col-span-5 small-phone:mb-8 ">
-              <div className="text-black mb-8 truncate tablet:text-xl">
+              <div className="text-black mb-8 tablet:text-xl">
                 <Link to="/">Trang chủ</Link>{" "}
                 <i className="fas fa-caret-right"></i>
                 <Link to={`/category/${product.category.toLocaleLowerCase()}`}>
@@ -122,7 +121,7 @@ function Product() {
               </div>
               <div>
                 <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
-                  <div className="flex big-phone:flex-row small-phone:flex-col justify-between my-8 small-phone:m-0 big-phone:col-span-4 small-phone:col-span-1 ">
+                  <div className="flex big-phone:flex-row justify-between my-8 big-phone:col-span-4 small-phone:col-span-5 ">
                     <Carousel className="w-full">
                       {listPic.map((img, index) => (
                         <div>
@@ -222,7 +221,7 @@ function Product() {
           </div>
           <div>
             <p className="text-2xl">Sản phẩm tương tự</p>
-            <div className="flex justify-center items-center flex-wrap w-9/12 mx-auto container">
+            <div className="flex justify-center items-center flex-wrap big-tablet:w-9/12 small-phone:w-full big-phone:mx-auto big-phone:container">
               <Swiper
                 watchSlidesProgress={true}
                 slidesPerView={4}
@@ -243,15 +242,11 @@ function Product() {
               </Swiper>
             </div>
           </div>
-          <div>
-            <div xl={6} lg={6} md={12} sm={12}>
-              <h2 style={{ color: "white" }}>
-                Bình luận ({product.reviews.length})
-              </h2>
+          <div className="container mx-auto my-8">
+            <div className="my-8">
+              <p>Bình luận ({product.reviews.length})</p>
               {product.reviews.length === 0 ? (
-                <h2 style={{ marginTop: "2rem", color: "white" }}>
-                  Chưa có đánh giá
-                </h2>
+                <p>Chưa có đánh giá</p>
               ) : (
                 <ul className="reviews">
                   {product.reviews.map((review) => (
@@ -268,12 +263,10 @@ function Product() {
                 </ul>
               )}
             </div>
-            <div xl={6} lg={6} md={12} sm={12}>
-              <div>
-                <h2 style={{ color: "white" }}>Viết nhận xét</h2>
-              </div>
+            <div className="container mx-auto bg-[#126E82] p-4">
+              <p className="text-2xl text-white text-center">Viết nhận xét</p>
               {user ? (
-                <form className="write-reviews" onSubmit={submitHandler}>
+                <form onSubmit={submitHandler}>
                   <div>
                     <div
                       style={{
@@ -294,23 +287,14 @@ function Product() {
                         <option value="4">4 sao - Rất tốt</option>
                         <option value="5">5 sao - Tuyệt vời</option>
                       </select>
-                      <button
-                        variant="contained"
-                        className="addToCart"
-                        type="submit"
-                      >
-                        Gửi đánh giá
-                      </button>
                     </div>
                     <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        textAlign: "center",
-                      }}
+                      className="flex flex-col "
                     >
                       <label htmlFor="comment">
-                        <strong>Bình luận của bạn</strong>
+                        <strong className="text-white">
+                          Bình luận của bạn
+                        </strong>
                       </label>
                       <textarea
                         id="comment"
@@ -327,7 +311,15 @@ function Product() {
                           )}
                         </label> */}
                       </div>
-                      <div></div>
+                      <div className="text-center">
+                        <button
+                          variant="contained"
+                          className="bg-[#132C33]"
+                          type="submit"
+                        >
+                          Gửi đánh giá
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>

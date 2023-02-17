@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function SimilarProduct({ _id, name, category, price, pictures, discount }) {
   return (
     <Link to={`/san-pham/${_id}`}>
-      <div className="px-2 py-4 shadow-sm bg-[#D8E3E7]  flex flex-col justify-center">
+      <div className="px-2 py-4 shadow-sm bg-[#D8E3E7]  flex flex-col justify-center big-phone:text-base small-phone:text-xs">
         <div className="relative hover:scale-105 ease-in-out duration-300">
           <span className="absolute right-0 bg-[#132C33] text-white p-1 rounded-bl-lg rounded-tr-lg z-30">
             -{discount}%
@@ -17,10 +17,8 @@ function SimilarProduct({ _id, name, category, price, pictures, discount }) {
           />
         </div>
         <h1 className="font-bold truncate">{name}</h1>
-        <div bg="warning" text="dark">
-          {category}
-        </div>
-        <div bg="warning" text="dark">
+        <div className="truncate">{category}</div>
+        <div className="truncate">
           {(price * 24000).toLocaleString("it-IT", {
             style: "currency",
             currency: "VND",

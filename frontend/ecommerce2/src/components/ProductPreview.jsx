@@ -5,7 +5,7 @@ function ProductPreview(props) {
   const { product } = props;
   return (
     <Link to={`/san-pham/${product._id}`}>
-      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full max-h-xl">
+      <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full max-h-xl small-phone:text-xs big-phone:text-base">
         <div className="relative hover:scale-105 ease-in-out duration-300">
           <span className="absolute right-0 bg-[#132C33] text-white p-1 rounded-bl-lg rounded-tr-lg z-30">
             -{product.discount}%
