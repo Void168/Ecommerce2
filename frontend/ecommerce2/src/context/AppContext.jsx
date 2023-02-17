@@ -8,7 +8,7 @@ export const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1)
   const products = useSelector((state) => state.products)
   const [gender, setGender] = useState('newest')
-
+  
   const isChecked = (e) => {
     setGender(e.target.value)
   }

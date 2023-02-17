@@ -1,11 +1,12 @@
-const router = require('express').Router()
+import express from 'express';
+const orderRouter = express.Router();
 
-const Order = require('../models/orderModel.js')
-const User = require('../models/userModel.js')
+import Order from'../models/orderModel.js'
+import User from'../models/userModel.js'
 
 //creating an order
 
-router.post('/', async (req, res) => {
+orderRouter.post('/', async (req, res) => {
   const io = req.app.get('socketio')
   const { userId, cart, phone, address } = req.body
   try {
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
 })
 
 // getting all orders;
-router.get('/', async (req, res) => {
+orderRouter.get('/', async (req, res) => {
   try {
     const orders = await Order.find().populate('owner', ['email', 'name'])
     res.status(200).json(orders)
@@ -46,7 +47,7 @@ router.get('/', async (req, res) => {
 })
 
 // Get single order
-router.get('/:id', async (req, res) => {
+orderRouter.get('/:id', async (req, res) => {
   const order = await Order.findById(req.params.id)
   if (order) {
     res.send(order)
@@ -59,7 +60,7 @@ router.get('/:id', async (req, res) => {
 
 //shipping order
 
-router.patch('/:id/mark-shipped', async (req, res) => {
+orderRouter.patch('/:id/mark-shipped', async (req, res) => {
   const io = req.app.get('socketio')
   const { ownerId } = req.body
   const { id } = req.params
@@ -81,4 +82,4 @@ router.patch('/:id/mark-shipped', async (req, res) => {
   }
 })
 
-module.exports = router
+export default orderRouter;

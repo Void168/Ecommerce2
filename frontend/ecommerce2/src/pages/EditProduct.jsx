@@ -38,19 +38,33 @@ function EditProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !description || !price || !category || !brand || !images.length) {
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      !brand ||
+      !images.length
+    ) {
       return alert("Vui lòng điền vào form hoặc quay lại");
     }
-    updateProduct({ id, name, description, price, category, images, brand, discount }).then(
-      ({ data }) => {
-        if (data.length > 0) {
-          setTimeout(() => {
-            alert("cập nhật thành công");
-            navigate("/dashboard");
-          }, 1500);
-        }
+    updateProduct({
+      id,
+      name,
+      description,
+      price,
+      category,
+      images,
+      brand,
+      discount,
+    }).then(({ data }) => {
+      if (data.length > 0) {
+        setTimeout(() => {
+          alert("cập nhật thành công");
+          navigate("/dashboard");
+        }, 500);
       }
-    );
+    });
   };
 
   const handleRemoveImg = (imgObj) => {
@@ -93,11 +107,29 @@ function EditProduct() {
 
   return (
     <div className="big-phone:container big-phone:mx-auto min-h-max my-8">
-      {error && <Loading />}
+      {error && null}
       {loading ? (
         <Loading />
       ) : (
         <>
+          <div className="text-center">
+            {isSuccess && (
+              <alert
+                variant="success"
+                className="p-2 text-lg text-emerald-700 bg-emerald-200 border-emerald-700 rounded-lg shadow-sm"
+              >
+                Cập nhật thành công
+              </alert>
+            )}
+            {isError && (
+              <alert
+                variant="error"
+                className="p-2 text-lg text-red-700 bg-red-200 border-red-700 rounded-lg shadow-sm"
+              >
+                Cập nhật thất bại
+              </alert>
+            )}
+          </div>
           <div className="flex laptop:flex-row small-phone:flex-col">
             <form
               onSubmit={handleSubmit}
@@ -109,10 +141,6 @@ function EditProduct() {
                     Điều chỉnh sản phẩm
                   </strong>
                 </div>
-                {isSuccess && (
-                  <alert variant="success">Cập nhật thành công</alert>
-                )}
-                {isError && <alert variant="error">Cập nhật thất bại</alert>}
                 <div>
                   <label>Tên sản phẩm</label>
                   <br />

@@ -70,7 +70,10 @@ function ProductList() {
                               Xóa sản phẩm
                             </button>
                             <button className="bg-[#132C33] mt-6">
-                              <Link to={`/product/${product._id}/edit`}>
+                              <Link
+                                to={`/product/${product._id}/edit`}
+                                target="_blank"
+                              >
                                 Chỉnh sửa
                               </Link>
                             </button>
@@ -110,7 +113,10 @@ function ProductList() {
                               Xóa sản phẩm
                             </button>
                             <button className="bg-[#132C33] mt-6">
-                              <Link to={`/product/${product._id}/edit`}>
+                              <Link
+                                to={`/product/${product._id}/edit`}
+                                target="_blank"
+                              >
                                 Chỉnh sửa
                               </Link>
                             </button>

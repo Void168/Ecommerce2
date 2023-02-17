@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useRef } from "react";
+import { AppContext } from "../context/AppContext.jsx";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice.js";
 import categories from "../categories.js";
@@ -8,11 +8,11 @@ import axios from "../axios";
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
+  const { page } = useContext(AppContext);
   const inputRef = useRef(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const bellRef = useRef(null);
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
@@ -65,14 +65,13 @@ function Navigation() {
   const pressKey = (e) => {
     e.preventDefault();
     document.addEventListener("keydown", navigateSearch, true);
-  }
-  
+  };
+
   const navigateSearch = (e) => {
     if (e.key === "Enter" && inputRef.current.value !== null) {
       navigate(`/search/${inputRef.current.value}`);
     }
-    if (e.key === "Enter" && inputRef.current.value === null)
-      navigate('/');
+    if (e.key === "Enter" && inputRef.current.value === null) navigate("/");
   };
 
   const clickSearch = () => {
@@ -81,7 +80,7 @@ function Navigation() {
     else {
       navigate("/");
     }
-  }
+  };
 
   return (
     <div
@@ -117,7 +116,16 @@ function Navigation() {
                   {categories.map((category) => (
                     <div key={category.id}>
                       <Link
-                        to={`/category/${category.name.toLocaleLowerCase()}`}
+                        to={`/danh-muc/${category.name
+                          .toLocaleLowerCase()
+                          .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                          .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                          .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                          .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                          .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                          .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                          .replace(/đ/g, "d")
+                          .replace(/\s/g, "-")}/trang-${page}`}
                         className="dropdown__categories--element"
                         onClick={handleClose}
                       >
@@ -245,7 +253,9 @@ function Navigation() {
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
                         <li className="my-1">
-                          <Link to="/dashboard">Quản lý</Link>
+                          <Link to='/dashboard'>
+                            Quản lý
+                          </Link>
                         </li>
                         <li className=" text-center">
                           <button

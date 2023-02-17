@@ -1,6 +1,9 @@
-const cloudinary = require('cloudinary')
-const router = require('express').Router()
-require('dotenv').config()
+import cloudinary from 'cloudinary'
+import express from 'express';
+import dotenv from 'dotenv';
+
+const imagesRouter = express.Router();
+dotenv.config()
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -8,7 +11,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 })
 
-router.delete('/:public_id', async (req, res) => {
+imagesRouter.delete('/:public_id', async (req, res) => {
   const { public_id } = req.params
   try {
     await cloudinary.uploader.destroy(public_id)
@@ -18,4 +21,4 @@ router.delete('/:public_id', async (req, res) => {
   }
 })
 
-module.exports = router
+export default imagesRouter;

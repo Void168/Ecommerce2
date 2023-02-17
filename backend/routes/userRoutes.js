@@ -1,9 +1,9 @@
-const router = require('express').Router()
-const User = require('../models/userModel.js')
-
+const userRouter = express.Router()
+import express from 'express';;
+import User from '../models/userModel.js';
 //Sign Up
 
-router.post('/signup', async (req, res) => {
+userRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body
 
   try {
@@ -16,7 +16,7 @@ router.post('/signup', async (req, res) => {
 })
 
 // Login
-router.post('/login', async (req, res) => {
+userRouter.post('/login', async (req, res) => {
   const { email, password } = req.body
   try {
     const user = await User.findByCredentials(email, password)
@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
 })
 
 // Get users
-router.get('/', async (req, res) => {
+userRouter.get('/', async (req, res) => {
   try {
     const users = await User.find({ isAdmin: false }).populate('orders')
     res.json(users)
@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
 })
 
 // get user orders
-router.get('/:id/orders', async (req, res) => {
+userRouter.get('/:id/orders', async (req, res) => {
   const { id } = req.params
   try {
     const user = await User.findById(id).populate('orders')
@@ -48,7 +48,7 @@ router.get('/:id/orders', async (req, res) => {
 })
 
 // update user notifcations
-router.post('/:id/updateNotifications', async (req, res) => {
+userRouter.post('/:id/updateNotifications', async (req, res) => {
   const { id } = req.params
   try {
     const user = await User.findById(id)
@@ -63,4 +63,4 @@ router.post('/:id/updateNotifications', async (req, res) => {
   }
 })
 
-module.exports = router
+export default userRouter;

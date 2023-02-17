@@ -1,17 +1,16 @@
-import React, { useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/AppContext";
+import { Link } from "react-router-dom";
+import { updateProducts } from "../features/productSlice";
 import axios from "../axios";
 import ProductPreview from "../components/ProductPreview";
-import { updateProducts } from "../features/productSlice";
-import { useState } from "react";
 import Loading from "../components/Loading";
 import Paginate from "../components/Paginate";
 import WatchedProduct from "../components/WatchedProduct";
 import FilterPrice from "../components/FilterPrice";
 import FilterPriceResponsive from "../components/FilterPriceResponsive";
 import Article from "../components/Article";
-import { Link } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const { value, page, gender, sortPrice, sortAlphabet } =
     useContext(AppContext);
-
+  
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
   }, [dispatch]);

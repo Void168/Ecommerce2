@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function SearchProducts(props) {
   const { product } = props;
   return (
-    <Link to={`/product/${product._id}`}>
+    <Link to={`/san-pham/${product._id}`}>
       <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full max-h-max">
         <img
           variant="top"

@@ -59,20 +59,20 @@ function App() {
 
   return (
     <div className="bg-[#D8E3E7]">
-      <CartButton />
-      <ScrollToTop />
-      <header>
-        <div className="flex justify-center">
-          <img
-            src="/images/logo.png"
-            alt="mini-logo"
-            className="big-tablet:hidden small-phone:block shadow-none"
-          />
-        </div>
-        <Navigation />
-        <NavigationResponsive />
-      </header>
       <AppProvider>
+        <CartButton />
+        <ScrollToTop />
+        <header>
+          <div className="flex justify-center">
+            <img
+              src="/images/logo.png"
+              alt="mini-logo"
+              className="big-tablet:hidden small-phone:block shadow-none"
+            />
+          </div>
+          <Navigation />
+          <NavigationResponsive />
+        </header>
         <main
           className={
             location.pathname === "/login" || location.pathname === "/register"
@@ -94,8 +94,8 @@ function App() {
                 <Route path="/register" element={<Signup />} />
               </>
             )}
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/category/:category" element={<Category />} />
+            <Route path="/san-pham/:id" element={<Product />} />
+            <Route path="/danh-muc/:category/:page" element={<Category />} />
             {user && <Route path="/cart" element={<Cart />} />}
             <Route path="/order/:id" element={<OrderDetail />}></Route>
 
@@ -112,10 +112,10 @@ function App() {
           </Routes>
           <ScrollToTopButton />
         </main>
+        <footer>
+          <Footer />
+        </footer>
       </AppProvider>
-      <footer>
-        <Footer />
-      </footer>
     </div>
   );
 }

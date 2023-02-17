@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import SimilarProduct from "../components/SimilarProduct";
-import { useAddToCartMutation } from "../services/appApi";
+import Rating from '../components/Rating';
+import {
+  useAddToCartMutation,
+  useCreateReviewMutation,
+} from "../services/appApi";
 import ToastMessage from "../components/ToastMessage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
@@ -21,14 +25,32 @@ function Product() {
   const [similar, setSimilar] = useState(null);
   const [selected, setSelected] = useState(Image[1]);
   const [loading, setLoading] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
 
   const [addToCart, { isSuccess }] = useAddToCartMutation();
+  const [createReview, { isError, isSuccess1 }] = useCreateReviewMutation();
   const navigate = useNavigate();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (comment && rating) {
+      dispatch(
+        createReview({ rating, comment, name: user.name })
+      );
+    } else {
+      alert("Hãy bình luận và chọn số sao");
+    }
+  };
 
   useEffect(() => {
     axios.get(`/products/${id}`).then(({ data }) => {
       setProduct(data.product);
       setSimilar(data.similar);
+    });
+    axios.get(`/products/${id}/reviews`).then(({ data }) => {
+      setComment(data.comment);
     });
   }, [id]);
 
@@ -79,9 +101,22 @@ function Product() {
                   {" "}
                   {product.category}{" "}
                 </Link>
-                <i className="fas fa-caret-right"></i>
-                {/* {product.type} <i class="fas fa-caret-right"></i> */}{" "}
-                {product.name}
+                <Link
+                  to={`/search/${product.brand
+                    .toLocaleLowerCase()
+                    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                    .replace(/đ/g, "d")
+                    .replace(/\s/g, "")}`}
+                >
+                  {" "}
+                  <i className="fas fa-caret-right"></i> {product.brand}{" "}
+                </Link>
+                <i className="fas fa-caret-right"></i> {product.name}
               </div>
               <div>
                 <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
@@ -126,12 +161,21 @@ function Product() {
                   </span>
                   <p className="laptop:text-3xl tablet:text-2xl my-4 text-[#126E82]">
                     <span className="my-4 text-xl text-black">Còn: </span>
-                    {(product.price * 24000).toLocaleString("it-IT", {
+                    {(
+                      ((product.price * (100 - product.discount)) / 100) *
+                      24000
+                    ).toLocaleString("it-IT", {
                       style: "currency",
                       currency: "VND",
                     })}
+                    <span className="my-4 text-xl text-black">
+                      {" "}
+                      (Giảm {product.discount}%)
+                    </span>
                   </p>
-                  <strong>{product.description}</strong>
+                  <p>{product.description}</p>
+                  <br />
+                  <p>Nhà phân phối: {product.brand}</p>
                 </div>
                 <div className="my-4 flex flex-col">
                   {!user ? (
@@ -179,7 +223,7 @@ function Product() {
           </div>
           <div>
             <p className="text-2xl">Sản phẩm tương tự</p>
-            <div className="flex justify-center items-center flex-wrap w-full my-4">
+            <div className="flex justify-center items-center flex-wrap w-9/12 mx-auto container">
               <Swiper
                 watchSlidesProgress={true}
                 slidesPerView={4}
@@ -198,6 +242,101 @@ function Product() {
                   <SwiperSlide key={product.id}>{product}</SwiperSlide>
                 ))}
               </Swiper>
+            </div>
+          </div>
+          <div>
+            <div xl={6} lg={6} md={12} sm={12}>
+              <h2 style={{ color: "white" }}>
+                Bình luận ({product.reviews.length})
+              </h2>
+              {product.reviews.length === 0 ? (
+                <h2 style={{ marginTop: "2rem", color: "white" }}>
+                  Chưa có đánh giá
+                </h2>
+              ) : (
+                <ul className="reviews">
+                  {product.reviews.map((review) => (
+                    <li key={review._id}>
+                      <strong>{review.name}</strong>
+                      <Rating rating={review.rating} caption=" "></Rating>
+                      <p>
+                        {review.createdAt.substring(0, 10)}{" "}
+                        {review.createdAt.substring(11, 19)}
+                      </p>
+                      <p>Nội dung: {review.comment}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div xl={6} lg={6} md={12} sm={12}>
+              <div>
+                <h2 style={{ color: "white" }}>Viết nhận xét</h2>
+              </div>
+              {user ? (
+                <form className="write-reviews" onSubmit={submitHandler}>
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <select
+                        style={{ margin: "2rem 0" }}
+                        id="rating"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                      >
+                        <option value="">Chọn đánh giá</option>
+                        <option value="1">1 sao - Tệ</option>
+                        <option value="2">2 sao - Khá</option>
+                        <option value="3">3 sao - Tốt</option>
+                        <option value="4">4 sao - Rất tốt</option>
+                        <option value="5">5 sao - Tuyệt vời</option>
+                      </select>
+                      <button
+                        variant="contained"
+                        className="addToCart"
+                        type="submit"
+                      >
+                        Gửi đánh giá
+                      </button>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        textAlign: "center",
+                      }}
+                    >
+                      <label htmlFor="comment">
+                        <strong>Bình luận của bạn</strong>
+                      </label>
+                      <textarea
+                        id="comment"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+                      <div>
+                        {/* <label>
+                          {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                          {errorReviewCreate && (
+                            <MessageBox variant="danger">
+                              {errorReviewCreate}
+                            </MessageBox>
+                          )}
+                        </label> */}
+                      </div>
+                      <div></div>
+                    </div>
+                  </div>
+                </form>
+              ) : (
+                <h2>
+                  Vui lòng <Link to="/signin">Đăng nhập</Link> để nhận xét
+                </h2>
+              )}
             </div>
           </div>
         </>

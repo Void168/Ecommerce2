@@ -1,9 +1,10 @@
-const router = require('express').Router()
-const Article = require('../models/articleModel.js')
-const User = require('../models/userModel.js')
+import express from 'express';
+const orderRouter = express.Router()
+import Article from '../models/articleModel.js'
+import User from'../models/userModel.js'
 
 // Get Articles
-router.get('/', async (req, res) => {
+orderRouter.get('/', async (req, res) => {
   try {
     const articles = await Article.find()
     res.status(200).json(articles)
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 // create Articles
-router.post('/', async (req, res) => {
+orderRouter.post('/', async (req, res) => {
   try {
     const {
       title,
@@ -39,7 +40,7 @@ router.post('/', async (req, res) => {
 })
 
 // update article
-router.patch('/:id', async (req, res) => {
+orderRouter.patch('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const {
@@ -66,7 +67,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 // delete article
-router.delete('/:id', async (req, res) => {
+orderRouter.delete('/:id', async (req, res) => {
   const { id } = req.params
   const { user_id } = req.body
   try {
@@ -80,4 +81,4 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-module.exports = router
+export default orderRouter

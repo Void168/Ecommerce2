@@ -1,9 +1,11 @@
-const router = require('express').Router()
-const Product = require('../models/productModel.js')
-const User = require('../models/userModel.js')
+import express from 'express';
+const productRouter = express.Router();
+
+import Product from '../models/productModel.js';
+import User from '../models/userModel.js';
 
 // Get Products
-router.get('/', async (req, res) => {
+productRouter.get('/', async (req, res) => {
   try {
     const products = await Product.find()
     res.status(200).json(products)
@@ -13,7 +15,7 @@ router.get('/', async (req, res) => {
 })
 
 // Get single product
-router.get('/:id', async (req, res) => {
+productRouter.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const product = await Product.findById(id)
@@ -25,7 +27,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // create products
-router.post('/', async (req, res) => {
+productRouter.post('/', async (req, res) => {
   try {
     const {
       name,
@@ -57,7 +59,7 @@ router.post('/', async (req, res) => {
 })
 
 // update product
-router.patch('/:id', async (req, res) => {
+productRouter.patch('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const {
@@ -90,7 +92,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 // delete product
-router.delete('/:id', async (req, res) => {
+productRouter.delete('/:id', async (req, res) => {
   const { id } = req.params
   const { user_id } = req.body
   try {
@@ -105,7 +107,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 // cart routes
-router.post('/add-to-cart', async (req, res) => {
+productRouter.post('/add-to-cart', async (req, res) => {
   const { userId, productId, price } = req.body
 
   try {
@@ -127,7 +129,7 @@ router.post('/add-to-cart', async (req, res) => {
   }
 })
 
-router.post('/remove-from-cart', async (req, res) => {
+productRouter.post('/remove-from-cart', async (req, res) => {
   const { userId, productId, price } = req.body
   try {
     const user = await User.findById(userId)
@@ -144,7 +146,7 @@ router.post('/remove-from-cart', async (req, res) => {
   }
 })
 
-router.post('/increase-cart', async (req, res) => {
+productRouter.post('/increase-cart', async (req, res) => {
   const { userId, productId, price } = req.body
   try {
     const user = await User.findById(userId)
@@ -161,7 +163,7 @@ router.post('/increase-cart', async (req, res) => {
   }
 })
 
-router.post('/decrease-cart', async (req, res) => {
+productRouter.post('/decrease-cart', async (req, res) => {
   const { userId, productId, price } = req.body
   try {
     const user = await User.findById(userId)
@@ -178,17 +180,20 @@ router.post('/decrease-cart', async (req, res) => {
   }
 })
 
-router.post('/:id/reviews', async (req, res) => {
-  const productId = req.params.id
-  const product = await Product.findById(productId)
+productRouter.post('/:id/reviews', async (req, res) => {
+  const { id } = req.params
+  const { userId } = req.body
+  console.log(userId)
+  const product = await Product.findById(id)
   if (product) {
-    if (product.reviews.find((x) => x.name === req.user.name)) {
+    const user = await User.findById(userId)
+    if (product.reviews.find((x) => x.name === user.name)) {
       return res
         .status(400)
         .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' })
     }
     const review = {
-      name: req.user.name,
+      name: user.name,
       rating: Number(req.body.rating),
       comment: req.body.comment,
     }
@@ -206,4 +211,4 @@ router.post('/:id/reviews', async (req, res) => {
   }
 })
 
-module.exports = router
+export default productRouter;

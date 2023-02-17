@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { AppContext } from "../context/AppContext";
 import { logout, resetNotifications } from "../features/userSlice.js";
 import categories from "../categories.js";
 import axios from "../axios";
@@ -25,6 +26,7 @@ function NavigationResponsive() {
   const [openMore, setOpenMore] = useState(false);
   const [openNoti, setOpenNoti] = useState(false);
   const user = useSelector((state) => state.user);
+  const { list } = useContext(AppContext)
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
   const dispatch = useDispatch();
@@ -245,7 +247,7 @@ function NavigationResponsive() {
               </li>
               <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
                 <NavLink
-                  to="/dashboard"
+                  to={`/dashboard/product-list}`}
                   className={({ isActive }) =>
                     isActive ? activeLink : normalLink
                   }

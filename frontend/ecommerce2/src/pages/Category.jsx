@@ -12,16 +12,29 @@ import Pagination from "@mui/material/Pagination";
 import FilterPrice from "../components/FilterPrice";
 import { AppContext } from "../context/AppContext";
 import FilterPriceResponsive from "../components/FilterPriceResponsive";
+import categories from '../categories'
 
 function Category() {
   const { category } = useParams();
-  console.log(category)
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const products = useSelector((state) => state.products);
   const [searchTerm, setSearchTerm] = useState("");
-  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+  const categoryName = categories.find(
+    (cateName) =>
+      cateName.name
+        .toLocaleLowerCase()
+        .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+        .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+        .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+        .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+        .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+        .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+        .replace(/đ/g, "d")
+        .replace(/\s/g, "") === category.replaceAll("-", "")
+  );
+  
   const {
     value,
     page,
@@ -38,7 +51,7 @@ function Category() {
 
   const productsSearch = products.filter(
     (product) =>
-      product.category === categoryName &&
+      product.category === categoryName?.name &&
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -53,7 +66,7 @@ function Category() {
     setTimeout(() => {
       setLoading(false);
     }, 500);
-  }, [categoryName]);
+  }, [categoryName?.name]);
 
   return (
     <div className="container mx-auto">
@@ -63,7 +76,7 @@ function Category() {
         <>
           <div>
             <p className="text-center font-bold text-3xl my-2">
-              {categoryName}
+              {categoryName?.name}
             </p>
           </div>
           <div className="text-center">
@@ -82,7 +95,7 @@ function Category() {
                 (filteredProduct) =>
                   value[0] / 24000 <= filteredProduct.price &&
                   filteredProduct.price <= value[1] / 24000 &&
-                  filteredProduct.category === categoryName
+                  filteredProduct.category === categoryName?.name
               ).length > 0 ? (
                 <p className="text-white px-4 mt-8 text-2xl text-center">
                   Có{" "}
@@ -91,7 +104,7 @@ function Category() {
                       (filteredProduct) =>
                         value[0] / 24000 <= filteredProduct.price &&
                         filteredProduct.price <= value[1] / 24000 &&
-                        filteredProduct.category === categoryName
+                        filteredProduct.category === categoryName?.name
                     ).length
                   }{" "}
                   sản phẩm
@@ -121,7 +134,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -142,7 +155,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -167,7 +180,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -189,7 +202,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -212,7 +225,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -234,7 +247,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -268,7 +281,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -289,7 +302,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -323,7 +336,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -345,7 +358,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -368,7 +381,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -390,7 +403,7 @@ function Category() {
                                       .filter(
                                         (filteredProduct) =>
                                           filteredProduct.category ===
-                                            categoryName &&
+                                            categoryName?.name &&
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
@@ -417,7 +430,7 @@ function Category() {
                             count={Math.ceil(
                               productsSearch.filter(
                                 (filteredProduct) =>
-                                  filteredProduct.category === categoryName &&
+                                  filteredProduct.category === categoryName?.name &&
                                   value[0] / 24000 <= filteredProduct.price &&
                                   filteredProduct.price <= value[1] / 24000
                               ).length / 8

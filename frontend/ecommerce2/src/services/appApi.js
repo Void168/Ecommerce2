@@ -33,6 +33,15 @@ export const appApi = createApi({
       }),
     }),
 
+    // create preview
+    createReview: builder.mutation({
+      query: (product_id, product) => ({
+        url: `/products/${product_id}/reviews`,
+        body: product,
+        method: 'POST',
+      }),
+    }),
+
     // add to cart
     addToCart: builder.mutation({
       query: (cartInfo) => ({
@@ -133,6 +142,7 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useCreateProductMutation,
+  useCreateReviewMutation,
   useAddToCartMutation,
   useRemoveFromCartMutation,
   useIncreaseCartProductMutation,
