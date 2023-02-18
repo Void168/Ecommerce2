@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    // name: { type: String, required: true },
     comment: { type: String, required: true },
-    rating: { type: Number, required: true },
+    rating: { type: Number, required: true},
+    date: {
+      type: String,
+      default: new Date().toISOString().split('T')[0],
+    },
   },
-  {
-    timestamps: true,
-  }
 );
 
 const ProductSchema = mongoose.Schema(
@@ -34,9 +35,9 @@ const ProductSchema = mongoose.Schema(
       require: true,
     },
     brand: {type: String, required: true},
-    discount:{ type: Number, required: false, min: 0},
-    rating: { type: Number, required: false, min: 0},
-    numReview: { type: Number, required: false, min: 0 },
+    discount:{ type: Number, required: false, default: 0},
+    rating: { type: Number, required: false, default: 0},
+    numReview: { type: Number, required: false, default: 0 },
     reviews: [reviewSchema],
   },
   { minimize: false },

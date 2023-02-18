@@ -25,8 +25,10 @@ function NavigationResponsive() {
   const [openAccount, setOpenAccount] = useState(false);
   const [openMore, setOpenMore] = useState(false);
   const [openNoti, setOpenNoti] = useState(false);
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
-  const { list } = useContext(AppContext)
+  const { list } = useContext(AppContext);
+  const inputRef = useRef(null);
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
   const dispatch = useDispatch();
@@ -60,6 +62,27 @@ function NavigationResponsive() {
     setOpenAccount(false);
     setOpenMore(false);
     setValue(0);
+  };
+
+  const pressKey = (e) => {
+    e.preventDefault();
+    document.addEventListener("keydown", navigateSearch, true);
+  };
+
+  const navigateSearch = (e) => {
+    if (e.key === "Enter" && inputRef.current.value !== null) {
+      navigate(`/search/${inputRef.current.value}`);
+    }
+    if (e.key === "Enter" && inputRef.current.value === null) navigate("/");
+  };
+
+  const clickSearch = () => {
+    if (inputRef.current.value !== null) {
+      setOpen(false);
+      navigate(`/search/${inputRef.current.value}`);
+    } else {
+      navigate("/");
+    }
   };
 
   const homeClick = () => {
@@ -165,6 +188,19 @@ function NavigationResponsive() {
         className="duration-300"
       >
         <Box className=" container mx-auto w-full rounded-lg tablet:mt-16 small-phone:mt-24">
+          <div className="desktop:w-6/12 big-tablet:w-5/12 relative">
+            <input
+              className="p-1 rounded w-full"
+              placeholder="Tìm kiếm"
+              onChange={pressKey}
+              ref={inputRef}
+            ></input>
+            <span onClick={clickSearch}>
+              <i
+                className="fa-solid fa-magnifying-glass absolute right-1 top-4 cursor-pointer border-l-2 pl-1"
+              ></i>
+            </span>
+          </div>
           <Typography id="modal-modal-description">
             <div className="grid tablet:grid-cols-4 big-phone:grid-cols-2 p-2 small-phone:grid-cols-3 bg-[#132C33] mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max ">
               {categories.map((category) => (

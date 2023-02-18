@@ -5,7 +5,7 @@ function Rating(props) {
   return (
     <>
       <p>Đánh giá</p>
-      <div className="rating">
+      <div className="text-cyan-600">
         <span>
           <i
             className={

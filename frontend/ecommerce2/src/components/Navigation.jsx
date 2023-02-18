@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { AppContext } from "../context/AppContext.jsx";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ function Navigation() {
   const { page } = useContext(AppContext);
   const inputRef = useRef(null);
   const user = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bellRef = useRef(null);
@@ -70,13 +71,23 @@ function Navigation() {
   const navigateSearch = (e) => {
     if (e.key === "Enter" && inputRef.current.value !== null) {
       navigate(`/search/${inputRef.current.value}`);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
     if (e.key === "Enter" && inputRef.current.value === null) navigate("/");
   };
 
   const clickSearch = () => {
-    if (inputRef.current.value !== null)
+    if (inputRef.current.value !== null) {
       navigate(`/search/${inputRef.current.value}`);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }
+      
     else {
       navigate("/");
     }

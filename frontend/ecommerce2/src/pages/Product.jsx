@@ -37,7 +37,19 @@ function Product() {
   const submitHandler = (e) => {
     e.preventDefault();
     if (comment && rating) {
-      dispatch(createReview({ rating, comment, name: user.name }));
+      window.alert("Gửi nhận xét thành công");
+      setRating("");
+      setComment("");
+      dispatch(
+        createReview({ rating, comment }).then(({ data }) => {
+          if (data.length > 0) {
+            setLoading(true);
+            setTimeout(() => {
+              setLoading(false);
+            }, 1500);
+          }
+        })
+      );
     } else {
       alert("Hãy bình luận và chọn số sao");
     }
@@ -48,9 +60,9 @@ function Product() {
       setProduct(data.product);
       setSimilar(data.similar);
     });
-    axios.get(`/products/${id}/reviews`).then(({ data }) => {
-      setComment(data.comment);
-    });
+    // axios.get(`/products/${id}/reviews`).then(({ data }) => {
+    //   setComment(data.comment);
+    // });
   }, [id]);
 
   useEffect(() => {
@@ -58,7 +70,7 @@ function Product() {
     setTimeout(() => {
       setLoading(false);
     }, 300);
-  }, [id]);
+  }, [id, isSuccess1]);
 
   if (!product) {
     return (
@@ -74,7 +86,7 @@ function Product() {
       <div
         className="big-phone:container big-phone:mx-auto"
         data-value={index}
-        key={product}
+        key={index}
       >
         <SimilarProduct {...product} />
       </div>
@@ -220,7 +232,7 @@ function Product() {
             </div>
           </div>
           <div>
-            <p className="text-2xl">Sản phẩm tương tự</p>
+            <p className="neon__text">Sản phẩm tương tự</p>
             <div className="flex justify-center items-center flex-wrap big-tablet:w-9/12 small-phone:w-full big-phone:mx-auto big-phone:container">
               <Swiper
                 watchSlidesProgress={true}
@@ -242,28 +254,8 @@ function Product() {
               </Swiper>
             </div>
           </div>
-          <div className="container mx-auto my-8">
-            <div className="my-8">
-              <p>Bình luận ({product.reviews.length})</p>
-              {product.reviews.length === 0 ? (
-                <p>Chưa có đánh giá</p>
-              ) : (
-                <ul className="reviews">
-                  {product.reviews.map((review) => (
-                    <li key={review._id}>
-                      <strong>{review.name}</strong>
-                      <Rating rating={review.rating} caption=" "></Rating>
-                      <p>
-                        {review.createdAt.substring(0, 10)}{" "}
-                        {review.createdAt.substring(11, 19)}
-                      </p>
-                      <p>Nội dung: {review.comment}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div className="container mx-auto bg-[#126E82] p-4">
+          <div className="big-phone:container big-phone:mx-auto my-8 grid big-tablet:grid-cols-2 small-phone:grid-cols-1 gap-8">
+            <div className="container mx-auto bg-[#126E82] p-4 big-tablet:col-span-1 rounded-lg shadow-sm">
               <p className="text-2xl text-white text-center">Viết nhận xét</p>
               {user ? (
                 <form onSubmit={submitHandler}>
@@ -288,9 +280,7 @@ function Product() {
                         <option value="5">5 sao - Tuyệt vời</option>
                       </select>
                     </div>
-                    <div
-                      className="flex flex-col "
-                    >
+                    <div className="flex flex-col ">
                       <label htmlFor="comment">
                         <strong className="text-white">
                           Bình luận của bạn
@@ -328,6 +318,29 @@ function Product() {
                   Vui lòng <Link to="/signin">Đăng nhập</Link> để nhận xét
                 </h2>
               )}
+            </div>
+            <div className="big-tablet:col-span-1 bg-[#126E82] p-4 shadow-sm rounded-lg">
+              <div className="p-2 bg-[#D8E3E7] rounded-lg">
+                <p>Bình luận ({product.reviews.length})</p>
+              </div>
+              <div className="p-2 bg-[#D8E3E7] my-4 overflow-y-auto h-72 rounded-lg">
+                {product.reviews.length === 0 ? (
+                  <p>Chưa có đánh giá</p>
+                ) : (
+                  <ul className="rounded-lg">
+                    {product.reviews.map((review) => (
+                      <li key={review._id} className="my-8">
+                        {/* <strong>{review.name}</strong> */}
+                        <Rating rating={review.rating} caption=" ">
+                          {review.rating}
+                        </Rating>
+                        <p>{review.date} </p>
+                        <p>Nội dung: {review.comment}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         </>

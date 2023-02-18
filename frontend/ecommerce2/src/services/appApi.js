@@ -33,11 +33,11 @@ export const appApi = createApi({
       }),
     }),
 
-    // create preview
+    // create review
     createReview: builder.mutation({
-      query: (product_id, product) => ({
+      query: (product_id, user_id, product) => ({
         url: `/products/${product_id}/reviews`,
-        body: product,
+        body: { product, user_id },
         method: 'POST',
       }),
     }),

@@ -10,20 +10,20 @@ function Footer() {
         location.pathname === "/register" ||
         location.pathname === "/dashboard" ||
         location.pathname === "/cart"
-          ? "bg-[#126E82] big-tablet:block small-phone:hidden"
-          : "bg-[#126E82]"
+          ? "bg-[#D8E3E7] big-tablet:block small-phone:hidden"
+          : "bg-[#D8E3E7]"
       }
     >
       <div className="container mx-auto">
         <div>
           <div xl={3} lg={3} md={12}>
             <h2>
-              CÔNG TY CỔ PHẦN HFOOD © 2021 - 2100 Công Ty Cổ Phần Thương Mại
-              HFOOD
+              CÔNG TY CỔ PHẦN HFOOD © 2023 - 2100 Công Ty Cổ Phần Thương Mại
+              WEIRDSHOP
             </h2>
             <h3>
               Giấy chứng nhận đăng ký doanh nghiệp: 0280920130 do Sở KH-ĐT
-              TP.HCM cấp lần đầu ngày 16 tháng 08 năm 2021
+              TP.HCM cấp lần đầu ngày 16 tháng 08 năm 2023
             </h3>
             <br />
             <h4>Chính sách vận chuyển</h4>
@@ -48,7 +48,7 @@ function Footer() {
               <br />
               <strong>
                 &emsp; &emsp; &emsp; &emsp; All rights reserved &emsp; &emsp;
-                &emsp; &emsp; CopyRight © 2021
+                &emsp; &emsp; CopyRight © 2023
               </strong>
             </h3>
             <br />

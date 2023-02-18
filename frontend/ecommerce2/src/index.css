@@ -3,10 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-  body {
-    font-family: "Quicksand", sans-serif;
-  }
-
   .form__element {
     @apply my-8;
   }
@@ -39,8 +35,8 @@
     @apply border-2 border-[#132C33] p-4 text-center;
   }
 
-  th{
-    @apply small-phone:p-0 big-phone:p-4
+  th {
+    @apply small-phone:p-0 big-phone:p-4;
   }
 
   #vertical-tabpanel-0,
@@ -58,8 +54,15 @@
   }
 
   .neon__text {
-    @apply big-phone:text-3xl small-phone:text-2xl bg-gradient-to-r from-sky-900 to-sky-700 shadow-sm text-[#D8E3E7] px-4 banner__titles big-phone:w-6/12 small-phone:w-10/12 shadow-cyan-500/50 my-8
+    @apply big-phone:text-3xl small-phone:text-2xl bg-gradient-to-r from-sky-900 to-sky-700 shadow-sm text-[#D8E3E7] px-4 banner__titles big-phone:w-6/12 small-phone:w-10/12 shadow-cyan-500/50 my-8;
   }
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .dropdown__profile ul div {
@@ -216,28 +219,23 @@
   font-family: "Gruppo", cursive;
 }
 
-.react-date-picker__inputGroup__input{
+.react-date-picker__inputGroup__input {
   box-shadow: none;
 }
-.MuiInputBase-input{
+.MuiInputBase-input {
   padding: 0.5rem 1rem !important;
   box-shadow: none;
 }
-.react-date-picker__clear-button{
+.react-date-picker__clear-button {
   display: none !important;
 }
 
 .banner__titles {
-  animation: flicker 1.5s infinite alternate;     
+  animation: flicker 1.5s infinite alternate;
   height: 40px;
   position: relative;
-  text-shadow:
-  0 0 10px #fff,
-  0 0 21px #fff,
-  0 0 42px #0fa,
-  0 0 82px #0fa,
-  0 0 92px #0fa,
-  0 0 151px #0fa;
+  text-shadow: 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa, 0 0 82px #0fa,
+    0 0 92px #0fa, 0 0 151px #0fa;
 }
 .banner__titles:after {
   content: "";
@@ -256,28 +254,27 @@
   bottom: 0;
   width: 0;
   height: 0;
-  border-left: 20px solid #0368A0;
+  border-left: 20px solid #0368a0;
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
 }
 
-
-
 /* Flickering animation */
 @keyframes flicker {
-    
-  0%, 18%, 22%, 25%, 53%, 57%, 100% {
-
-      text-shadow:
-        0 0 10px #fff,
-        0 0 21px #fff,
-        0 0 42px #0fa,
-        0 0 82px #0fa,
-        0 0 92px #0fa,
-        0 0 151px #0fa;
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #0fa, 0 0 82px #0fa,
+      0 0 92px #0fa, 0 0 151px #0fa;
   }
-  
-  20%, 24%, 55% {        
-      text-shadow: none;
-  }    
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
 }

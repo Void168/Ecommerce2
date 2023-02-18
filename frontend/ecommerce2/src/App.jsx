@@ -58,8 +58,8 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-[#D8E3E7]">
-      <AppProvider>
+    <AppProvider>
+      <div className="bg-[#D8E3E7]">
         <CartButton />
         <ScrollToTop />
         <header>
@@ -76,8 +76,8 @@ function App() {
         <main
           className={
             location.pathname === "/login" || location.pathname === "/register"
-              ? "py-8 px-4 small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round h-screen"
-              : "py-8 px-4"
+              ? "py-8 px-4 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round h-screen"
+              : "py-8 px-4 bg-main w-full"
           }
         >
           <Routes>
@@ -115,8 +115,8 @@ function App() {
         <footer>
           <Footer />
         </footer>
-      </AppProvider>
-    </div>
+      </div>
+    </AppProvider>
   );
 }
 

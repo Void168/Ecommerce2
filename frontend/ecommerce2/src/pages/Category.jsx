@@ -12,14 +12,15 @@ import Pagination from "@mui/material/Pagination";
 import FilterPrice from "../components/FilterPrice";
 import { AppContext } from "../context/AppContext";
 import FilterPriceResponsive from "../components/FilterPriceResponsive";
-import categories from '../categories'
+import categories from "../categories";
 
 function Category() {
   const { category } = useParams();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-
+  const [active, setActive] = useState(false)
   const products = useSelector((state) => state.products);
+
   const [searchTerm, setSearchTerm] = useState("");
   const categoryName = categories.find(
     (cateName) =>
@@ -34,7 +35,7 @@ function Category() {
         .replace(/đ/g, "d")
         .replace(/\s/g, "") === category.replaceAll("-", "")
   );
-  
+
   const {
     value,
     page,
@@ -54,7 +55,26 @@ function Category() {
       product.category === categoryName?.name &&
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const clickBrand = () => setActive(!active);
 
+  const set = new Set(productsSearch.map((product) => product.brand));
+  const array = [...set];
+
+  console.log(array);
+  const listItems = array.map((brand) => (
+    <div key={brand.toString()} onClick={clickBrand}>
+      <div
+        className={
+          active
+            ? "shadow-sm bg-gradient-to-r from-neutral-300 to-neutral-400	max-w-max rounded-full mx-2 p-2 border-[#51C4D3] border-4"
+            : "shadow-sm bg-gradient-to-r from-neutral-300 to-neutral-400 max-w-max rounded-full mx-2 p-2"
+        }
+      >
+        {brand}
+      </div>
+    </div>
+  ));
+console.log(active)
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
@@ -124,6 +144,9 @@ function Category() {
                       <p>Không tìm thấy sản phẩm phù hợp</p>
                     ) : (
                       <div className="rounded-lg shadow-sm bg-[#126E82] py-4">
+                        <div className="flex flex-row">
+                          {listItems}</div>
+
                         <div className="p-4 grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 max-h-max">
                           <>
                             {page === 1 ? (
@@ -430,7 +453,8 @@ function Category() {
                             count={Math.ceil(
                               productsSearch.filter(
                                 (filteredProduct) =>
-                                  filteredProduct.category === categoryName?.name &&
+                                  filteredProduct.category ===
+                                    categoryName?.name &&
                                   value[0] / 24000 <= filteredProduct.price &&
                                   filteredProduct.price <= value[1] / 24000
                               ).length / 8

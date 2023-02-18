@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const { value, page, gender, sortPrice, sortAlphabet } =
     useContext(AppContext);
-  
+
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
   }, [dispatch]);
@@ -44,40 +44,21 @@ function Home() {
         />
       )}
       {/* Promo */}
-      <p className="neon__text">
-        Tin công nghệ
-      </p>
+      <p className="neon__text">Tin công nghệ</p>
       <div className="grid-cols-4 big-phone:container big-phone:mx-auto my-4">
         {loading ? (
           <Loading />
         ) : (
           <>
             <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 max-h-max bg-promo rounded-lg shadow-sm">
-              {page === 1 ? (
-                <>
-                  {articles.slice(0, 6).map((newArticle) => (
-                    <Article
-                      {...newArticle}
-                      key={newArticle._id}
-                      article={newArticle}
-                      className="col-span-1"
-                    />
-                  ))}
-                </>
-              ) : (
-                <>
-                  {articles
-                    .slice(6 * (page - 1), 6 * page)
-                    .map((newArticle) => (
-                      <Article
-                        {...newArticle}
-                        key={newArticle._id}
-                        article={newArticle}
-                        className="col-span-1"
-                      />
-                    ))}
-                </>
-              )}
+              {articles.slice(0, 6).map((newArticle) => (
+                <Article
+                  {...newArticle}
+                  key={newArticle._id}
+                  article={newArticle}
+                  className="col-span-1"
+                />
+              ))}
             </div>
             <div className="text-center my-8">
               <Link to="/promo">
@@ -87,9 +68,7 @@ function Home() {
           </>
         )}
       </div>
-      <p className="neon__text">
-        Sản phẩm nổi bật
-      </p>
+      <p className="neon__text">Sản phẩm nổi bật</p>
       <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">
         <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
           <FilterPrice />
@@ -367,9 +346,7 @@ function Home() {
         </div>
       </div>
       {/* last products */}
-      <p className="neon__text">
-        Sản phẩm đã xem
-      </p>
+      <p className="neon__text">Sản phẩm đã xem</p>
       <div className="container mx-auto">
         <div className="grid laptop:grid-cols-8 gap-4 bg-[#126E82] px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
           {loading ? (

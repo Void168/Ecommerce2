@@ -182,21 +182,16 @@ productRouter.post('/decrease-cart', async (req, res) => {
 
 productRouter.post('/:id/reviews', async (req, res) => {
   const { id } = req.params
-  const { userId } = req.body
   try {
-    const user = await User.findById(userId)
-    console.log(user) 
-    const product = await Product.findById(id)
+    const product = await Product.findByIdAndUpdate(id)
     if (product) {
-      const user = await User.findById(userId)
-      if (product.reviews.find((x) => x.name === user.name)) {
-        return res
-          .status(400)
-          .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' })
-      }
+      // if (product.reviews.find((x) => x.name === user.name)) {
+      //   return res
+      //     .status(400)
+      //     .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' })
+      // }
       const review = {
-        name: user.name,
-        rating: Number(req.body.rating),
+        rating: req.body.rating,
         comment: req.body.comment,
       }
       product.reviews.push(review)
