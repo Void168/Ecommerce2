@@ -80,7 +80,7 @@ function Footer() {
             <br />
           </div>
           <div>
-            <div class="flex big-phone:flex-row small-phone:flex-col text-center justify-evenly big-tablet:m-0 small-phone:mb-20 text-xl">
+            <div className="flex big-phone:flex-row small-phone:flex-col text-center justify-evenly big-tablet:m-0 small-phone:mb-20 text-xl">
               <p>All rights reserved</p>
               <p>CopyRight © 2023</p>
             </div>

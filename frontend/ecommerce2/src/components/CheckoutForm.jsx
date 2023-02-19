@@ -101,7 +101,9 @@ function CheckoutForm() {
           />
         </div>
         <div md={5}>
-          <label className="text-gray-400">Điện thoại</label>
+          <label className="small-phone:text-gray-400 tablet:text-black">
+            Điện thoại
+          </label>
           <br />
           <input
             type="phone"
@@ -112,7 +114,10 @@ function CheckoutForm() {
             className="w-6/12 small-phone:w-full"
           />
         </div>
-        <label htmlFor="card-element" className="text-gray-400">
+        <label
+          htmlFor="card-element"
+          className="small-phone:text-gray-400 tablet:text-black"
+        >
           Thông tin thanh toán
         </label>
         <CardElement className="w-6/12 shadow-sm p-2 rounded-md bg-white small-phone:w-full" />

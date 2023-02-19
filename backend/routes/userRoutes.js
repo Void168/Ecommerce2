@@ -1,6 +1,8 @@
 const userRouter = express.Router()
-import express from 'express';;
-import User from '../models/userModel.js';
+import express from 'express'
+import User from '../models/userModel.js'
+import bcrypt from 'bcrypt';
+
 //Sign Up
 
 userRouter.post('/signup', async (req, res) => {
@@ -36,6 +38,50 @@ userRouter.get('/', async (req, res) => {
   }
 })
 
+// Get single user
+userRouter.get('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const user = await User.findById(id)
+    res.status(200).json({ user })
+  } catch (e) {
+    res.status(400).send(e.message)
+  }
+})
+
+// update user
+userRouter.patch('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const { password, phone, avatar, address } = req.body
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        password: bcrypt.hashSync(password, 8),
+        phone,
+        avatar,
+        address,
+      },
+      { new: true },
+    )
+    res.status(200).json(user)
+  } catch (e) {
+    res.status(400).send(e.message)
+  }
+})
+
+// delete user
+userRouter.delete('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    await User.findByIdAndDelete(id)
+    const users = await User.find()
+    res.status(200).json(users)
+  } catch (e) {
+    res.status(400).send(e.message)
+  }
+})
+
 // get user orders
 userRouter.get('/:id/orders', async (req, res) => {
   const { id } = req.params
@@ -63,4 +109,4 @@ userRouter.post('/:id/updateNotifications', async (req, res) => {
   }
 })
 
-export default userRouter;
+export default userRouter

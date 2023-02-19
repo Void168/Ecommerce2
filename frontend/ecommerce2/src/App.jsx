@@ -27,6 +27,7 @@ import NewAriticles from "./pages/NewArticles";
 import NavigationResponsive from "./components/NavigationResponsive";
 import CartButton from "./components/CartButton";
 import SearchPage from "./pages/SearchPage";
+import Profile from './pages/Profile';
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -99,12 +100,17 @@ function App() {
             {user && <Route path="/cart" element={<Cart />} />}
             <Route path="/order/:id" element={<OrderDetail />}></Route>
 
-            <Route path="/new-product" element={<NewProducts />} />
-            <Route path="/new-article" element={<NewAriticles />} />
             <Route path="*" element={<Home />} />
-            {user && <Route path="/orders" element={<Order />} />}
+            {user && (
+              <>
+                <Route path="/orders" element={<Order />} />
+                <Route path="/profile/:id/edit" element={<Profile />} />
+              </>
+            )}
             {user && user.isAdmin && (
               <>
+                <Route path="/new-product" element={<NewProducts />} />
+                <Route path="/new-article" element={<NewAriticles />} />
                 <Route path="/dashboard" element={<Dashboard />}></Route>
                 <Route path="/product/:id/edit" element={<EditProduct />} />
               </>

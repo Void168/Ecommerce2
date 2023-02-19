@@ -182,8 +182,9 @@ productRouter.post('/decrease-cart', async (req, res) => {
 
 productRouter.post('/:id/reviews', async (req, res) => {
   const { id } = req.params
+
   try {
-    const product = await Product.findByIdAndUpdate(id)
+    const product = await Product.findById(id)
     if (product) {
       // if (product.reviews.find((x) => x.name === user.name)) {
       //   return res

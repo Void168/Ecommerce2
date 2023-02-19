@@ -10,7 +10,7 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [emailReset, setEmailReset] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { isError, isLoading, error }] = useLoginMutation();
+  const [login, { isSucess, isError, isLoading, error }] = useLoginMutation();
   const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(true);
@@ -25,6 +25,9 @@ function Login(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (error) {
+      alert("Tài khoản hoặc mật khẩu không đúng");
+    }
   };
 
   const ShowHidePassword = () => {
@@ -46,9 +49,11 @@ function Login(props) {
   const checkUser = (e) => {
     e.preventDefault();
     if (email && password) {
-      navigate(-1);
+      login({ email, password });
+      navigate('/');
+    } else {
+      alert("Tài khoản hoặc mật khẩu không đúng");
     }
-    login({ email, password });
   };
 
   return (

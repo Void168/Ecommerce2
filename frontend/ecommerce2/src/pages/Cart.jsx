@@ -58,13 +58,16 @@ function Cart() {
           <Loading />
         ) : (
           <>
-            {cart.length === 0 ? (
-              <p className="text-xl mt-8">
+              {cart.length === 0 ? (
+                <div className="h-screen">
+                  <p className="text-xl mt-8">
                 Giỏ hàng trống.{" "}
                 <Link to="/" className="text-[#126E82]">
                   Tiếp tục mua hàng
                 </Link>
               </p>
+                </div>
+              
             ) : (
               <div className=" grid grid-cols-3 gap-4">
                 <div className="col-span-2">

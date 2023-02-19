@@ -21,7 +21,7 @@ const reducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  blackList: [appApi.reducerPath, 'products', 'articles'],
+  blackList: [appApi.reducerPath,'products', 'articles'],
 }
 
 // persist store

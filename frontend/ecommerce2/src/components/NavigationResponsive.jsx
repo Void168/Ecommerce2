@@ -196,9 +196,7 @@ function NavigationResponsive() {
               ref={inputRef}
             ></input>
             <span onClick={clickSearch}>
-              <i
-                className="fa-solid fa-magnifying-glass absolute right-1 top-4 cursor-pointer border-l-2 pl-1"
-              ></i>
+              <i className="fa-solid fa-magnifying-glass absolute right-1 top-4 cursor-pointer border-l-2 pl-1"></i>
             </span>
           </div>
           <Typography id="modal-modal-description">
@@ -248,12 +246,12 @@ function NavigationResponsive() {
             <div>
               <li>
                 <Avatar
-                  alt="Remy Sharp"
-                  src="/static/images/avatar/1.jpg"
+                  alt={`${user.name}`}
+                  src={`${user.avatar}`}
                   className="mx-8"
                 />
               </li>
-              <li>
+              <li onClick={handleClose}>
                 {!user ? (
                   <NavLink
                     className={({ isActive }) =>
@@ -265,7 +263,7 @@ function NavigationResponsive() {
                   </NavLink>
                 ) : (
                   <div className="dropdown__profile relative px-8 py-12 text-2xl">
-                    <Link to="/">
+                    <Link to={`/profile/${user._id}/edit`}>
                       {user.name} <i className="fa-solid fa-caret-down" />
                     </Link>
                   </div>

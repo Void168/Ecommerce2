@@ -24,6 +24,18 @@ export const appApi = createApi({
       }),
     }),
 
+    // delete user
+    deleteUser: builder.mutation({
+      query: ({ user_id }) => ({
+        url: `/users/${user_id}`,
+        body: {
+          user_id,
+        },
+        method: 'DELETE',
+      }),
+    }),
+
+    
     // create product
     createProduct: builder.mutation({
       query: (product) => ({
@@ -35,9 +47,9 @@ export const appApi = createApi({
 
     // create review
     createReview: builder.mutation({
-      query: (product_id, user_id, product) => ({
+      query: ({ product_id, user_id }) => ({
         url: `/products/${product_id}/reviews`,
-        body: { product, user_id },
+        body:{user_id},
         method: 'POST',
       }),
     }),
@@ -59,7 +71,7 @@ export const appApi = createApi({
         method: 'POST',
       }),
     }),
-
+    
     // increase cart
     increaseCartProduct: builder.mutation({
       query: (body) => ({
@@ -68,7 +80,7 @@ export const appApi = createApi({
         method: 'POST',
       }),
     }),
-
+    
     // decrease cart
     decreaseCartProduct: builder.mutation({
       query: (body) => ({
@@ -77,7 +89,7 @@ export const appApi = createApi({
         method: 'POST',
       }),
     }),
-
+    
     // create order
     createOrder: builder.mutation({
       query: (body) => ({
@@ -97,12 +109,21 @@ export const appApi = createApi({
         method: 'DELETE',
       }),
     }),
-
+    
     // update product
     updateProduct: builder.mutation({
       query: (product) => ({
         url: `/products/${product.id}`,
         body: product,
+        method: 'PATCH',
+      }),
+    }),
+    
+    // update profile
+    updateProfile: builder.mutation({
+      query: (user) => ({
+        url: `/users/${user.id}`,
+        body: user,
         method: 'PATCH',
       }),
     }),
@@ -127,7 +148,7 @@ export const appApi = createApi({
       }),
     }),
 
-    // create article
+    // update article
     updateArticle: builder.mutation({
       query: (article) => ({
         url: `/articles/${article.id}`,
@@ -144,11 +165,13 @@ export const {
   useCreateProductMutation,
   useCreateReviewMutation,
   useAddToCartMutation,
+  useDeleteUserMutation,
   useRemoveFromCartMutation,
   useIncreaseCartProductMutation,
   useDecreaseCartProductMutation,
   useCreateOrderMutation,
   useDeleteProductMutation,
+  useUpdateProfileMutation,
   useUpdateProductMutation,
   useCreateArticleMutation,
   useDeleteArticleMutation,

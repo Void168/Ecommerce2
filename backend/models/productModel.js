@@ -1,16 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const reviewSchema = new mongoose.Schema(
-  {
-    // name: { type: String, required: true },
-    comment: { type: String, required: true },
-    rating: { type: Number, required: true},
-    date: {
-      type: String,
-      default: new Date().toISOString().split('T')[0],
-    },
+const reviewSchema = new mongoose.Schema({
+  // name: { type: String, required: true },
+  comment: { type: String, required: true },
+  rating: { type: Number, required: true },
+  date: {
+    type: String,
+    default: new Date().toISOString().split('T')[0],
   },
-);
+})
 
 const ProductSchema = mongoose.Schema(
   {
@@ -34,9 +32,9 @@ const ProductSchema = mongoose.Schema(
       type: Array,
       require: true,
     },
-    brand: {type: String, required: true},
-    discount:{ type: Number, required: false, default: 0},
-    rating: { type: Number, required: false, default: 0},
+    brand: { type: String, required: true },
+    discount: { type: Number, required: false, default: 0 },
+    rating: { type: Number, required: false, default: 0 },
     numReview: { type: Number, required: false, default: 0 },
     reviews: [reviewSchema],
   },

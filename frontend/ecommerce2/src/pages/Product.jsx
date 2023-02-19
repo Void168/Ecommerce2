@@ -38,11 +38,9 @@ function Product() {
     e.preventDefault();
     if (comment && rating) {
       window.alert("Gửi nhận xét thành công");
-      setRating("");
-      setComment("");
       dispatch(
         createReview({ rating, comment }).then(({ data }) => {
-          if (data.length > 0) {
+          if (data?.length > 0) {
             setLoading(true);
             setTimeout(() => {
               setLoading(false);
@@ -50,6 +48,8 @@ function Product() {
           }
         })
       );
+      setRating("");
+      setComment("");
     } else {
       alert("Hãy bình luận và chọn số sao");
     }
@@ -160,8 +160,25 @@ function Product() {
                 Thông tin sản phẩm
               </p>
               <div className="flex flex-col big-tablet:justify-between laptop:justify-start galaxy-fold:justify-start py-4 px-8 h-full">
-                <div className="text-xl">
-                  <p className="my-4">{product.name}</p>
+                  <div className="text-xl">
+                    <div className="flex flex-row py-4 px-2">
+                      <p>{product.name}</p>
+                  <div className="flex flex-row mx-4">
+                    <Rating
+                      rating={
+                        product.reviews.reduce((a, c) => c.rating + a, 0) /
+                        product.reviews.length
+                      }
+                      caption=" "
+                    ></Rating>
+                    <span>
+                      ({product.reviews.reduce((a, c) => c.rating + a, 0) /
+                        product.reviews.length})
+                    </span>
+                  </div>
+                    </div>
+                  
+
                   <span className="my-4 text-xl text-black">Giá gốc: </span>
                   <span className="laptop:text-3xl tablet:text-2xl my-4 text-red-500 line-through">
                     {(product.price * 24000).toLocaleString("it-IT", {
@@ -315,7 +332,7 @@ function Product() {
                 </form>
               ) : (
                 <h2>
-                  Vui lòng <Link to="/signin">Đăng nhập</Link> để nhận xét
+                  Vui lòng <Link to="/login">Đăng nhập</Link> để nhận xét
                 </h2>
               )}
             </div>

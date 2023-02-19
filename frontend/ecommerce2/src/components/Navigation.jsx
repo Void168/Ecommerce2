@@ -50,7 +50,7 @@ function Navigation() {
     else setDisplay(true);
 
     dispatch(resetNotifications());
-    if (unreadNotifications > 0)
+    if (user && unreadNotifications > 0)
       axios.post(`/users/${user._id}/updateNotifications`);
   };
 
@@ -208,7 +208,7 @@ function Navigation() {
                           : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
                       }
                     >
-                      {user?.notifications.length > 0 ? (
+                      {user?.notifications?.length > 0 ? (
                         user?.notifications.map((notification) => (
                           <div className="border-b border-[#132C33] py-2">
                             <p
@@ -253,7 +253,7 @@ function Navigation() {
                 <div className="mt-4 dropdown__profile relative">
                   <NavLink
                     className="p-4 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
-                    to="/"
+                    to={`/profile/${user._id}/edit`}
                   >
                     {user.name} <i className="fa-solid fa-caret-down" />
                   </NavLink>
@@ -264,9 +264,7 @@ function Navigation() {
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
                         <li className="my-1">
-                          <Link to='/dashboard'>
-                            Quản lý
-                          </Link>
+                          <Link to="/dashboard">Quản lý</Link>
                         </li>
                         <li className=" text-center">
                           <button
@@ -279,7 +277,7 @@ function Navigation() {
                       </div>
                     </ul>
                   ) : (
-                    <ul className="flex flex-col text-black absolute z-10">
+                    <ul className="flex flex-col text-black absolute z-10 w-48">
                       <div className="bg-[#51C4D3] rounded-b-3xl p-2">
                         <li>
                           <Link to="/orders">Lịch sử mua hàng</Link>
@@ -319,12 +317,12 @@ function Navigation() {
         </div>
         <div className="relative p-4">
           <NavLink to="/cart">
-            {user?.cart.count > 0 && (
+            {user?.cart?.count > 0 && (
               <span
                 className="
               bg-[#51C4D3] px-3 py-1 rounded-full absolute z-10 top-0 left-8"
               >
-                {user.cart.count}
+                {user?.cart?.count}
               </span>
             )}
             <i className="fas fa-shopping-cart text-3xl" />

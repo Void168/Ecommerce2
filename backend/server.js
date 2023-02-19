@@ -29,7 +29,7 @@ const io = new Server(server, {
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 })
 
-const stripe = new Stripe('process.env.CLIENT_STRIPE_SECRET');
+const stripe = new Stripe(`${process.env.CLIENT_STRIPE_SECRET}`);
 
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))

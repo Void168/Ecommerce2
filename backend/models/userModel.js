@@ -28,6 +28,18 @@ const UserSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    avatar: {
+      type: String,
+      require: false,
+    },
+    phone: {
+      type: String,
+      require: false,
+    },
+    address: {
+      type: String,
+      require: false,
+    },
     cart: {
       type: Object,
       default: {

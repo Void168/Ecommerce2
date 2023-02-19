@@ -3,13 +3,18 @@ import React, { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 
 function Paginate() {
-  const { count, changeIndex } = useContext(AppContext)
+  const { count, changeIndex, page } = useContext(AppContext)
 
   return (
     <Stack spacing={2} className="p-1 rounded-lg">
-      <Pagination count={count} color="primary" onChange={changeIndex} />
+      <Pagination
+        count={count}
+        page={page}
+        color="primary"
+        onChange={changeIndex}
+      />
     </Stack>
-  )
+  );
 }
 
 export default Paginate

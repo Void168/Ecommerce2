@@ -51,9 +51,7 @@ function Signup() {
   return (
     <div className="container mx-auto">
       <div className="flex flex-row w-full justify-center">
-        {
-          error && (<Loading />)
-        }
+        {error && <Loading />}
         {loading ? (
           <Loading />
         ) : (
@@ -97,7 +95,7 @@ function Signup() {
                   <div className="flex flex-row">
                     <input
                       className="w-full"
-                      type={showPassword === true ? 'password' : 'text'}
+                      type={showPassword === true ? "password" : "text"}
                       id="password"
                       name="password"
                       placeholder="Nhập mật khẩu"
@@ -108,27 +106,38 @@ function Signup() {
                       <i
                         className={
                           showPassword
-                            ? 'fas fa-eye-slash eye-1 absolute right-1 bottom-3'
-                            : 'fas fa-eye eye-1 absolute right-1 bottom-3'
+                            ? "fas fa-eye-slash eye-1 absolute right-1 bottom-3"
+                            : "fas fa-eye eye-1 absolute right-1 bottom-3"
                         }
                       ></i>
                     </span>
                   </div>
                 </div>
-                <div>
+                <div className="relative form__element">
                   <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
                   <br />
-                  <input
-                    className="w-full"
-                    type={showPassword === true ? 'password' : 'text'}
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    placeholder="Nhập lại mật khẩu"
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value)
-                    }}
-                    required
-                  ></input>
+                  <div className="flex flex-row">
+                    <input
+                      className="w-full"
+                      type={showPassword === true ? "password" : "text"}
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Nhập lại mật khẩu"
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                      }}
+                      required
+                    ></input>
+                    <span onClick={ShowHidePassword}>
+                      <i
+                        className={
+                          showPassword
+                            ? "fas fa-eye-slash eye-1 absolute right-1 bottom-3"
+                            : "fas fa-eye eye-1 absolute right-1 bottom-3"
+                        }
+                      ></i>
+                    </span>
+                  </div>
                 </div>
                 <div className="form__element">
                   <button type="submit" className="w-full bg-[#132C33]">
@@ -137,11 +146,11 @@ function Signup() {
                 </div>
                 <div>
                   <div className="form__element">
-                    Đã có tài khoản? {''}
+                    Đã có tài khoản? {""}
                     <Link to="/login">Đăng nhập</Link>
                   </div>
                   <div className="form__element pointer">
-                    <h4 onClick={openPopup}>Quên mật khẩu? {''} </h4>
+                    <h4 onClick={openPopup}>Quên mật khẩu? {""} </h4>
                   </div>
                 </div>
               </form>
@@ -157,7 +166,7 @@ function Signup() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default Signup

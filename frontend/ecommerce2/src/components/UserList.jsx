@@ -3,11 +3,21 @@ import axios from "../axios";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Loading from "./Loading";
+import { Link } from "react-router-dom";
+import { useDeleteUserMutation } from "../services/appApi";
+import { useSelector } from "react-redux";
 
 function UserList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation();
+
+  const handleDeleteUser = (id) => {
+    if (window.confirm("Chắc chắn xóa tài khoản này?")) {
+      deleteUser({ user_id: id });
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -40,8 +50,8 @@ function UserList() {
                 <table className="w-full my-4 table-fixed tablet:text-xs big-tablet:text-sm laptop:text-base">
                   <thead>
                     <tr>
-                      <th>Client Id</th>
-                      <th>Client Name</th>
+                      <th>Id</th>
+                      <th>Tên tài khoản</th>
                       <th>Email</th>
                       <th>Các đơn hàng</th>
                     </tr>
@@ -54,6 +64,19 @@ function UserList() {
                             <td className="truncate">{user._id}</td>
                             <td className="truncate">{user.name}</td>
                             <td className="truncate">{user.email}</td>
+                            <td>
+                              <div className="flex flex-col">
+                                <button
+                                  onClick={() =>
+                                    handleDeleteUser(user._id, user._id)
+                                  }
+                                  disabled={isLoading}
+                                  className="bg-[#132C33]"
+                                >
+                                  Xóa người dùng
+                                </button>
+                              </div>
+                            </td>
                           </tr>
                         ))}
                       </>

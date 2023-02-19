@@ -6,7 +6,7 @@ import appApi from '../services/appApi.js'
 const initialState = null
 
 export const userSlice = createSlice({
-  name: 'products',
+  name: 'user',
   initialState,
   reducers: {
     logout: () => initialState,
@@ -29,6 +29,14 @@ export const userSlice = createSlice({
       (_, { payload }) => payload,
     )
     builder.addMatcher(
+      appApi.endpoints.updateProfile.matchFulfilled,
+      (_, { payload }) => payload,
+    )
+    builder.addMatcher(
+      appApi.endpoints.deleteUser.matchFulfilled,
+      (_, { payload }) => payload,
+    )
+    builder.addMatcher(
       appApi.endpoints.addToCart.matchFulfilled,
       (_, { payload }) => payload,
     )
@@ -46,6 +54,10 @@ export const userSlice = createSlice({
     )
     builder.addMatcher(
       appApi.endpoints.createOrder.matchFulfilled,
+      (_, { payload }) => payload,
+    )
+    builder.addMatcher(
+      appApi.endpoints.createReview.matchFulfilled,
       (_, { payload }) => payload,
     )
   },
