@@ -51,7 +51,7 @@ function Home() {
         ) : (
           <>
             <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 max-h-max bg-promo rounded-lg shadow-sm">
-              {articles.slice(0, 3).map((newArticle) => (
+              {articles?.slice(0, 3).map((newArticle) => (
                 <Article
                   {...newArticle}
                   key={newArticle._id}

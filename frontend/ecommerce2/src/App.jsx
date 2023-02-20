@@ -1,5 +1,5 @@
 import Navigation from "./components/Navigation";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -34,9 +34,10 @@ window.onbeforeunload = function () {
 };
 
 function App() {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user); 
   const dispatch = useDispatch();
   const location = useLocation();
+  
 
   useEffect(() => {
     const socket = io("http://localhost:8080");
@@ -64,6 +65,16 @@ function App() {
         <CartButton />
         <ScrollToTop />
         <header>
+          <Navigation />
+          <NavigationResponsive />
+        </header>
+        <main
+          className={
+            location.pathname === "/login" || location.pathname === "/register"
+              ? "py-8 px-4 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max"
+              : "py-8 px-4 bg-main w-full"
+          }
+        >
           <div className="flex justify-center">
             <img
               src="/images/logo.png"
@@ -71,16 +82,6 @@ function App() {
               className="big-tablet:hidden small-phone:block shadow-none"
             />
           </div>
-          <Navigation />
-          <NavigationResponsive />
-        </header>
-        <main
-          className={
-            location.pathname === "/login" || location.pathname === "/register"
-              ? "py-8 px-4 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round h-screen"
-              : "py-8 px-4 bg-main w-full"
-          }
-        >
           <Routes>
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -91,7 +92,6 @@ function App() {
             {!user && (
               <>
                 <Route path="/login" element={<Login />} />
-                {user && <Route path="/login" element={<Home />} />}
                 <Route path="/register" element={<Signup />} />
               </>
             )}

@@ -40,6 +40,9 @@ module.exports = {
         '200':'42.5rem',
         '256': '45rem',
       },
+      left: {
+        '2/5':'40%'
+      }
     },
   },
   variants: {

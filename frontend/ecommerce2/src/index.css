@@ -18,7 +18,7 @@
   }
 
   button {
-    @apply bg-[#132C33]  p-2 rounded-md hover:bg-[#126E82] text-white shadow-sm ease-in-out duration-200;
+    @apply bg-[#132C33]  p-2 rounded-md hover:bg-[#D8E3E7] hover:text-black text-white shadow-sm ease-in-out duration-300;
   }
 
   .form__create--product div {
@@ -91,7 +91,8 @@ body {
 .MuiBottomNavigationAction-label,
 .MuiListSubheader-root,
 .MuiListItemText-primary,
-.MuiInput-root {
+.MuiInput-root,
+.MuiAlert-message {
   font-family: "Quicksand", sans-serif !important;
 }
 

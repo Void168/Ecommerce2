@@ -94,7 +94,7 @@ function Product() {
   }
 
   const navigateToLogin = () => {
-    navigate("/login");
+    navigate('/login');
   };
 
   const listPic = product.pictures;
@@ -160,24 +160,25 @@ function Product() {
                 Thông tin sản phẩm
               </p>
               <div className="flex flex-col big-tablet:justify-between laptop:justify-start galaxy-fold:justify-start py-4 px-8 h-full">
-                  <div className="text-xl">
-                    <div className="flex flex-row py-4 px-2">
-                      <p>{product.name}</p>
-                  <div className="flex flex-row mx-4">
-                    <Rating
-                      rating={
-                        product.reviews.reduce((a, c) => c.rating + a, 0) /
-                        product.reviews.length
-                      }
-                      caption=" "
-                    ></Rating>
-                    <span>
-                      ({product.reviews.reduce((a, c) => c.rating + a, 0) /
-                        product.reviews.length})
-                    </span>
-                  </div>
+                <div className="text-xl">
+                  <div className="flex flex-row py-4 px-2">
+                    <p>{product.name}</p>
+                    <div className="flex flex-row mx-4">
+                      <Rating
+                        rating={
+                          product.reviews.reduce((a, c) => c.rating + a, 0) /
+                          product.reviews.length
+                        }
+                        caption=" "
+                      ></Rating>
+                      <span>
+                        (
+                        {product.reviews.reduce((a, c) => c.rating + a, 0) /
+                          product.reviews.length}
+                        )
+                      </span>
                     </div>
-                  
+                  </div>
 
                   <span className="my-4 text-xl text-black">Giá gốc: </span>
                   <span className="laptop:text-3xl tablet:text-2xl my-4 text-red-500 line-through">
@@ -351,7 +352,14 @@ function Product() {
                         <Rating rating={review.rating} caption=" ">
                           {review.rating}
                         </Rating>
-                        <p>{review.date} </p>
+                        <p>
+                          {review.date
+                            .slice(0, 10)
+                            .toString()
+                            .split("-")
+                            .reverse()
+                            .join("-")}{" "}
+                        </p>
                         <p>Nội dung: {review.comment}</p>
                       </li>
                     ))}
