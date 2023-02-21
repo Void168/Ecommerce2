@@ -28,6 +28,7 @@ import NavigationResponsive from "./components/NavigationResponsive";
 import CartButton from "./components/CartButton";
 import SearchPage from "./pages/SearchPage";
 import Profile from './pages/Profile';
+import EditArticle from "./pages/EditArticle";
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -113,6 +114,7 @@ function App() {
                 <Route path="/new-article" element={<NewAriticles />} />
                 <Route path="/dashboard" element={<Dashboard />}></Route>
                 <Route path="/product/:id/edit" element={<EditProduct />} />
+                <Route path="/article/:id/edit" element={<EditArticle />} />
               </>
             )}
           </Routes>

@@ -1,10 +1,10 @@
 import express from 'express';
-const orderRouter = express.Router()
+const articleRouter = express.Router()
 import Article from '../models/articleModel.js'
 import User from'../models/userModel.js'
 
 // Get Articles
-orderRouter.get('/', async (req, res) => {
+articleRouter.get('/', async (req, res) => {
   try {
     const articles = await Article.find()
     res.status(200).json(articles)
@@ -13,8 +13,19 @@ orderRouter.get('/', async (req, res) => {
   }
 })
 
+// Get single product
+articleRouter.get('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const article = await Article.findById(id)
+    res.status(200).json({ article })
+  } catch (e) {
+    res.status(400).send(e.message)
+  }
+})
+
 // create Articles
-orderRouter.post('/', async (req, res) => {
+articleRouter.post('/', async (req, res) => {
   try {
     const {
       title,
@@ -40,7 +51,7 @@ orderRouter.post('/', async (req, res) => {
 })
 
 // update article
-orderRouter.patch('/:id', async (req, res) => {
+articleRouter.patch('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const {
@@ -67,7 +78,7 @@ orderRouter.patch('/:id', async (req, res) => {
 })
 
 // delete article
-orderRouter.delete('/:id', async (req, res) => {
+articleRouter.delete('/:id', async (req, res) => {
   const { id } = req.params
   const { user_id } = req.body
   try {
@@ -81,4 +92,4 @@ orderRouter.delete('/:id', async (req, res) => {
   }
 })
 
-export default orderRouter
+export default articleRouter

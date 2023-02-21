@@ -83,9 +83,7 @@ function NewArticles() {
 
   return (
     <div className="container mx-auto">
-      {
-        error && <Loading />
-      }
+      {error && <Loading />}
       {loading ? (
         <Loading />
       ) : (
@@ -150,7 +148,10 @@ function NewArticles() {
               <div md={6}>
                 <label>Ngày hết hạn</label>
                 <br />
-                <DatePicker onChange={onChange} value={expire} />
+                <DatePicker
+                  onChange={onChange}
+                  value={typeof expire === "string" ? new Date(expire) : expire}
+                />
                 {date > expire ? <div>Ngày không hợp lệ</div> : null}
               </div>
               <div className="text-center">
@@ -193,7 +194,7 @@ function NewArticles() {
         </>
       )}
     </div>
-  )
+  );
 }
 
 export default NewArticles

@@ -19,11 +19,11 @@ const ArticleSchema = mongoose.Schema(
     },
     date: {
       type: String,
-      default: new Date().toISOString().split('T')[0],
+      default: new Date(),
     },
     expire: {
       type: String,
-      default: new Date().toISOString().split('T')[0],
+      default: new Date(),
     },
   },
   { minimize: false },

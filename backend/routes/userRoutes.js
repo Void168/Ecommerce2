@@ -51,14 +51,19 @@ userRouter.get('/:id', async (req, res) => {
 userRouter.patch('/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const { password, phone, avatar, address } = req.body
+    const hashPassword = async (password) => {
+      const salt = await bcrypt.genSalt(10)
+      password = await bcrypt.hash(password, salt)
+      return password
+    }
+    if (req.body.password) {
+      req.body.password = await hashPassword(req.body.password)
+    }
+    
     const user = await User.findByIdAndUpdate(
       id,
       {
-        password: bcrypt.hashSync(password, 8),
-        phone,
-        avatar,
-        address,
+        $set: req.body,
       },
       { new: true },
     )

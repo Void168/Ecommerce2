@@ -88,7 +88,6 @@ function Profile() {
 
   return (
     <div className="big-phone:container big-phone:mx-auto min-h-max my-8">
-      {error && null}
       {loading ? (
         <Loading />
       ) : (
@@ -145,12 +144,12 @@ function Profile() {
                   />
                 </div>
                 <div>
-                  <label>Mật khẩu</label>
+                  <label>Đổi Mật khẩu</label>
                   <br />
                   <input
                     className="w-full"
                     type="text"
-                    placeholder="Nhập mật khẩu"
+                    placeholder="Nhập mật khẩu mới"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />

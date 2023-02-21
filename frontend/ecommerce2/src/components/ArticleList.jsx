@@ -51,7 +51,7 @@ function ArticleList() {
                         Xóa bài viết
                       </button>
                       <button className="bg-[#132C33] mx-2 laptop:text-base tablet:text-xs">
-                        <Link to={`/articles/${newArticle._id}/edit`}>
+                        <Link to={`/article/${newArticle._id}/edit`}>
                           Chỉnh sửa
                         </Link>
                       </button>

@@ -120,8 +120,8 @@ function Navigation() {
                 <div
                   className={
                     !open
-                      ? "hidden"
-                      : "grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm"
+                      ? "hidden ease-in-out duration-200"
+                      : "grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm ease-in-out duration-200"
                   }
                 >
                   {categories.map((category) => (
@@ -258,7 +258,7 @@ function Navigation() {
                     {user.name} <i className="fa-solid fa-caret-down" />
                   </NavLink>
                   {user?.isAdmin ? (
-                    <ul className="flex flex-col text-black absolute z-10 w-48">
+                    <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
                       <div className="bg-[#51C4D3] rounded-b-3xl p-2">
                         <li className="my-1">
                           <Link to="/orders">Lịch sử mua hàng</Link>
