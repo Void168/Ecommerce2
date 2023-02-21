@@ -53,7 +53,7 @@ function OrderList() {
                 <div className="my-4">
                   <p className="text-3xl">Chi tiết đơn hàng</p>
                 </div>
-                <div className="overflow-y-auto h-screen">
+                <div className="overflow-y-auto max-h-max">
                   <table className="w-full my-4 table-fixed tablet:text-xs big-tablet:text-sm laptop:text-base">
                     <thead>
                       <tr>

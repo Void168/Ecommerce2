@@ -56,10 +56,6 @@ export const userSlice = createSlice({
       appApi.endpoints.createOrder.matchFulfilled,
       (_, { payload }) => payload,
     )
-    builder.addMatcher(
-      appApi.endpoints.createReview.matchFulfilled,
-      (_, { payload }) => payload,
-    )
   },
 })
 

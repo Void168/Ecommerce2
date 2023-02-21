@@ -4,7 +4,7 @@ function Rating(props) {
   const { rating } = props;
   return (
     <>
-      <p>Đánh giá</p>
+      <p>Đánh giá</p>{" "}
       <div className="text-cyan-600">
         <span>
           <i
@@ -13,7 +13,9 @@ function Rating(props) {
                 ? "fas fa-star"
                 : rating >= 0.5
                 ? "fas fa-star-half-alt"
-                : "fa fa-star-o"
+                : rating < 0.5
+                ? "fa fa-star-o"
+                : null
             }
           />
         </span>
@@ -67,4 +69,4 @@ function Rating(props) {
   );
 }
 
-export default Rating
+export default Rating;

@@ -35,7 +35,6 @@ export const appApi = createApi({
       }),
     }),
 
-    
     // create product
     createProduct: builder.mutation({
       query: (product) => ({
@@ -47,9 +46,9 @@ export const appApi = createApi({
 
     // create review
     createReview: builder.mutation({
-      query: ( product, body ) => ({
+      query: (product) => ({
         url: `/products/${product.id}/reviews`,
-        body,
+        body: product,
         method: 'POST',
       }),
     }),
@@ -71,7 +70,7 @@ export const appApi = createApi({
         method: 'POST',
       }),
     }),
-    
+
     // increase cart
     increaseCartProduct: builder.mutation({
       query: (body) => ({
@@ -80,7 +79,7 @@ export const appApi = createApi({
         method: 'POST',
       }),
     }),
-    
+
     // decrease cart
     decreaseCartProduct: builder.mutation({
       query: (body) => ({
@@ -89,7 +88,7 @@ export const appApi = createApi({
         method: 'POST',
       }),
     }),
-    
+
     // create order
     createOrder: builder.mutation({
       query: (body) => ({
@@ -109,7 +108,7 @@ export const appApi = createApi({
         method: 'DELETE',
       }),
     }),
-    
+
     // update product
     updateProduct: builder.mutation({
       query: (product) => ({
@@ -118,7 +117,7 @@ export const appApi = createApi({
         method: 'PATCH',
       }),
     }),
-    
+
     // update profile
     updateProfile: builder.mutation({
       query: (user) => ({

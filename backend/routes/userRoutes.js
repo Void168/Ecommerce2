@@ -59,7 +59,7 @@ userRouter.patch('/:id', async (req, res) => {
     if (req.body.password) {
       req.body.password = await hashPassword(req.body.password)
     }
-    
+
     const user = await User.findByIdAndUpdate(
       id,
       {
@@ -78,8 +78,7 @@ userRouter.delete('/:id', async (req, res) => {
   const { id } = req.params
   try {
     await User.findByIdAndDelete(id)
-    const users = await User.find()
-    res.status(200).json(users)
+    res.status(200).send({ message: "Xóa người dùng thành công" })
   } catch (e) {
     res.status(400).send(e.message)
   }
@@ -102,7 +101,7 @@ userRouter.post('/:id/updateNotifications', async (req, res) => {
   try {
     const user = await User.findById(id)
     user.notifications.forEach((notif) => {
-      notif.status = 'read'
+      notif.status = 'đọc'
     })
     user.markModified('notifications')
     await user.save()

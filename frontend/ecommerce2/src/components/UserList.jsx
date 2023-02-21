@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 function UserList() {
   const [users, setUsers] = useState([]);
+  const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation();
@@ -46,7 +47,7 @@ function UserList() {
             {users?.length === 0 ? (
               <h2 className="py-2 text-center">Chưa có tài khoản nào</h2>
             ) : (
-              <div className="overflow-y-auto h-screen">
+              <div className="overflow-y-auto max-h-max">
                 <table className="w-full my-4 table-fixed tablet:text-xs big-tablet:text-sm laptop:text-base">
                   <thead>
                     <tr>

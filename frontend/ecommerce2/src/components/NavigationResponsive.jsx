@@ -391,29 +391,33 @@ function NavigationResponsive() {
         <div className="mb-4">
           <DoubleArrowIcon onClick={handleOpenNoti} className="text-white" />
         </div>
-        {user?.notifications.length > 0 ? (
-          user?.notifications.map((notification) => (
-            <div className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base">
-              {/* <p
+        {user ? (
+          <>
+            {user?.notifications?.length > 0 ? (
+              user?.notifications?.map((notification) => (
+                <div className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base">
+                  {/* <p
                 className={`notification-${notification.status}`}
                 key={notification._id}
               ></p> */}
-              {notification.message} vào lúc{" "}
-              {notification.time.split("T")[1].slice(0, 8) +
-                " " +
-                "ngày" +
-                " " +
-                notification.time
-                  .slice(0, 10)
-                  .toString()
-                  .split("-")
-                  .reverse()
-                  .join("-")}
-            </div>
-          ))
-        ) : (
-          <span>Không có thông báo mới</span>
-        )}
+                  {notification.message} vào lúc{" "}
+                  {notification.time.split("T")[1].slice(0, 8) +
+                    " " +
+                    "ngày" +
+                    " " +
+                    notification.time
+                      .slice(0, 10)
+                      .toString()
+                      .split("-")
+                      .reverse()
+                      .join("-")}
+                </div>
+              ))
+            ) : (
+              <span>Không có thông báo mới</span>
+            )}
+          </>
+        ) : null}
       </div>
     </>
   );

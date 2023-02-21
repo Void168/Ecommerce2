@@ -60,7 +60,6 @@ function Category() {
   const set = new Set(productsSearch.map((product) => product.brand));
   const array = [...set];
 
-  console.log(array);
   const listItems = array.map((brand) => (
     <div key={brand.toString()} onClick={clickBrand}>
       <div

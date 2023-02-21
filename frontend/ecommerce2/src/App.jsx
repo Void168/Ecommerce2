@@ -1,6 +1,6 @@
 import Navigation from "./components/Navigation";
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { AppProvider } from "./context/AppContext";
+import { Route, Routes, useLocation } from "react-router-dom";
+import {  AppProvider } from "./context/AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -13,7 +13,7 @@ import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import Dashboard from "./pages/Dashboard";
 import EditProduct from "./pages/EditProduct";
-import { useEffect } from "react";
+import {  useEffect } from "react";
 import { io } from "socket.io-client";
 import { addNotification } from "./features/userSlice";
 import ScrollToTop from "./components/ScrollToTop";
@@ -38,7 +38,6 @@ function App() {
   const user = useSelector((state) => state.user); 
   const dispatch = useDispatch();
   const location = useLocation();
-  
 
   useEffect(() => {
     const socket = io("http://localhost:8080");

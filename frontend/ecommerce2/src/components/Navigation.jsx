@@ -208,6 +208,9 @@ function Navigation() {
                           : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
                       }
                     >
+                      {
+                        user ? (<></>) : null
+                      }
                       {user?.notifications?.length > 0 ? (
                         user?.notifications.map((notification) => (
                           <div className="border-b border-[#132C33] py-2">

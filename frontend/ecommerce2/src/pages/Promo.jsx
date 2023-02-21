@@ -30,7 +30,7 @@ function Promo() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 small-phone:h-full tablet:h-screen">
+        <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 small-phone:h-full tablet:max-h-max">
           {page === 1 ? (
             <>
               {articles.slice(0, 6).map((newArticle) => (

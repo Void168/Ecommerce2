@@ -9,6 +9,7 @@ function CheckoutForm() {
   const elements = useElements()
 
   const user = useSelector((state) => state.user)
+  console.log(user)
   const navigate = useNavigate()
   const [alertMessage, setAlertMessage] = useState('')
   const [
@@ -94,7 +95,7 @@ function CheckoutForm() {
           <input
             type="text"
             placeholder="Địa chỉ"
-            value={address}
+            value={user.address ? user.address : address}
             onChange={(e) => setAddress(e.target.value)}
             required
             className="w-6/12 small-phone:w-full"
@@ -108,7 +109,7 @@ function CheckoutForm() {
           <input
             type="phone"
             placeholder="Số điện thoại"
-            value={phone}
+            value={user.phone ? user.phone : phone}
             onChange={(e) => setPhone(e.target.value)}
             required
             className="w-6/12 small-phone:w-full"

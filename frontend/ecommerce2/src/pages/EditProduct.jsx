@@ -12,6 +12,7 @@ function EditProduct() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
+  const [rating, setRating] = useState("");
   const [brand, setBrand] = useState("");
   const [discount, setDiscount] = useState(0);
   const [imageToRemove, setImageToRemove] = useState(null);
@@ -28,6 +29,7 @@ function EditProduct() {
         setName(product.name);
         setDescription(product.description);
         setCategory(product.category);
+        setRating(product.rating);
         setImages(product.pictures);
         setPrice(product.price);
         setBrand(product.brand);
@@ -35,37 +37,6 @@ function EditProduct() {
       })
       .catch((e) => console.log(e));
   }, [id]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !brand ||
-      !images.length
-    ) {
-      return alert("Vui lòng điền vào form hoặc quay lại");
-    }
-    updateProduct({
-      id,
-      name,
-      description,
-      price,
-      category,
-      images,
-      brand,
-      discount,
-    }).then(({ data }) => {
-      if (data.length > 0) {
-        setTimeout(() => {
-          alert("cập nhật thành công");
-          navigate("/dashboard");
-        }, 500);
-      }
-    });
-  };
 
   const handleRemoveImg = (imgObj) => {
     setImageToRemove(imgObj.public_id);
@@ -96,6 +67,38 @@ function EditProduct() {
       }
     );
     widget.open();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      !brand ||
+      !images.length
+    ) {
+      return alert("Vui lòng điền vào form hoặc quay lại");
+    } else
+      updateProduct({
+        id,
+        name,
+        description,
+        price,
+        category,
+        images,
+        rating,
+        brand,
+        discount,
+      }).then(({ data }) => {
+        if (data.length > 0) {
+          setTimeout(() => {
+            alert("cập nhật thành công");
+            navigate(-1);
+          }, 500);
+        }
+      });
   };
 
   useEffect(() => {
@@ -211,6 +214,17 @@ function EditProduct() {
                     ))}
                   </select>
                 </div>
+                <div>
+                  <label>Đánh giá</label>
+                  <br />
+                  <input
+                    className="w-full bg-white"
+                    type="text"
+                    value={rating}
+                    disabled
+                    onChange={(e) => setRating(e.target.value)}
+                  />
+                </div>
                 <div className="text-center">
                   <button
                     type="submit"
@@ -223,9 +237,15 @@ function EditProduct() {
               </div>
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
-                  <button onClick={showWidget} className="bg-[#132C33]">
-                    Chọn ảnh
-                  </button>
+                  <div className="flex justify-center">
+                    <div
+                      onClick={showWidget}
+                      className="bg-[#132C33] cursor-pointer text-white shadow-sm rounded-lg w-6/12 py-2 hover:text-black ease-in-out duration-200 hover:bg-[#D8E3E7]"
+                    >
+                      Chọn ảnh
+                    </div>
+                  </div>
+
                   <div className="p-4 border-spacing-1 border-cyan-700 border-2 grid grid-cols-3 rounded-lg">
                     {images.map((image) => (
                       <div>

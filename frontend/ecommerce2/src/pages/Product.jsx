@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -18,18 +18,23 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { AppContext } from "../context/AppContext";
 
 function Product() {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+  const products = useSelector((state) => state.products);
   const [product, setProduct] = useState(null);
   const [similar, setSimilar] = useState(null);
   const [selected, setSelected] = useState();
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const dispatch = useDispatch();
+  const { watchedProduct, setWatchedProduct } = useContext(AppContext);
+  setWatchedProduct((oldArray) => [...oldArray, id]);
+  const watchedProductArray = new Set(watchedProduct);
 
+  const dispatch = useDispatch();
   const [addToCart, { isSuccess }] = useAddToCartMutation();
   const [createReview, { isError, isSuccess1 }] = useCreateReviewMutation();
   const navigate = useNavigate();
@@ -80,21 +85,69 @@ function Product() {
     );
   }
 
+  const convertVietnameseName = product.brand
+    .toLocaleLowerCase()
+    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+    .replace(/đ/g, "d")
+    .replace(/\s/g, "");
+
+  const convertVietnameseCategory = product.category
+    .toLocaleLowerCase()
+    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+    .replace(/đ/g, "d")
+    .replace(/\s/g, "");
+
   let similarProducts = [];
   if (similar) {
-    similarProducts = similar.map((product, index) => (
-      <div
-        className="big-phone:container big-phone:mx-auto"
-        data-value={index}
-        key={index}
-      >
-        <SimilarProduct {...product} />
-      </div>
-    ));
+    similarProducts = products
+      .filter(
+        (filteredProduct) =>
+          filteredProduct.name
+            .toLocaleLowerCase()
+            .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+            .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+            .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+            .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+            .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+            .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+            .replace(/đ/g, "d")
+            .replace(/\s/g, "")
+            .includes(convertVietnameseName) ||
+          filteredProduct.brand
+            .toLocaleLowerCase()
+            .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+            .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+            .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+            .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+            .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+            .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+            .replace(/đ/g, "d")
+            .replace(/\s/g, "")
+            .includes(convertVietnameseName)
+      )
+      .map((product, index) => (
+        <div
+          className="big-phone:container big-phone:mx-auto"
+          data-value={index}
+          key={index}
+        >
+          <SimilarProduct {...product} />
+        </div>
+      ));
   }
 
   const navigateToLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   const listPic = product.pictures;
@@ -133,7 +186,7 @@ function Product() {
               </div>
               <div>
                 <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
-                  <div className="flex big-phone:flex-row justify-between my-8 big-phone:col-span-4 small-phone:col-span-5 ">
+                  <div className="flex big-phone:flex-row justify-between big-phone:col-span-4 small-phone:col-span-5 ">
                     <Carousel className="w-full">
                       {listPic.map((img, index) => (
                         <div>
@@ -156,25 +209,27 @@ function Product() {
             </div>
 
             <div className="big-tablet:col-span-3 small-phone:col-span-5">
-              <p className="big-phone:text-4xl small-phone:text-3xl text-center mb-4">
+              <p className="big-phone:text-4xl small-phone:text-2xl text-center mb-4">
                 Thông tin sản phẩm
               </p>
-              <div className="flex flex-col big-tablet:justify-between laptop:justify-start galaxy-fold:justify-start py-4 px-8 h-full">
+              <div className="flex flex-col big-tablet:justify-between laptop:justify-start galaxy-fold:justify-start py-4 big-phone:px-8 small-phone:px-0 h-full">
                 <div className="text-xl">
-                  <div className="flex flex-row py-4 px-2">
-                    <p>{product.name}</p>
-                    <div className="flex flex-row mx-4">
+                  <div className="flex flex-col big-phone:py-4 px-2 small-phone:py-0">
+                    <p className="big-phone:text-3xl small-phone:text-xl">
+                      {product.name}
+                    </p>
+                    <div className="flex flex-row big-phone:text-xl small-phone:text-sm">
+                      (
                       <Rating
                         rating={
                           product.reviews.reduce((a, c) => c.rating + a, 0) /
-                          product.reviews.length
+                            product.reviews.length || 0
                         }
                         caption=" "
-                      ></Rating>
+                      ></Rating>{" "}
                       <span>
-                        (
                         {product.reviews.reduce((a, c) => c.rating + a, 0) /
-                          product.reviews.length}
+                          product.reviews.length || 0}
                         )
                       </span>
                     </div>
@@ -251,10 +306,10 @@ function Product() {
           </div>
           <div>
             <p className="neon__text">Sản phẩm tương tự</p>
-            <div className="flex justify-center items-center flex-wrap big-tablet:w-9/12 small-phone:w-full big-phone:mx-auto big-phone:container">
+            <div className="flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
               <Swiper
                 watchSlidesProgress={true}
-                slidesPerView={4}
+                slidesPerView={5}
                 autoplay={{
                   delay: 2500,
                   disableOnInteraction: false,
@@ -266,7 +321,7 @@ function Product() {
                 modules={[Autoplay, Pagination, Navigation]}
                 className="shadow-sm outline-0"
               >
-                {similarProducts.map((product) => (
+                {similarProducts.slice(0, 8).map((product) => (
                   <SwiperSlide key={product.id}>{product}</SwiperSlide>
                 ))}
               </Swiper>

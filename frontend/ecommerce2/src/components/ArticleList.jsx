@@ -9,12 +9,17 @@ import Article from "./Article";
 function ArticleList() {
   const articles = useSelector((state) => state.articles);
   const user = useSelector((state) => state.user);
+    const [loading, setLoading] = useState(false);
   const [deleteArticle, { isLoading, isSuccess }] = useDeleteArticleMutation();
   const [page, setPage] = useState(1);
 
   const handleDeleteArticle = (id) => {
     if (window.confirm("Chắc chắn xóa bài viết này?")) {
       deleteArticle({ article_id: id, user_id: user._id });
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
     }
   };
   return (
@@ -28,11 +33,11 @@ function ArticleList() {
             <Link to="/new-article">Tạo bài viết mới</Link>
           </button>
         </div>
-        <div className="container mx-auto h-screen">
+        <div className="container mx-auto max-h-max">
           <div className="grid laptop:grid-cols-3 tablet:grid-cols-2">
             {page === 1 ? (
               <>
-                {articles.slice(0, 8).map((newArticle) => (
+                {articles.slice(0, 6).map((newArticle) => (
                   <div>
                     <Article
                       {...newArticle}
