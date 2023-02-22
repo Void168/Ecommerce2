@@ -62,8 +62,6 @@ function Login() {
       setOpen(true);
     }
   };
-
-  console.log(open);
   return (
     <>
       <div>

@@ -22,6 +22,7 @@ function Navigation() {
   const signoutHandler = () => {
     navigate("/login");
     dispatch(logout());
+    localStorage.removeItem('viewed products')
   };
   const handleOpen = () => {
     if (open) setOpen(false);

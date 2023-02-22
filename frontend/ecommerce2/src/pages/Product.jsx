@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ import { AppContext } from "../context/AppContext";
 
 function Product() {
   const { id } = useParams();
+  const { page } = useContext(AppContext);
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.products);
   const [product, setProduct] = useState(null);
@@ -30,9 +31,15 @@ function Product() {
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const { watchedProduct, setWatchedProduct } = useContext(AppContext);
-  setWatchedProduct((oldArray) => [...oldArray, id]);
-  const watchedProductArray = new Set(watchedProduct);
+  const {viewedProducts, setViewedProducts} = useContext(AppContext)
+
+  useEffect(() => {
+    setViewedProducts((viewedProduct) => [product, ...viewedProduct]);
+  }, [product]);
+  localStorage.setItem(
+    "viewed products",
+    JSON.stringify(viewedProducts)
+  );
 
   const dispatch = useDispatch();
   const [addToCart, { isSuccess }] = useAddToCartMutation();
@@ -65,9 +72,9 @@ function Product() {
       setProduct(data.product);
       setSimilar(data.similar);
     });
-    // axios.get(`/products/${id}/reviews`).then(({ data }) => {
-    //   setComment(data.comment);
-    // });
+    axios.get(`/products/${id}/reviews`).then(({ data }) => {
+      setComment(data.comment);
+    });
   }, [id]);
 
   useEffect(() => {
@@ -86,17 +93,6 @@ function Product() {
   }
 
   const convertVietnameseName = product.brand
-    .toLocaleLowerCase()
-    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-    .replace(/đ/g, "d")
-    .replace(/\s/g, "");
-
-  const convertVietnameseCategory = product.category
     .toLocaleLowerCase()
     .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
     .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
@@ -163,7 +159,18 @@ function Product() {
               <div className="text-black mb-8 tablet:text-xl">
                 <Link to="/">Trang chủ</Link>{" "}
                 <i className="fas fa-caret-right"></i>
-                <Link to={`/category/${product.category.toLocaleLowerCase()}`}>
+                <Link
+                  to={`/danh-muc/${product.category
+                    .toLocaleLowerCase()
+                    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                    .replace(/đ/g, "d")
+                    .replace(/\s/g, "-")}/trang-${page}`}
+                >
                   {" "}
                   {product.category}{" "}
                 </Link>

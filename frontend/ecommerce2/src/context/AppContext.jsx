@@ -8,7 +8,8 @@ export const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const products = useSelector((state) => state.products);
   const [gender, setGender] = useState("newest");
-  const [watchedProduct, setWatchedProduct] = useState([])
+  const [viewedProducts, setViewedProducts] = useState([]);
+
   const isChecked = (e) => {
     setGender(e.target.value);
   };
@@ -81,8 +82,8 @@ export const AppProvider = ({ children }) => {
         isChecked,
         sortPrice,
         sortAlphabet,
-        watchedProduct,
-        setWatchedProduct,
+        viewedProducts,
+        setViewedProducts,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import axios from "../axios";
 import ProductPreview from "../components/ProductPreview";
 import Loading from "../components/Loading";
 import Paginate from "../components/Paginate";
-import WatchedProduct from "../components/WatchedProduct";
+import ViewedProduct from "../components/ViewedProduct";
 import FilterPrice from "../components/FilterPrice";
 import FilterPriceResponsive from "../components/FilterPriceResponsive";
 import Article from "../components/Article";
@@ -16,10 +16,15 @@ function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const articles = useSelector((state) => state.articles);
-  const lastProducts = products.slice(0, 8);
   const [loading, setLoading] = useState(false);
   const { value, page, gender, sortPrice, sortAlphabet } =
     useContext(AppContext);
+  const viewedProducts = localStorage.getItem('viewed products')
+  const list = JSON.parse(viewedProducts)
+  const listViewProduct = list.filter(element => element !== null);
+  const set = new Set(listViewProduct);
+  const viewedProduct = [...set]
+  console.log(viewedProduct);
 
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
@@ -353,8 +358,8 @@ function Home() {
             <Loading />
           ) : (
             <>
-              {lastProducts?.map((lastProduct) => (
-                <WatchedProduct
+              {viewedProduct?.slice(0, 8).map((lastProduct) => (
+                <ViewedProduct
                   {...lastProduct}
                   key={lastProduct._id}
                   product={lastProduct}
