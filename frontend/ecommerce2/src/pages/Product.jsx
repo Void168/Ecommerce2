@@ -35,7 +35,7 @@ function Product() {
 
   useEffect(() => {
     setViewedProducts((viewedProduct) => [product, ...viewedProduct]);
-  }, [product]);
+  }, [product, setViewedProducts]);
   localStorage.setItem(
     "viewed products",
     JSON.stringify(viewedProducts)

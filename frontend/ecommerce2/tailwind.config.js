@@ -18,7 +18,12 @@ module.exports = {
       backgroundImage: {
         'bg': "url('/src/background/bg-login.jpg')",
         'main': "url('/src/background/bg-main.jpg')",
-        'promo':"url('/src/background/bg-promo.jpg')",
+        'promo': "url('/src/background/bg-promo.jpg')",
+        'apple': "url('https://wallpapers.com/images/file/full-hd-apple-in-3d-soft-blue-7eumqvd2821gj3zr.jpg')",
+        'samsung': "url('https://cdn.wallpapersafari.com/76/68/7F8uTy.jpg')",
+        'xiaomi': "url('https://e0.pxfuel.com/wallpapers/163/794/desktop-wallpaper-xiaomi-3d-logo-gray-brickwall-creative-brands-xiaomi-logo-3d-art-xiaomi.jpg')",
+        'asus': "url('https://images5.alphacoders.com/312/thumb-1920-312869.jpg')",
+        'jbl': "url('https://images.alphacoders.com/888/888018.jpg')",
       },
       colors: {
         'nav-color': 'linear-gradient(0deg, rgba(216,227,231,1) 0%, rgba(18,110,130,1) 35%, rgba(19,44,51,1) 100%)'

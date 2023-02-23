@@ -56,6 +56,18 @@
   .neon__text {
     @apply big-phone:text-3xl small-phone:text-2xl bg-gradient-to-r from-sky-900 to-sky-700 shadow-sm text-[#D8E3E7] px-4 banner__titles big-phone:w-8/12 small-phone:w-10/12 shadow-cyan-500/50 my-8;
   }
+
+  .card__zoom {
+    @apply relative flex items-center justify-center m-3 overflow-hidden shadow-sm rounded-2xl cursor-pointer;
+  }
+
+  .card__zoom--image {
+    @apply absolute w-full h-full transition-all duration-500 ease-in-out transform bg-center bg-cover;
+  }
+
+  .card__zoom:hover .card__zoom--image {
+  @apply scale-110;
+}
 }
 
 body {
