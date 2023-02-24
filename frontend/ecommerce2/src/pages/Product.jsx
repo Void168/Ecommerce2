@@ -72,9 +72,6 @@ function Product() {
       setProduct(data.product);
       setSimilar(data.similar);
     });
-    axios.get(`/products/${id}/reviews`).then(({ data }) => {
-      setComment(data.comment);
-    });
   }, [id]);
 
   useEffect(() => {
@@ -233,7 +230,8 @@ function Product() {
                             product.reviews.length || 0
                         }
                         caption=" "
-                      ></Rating>{" "}
+                      ></Rating>
+                      &nbsp;
                       <span>
                         {product.reviews.reduce((a, c) => c.rating + a, 0) /
                           product.reviews.length || 0}

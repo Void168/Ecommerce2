@@ -64,21 +64,21 @@ function Home() {
       ) : (
         <div className="big-phone:container big-phone:mx-auto w-full">
           <div className="grid big-phone:grid-cols-3 small-phone:grid-rows-1 p-4 w-full gap-1">
-            <div className="grid grid-rows-3 gap-1 big-phone:col-span-2 small-phone:row-span-1">
-              <div className="row-span-2 p-3 h-full">
+            <div className="grid big-phone:grid-rows-3 small-phone:grid-rows-4 gap-1 big-phone:col-span-2 small-phone:row-span-1">
+              <div className="small-phone:row-span-2 p-3 h-full">
                 <Carousel>
                   {listBanner.map((item, i) => (
                     <Paper>
                       <img
                         src={item.url}
                         alt="banner"
-                        className="max-h-fit desktop:h-200 laptop:h-128 big-tablet:h-96 tablet:h-72 big-phone:h-64 small-phone:h-48"
+                        className="max-h-fit desktop:h-200 laptop:h-128 big-tablet:h-96 tablet:h-72 big-phone:h-64 small-phone:h-72"
                       />
                     </Paper>
                   ))}
                 </Carousel>
               </div>
-              <div className="grid grid-cols-2 gap-1">
+              <div className="grid grid-cols-2 gap-1 small-phone:row-span-2 big-phone:row-span-1">
                 <div className="card__zoom">
                   <div
                     alt="banner"
@@ -93,9 +93,30 @@ function Home() {
                     onClick={() => navigate("/search/samsung")}
                   />
                 </div>
+                <div className="card__zoom small-phone:block big-phone:hidden">
+                  <div
+                    alt="banner"
+                    className="card__zoom--image bg-xiaomi"
+                    onClick={() => navigate("/search/xiaomi")}
+                  />
+                </div>
+                <div className="card__zoom small-phone:block big-phone:hidden">
+                  <div
+                    alt="banner"
+                    className="card__zoom--image bg-asus"
+                    onClick={() => navigate("/search/asus")}
+                  />
+                </div>
+                <div className="card__zoom small-phone:block big-phone:hidden">
+                  <div
+                    alt="banner"
+                    className="card__zoom--image bg-jbl"
+                    onClick={() => navigate("/search/jbl")}
+                  />
+                </div>
               </div>
             </div>
-            <div className="grid big-phone:grid-rows-3 small-phone:grid-cols-1 gap-1 big-phone:col-span-1 small-phone:row-span-1">
+            <div className="grid big-phone:grid-rows-3 grid-cols-1 gap-1 big-phone:col-span-1 small-phone:w-0 small-phone:h-0 big-phone:w-full big-phone:h-full">
               <div className="card__zoom">
                 <div
                   alt="banner"

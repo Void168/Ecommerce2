@@ -66,8 +66,8 @@
   }
 
   .card__zoom:hover .card__zoom--image {
-  @apply scale-110;
-}
+    @apply scale-110;
+  }
 }
 
 body {
@@ -294,4 +294,10 @@ body {
 
 .control-arrow {
   background-color: #132c33 !important;
+}
+
+.MuiAvatar-root img {
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 100%;
 }

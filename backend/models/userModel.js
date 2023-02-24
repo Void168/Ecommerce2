@@ -29,7 +29,7 @@ const UserSchema = mongoose.Schema(
       default: false,
     },
     avatar: {
-      type: String,
+      type: Array,
       require: false,
     },
     phone: {

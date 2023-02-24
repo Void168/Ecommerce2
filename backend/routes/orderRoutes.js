@@ -1,21 +1,22 @@
-import express from 'express';
-const orderRouter = express.Router();
+import express from 'express'
+const orderRouter = express.Router()
 
-import Order from'../models/orderModel.js'
-import User from'../models/userModel.js'
+import Order from '../models/orderModel.js'
+import User from '../models/userModel.js'
 
 //creating an order
 
 orderRouter.post('/', async (req, res) => {
   const io = req.app.get('socketio')
-  const { userId, cart, phone, address } = req.body
+  const { userId, cart } = req.body
   try {
     const user = await User.findById(userId)
     const order = new Order({
       owner: user._id,
+      name: user.name,
       products: cart,
-      phone,
-      address,
+      phone: user.phone,
+      address: user.address,
     })
     order.count = cart.count
     order.total = cart.total
@@ -82,4 +83,4 @@ orderRouter.patch('/:id/mark-shipped', async (req, res) => {
   }
 })
 
-export default orderRouter;
+export default orderRouter

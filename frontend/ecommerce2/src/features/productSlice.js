@@ -26,10 +26,6 @@ export const productSlice = createSlice({
       appApi.endpoints.deleteProduct.matchFulfilled,
       (_, { payload }) => payload,
     )
-     builder.addMatcher(
-      appApi.endpoints.createReview.matchFulfilled,
-      (_, { payload }) => payload,
-    )   
   },
 })
 

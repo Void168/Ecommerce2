@@ -247,7 +247,7 @@ function NavigationResponsive() {
               <li>
                 <Avatar
                   alt={`${user.name}`}
-                  src={`${user.avatar}`}
+                  src={`${user.avatar.at(-1).url}`}
                   className="mx-8"
                 />
               </li>

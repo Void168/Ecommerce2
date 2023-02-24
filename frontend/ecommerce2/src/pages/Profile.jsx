@@ -4,18 +4,20 @@ import { useUpdateProfileMutation } from "../services/appApi";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import { Alert, Avatar } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function Profile() {
   const { id } = useParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setImages] = useState([]);
+  const [avatarToRemove, setAvatarToRemove] = useState(null);
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const user = useSelector((state) => state.user);
   const [updateProfile, { isError, error, isLoading, isSuccess }] =
     useUpdateProfileMutation();
-  //   const [avatarToRemove, setAvatarToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ function Profile() {
         const user = data.user;
         setName(user.name);
         setEmail(user.email);
-        setAvatar(user.avatar);
+        setImages(user.avatar);
         setPhone(user.phone);
         setPassword(user.password);
         setAddress(user.address);
@@ -45,21 +47,21 @@ function Profile() {
       avatar,
       phone,
       address,
-    })
+    });
   };
 
-  //   const handleRemoveImg = (imgObj) => {
-  //     setAvatarToRemove(imgObj.public_id);
-  //     axios
-  //       .delete(`/avatars/${imgObj.public_id}/`)
-  //       .then((res) => {
-  //         setAvatarToRemove(null);
-  //         setAvatar((prev) =>
-  //           prev.filter((img) => img.public_id !== imgObj.public_id)
-  //         );
-  //       })
-  //       .catch((e) => console.log(e));
-  //   };
+  const handleRemoveImg = (imgObj) => {
+    setAvatarToRemove(imgObj.public_id);
+    axios
+      .delete(`/images/${imgObj.public_id}/`)
+      .then((res) => {
+        setAvatarToRemove(null);
+        setImages((prev) =>
+          prev.filter((img) => img.public_id !== imgObj.public_id)
+        );
+      })
+      .catch((e) => console.log(e));
+  };
 
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
@@ -69,7 +71,7 @@ function Profile() {
       },
       (error, result) => {
         if (!error && result.event === "success") {
-          setAvatar((prev) => [
+          setImages((prev) => [
             ...prev,
             { url: result.info.url, public_id: result.info.public_id },
           ]);
@@ -188,23 +190,46 @@ function Profile() {
               </div>
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
-                  <div className="p-4grid grid-cols-3">
-                    <div className="flex justify-center">
-                      <Avatar alt="avatar" src={avatar} />
-                      {/* {avatarToRemove !== avatar.public_id && (
-                        <span>
-                          <i
-                            className="fa fa-times-circle"
-                            onClick={() => handleRemoveImg(avatar)}
-                          ></i>
-                        </span>
-                      )} */}
-                    </div>
+                  <div className="flex justify-center">
+                    <img
+                      alt={`${user.name}`}
+                      src={`${user.avatar.at(-1).url}`}
+                      className='w-32 h-32 rounded-full'
+                    />
                   </div>
                   <div className="flex justify-center">
-                    <button onClick={showWidget} className="bg-[#132C33]">
+                    <div
+                      onClick={showWidget}
+                      className="bg-[#132C33] cursor-pointer text-white shadow-sm rounded-lg w-6/12 py-2 hover:text-black ease-in-out duration-200 hover:bg-[#D8E3E7]"
+                    >
                       Chọn ảnh
-                    </button>
+                    </div>
+                  </div>
+
+                  <p>
+                    Danh sách avatar của bạn (nếu avatar nào không dùng nữa hãy
+                    xóa nó)
+                  </p>
+                  <div className="p-4 border-spacing-1 border-cyan-700 border-2 grid grid-cols-3 rounded-lg">
+                    {avatar
+                      ?.map((image) => (
+                        <div>
+                          <img
+                            src={image.url}
+                            alt=""
+                            className="big-desktop:w-64 laptop:w-48 laptop:h-48 big-phone:h-32 big-phone:w-32 big-desktop:h-64 shadow-sm rounded-lg mx-4"
+                          />
+                          {avatarToRemove !== image.public_id && (
+                            <span>
+                              <i
+                                className="fa fa-times-circle"
+                                onClick={() => handleRemoveImg(image)}
+                              ></i>
+                            </span>
+                          )}
+                        </div>
+                      ))
+                      .reverse()}
                   </div>
                 </div>
               </div>

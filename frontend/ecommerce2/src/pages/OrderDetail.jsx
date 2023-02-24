@@ -37,7 +37,7 @@ function OrderDetail() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export default OrderDetail

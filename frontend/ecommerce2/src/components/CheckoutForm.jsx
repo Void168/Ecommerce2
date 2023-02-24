@@ -16,6 +16,7 @@ function CheckoutForm() {
     createOrder,
     { isLoading, isError, isSuccess },
   ] = useCreateOrderMutation()
+  const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [paying, setPaying] = useState(false)
@@ -45,16 +46,20 @@ function CheckoutForm() {
       setPaying(false)
 
       if (paymentIntent) {
-        createOrder({ userId: user._id, cart: user.cart, address, phone }).then(
-          (res) => {
-            if (!isLoading && !isError) {
-              setAlertMessage(`Thanh toán ${paymentIntent.status}`)
-              setTimeout(() => {
-                navigate('/orders')
-              }, 2000)
-            }
-          },
-        )
+        createOrder({
+          userId: user._id,
+          cart: user.cart,
+          address,
+          phone,
+          name,
+        }).then((res) => {
+          if (!isLoading && !isError) {
+            setAlertMessage(`Thanh toán ${paymentIntent.status}`);
+            setTimeout(() => {
+              navigate("/orders");
+            }, 2000);
+          }
+        });
       }
     } catch (e) {
       console.log(e)
@@ -95,7 +100,7 @@ function CheckoutForm() {
           <input
             type="text"
             placeholder="Địa chỉ"
-            value={user.address ? user.address : address}
+            value={user.address}
             onChange={(e) => setAddress(e.target.value)}
             required
             className="w-6/12 small-phone:w-full"
@@ -109,7 +114,7 @@ function CheckoutForm() {
           <input
             type="phone"
             placeholder="Số điện thoại"
-            value={user.phone ? user.phone : phone}
+            value={user.phone}
             onChange={(e) => setPhone(e.target.value)}
             required
             className="w-6/12 small-phone:w-full"

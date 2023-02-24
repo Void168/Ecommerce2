@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice.js";
 import categories from "../categories.js";
 import axios from "../axios";
+import { Avatar } from "@mui/material";
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
@@ -22,7 +23,7 @@ function Navigation() {
   const signoutHandler = () => {
     navigate("/login");
     dispatch(logout());
-    localStorage.removeItem('viewed products')
+    localStorage.removeItem("viewed products");
   };
   const handleOpen = () => {
     if (open) setOpen(false);
@@ -87,9 +88,7 @@ function Navigation() {
       setTimeout(() => {
         setLoading(false);
       }, 500);
-    }
-      
-    else {
+    } else {
       navigate("/");
     }
   };
@@ -209,9 +208,7 @@ function Navigation() {
                           : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
                       }
                     >
-                      {
-                        user ? (<></>) : null
-                      }
+                      {user ? <></> : null}
                       {user?.notifications?.length > 0 ? (
                         user?.notifications.map((notification) => (
                           <div className="border-b border-[#132C33] py-2">
@@ -254,12 +251,22 @@ function Navigation() {
                   Đăng nhập
                 </NavLink>
               ) : (
-                <div className="mt-4 dropdown__profile relative">
+                <div
+                  className={
+                    user
+                      ? "dropdown__profile relative"
+                      : "mt-4 dropdown__profile relative"
+                  }
+                >
                   <NavLink
-                    className="p-4 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
+                    className="w-full flex flex-row justify-center items-center p-2 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
                     to={`/profile/${user._id}/edit`}
                   >
-                    {user.name} <i className="fa-solid fa-caret-down" />
+                    <Avatar
+                      alt={`${user.name}`}
+                      src={`${user.avatar.at(-1).url}`}
+                    />
+                    {user.name}&nbsp; <i className="fa-solid fa-caret-down" />
                   </NavLink>
                   {user?.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
