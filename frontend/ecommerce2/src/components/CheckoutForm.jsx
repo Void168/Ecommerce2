@@ -9,7 +9,6 @@ function CheckoutForm() {
   const elements = useElements()
 
   const user = useSelector((state) => state.user)
-  console.log(user)
   const navigate = useNavigate()
   const [alertMessage, setAlertMessage] = useState('')
   const [
@@ -17,6 +16,7 @@ function CheckoutForm() {
     { isLoading, isError, isSuccess },
   ] = useCreateOrderMutation()
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [paying, setPaying] = useState(false)
@@ -52,6 +52,7 @@ function CheckoutForm() {
           address,
           phone,
           name,
+          email,
         }).then((res) => {
           if (!isLoading && !isError) {
             setAlertMessage(`Thanh toán ${paymentIntent.status}`);
@@ -130,7 +131,7 @@ function CheckoutForm() {
         {user ? (
           <div className="text-center">
             <button
-              className="my-3 bg-[#132C33] big-phone:w-4/12 small-phone:w-/12"
+              className="my-3 bg-[#132C33] big-phone:w-4/12 small-phone:w-/12 button"
               type="submit"
               disabled={user.cart.count <= 0 || paying || isSuccess}
             >
@@ -138,7 +139,7 @@ function CheckoutForm() {
             </button>
           </div>
         ) : (
-          <button className="mt-3">
+          <button className="mt-3 button">
             <Link to="/login">Đăng nhập để thanh toán.</Link>
           </button>
         )}

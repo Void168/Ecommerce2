@@ -229,7 +229,7 @@ function EditProduct() {
                   <button
                     type="submit"
                     disabled={isLoading || isSuccess}
-                    className="bg-[#132C33] mx-2 my-4 text-xl laptop:block small-phone:hidden"
+                    className="bg-[#132C33] mx-2 my-4 text-xl laptop:block small-phone:hidden button"
                   >
                     Xác nhận
                   </button>
@@ -273,7 +273,7 @@ function EditProduct() {
             <button
               type="submit"
               disabled={isLoading || isSuccess}
-              className="bg-[#132C33] mx-2 my-4 text-xl laptop:hidden small-phone:block"
+              className="bg-[#132C33] mx-2 my-4 text-xl laptop:hidden small-phone:block button"
             >
               Xác nhận
             </button>

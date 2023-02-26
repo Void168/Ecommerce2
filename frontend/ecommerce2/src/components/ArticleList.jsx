@@ -29,7 +29,7 @@ function ArticleList() {
       </p>
       <div className="container mx-auto flex flex-col items-center w-full small-phone:hidden tablet:block ">
         <div className="text-center">
-          <button className="bg-[#132C33]">
+          <button className="bg-[#132C33] button">
             <Link to="/new-article">Tạo bài viết mới</Link>
           </button>
         </div>
@@ -51,11 +51,11 @@ function ArticleList() {
                           handleDeleteArticle(newArticle._id, user._id)
                         }
                         disabled={isLoading}
-                        className="bg-[#132C33] mx-2 laptop:text-base tablet:text-xs"
+                        className="bg-[#132C33] mx-2 laptop:text-base tablet:text-xs button"
                       >
                         Xóa bài viết
                       </button>
-                      <button className="bg-[#132C33] mx-2 laptop:text-base tablet:text-xs">
+                      <button className="bg-[#132C33] mx-2 laptop:text-base tablet:text-xs button">
                         <Link to={`/article/${newArticle._id}/edit`}>
                           Chỉnh sửa
                         </Link>
@@ -80,11 +80,11 @@ function ArticleList() {
                           handleDeleteArticle(newArticle._id, user._id)
                         }
                         disabled={isLoading}
-                        className="bg-[#132C33]"
+                        className="bg-[#132C33] button"
                       >
                         Xóa bài viết
                       </button>
-                      <button className="bg-[#132C33] mt-6">
+                      <button className="bg-[#132C33] mt-6 button">
                         <Link to={`/articles/${newArticle._id}/edit`}>
                           Chỉnh sửa
                         </Link>

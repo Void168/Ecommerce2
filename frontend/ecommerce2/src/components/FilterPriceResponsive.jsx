@@ -17,7 +17,9 @@ function FilterPriceResponsive() {
 
   return (
     <>
-      <button onClick={handleOpen}>Sắp xếp</button>
+      <button onClick={handleOpen} className="button">
+        Sắp xếp
+      </button>
       <Modal
         open={open}
         onClose={handleClose}

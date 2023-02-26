@@ -93,7 +93,7 @@ function OrderList() {
                                             order.owner?._id
                                           )
                                         }
-                                        className="bg-[#132C33] tablet:hidden big-tablet:block"
+                                        className="bg-[#132C33] tablet:hidden big-tablet:block button"
                                       >
                                         Đánh giấu đã vận chuyển
                                       </button>
@@ -104,7 +104,7 @@ function OrderList() {
                                             order.owner?._id
                                           )
                                         }
-                                        className="bg-[#132C33] tablet:block big-tablet:hidden"
+                                        className="bg-[#132C33] tablet:block big-tablet:hidden button"
                                       >
                                         <CheckCircleIcon />
                                       </button>
@@ -155,7 +155,7 @@ function OrderList() {
                                             order.owner?._id
                                           )
                                         }
-                                        className="bg-[#132C33] tablet:hidden big-tablet:block"
+                                        className="bg-[#132C33] tablet:hidden big-tablet:block button"
                                       >
                                         Đánh giấu đã vận chuyển
                                       </button>
@@ -166,7 +166,7 @@ function OrderList() {
                                             order.owner?._id
                                           )
                                         }
-                                        className="bg-[#132C33] tablet:block big-tablet:hidden"
+                                        className="bg-[#132C33] tablet:block big-tablet:hidden button"
                                       >
                                         <CheckCircleIcon />
                                       </button>

@@ -109,15 +109,18 @@ productRouter.delete('/:id', async (req, res) => {
 // cart routes
 productRouter.post('/add-to-cart', async (req, res) => {
   const { userId, productId, price } = req.body
-
   try {
     const user = await User.findById(userId)
+    const product = await Product.findById(productId)
     const userCart = user.cart
-    if (user.cart[productId]) {
+    if (userCart[productId]) {
       userCart[productId] += 1
+      userCart[product.name] += 1
     } else {
+      userCart[product.name] = 1
       userCart[productId] = 1
     }
+    userCart[product.price] = 1
     userCart.count += 1
     userCart.total = Number(userCart.total) + Number(price * 24000)
     user.cart = userCart
@@ -149,11 +152,13 @@ productRouter.post('/remove-from-cart', async (req, res) => {
 productRouter.post('/increase-cart', async (req, res) => {
   const { userId, productId, price } = req.body
   try {
+    const product = await Product.findById(productId)
     const user = await User.findById(userId)
     const userCart = user.cart
     userCart.total += Number(price * 24000)
     userCart.count += 1
     userCart[productId] += 1
+    userCart[product.name] += 1
     user.cart = userCart
     user.markModified('cart')
     await user.save()
@@ -166,10 +171,12 @@ productRouter.post('/increase-cart', async (req, res) => {
 productRouter.post('/decrease-cart', async (req, res) => {
   const { userId, productId, price } = req.body
   try {
+    const product = await Product.findById(productId)
     const user = await User.findById(userId)
     const userCart = user.cart
     userCart.total -= Number(price * 24000)
     userCart.count -= 1
+    userCart[product.name] -= 1
     userCart[productId] -= 1
     user.cart = userCart
     user.markModified('cart')

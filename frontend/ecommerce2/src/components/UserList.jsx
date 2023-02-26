@@ -72,7 +72,7 @@ function UserList() {
                                     handleDeleteUser(user._id, user._id)
                                   }
                                   disabled={isLoading}
-                                  className="bg-[#132C33]"
+                                  className="bg-[#132C33] button"
                                 >
                                   Xóa người dùng
                                 </button>

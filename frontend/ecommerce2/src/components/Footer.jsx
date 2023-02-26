@@ -10,8 +10,8 @@ function Footer() {
         location.pathname === "/register" ||
         location.pathname === "/dashboard" ||
         location.pathname === "/cart"
-          ? "bg-[#D8E3E7] big-tablet:block small-phone:hidden"
-          : "bg-[#D8E3E7]"
+          ? "bg-[#132C33] big-tablet:block small-phone:hidden text-[#D8E3E7]"
+          : "bg-[#132C33] text-[#D8E3E7]"
       }
     >
       <div className="container mx-auto p-4">

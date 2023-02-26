@@ -108,7 +108,7 @@ console.log(active)
             />
           </div>
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
-            <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
+            <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
               <FilterPrice />
               {productsSearch.filter(
                 (filteredProduct) =>
@@ -142,7 +142,7 @@ console.log(active)
                     {productsSearch.length === 0 ? (
                       <p>Không tìm thấy sản phẩm phù hợp</p>
                     ) : (
-                      <div className="rounded-lg shadow-sm bg-[#126E82] py-4">
+                      <div className="rounded-lg shadow-sm bg-[#132C33] py-4">
                         <div className="flex flex-row">
                           {listItems}</div>
 

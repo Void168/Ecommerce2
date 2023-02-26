@@ -7,6 +7,12 @@ const OrderSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    name: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
     status: {
       type: String,
       default: 'Đang xử lý',

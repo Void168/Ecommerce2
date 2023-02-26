@@ -13,6 +13,7 @@ import FilterPriceResponsive from "../components/FilterPriceResponsive";
 import Article from "../components/Article";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@mui/material";
+import { width } from "@mui/system";
 
 const listBanner = [
   {
@@ -160,8 +161,28 @@ function Home() {
               ))}
             </div>
             <div className="text-center my-8">
-              <Link to="/promo">
-                <button>Xem thêm</button>
+              <Link
+                to="/promo"
+                className="relative inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-black bg-[#D8E3E7] border-2 border-[#132C33] rounded-lg hover:text-white group hover:bg-gray-50"
+              >
+                <span className="absolute left-0 block w-full h-0 transition-all bg-[#132c33] opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-200 ease"></span>
+                <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="relative">Xem thêm</span>
               </Link>
             </div>
           </>
@@ -169,7 +190,7 @@ function Home() {
       </div>
       <p className="neon__text">Sản phẩm nổi bật</p>
       <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">
-        <div className="w-full bg-[#126E82] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
+        <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
           <FilterPrice />
           <p className="text-white px-4 my-8  big-desktop:text-2xl desktop:text-xl text-center">
             Có{" "}
@@ -189,7 +210,7 @@ function Home() {
             <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
               <FilterPriceResponsive />
             </div>
-            <div className="bg-[#126E82] p-4 rounded-lg shadow-sm">
+            <div className="bg-[#132C33] p-4 rounded-lg shadow-sm">
               <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1">
                 {loading ? (
                   <div className=" col-span-4 relative h-screen flex justify-center items-center text-center w-full">
@@ -447,7 +468,7 @@ function Home() {
       {/* last products */}
       <p className="neon__text">Sản phẩm đã xem</p>
       <div className="container mx-auto">
-        <div className="grid laptop:grid-cols-8 gap-4 bg-[#126E82] px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+        <div className="grid laptop:grid-cols-8 gap-4 bg-[#132C33] px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
           {loading ? (
             <Loading />
           ) : (

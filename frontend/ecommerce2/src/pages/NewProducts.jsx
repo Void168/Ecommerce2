@@ -171,7 +171,7 @@ function NewProducts() {
                   <button
                     type="submit"
                     disabled={isLoading || isSuccess}
-                    className="bg-[#132C33] mx-2 my-4 text-xl laptop:block small-phone:hidden"
+                    className="bg-[#132C33] mx-2 my-4 text-xl laptop:block small-phone:hidden button"
                   >
                     Xác nhận
                   </button>
@@ -179,7 +179,7 @@ function NewProducts() {
               </div>
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
-                  <button onClick={showWidget} className="bg-[#132C33]">
+                  <button onClick={showWidget} className="bg-[#132C33] button">
                     Chọn ảnh
                   </button>
                   <div className="p-4 border-spacing-1 border-cyan-700 border-2 grid grid-cols-3 rounded-lg">
@@ -209,7 +209,7 @@ function NewProducts() {
             <button
               type="submit"
               disabled={isLoading || isSuccess}
-              className="bg-[#132C33] mx-2 my-4 text-xl laptop:hidden small-phone:block"
+              className="bg-[#132C33] mx-2 my-4 text-xl laptop:hidden small-phone:block button"
             >
               Xác nhận
             </button>

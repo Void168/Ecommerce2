@@ -182,7 +182,7 @@ function Profile() {
                   <button
                     type="submit"
                     disabled={isLoading || isSuccess}
-                    className="bg-[#132C33] mx-2 my-4 text-xl laptop:block small-phone:hidden"
+                    className="bg-[#132C33] mx-2 my-4 text-xl laptop:block small-phone:hidden button"
                   >
                     Xác nhận
                   </button>
@@ -193,8 +193,8 @@ function Profile() {
                   <div className="flex justify-center">
                     <img
                       alt={`${user.name}`}
-                      src={`${user.avatar.at(-1).url}`}
-                      className='w-32 h-32 rounded-full'
+                      src={`${user?.avatar?.at(-1)?.url}`}
+                      className="w-32 h-32 rounded-full"
                     />
                   </div>
                   <div className="flex justify-center">
@@ -239,7 +239,7 @@ function Profile() {
             <button
               type="submit"
               disabled={isLoading || isSuccess}
-              className="bg-[#132C33] mx-2 my-4 text-xl laptop:hidden small-phone:block"
+              className="bg-[#132C33] mx-2 my-4 text-xl laptop:hidden small-phone:block button"
             >
               Xác nhận
             </button>

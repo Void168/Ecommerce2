@@ -31,15 +31,12 @@ function Product() {
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const {viewedProducts, setViewedProducts} = useContext(AppContext)
+  const { viewedProducts, setViewedProducts } = useContext(AppContext);
 
   useEffect(() => {
     setViewedProducts((viewedProduct) => [product, ...viewedProduct]);
   }, [product, setViewedProducts]);
-  localStorage.setItem(
-    "viewed products",
-    JSON.stringify(viewedProducts)
-  );
+  localStorage.setItem("viewed products", JSON.stringify(viewedProducts));
 
   const dispatch = useDispatch();
   const [addToCart, { isSuccess }] = useAddToCartMutation();
@@ -268,32 +265,34 @@ function Product() {
                 <div className="my-4 flex flex-col">
                   {!user ? (
                     <button
-                      className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4"
+                      className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"
                       onClick={navigateToLogin}
                     >
                       Đăng nhập để mua hàng
                     </button>
                   ) : (
-                    <button
-                      className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4"
-                      onClick={(e) =>
-                        addToCart({
-                          userId: user._id,
-                          productId: id,
-                          price: product.price,
-                          image: product.pictures[0].url,
-                        })
-                      }
-                    >
-                      Thêm vào giỏ
-                    </button>
+                    <>
+                      <button
+                        className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"
+                        onClick={(e) =>
+                          addToCart({
+                            userId: user._id,
+                            productId: id,
+                            price: product.price,
+                            image: product.pictures[0].url,
+                          })
+                        }
+                      >
+                        Thêm vào giỏ
+                      </button>
+                    </>
                   )}
                   {user && user.isAdmin && (
-                    <Link to={`/product/${product._id}/edit`}>
-                      <button className="bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 big-tablet:w-6/12 tablet:w-8/12 small-phone:w-full">
+                    <button className="button bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 big-tablet:w-6/12 tablet:w-8/12 small-phone:w-full">
+                      <Link to={`/product/${product._id}/edit`}>
                         Sửa thông tin sản phẩm
-                      </button>
-                    </Link>
+                      </Link>
+                    </button>
                   )}
                 </div>
               </div>
@@ -333,7 +332,7 @@ function Product() {
             </div>
           </div>
           <div className="big-phone:container big-phone:mx-auto my-8 grid big-tablet:grid-cols-2 small-phone:grid-cols-1 gap-8">
-            <div className="container mx-auto bg-[#126E82] p-4 big-tablet:col-span-1 rounded-lg shadow-sm">
+            <div className="container mx-auto bg-[#132C33] p-4 big-tablet:col-span-1 rounded-lg shadow-sm">
               <p className="text-2xl text-white text-center">Viết nhận xét</p>
               {user ? (
                 <form onSubmit={submitHandler}>
@@ -382,7 +381,7 @@ function Product() {
                       <div className="text-center">
                         <button
                           variant="contained"
-                          className="bg-[#132C33]"
+                          className="bg-[#132C33] button"
                           type="submit"
                         >
                           Gửi đánh giá
@@ -397,7 +396,7 @@ function Product() {
                 </h2>
               )}
             </div>
-            <div className="big-tablet:col-span-1 bg-[#126E82] p-4 shadow-sm rounded-lg">
+            <div className="big-tablet:col-span-1 bg-[#132C33] p-4 shadow-sm rounded-lg">
               <div className="p-2 bg-[#D8E3E7] rounded-lg">
                 <p>Bình luận ({product.reviews.length})</p>
               </div>

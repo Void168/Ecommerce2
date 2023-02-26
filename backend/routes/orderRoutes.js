@@ -3,6 +3,7 @@ const orderRouter = express.Router()
 
 import Order from '../models/orderModel.js'
 import User from '../models/userModel.js'
+import Product from '../models/productModel.js'
 
 //creating an order
 
@@ -14,6 +15,7 @@ orderRouter.post('/', async (req, res) => {
     const order = new Order({
       owner: user._id,
       name: user.name,
+      email: user.email,
       products: cart,
       phone: user.phone,
       address: user.address,
@@ -49,13 +51,12 @@ orderRouter.get('/', async (req, res) => {
 
 // Get single order
 orderRouter.get('/:id', async (req, res) => {
-  const order = await Order.findById(req.params.id)
-  if (order) {
-    res.send(order)
-  } else {
-    res.status(404).send({
-      message: 'Không tìm thấy đơn hàng',
-    })
+  const { id } = req.params
+  try {
+    const order = await Order.findById(id)
+    res.status(200).json({ order })
+  } catch (e) {
+    res.status(400).send(e.message)
   }
 })
 

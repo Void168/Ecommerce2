@@ -14,7 +14,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [login, { isSucess, isError, isLoading, error }] = useLoginMutation();
   const [loading, setLoading] = useState(false);
@@ -54,14 +54,15 @@ function Login() {
   };
 
   const submitHandler = (e) => {
-    e.preventDefault(); 
-    navigate("/");
+    e.preventDefault();
     login({ email, password });
     if (error) {
-      navigate("/login");
       setOpen(true);
-    }
+      navigate("/login");
+    } 
+    
   };
+  console.log(open);
   return (
     <>
       <div>
@@ -134,7 +135,7 @@ function Login() {
                   </div>
                 </div>
                 <div className="form__element text-center small-phone:m-0">
-                  <button type="submit" className="w-8/12 bg-[#132C33]">
+                  <button type="submit" className="w-8/12 bg-[#132C33] button">
                     Xác Nhận
                   </button>
                 </div>

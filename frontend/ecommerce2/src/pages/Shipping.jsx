@@ -123,8 +123,8 @@ function Shipping() {
               <div
                 className={
                   navbar
-                    ? "sticky bg-[#126E82] shadow-sm p-4 big-desktop:h-256 big-tablet:h-200 bottom-8 top-40 overflow-y-auto"
-                    : "bg-[#126E82] shadow-sm p-4 h-256 overflow-y-auto"
+                    ? "sticky bg-[#132C33] shadow-sm p-4 big-desktop:h-256 big-tablet:h-200 bottom-8 top-40 overflow-y-auto"
+                    : "bg-[#132C33] shadow-sm p-4 h-256 overflow-y-auto"
                 }
               >
                 <p
@@ -708,7 +708,7 @@ function Shipping() {
         )}
       </div>
       <>
-        <button onClick={handleOpen} className="fixed left-2 bottom-20">
+        <button onClick={handleOpen} className="fixed left-2 bottom-20 big-tablet:hidden small-phone:block button">
           Đi đến
         </button>
         <Modal
@@ -721,7 +721,7 @@ function Shipping() {
           <Box className="w-full rounded-lg">
             <Typography id="modal-modal-description">
               <div className="p-2 mt-3 border-none text-white galaxy-fold:max-h-max">
-                <div className="h-96 col-span-1 bg-[#126E82] text-white rounded-lg shadow-sm p-2 overflow-y-auto">
+                <div className="h-96 col-span-1 bg-[#132C33] text-white rounded-lg shadow-sm p-2 overflow-y-auto">
                   <p
                     onClick={gotoShippingPolicySection}
                     className="laptop:text-xl big-tablet:text-base cursor-pointer "

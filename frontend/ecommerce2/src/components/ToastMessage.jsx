@@ -14,8 +14,8 @@ function ToastMessage({ bg, title, body }) {
         show={show}
         delay={2000}
         autohide
-        className="bg-[#126E82] p-2 rounded-lg"
-        onClick={() => navigate('/cart')}
+        className="bg-[#132C33] p-2 rounded-lg"
+        onClick={() => navigate("/cart")}
       >
         <Toast.Header
           className="flex justify-between border-b"
@@ -27,7 +27,7 @@ function ToastMessage({ bg, title, body }) {
         <Toast.Body>{body}</Toast.Body>
       </Toast>
     </ToastContainer>
-  )
+  );
 }
 
 export default ToastMessage

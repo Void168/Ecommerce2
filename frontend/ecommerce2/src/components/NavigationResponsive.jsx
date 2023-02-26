@@ -127,7 +127,7 @@ function NavigationResponsive() {
 
   return (
     <>
-      <Box className="fixed overscroll-x-auto shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0">
+      <Box className="fixed overscroll-x-auto shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0 ">
         <BottomNavigation
           showLabels
           value={value}
@@ -247,7 +247,7 @@ function NavigationResponsive() {
               <li>
                 <Avatar
                   alt={`${user.name}`}
-                  src={`${user.avatar.at(-1).url}`}
+                  src={`${user?.avatar?.at(-1)?.url}`}
                   className="mx-8"
                 />
               </li>
@@ -294,7 +294,7 @@ function NavigationResponsive() {
               <li className="text-center flex-end mb-20" onClick={handleClose}>
                 <button
                   onClick={signoutHandler}
-                  className="bg-[#132C33] text-xl"
+                  className="bg-[#132C33] text-xl button"
                 >
                   Đăng xuất
                 </button>
@@ -318,7 +318,9 @@ function NavigationResponsive() {
             </li>
 
             <li className="justify-self-end" onClick={handleClose}>
-              <button onClick={signoutHandler}>Đăng xuất</button>
+              <button onClick={signoutHandler} className="button">
+                Đăng xuất
+              </button>
             </li>
           </ul>
         )}

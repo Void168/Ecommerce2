@@ -56,7 +56,6 @@ function Signup() {
   const submitHandler = (e) => {
     e.preventDefault();
     signup({ name, email, password });
-    navigate("/");
     if (password !== comfirmPassword) {
       alert("Mật khẩu xác nhận không đúng!");
     } 
@@ -170,7 +169,7 @@ function Signup() {
                 </div>
               </div>
               <div className="form__element text-center small-phone:m-0">
-                <button type="submit" className="w-8/12 bg-[#132C33]">
+                <button type="submit" className="w-8/12 bg-[#132C33] button">
                   Xác Nhận
                 </button>
               </div>

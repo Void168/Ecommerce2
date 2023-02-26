@@ -144,7 +144,7 @@ function CartResponsive() {
                                         userId: user._id,
                                       })
                                     }
-                                    className="bg-[#132C33]"
+                                    className="bg-[#132C33] button"
                                   >
                                     Hủy bỏ
                                   </button>

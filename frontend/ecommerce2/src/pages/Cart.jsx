@@ -58,16 +58,15 @@ function Cart() {
           <Loading />
         ) : (
           <>
-              {cart.length === 0 ? (
-                <div className="h-screen">
-                  <p className="text-xl mt-8">
-                Giỏ hàng trống.{" "}
-                <Link to="/" className="text-[#126E82]">
-                  Tiếp tục mua hàng
-                </Link>
-              </p>
-                </div>
-              
+            {cart.length === 0 ? (
+              <div className="h-screen">
+                <p className="text-xl mt-8">
+                  Giỏ hàng trống.{" "}
+                  <Link to="/" className="text-[#126E82]">
+                    Tiếp tục mua hàng
+                  </Link>
+                </p>
+              </div>
             ) : (
               <div className=" grid grid-cols-3 gap-4">
                 <div className="col-span-2">
@@ -155,7 +154,7 @@ function Cart() {
                                           userId: user._id,
                                         })
                                       }
-                                      className="bg-[#132C33]"
+                                      className="bg-[#132C33] button"
                                     >
                                       Hủy bỏ
                                     </button>

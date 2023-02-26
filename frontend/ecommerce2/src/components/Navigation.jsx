@@ -41,9 +41,9 @@ function Navigation() {
     0
   );
   const activeLink =
-    "bg-[#51C4D3] text-black desktop:p-4 big-tablet:px-2 big-tablet:py-4 rounded-full desktop:text-lg big-tablet:text-base";
+    "border-b-2 border-[#51C4D3] text-[#51C4D3] desktop:p-4 big-tablet:px-2 big-tablet:py-4 desktop:text-lg big-tablet:text-base";
   const normalLink =
-    "p-4 hover:bg-[#51C4D3] hover:text-black rounded-full hover:shadow-sm ease-in-out duration-300 desktop:text-lg big-tablet:text-base";
+    "p-4 hover:text-[#51C4D3] ease-in-out duration-200 desktop:text-lg big-tablet:text-base";
 
   const handleToggleNotifications = () => {
     const position = bellRef.current.getBoundingClientRect();
@@ -97,11 +97,11 @@ function Navigation() {
     <div
       className={
         navbar
-          ? "fixed bg-[#126E82] shadow-sm top-0 w-full z-50 opacity-95 galaxy-fold:hidden big-tablet:block"
+          ? "fixed bg-[#132C33] shadow-sm top-0 w-full z-50 opacity-95 galaxy-fold:hidden big-tablet:block"
           : "w-full sticky z-50 galaxy-fold:hidden big-tablet:block"
       }
     >
-      <ul className="justify-around bg-[#126E82] p-4 flex">
+      <ul className="justify-around bg-[#132C33] p-4 flex">
         <div className="laptop:w-1/12 galaxy-fold:w-0">
           <Link className="h-10" to="/">
             <img src="../images/sfsff.png" alt="logo" />
@@ -111,19 +111,10 @@ function Navigation() {
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
               <div className="mt-3 dropdown__categories">
-                <NavLink
-                  onClick={handleOpen}
-                  className="p-4 mb-2 hover:bg-[#132C33] rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base"
-                >
+                <NavLink className="p-4 mb-2 hover:bg-[#D8E3E7] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base">
                   Danh mục
                 </NavLink>
-                <div
-                  className={
-                    !open
-                      ? "hidden ease-in-out duration-200"
-                      : "grid absolute bg-[#132C33] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm ease-in-out duration-200"
-                  }
-                >
+                <div className="grid absolute text-black bg-[#D8E3E7] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm ease-in-out duration-200">
                   {categories.map((category) => (
                     <div key={category.id}>
                       <Link
@@ -205,7 +196,7 @@ function Navigation() {
                       className={
                         !display
                           ? "hidden"
-                          : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-64"
+                          : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-48"
                       }
                     >
                       {user ? <></> : null}
@@ -259,18 +250,19 @@ function Navigation() {
                   }
                 >
                   <NavLink
-                    className="w-full flex flex-row justify-center items-center p-2 hover:bg-[#51C4D3] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
+                    className="profile w-full flex flex-row justify-center items-center p-2 hover:bg-[#D8E3E7] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
                     to={`/profile/${user._id}/edit`}
                   >
                     <Avatar
                       alt={`${user.name}`}
-                      src={`${user.avatar.at(-1).url}`}
+                      src={`${user?.avatar?.at(-1)?.url}`}
                     />
+                    &nbsp;
                     {user.name}&nbsp; <i className="fa-solid fa-caret-down" />
                   </NavLink>
                   {user?.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
-                      <div className="bg-[#51C4D3] rounded-b-3xl p-2">
+                      <div className="bg-[#D8E3E7] rounded-b-3xl p-2">
                         <li className="my-1">
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
@@ -280,7 +272,7 @@ function Navigation() {
                         <li className=" text-center">
                           <button
                             onClick={signoutHandler}
-                            className="bg-[#132C33]"
+                            className="bg-[#132C33] button"
                           >
                             Đăng xuất
                           </button>
@@ -294,7 +286,9 @@ function Navigation() {
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
                         <li>
-                          <button onClick={signoutHandler}>Đăng xuất</button>
+                          <button onClick={signoutHandler} className="button">
+                            Đăng xuất
+                          </button>
                         </li>
                       </div>
                     </ul>
@@ -331,12 +325,12 @@ function Navigation() {
             {user?.cart?.count > 0 && (
               <span
                 className="
-              bg-[#51C4D3] px-3 py-1 rounded-full absolute z-10 top-0 left-8"
+              bg-[#D8E3E7] px-3 py-1 rounded-full absolute z-10 top-0 left-8"
               >
                 {user?.cart?.count}
               </span>
             )}
-            <i className="fas fa-shopping-cart text-3xl" />
+            <i className="fas fa-shopping-cart text-3xl text-[#d35164]" />
             <span className="text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">
               Giỏ hàng
             </span>

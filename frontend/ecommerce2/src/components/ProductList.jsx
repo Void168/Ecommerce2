@@ -22,7 +22,7 @@ function ProductList() {
         Vui lòng sử dụng thiết bị lớn hơn để quản lý
       </p>
       <div className="big-phone:container big-phone:mx-auto small-phone:m-0 big-phone:block small-phone:hidden">
-        <button className="bg-[#132C33]">
+        <button className="bg-[#132C33] button">
           <Link to="/new-product">Tạo sản phẩm mới</Link>
         </button>
         <div className="overflow-x-auto h-screen">
@@ -65,11 +65,11 @@ function ProductList() {
                                 handleDeleteProduct(product._id, user._id)
                               }
                               disabled={isLoading}
-                              className="bg-[#132C33]"
+                              className="bg-[#132C33] button"
                             >
                               Xóa sản phẩm
                             </button>
-                            <button className="bg-[#132C33] mt-6">
+                            <button className="bg-[#132C33] mt-6 button">
                               <Link
                                 to={`/product/${product._id}/edit`}
                                 target="_blank"
@@ -108,11 +108,11 @@ function ProductList() {
                                 handleDeleteProduct(product._id, user._id)
                               }
                               disabled={isLoading}
-                              className="bg-[#132C33]"
+                              className="bg-[#132C33] button"
                             >
                               Xóa sản phẩm
                             </button>
-                            <button className="bg-[#132C33] mt-6">
+                            <button className="bg-[#132C33] mt-6 button">
                               <Link
                                 to={`/product/${product._id}/edit`}
                                 target="_blank"

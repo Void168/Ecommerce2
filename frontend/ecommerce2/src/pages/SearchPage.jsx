@@ -119,7 +119,7 @@ function SearchPage() {
                   }{" "}
                   kết quả cho {searchName}
                 </p>
-                <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-[#126E82] p-4 shadow-sm rounded-lg">
+                <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-[#132C33] p-4 shadow-sm rounded-lg">
                   {page === 1 ? (
                     <>
                       {products

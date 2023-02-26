@@ -17,8 +17,8 @@
     @apply p-2;
   }
 
-  button {
-    @apply bg-[#132C33]  p-2 rounded-md hover:bg-[#D8E3E7] hover:text-black text-white shadow-sm ease-in-out duration-300;
+  .button {
+    @apply bg-[#132C33] rounded px-5 py-2.5 overflow-hidden relative hover:bg-gradient-to-r hover:from-[#51C4D3] hover:to-[#D8E3E7] text-white hover:text-black hover:ring-2 hover:ring-offset-2 hover:ring-[#51C4D3] transition-all ease-out duration-200;
   }
 
   .form__create--product div {
@@ -68,6 +68,16 @@
   .card__zoom:hover .card__zoom--image {
     @apply scale-110;
   }
+
+  .card .add-to-cart,
+  .card .button {
+    @apply hidden;
+  }
+
+  .card:hover .add-to-cart,
+  .card:hover .button {
+    @apply block duration-300 ease-in-out transition-all;
+  }
 }
 
 body {
@@ -112,8 +122,8 @@ body {
   background-color: #d8e3e7;
 }
 .css-wjh20t-MuiPagination-ul li button:hover {
-  background-color: #1976d2;
   color: white;
+  background-color: #126e82;
 }
 
 .cart-payment {
@@ -219,11 +229,6 @@ body {
   background: white !important;
 } */
 
-.css-2s90m6-MuiAvatar-root {
-  width: 6rem !important;
-  height: 6rem !important;
-}
-
 .css-wjh20t-MuiPagination-ul li {
   padding: 5px;
 }
@@ -300,4 +305,33 @@ body {
   width: 2rem !important;
   height: 2rem !important;
   border-radius: 100%;
+}
+
+profile .MuiAvatar-root img {
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #132c33;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(216, 227, 231, 1) 0%,
+    rgba(81, 196, 211, 1) 100%,
+    rgba(19, 44, 51, 1) 100%
+  );
+  border-radius: 100vw;
+  border: 0.15em solid rgb(80, 64, 54);
+}
+
+::-webkit-slider-thumb:hover {
+  background: hsl(120 100% 10% / 1);
 }

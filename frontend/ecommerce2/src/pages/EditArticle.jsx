@@ -190,7 +190,7 @@ function EditArticle() {
                     <button
                       type="submit"
                       disabled={isLoading || isSuccess}
-                      className="bg-[#132C33] mx-2 my-4 text-xl"
+                      className="bg-[#132C33] mx-2 my-4 text-xl button"
                     >
                       Xác nhận
                     </button>
@@ -198,7 +198,10 @@ function EditArticle() {
                 </div>
                 <div className="col-span-3 p-4">
                   <div className="text-center">
-                    <button onClick={showWidget} className="bg-[#132C33]">
+                    <button
+                      onClick={showWidget}
+                      className="bg-[#132C33] button"
+                    >
                       Chọn ảnh thumbnails
                     </button>
                     <div className="p-4 border-spacing-1 border-cyan-700 border-2 grid grid-cols-1 rounded-lg">
