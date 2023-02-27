@@ -32,6 +32,8 @@ productRouter.post('/', async (req, res) => {
     const {
       name,
       description,
+      longDescription,
+      specifications,
       price,
       category,
       brand,
@@ -43,6 +45,8 @@ productRouter.post('/', async (req, res) => {
     const product = await Product.create({
       name,
       description,
+      longDescription,
+      specifications,
       price,
       category,
       pictures,
@@ -65,6 +69,8 @@ productRouter.patch('/:id', async (req, res) => {
     const {
       name,
       description,
+      longDescription,
+      specifications,
       price,
       category,
       brand,
@@ -76,6 +82,8 @@ productRouter.patch('/:id', async (req, res) => {
     const product = await Product.findByIdAndUpdate(id, {
       name,
       description,
+      longDescription,
+      specifications,
       price,
       category,
       pictures,

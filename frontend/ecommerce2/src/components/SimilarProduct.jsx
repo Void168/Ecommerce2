@@ -16,7 +16,7 @@ function SimilarProduct({ _id, name, category, price, pictures, discount }) {
             alt="product-pic"
           />
         </div>
-        <h1 className="font-bold truncate">{name}</h1>
+        <p className="font-bold truncate">{name}</p>
         <div className="truncate">{category}</div>
         <div className="truncate">
           {(price * 24000).toLocaleString("it-IT", {

@@ -11,7 +11,7 @@ function ViewedProduct({ _id, name, category, price, pictures, discount }) {
           src={pictures[0]?.url}
           alt="product-pic"
         />
-        <h1 className="font-bold truncate">{name}</h1>
+        <p className="font-bold truncate">{name}</p>
         <div bg="warning" text="dark">
           {category}
         </div>

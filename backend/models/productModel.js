@@ -24,6 +24,14 @@ const ProductSchema = mongoose.Schema(
       type: String,
       required: [true, 'Không được để trống'],
     },
+    specifications: {
+      type: String,
+      required: [true, 'Không được để trống'],
+    },
+    longDescription: {
+      type: String,
+      required: [true, 'Không được để trống'],
+    },
     price: {
       type: Number,
       required: [true, 'Không được để trống'],

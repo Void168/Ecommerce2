@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import categories from "../categories";
+import EditText from "../components/EditText";
 import Loading from "../components/Loading";
 import { useCreateProductMutation } from "../services/appApi";
 
 function NewProducts() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [longDescription, setLongDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [discount, setDiscount] = useState(0);
+  const [specifications, setSpecifications] = useState("")
   const [images, setImages] = useState([]);
   const [imageToRemove, setImageToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -21,10 +24,19 @@ function NewProducts() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !description || !price || !category ||!brand || !images.length) {
+    if (
+      !name ||
+      !description ||
+      !longDescription ||
+      !specifications ||
+      !price ||
+      !category ||
+      !brand ||
+      !images.length
+    ) {
       return alert("Vui lòng điền vào form hoặc quay lại");
     }
-    createProduct({ name, description, price, category, brand, discount, images }).then(
+    createProduct({ name, description, longDescription, specifications, price, category, brand, discount, images }).then(
       ({ data }) => {
         if (data.length > 0) {
           setTimeout(() => {
@@ -110,7 +122,7 @@ function NewProducts() {
                   />
                 </div>
                 <div>
-                  <label>Mô tả</label>
+                  <label>Mô tả ngắn</label>
                   <br />
                   <input
                     className="w-full"
@@ -119,6 +131,26 @@ function NewProducts() {
                     value={description}
                     required
                     onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div className="laptop:col-span-2">
+                  <label>Mô tả chi tiết</label>
+                  <br />
+                  <EditText
+                    theme="snow"
+                    value={longDescription}
+                    onChange={setLongDescription}
+                    className="bg-white h-96 mb-8"
+                  />
+                </div>
+                <div className="laptop:col-span-2">
+                  <label>Thông số kỹ thuật</label>
+                  <br />
+                  <EditText
+                    theme="snow"
+                    value={specifications}
+                    onChange={setSpecifications}
+                    className="bg-white h-96 mb-8"
                   />
                 </div>
                 <div>
@@ -179,9 +211,14 @@ function NewProducts() {
               </div>
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
-                  <button onClick={showWidget} className="bg-[#132C33] button">
-                    Chọn ảnh
-                  </button>
+                  <div className="flex justify-center">
+                    <div
+                      onClick={showWidget}
+                      className="bg-[#132C33] cursor-pointer text-white shadow-sm rounded-lg w-6/12 py-2 hover:text-black ease-in-out duration-200 hover:bg-[#D8E3E7]"
+                    >
+                      Chọn ảnh
+                    </div>
+                  </div>
                   <div className="p-4 border-spacing-1 border-cyan-700 border-2 grid grid-cols-3 rounded-lg">
                     {images.map((image) => (
                       <div>

@@ -12,7 +12,7 @@ function SearchProducts(props) {
           src={product.pictures[0]?.url}
           alt="product-pic"
         />
-        <h1 className="font-bold truncate">{product.name}</h1>
+        <p className="font-bold truncate">{product.name}</p>
         <div
           bg="warning"
           text="dark"

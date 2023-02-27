@@ -5,9 +5,26 @@ function Rating(props) {
   return (
     <>
       <div className="text-cyan-600">
-        <span>
-          <i className={rating <= 0 ? "fa-regular fa-star" : null} />
-        </span>
+        {rating <= 0 && (
+          <>
+            <span>
+              <i className="fa-regular fa-star" />
+            </span>
+            <span>
+              <i className="fa-regular fa-star" />
+            </span>
+            <span>
+              <i className="fa-regular fa-star" />
+            </span>
+            <span>
+              <i className="fa-regular fa-star" />
+            </span>
+            <span>
+              <i className="fa-regular fa-star" />
+            </span>
+          </>
+        )}
+
         <span>
           <i
             className={

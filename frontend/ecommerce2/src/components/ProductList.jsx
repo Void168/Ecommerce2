@@ -115,7 +115,6 @@ function ProductList() {
                             <button className="bg-[#132C33] mt-6 button">
                               <Link
                                 to={`/product/${product._id}/edit`}
-                                target="_blank"
                               >
                                 Chỉnh sửa
                               </Link>

@@ -21,11 +21,19 @@
     @apply bg-[#132C33] rounded px-5 py-2.5 overflow-hidden relative hover:bg-gradient-to-r hover:from-[#51C4D3] hover:to-[#D8E3E7] text-white hover:text-black hover:ring-2 hover:ring-offset-2 hover:ring-[#51C4D3] transition-all ease-out duration-200;
   }
 
+  .button1 {
+    @apply border-2 border-[#D8E3E7] rounded-full px-5 py-2.5 overflow-hidden relative hover:bg-[#D8E3E7] text-white hover:text-black transition-all ease-out duration-200;
+  }
+
   .form__create--product div {
     @apply my-4;
   }
 
   .form__create--product div input {
+    @apply ml-2;
+  }
+
+  .form__create--product div .quill {
     @apply ml-2;
   }
 
@@ -70,13 +78,21 @@
   }
 
   .card .add-to-cart,
-  .card .button {
+  .card .button1 {
     @apply hidden;
   }
 
   .card:hover .add-to-cart,
-  .card:hover .button {
+  .card:hover .button1 {
     @apply block duration-300 ease-in-out transition-all;
+  }
+
+  h1{
+    @apply text-3xl
+  }
+
+  h2{
+    @apply text-2xl
   }
 }
 
@@ -335,3 +351,18 @@ profile .MuiAvatar-root img {
 ::-webkit-slider-thumb:hover {
   background: hsl(120 100% 10% / 1);
 }
+
+.ql-align-justify:has(> img),
+.ql-align-justify span:has(> img){
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ql-indent-1{
+    padding-left: 2rem;
+  }
+
+  .ql-indent-2{
+   padding-left: 4rem;
+  }

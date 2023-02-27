@@ -137,7 +137,7 @@ function Navigation() {
                             alt="category"
                             className="w-32 h-32 rounded-lg shadow-sm ml-2 "
                           />
-                          <h1 className="mt-1">{category.name}</h1>
+                          <p className="mt-1">{category.name}</p>
                         </div>
                       </Link>
                     </div>
