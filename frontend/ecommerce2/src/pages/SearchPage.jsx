@@ -27,7 +27,8 @@ function SearchPage() {
     .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
     .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
     .replace(/đ/g, "d")
-    .replace(/\s/g, "");
+    .replace(/\s/g, "")
+    .replaceAll("-", "");
 
   return (
     <div className="big-phone:container big-phone:mx-auto">
@@ -60,6 +61,17 @@ function SearchPage() {
                   .replace(/đ/g, "d")
                   .replace(/\s/g, "")
                   .includes(convertVietnamese) ||
+                convertVietnamese
+                  .toLocaleLowerCase()
+                  .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                  .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                  .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                  .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                  .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                  .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                  .replace(/đ/g, "d")
+                  .replace(/\s/g, "")
+                  .includes(filteredProduct.category.toLocaleLowerCase()) ||
                 filteredProduct.brand
                   .toLocaleLowerCase()
                   .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
@@ -104,6 +116,20 @@ function SearchPage() {
                           .replace(/đ/g, "d")
                           .replace(/\s/g, "")
                           .includes(convertVietnamese) ||
+                        convertVietnamese
+                          .toLocaleLowerCase()
+                          .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                          .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                          .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                          .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                          .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                          .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                          .replace(/đ/g, "d")
+                          .replace(/\s/g, "")
+                          .replaceAll("-", "")
+                          .includes(
+                            filteredProduct.category.toLocaleLowerCase()
+                          ) ||
                         filteredProduct.brand
                           .toLocaleLowerCase()
                           .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
@@ -117,7 +143,7 @@ function SearchPage() {
                           .includes(convertVietnamese)
                     ).length
                   }{" "}
-                  kết quả cho {searchName}
+                  kết quả cho {searchName.replaceAll("-"," ")}
                 </p>
                 <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-[#132C33] p-4 shadow-sm rounded-lg">
                   {page === 1 ? (
@@ -159,6 +185,26 @@ function SearchPage() {
                               .replace(/đ/g, "d")
                               .replace(/\s/g, "")
                               .includes(convertVietnamese) ||
+                            convertVietnamese
+                              .toLocaleLowerCase()
+                              .replace(
+                                /à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,
+                                "a"
+                              )
+                              .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                              .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                              .replace(
+                                /ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,
+                                "o"
+                              )
+                              .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                              .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                              .replace(/đ/g, "d")
+                              .replace(/\s/g, "")
+                              .replaceAll("-", "")
+                              .includes(
+                                filteredProduct.category.toLocaleLowerCase()
+                              ) ||
                             filteredProduct.brand
                               .toLocaleLowerCase()
                               .replace(
@@ -225,6 +271,26 @@ function SearchPage() {
                               .replace(/đ/g, "d")
                               .replace(/\s/g, "")
                               .includes(convertVietnamese) ||
+                            convertVietnamese
+                              .toLocaleLowerCase()
+                              .replace(
+                                /à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,
+                                "a"
+                              )
+                              .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                              .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                              .replace(
+                                /ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,
+                                "o"
+                              )
+                              .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                              .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                              .replace(/đ/g, "d")
+                              .replace(/\s/g, "")
+                              .replaceAll("-", "")
+                              .includes(
+                                filteredProduct.category.toLocaleLowerCase()
+                              ) ||
                             filteredProduct.brand
                               .toLocaleLowerCase()
                               .replace(
@@ -281,6 +347,20 @@ function SearchPage() {
                             .replace(/đ/g, "d")
                             .replace(/\s/g, "")
                             .includes(convertVietnamese) ||
+                          convertVietnamese
+                            .toLocaleLowerCase()
+                            .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                            .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                            .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                            .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                            .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                            .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                            .replace(/đ/g, "d")
+                            .replace(/\s/g, "")
+                            .replaceAll("-", "")
+                            .includes(
+                              filteredProduct.category.toLocaleLowerCase()
+                            ) ||
                           filteredProduct.brand
                             .toLocaleLowerCase()
                             .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")

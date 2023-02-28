@@ -195,7 +195,7 @@ function Product() {
   };
 
   const listPic = product.pictures;
-  console.log(product?.specifications);
+
   return (
     <>
       <div className="flex justify-center">
@@ -472,40 +472,42 @@ function Product() {
                 </div>
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <div className="w-8/12 border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7] flex flex-col justify-center items-center">
+                <div className="w-8/12 border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7]">
                   <p className="text-3xl text-center mb-8 text-[#51C4D3]">
                     THÔNG SỐ KỸ THUẬT
                   </p>
                   <div
                     className={
                       open1
-                        ? "specifications h-full transition-height ease-linear duration-300"
-                        : "specifications h-96 overflow-hidden transition-height ease-linear duration-300"
+                        ? "specifications h-full transition-height ease-linear duration-300 px-12"
+                        : "specifications h-96 overflow-hidden transition-height ease-linear duration-300 px-12"
                     }
                     dangerouslySetInnerHTML={{
                       __html: product?.specifications,
                     }}
                   ></div>
-                  <button
-                    className={
-                      open1
-                        ? "button w-3/12 hidden"
-                        : "button w-3/12 block my-4"
-                    }
-                    onClick={handleClick1}
-                  >
-                    Xem thêm
-                  </button>
-                  <button
-                    className={
-                      open1
-                        ? "button w-3/12 block my-4"
-                        : "button w-3/12 hidden"
-                    }
-                    onClick={handleClick1}
-                  >
-                    Thu gọn
-                  </button>
+                  <div className="flex justify-center items-center">
+                    <button
+                      className={
+                        open1
+                          ? "button w-3/12 hidden"
+                          : "button w-3/12 block my-4"
+                      }
+                      onClick={handleClick1}
+                    >
+                      Xem thêm
+                    </button>
+                    <button
+                      className={
+                        open1
+                          ? "button w-3/12 block my-4"
+                          : "button w-3/12 hidden"
+                      }
+                      onClick={handleClick1}
+                    >
+                      Thu gọn
+                    </button>
+                  </div>
                 </div>
               </TabPanel>
               <TabPanel value={value} index={2}>
@@ -611,7 +613,7 @@ function Product() {
             </Box>
             <div>
               <p className="neon__text">Sản phẩm tương tự</p>
-              {similarProducts.length > 1 ? (
+              {similarProducts.length > 2 ? (
                 <div className="flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
                   <Swiper
                     watchSlidesProgress={true}
@@ -625,13 +627,32 @@ function Product() {
                     }}
                     navigation={true}
                     modules={[Autoplay, Pagination, Navigation]}
-                    className="shadow-sm outline-0"
+                    className="shadow-sm outline-0 bg-[#D8E3E7] bg-opacity-70"
                   >
-                    {similarProducts.slice(0, 8).map((product) => (
+                    {similarProducts.map((product) => (
                       <SwiperSlide key={product.id}>{product}</SwiperSlide>
                     ))}
                   </Swiper>
                 </div>
+              ) : similarProducts.length <= 2 && similarProducts.length > 1 ? (
+                <Swiper
+                  watchSlidesProgress={true}
+                  slidesPerView={5}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation={true}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  className="shadow-sm outline-0 bg-[#D8E3E7] bg-opacity-70"
+                >
+                  {similarProducts.map((product) => (
+                    <SwiperSlide key={product.id}>{product}</SwiperSlide>
+                  ))}
+                </Swiper>
               ) : (
                 <div className="flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
                   <p>Chưa có sản phẩm tương tự</p>
