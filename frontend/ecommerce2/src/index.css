@@ -87,12 +87,12 @@
     @apply block duration-300 ease-in-out transition-all;
   }
 
-  h1{
-    @apply text-3xl
+  h1 {
+    @apply text-3xl;
   }
 
-  h2{
-    @apply text-2xl
+  h2 {
+    @apply text-2xl;
   }
 }
 
@@ -130,7 +130,14 @@ body {
 .MuiListSubheader-root,
 .MuiListItemText-primary,
 .MuiInput-root,
-.MuiAlert-message {
+.MuiAlert-message,
+.MuiFormLabel-root,
+.MuiSelect-nativeInput,
+.css-yf8vq0-MuiSelect-nativeInput,
+.MuiSelect-select,
+.MuiInputBase-input,
+.MuiOutlinedInput-input,
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   font-family: "Quicksand", sans-serif !important;
 }
 
@@ -353,16 +360,16 @@ profile .MuiAvatar-root img {
 }
 
 .ql-align-justify:has(> img),
-.ql-align-justify span:has(> img){
+.ql-align-justify span:has(> img) {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.ql-indent-1{
-    padding-left: 2rem;
-  }
+.ql-indent-1 {
+  padding-left: 2rem;
+}
 
-  .ql-indent-2{
-   padding-left: 4rem;
-  }
+.ql-indent-2 {
+  padding-left: 4rem;
+}

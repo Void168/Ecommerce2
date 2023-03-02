@@ -30,6 +30,7 @@ import SearchPage from "./pages/SearchPage";
 import Profile from './pages/Profile';
 import EditArticle from "./pages/EditArticle";
 import Loading from "./components/Loading";
+import Chart from "./pages/Chart";
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -121,6 +122,7 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />}></Route>
                   <Route path="/product/:id/edit" element={<EditProduct />} />
                   <Route path="/article/:id/edit" element={<EditArticle />} />
+                  <Route path="/chart/" element={<Chart />} />
                 </>
               )}
             </Routes>
