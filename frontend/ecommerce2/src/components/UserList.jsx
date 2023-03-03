@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 function UserList() {
   const [users, setUsers] = useState([]);
-  const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation();

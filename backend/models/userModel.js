@@ -40,6 +40,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       require: false,
     },
+    createAt: {
+      type: String,
+      default: new Date().toISOString().split('T')[0],
+    },
     cart: {
       type: Object,
       default: {

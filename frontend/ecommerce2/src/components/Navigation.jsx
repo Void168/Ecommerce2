@@ -204,11 +204,11 @@ function Navigation() {
                   onClick={handleToggleNotifications}
                   className="relative"
                 >
-                  <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
+                  <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-1 top-2 text-sm">
                     {unreadNotifications}
                   </span>
                   <i
-                    className="fas fa-bell mt-5"
+                    className="fas fa-bell mt-5 text-sm"
                     ref={bellRef}
                     data-count={unreadNotifications || null}
                   ></i>
@@ -291,6 +291,9 @@ function Navigation() {
                         <li className="my-1">
                           <Link to="/dashboard">Quản lý</Link>
                         </li>
+                        <li className="my-1">
+                          <Link to="/chart">Thống kê</Link>
+                        </li>
                         <li className=" text-center">
                           <button
                             onClick={signoutHandler}
@@ -352,7 +355,7 @@ function Navigation() {
                 {user?.cart?.count}
               </span>
             )}
-            <i className="fas fa-shopping-cart text-3xl text-[#d35164]" />
+            <i className="fas fa-shopping-cart laptop:text-3xl big-tablet:text-base text-[#d35164]" />
             <span className="text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">
               Giỏ hàng
             </span>

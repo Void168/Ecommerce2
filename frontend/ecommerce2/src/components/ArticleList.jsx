@@ -12,6 +12,7 @@ function ArticleList() {
     const [loading, setLoading] = useState(false);
   const [deleteArticle, { isLoading, isSuccess }] = useDeleteArticleMutation();
   const [page, setPage] = useState(1);
+  const today = new Date().toISOString();
 
   const handleDeleteArticle = (id) => {
     if (window.confirm("Chắc chắn xóa bài viết này?")) {
@@ -22,6 +23,7 @@ function ArticleList() {
       }, 300);
     }
   };
+
   return (
     <>
       <p className="tablet:hidden small-phone:block h-screen">
@@ -38,13 +40,18 @@ function ArticleList() {
             {page === 1 ? (
               <>
                 {articles.slice(0, 6).map((newArticle) => (
-                  <div>
+                  <div className="relative">
                     <Article
                       {...newArticle}
                       key={newArticle._id}
                       article={newArticle}
                       className="laptop:col-span-1"
                     />
+                    {today > newArticle.expire ? (
+                      <span className="absolute top-0 right-0 mt-12 mr-8 bg-red-500 text-white p-4 rounded-tr-lg">
+                        Hết hạn
+                      </span>
+                    ) : null}
                     <div className="grid grid-cols-2 justify-around mt-6">
                       <button
                         onClick={() =>

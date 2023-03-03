@@ -130,7 +130,7 @@ productRouter.post('/add-to-cart', async (req, res) => {
     }
     userCart[product.price] = 1
     userCart.count += 1
-    userCart.total = Number(userCart.total) + Number(price * 24000)
+    userCart.total = Number(userCart.total) + Number(price * 24000 * (100 - product.discount) / 100)
     user.cart = userCart
     user.markModified('cart')
     await user.save()
@@ -144,8 +144,9 @@ productRouter.post('/remove-from-cart', async (req, res) => {
   const { userId, productId, price } = req.body
   try {
     const user = await User.findById(userId)
+    const product = await Product.findById(productId)
     const userCart = user.cart
-    userCart.total -= Number(userCart[productId]) * Number(price * 24000)
+    userCart.total -= Number(userCart[productId]) * Number(price * 24000 * (100 - product.discount) / 100)
     userCart.count -= userCart[productId]
     delete userCart[productId]
     user.cart = userCart

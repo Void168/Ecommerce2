@@ -243,31 +243,33 @@ function NavigationResponsive() {
                 className="text-white"
               />
             </div>
-            <div>
-              <li>
+            <ul className="w-full flex flex-col container mx-auto text-white overflow-y-auto">
+              <li onClick={handleClose}>
                 <Avatar
                   alt={`${user.name}`}
                   src={`${user?.avatar?.at(-1)?.url}`}
                   className="mx-8"
                 />
-              </li>
-              <li onClick={handleClose}>
-                {!user ? (
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive ? activeLink : normalLink
-                    }
-                    to="/login"
-                  >
-                    Đăng nhập
-                  </NavLink>
-                ) : (
-                  <div className="dropdown__profile relative px-8 py-12 text-2xl">
-                    <Link to={`/profile/${user._id}/edit`}>
-                      {user.name} <i className="fa-solid fa-caret-down" />
-                    </Link>
-                  </div>
-                )}
+                <span>
+                  <>
+                    {!user ? (
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? activeLink : normalLink
+                        }
+                        to="/login"
+                      >
+                        Đăng nhập
+                      </NavLink>
+                    ) : (
+                      <div className="dropdown__profile relative px-8 py-12 text-2xl">
+                        <Link to={`/profile/${user._id}/edit`}>
+                          {user.name} <i className="fa-solid fa-caret-down" />
+                        </Link>
+                      </div>
+                    )}
+                  </>
+                </span>
               </li>
               <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
                 <NavLink
@@ -281,7 +283,7 @@ function NavigationResponsive() {
               </li>
               <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
                 <NavLink
-                  to={`/dashboard/product-list}`}
+                  to={`/dashboard}`}
                   className={({ isActive }) =>
                     isActive ? activeLink : normalLink
                   }
@@ -289,7 +291,17 @@ function NavigationResponsive() {
                   Quản lý
                 </NavLink>
               </li>
-            </div>
+              <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
+                <NavLink
+                  to="/chart"
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  Thống kê
+                </NavLink>
+              </li>
+            </ul>
             <div>
               <li className="text-center flex-end mb-20" onClick={handleClose}>
                 <button

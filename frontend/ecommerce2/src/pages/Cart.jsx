@@ -32,6 +32,7 @@ function Cart() {
     style: "currency",
     currency: "VND",
   });
+  console.log(subTotal)
 
   const handleDecrease = (product) => {
     const quantity = user.cart.count;
@@ -94,20 +95,23 @@ function Cart() {
                             {cart.map((item) => (
                               <tr key={item}>
                                 <td>
-                                  <img
-                                    src={item.pictures[0].url}
-                                    className="desktop:ml-10 shadow-sm w-24 h-24 object-cover"
-                                    alt="cart-item"
-                                  />
+                                  <Link to={`/san-pham/${item._id}`}>
+                                    <img
+                                      src={item.pictures[0].url}
+                                      className="desktop:ml-10 shadow-sm w-24 h-24 object-cover"
+                                      alt="cart-item"
+                                    />
+                                  </Link>
                                 </td>
                                 <td>
-                                  {(item.price * 24000).toLocaleString(
-                                    "it-IT",
-                                    {
-                                      style: "currency",
-                                      currency: "VND",
-                                    }
-                                  )}
+                                  {(
+                                    ((item.price * (100 - item.discount)) /
+                                      100) *
+                                    24000
+                                  ).toLocaleString("it-IT", {
+                                    style: "currency",
+                                    currency: "VND",
+                                  })}
                                 </td>
                                 <td>
                                   <span className="flex justify-around">
@@ -136,9 +140,9 @@ function Cart() {
                                 </td>
                                 <td>
                                   {(
-                                    item.price *
-                                    24000 *
-                                    user.cart[item._id]
+                                    ((item.price * (100 - item.discount)) /
+                                      100) *
+                                    24000
                                   ).toLocaleString("it-IT", {
                                     style: "currency",
                                     currency: "VND",

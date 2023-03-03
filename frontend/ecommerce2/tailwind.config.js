@@ -5,12 +5,12 @@ module.exports = {
       'galaxy-fold': '280px',
       'small-phone': '320px',
       'big-phone': '540px',
-      tablet: '640px',
+      'tablet': '640px',
       'big-tablet': '820px',
 
-      laptop: '1080px',
+      'laptop': '1080px',
 
-      desktop: '1280px',
+      'desktop': '1280px',
 
       'big-desktop': '1536px',
     },
