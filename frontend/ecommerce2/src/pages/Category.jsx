@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import ProductPreview from "../components/ProductPreview";
 import { updateProducts } from "../features/productSlice";
 import Stack from "@mui/material/Stack";
+import Select from "react-select";
 import Pagination from "@mui/material/Pagination";
 import FilterPrice from "../components/FilterPrice";
 import { AppContext } from "../context/AppContext";
@@ -18,7 +19,7 @@ function Category() {
   const { category } = useParams();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [active, setActive] = useState(false)
+  const [options, setOptions] = useState([]);
   const products = useSelector((state) => state.products);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -55,28 +56,25 @@ function Category() {
       product.category === categoryName?.name &&
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const clickBrand = () => setActive(!active);
 
   const set = new Set(productsSearch.map((product) => product.brand));
-  const array = [...set];
+  const arrayValues = [...set];
+  const array = [];
 
-  const listItems = array.map((brand) => (
-    <div key={brand.toString()} onClick={clickBrand}>
-      <div
-        className={
-          active
-            ? "shadow-sm bg-gradient-to-r from-neutral-300 to-neutral-400	max-w-max rounded-full mx-2 p-2 border-[#51C4D3] border-4"
-            : "shadow-sm bg-gradient-to-r from-neutral-300 to-neutral-400 max-w-max rounded-full mx-2 p-2"
-        }
-      >
-        {brand}
-      </div>
-    </div>
-  ));
-console.log(active)
+  arrayValues.forEach(function (v, i) {
+    let obj = {};
+    obj.value = v;
+    obj.label = arrayValues[i];
+    array.push(obj);
+  });
+
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
+  };
+
+  const handleChange = (selectedOption) => {
+    setOptions(selectedOption);
   };
 
   useEffect(() => {
@@ -86,6 +84,8 @@ console.log(active)
       setLoading(false);
     }, 500);
   }, [categoryName?.name]);
+
+  const optionsArray = options.map((s) => s.value);
 
   return (
     <div className="container mx-auto">
@@ -123,7 +123,8 @@ console.log(active)
                       (filteredProduct) =>
                         value[0] / 24000 <= filteredProduct.price &&
                         filteredProduct.price <= value[1] / 24000 &&
-                        filteredProduct.category === categoryName?.name
+                        filteredProduct.category === categoryName?.name &&
+                        optionsArray.includes(filteredProduct.brand)
                     ).length
                   }{" "}
                   sản phẩm
@@ -143,9 +144,15 @@ console.log(active)
                       <p>Không tìm thấy sản phẩm phù hợp</p>
                     ) : (
                       <div className="rounded-lg shadow-sm bg-[#132C33] py-4">
-                        <div className="flex flex-row">
-                          {listItems}</div>
-
+                        <Select
+                          defaultValue={[...array]}
+                          isMulti
+                          name="colors"
+                          options={array}
+                          className="basic-multi-select mx-4"
+                          classNamePrefix="select"
+                          onChange={handleChange}
+                        />
                         <div className="p-4 grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 max-h-max">
                           <>
                             {page === 1 ? (
@@ -160,7 +167,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .slice(0, 8)
                                       .map((product) => (
@@ -181,7 +191,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .slice(
                                         productsSearch.length - 8,
@@ -206,7 +219,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortPrice)
                                       .slice(0, 8)
@@ -228,7 +244,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortPrice)
                                       .reverse()
@@ -251,7 +270,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortAlphabet)
                                       .slice(0, 8)
@@ -273,7 +295,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .slice(0, 8)
                                       .sort(sortAlphabet)
@@ -307,7 +332,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .slice(8 * (page - 1), 8 * page)
                                       .map((product) => (
@@ -328,7 +356,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .slice(
                                         8 *
@@ -362,7 +393,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortPrice)
                                       .slice(8 * (page - 1), 8 * page)
@@ -384,7 +418,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortPrice)
                                       .reverse()
@@ -407,7 +444,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortAlphabet)
                                       .slice(8 * (page - 1), 8 * page)
@@ -429,7 +469,10 @@ console.log(active)
                                           value[0] / 24000 <=
                                             filteredProduct.price &&
                                           filteredProduct.price <=
-                                            value[1] / 24000
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
                                       )
                                       .sort(sortAlphabet)
                                       .reverse()
@@ -455,7 +498,8 @@ console.log(active)
                                   filteredProduct.category ===
                                     categoryName?.name &&
                                   value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
+                                  filteredProduct.price <= value[1] / 24000 &&
+                                  optionsArray.includes(filteredProduct.brand)
                               ).length / 8
                             )}
                             color="primary"
