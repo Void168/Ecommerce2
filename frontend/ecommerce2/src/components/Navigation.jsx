@@ -149,7 +149,7 @@ function Navigation() {
                           .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
                           .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
                           .replace(/đ/g, "d")
-                          .replace(/\s/g, "-")}/trang-${page}`}
+                          .replace(/\s/g, "-")}`}
                         className="dropdown__categories--element"
                         onClick={handleClose}
                       >

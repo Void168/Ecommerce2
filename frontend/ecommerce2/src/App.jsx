@@ -1,6 +1,6 @@
 import Navigation from "./components/Navigation";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import {  AppProvider } from "./context/AppContext";
+import {  AppContext, AppProvider } from "./context/AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -13,7 +13,7 @@ import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import Dashboard from "./pages/Dashboard";
 import EditProduct from "./pages/EditProduct";
-import {  useEffect } from "react";
+import {  useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import { addNotification } from "./features/userSlice";
 import ScrollToTop from "./components/ScrollToTop";
@@ -41,6 +41,7 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const {page} = useContext(AppContext)
 
   useEffect(() => {
     const socket = io("http://localhost:8080");
@@ -104,7 +105,10 @@ function App() {
               )}
 
               <Route path="/san-pham/:id" element={<Product />} />
-              <Route path="/danh-muc/:category/:page" element={<Category />} />
+              <Route
+                path={`/danh-muc/:category`}
+                element={<Category />}
+              />
               {user && <Route path="/cart" element={<Cart />} />}
               <Route path="/order/:id" element={<OrderDetail />}></Route>
 

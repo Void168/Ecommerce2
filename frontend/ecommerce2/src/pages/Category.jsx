@@ -19,10 +19,10 @@ function Category() {
   const { category } = useParams();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [options, setOptions] = useState([]);
   const products = useSelector((state) => state.products);
-
-  const [searchTerm, setSearchTerm] = useState("");
+  useEffect(() => {
+    axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
+  }, [dispatch]);
   const categoryName = categories.find(
     (cateName) =>
       cateName.name
@@ -37,6 +37,24 @@ function Category() {
         .replace(/\s/g, "") === category.replaceAll("-", "")
   );
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const productsSearch = products.filter(
+    (product) =>
+      product.category === categoryName?.name &&
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const set = new Set(productsSearch.map((product) => product.brand));
+  const arrayValues = [...set];
+  const array = [];
+  arrayValues.forEach(function (v, i) {
+    let obj = {};
+    obj.value = v;
+    obj.label = arrayValues[i];
+    array.push(obj);
+  });
+
+  const [options, setOptions] = useState([...array]);
+
   const {
     value,
     page,
@@ -47,27 +65,6 @@ function Category() {
     sortAlphabet,
   } = useContext(AppContext);
 
-  useEffect(() => {
-    axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
-  }, [dispatch]);
-
-  const productsSearch = products.filter(
-    (product) =>
-      product.category === categoryName?.name &&
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const set = new Set(productsSearch.map((product) => product.brand));
-  const arrayValues = [...set];
-  const array = [];
-
-  arrayValues.forEach(function (v, i) {
-    let obj = {};
-    obj.value = v;
-    obj.label = arrayValues[i];
-    array.push(obj);
-  });
-
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
@@ -75,17 +72,30 @@ function Category() {
 
   const handleChange = (selectedOption) => {
     setOptions(selectedOption);
+    if (
+      productsSearch.filter(
+        (filteredProduct) =>
+          value[0] / 24000 <= filteredProduct.price &&
+          filteredProduct.price <= value[1] / 24000 &&
+          filteredProduct.category === categoryName?.name &&
+          optionsArray.includes(filteredProduct.brand)
+      ).length <= 9
+    ) {
+      resetPage();
+    }
   };
+  const optionsArray = options.map((s) => s.value);
 
   useEffect(() => {
     setLoading(true);
+    setOptions([...array]);
     resetPage();
     setTimeout(() => {
       setLoading(false);
     }, 500);
   }, [categoryName?.name]);
 
-  const optionsArray = options.map((s) => s.value);
+  console.log(options);
 
   return (
     <div className="container mx-auto">
@@ -311,7 +321,31 @@ function Category() {
                                         />
                                       ))}
                                   </>
-                                ) : null}
+                                ) : (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName?.name &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
+                                      )
+                                      .slice(0, 8)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                )}
                               </>
                             ) : productsSearch.filter(
                                 (filteredProduct) =>
@@ -485,7 +519,31 @@ function Category() {
                                         />
                                       ))}
                                   </>
-                                ) : null}
+                                ) : (
+                                  <>
+                                    {productsSearch
+                                      .filter(
+                                        (filteredProduct) =>
+                                          filteredProduct.category ===
+                                            categoryName?.name &&
+                                          value[0] / 24000 <=
+                                            filteredProduct.price &&
+                                          filteredProduct.price <=
+                                            value[1] / 24000 &&
+                                          optionsArray.includes(
+                                            filteredProduct.brand
+                                          )
+                                      )
+                                      .slice(8 * (page - 1), 8 * page)
+                                      .map((product) => (
+                                        <ProductPreview
+                                          {...product}
+                                          key={product._id}
+                                          product={product}
+                                        />
+                                      ))}
+                                  </>
+                                )}
                               </>
                             )}
                           </>

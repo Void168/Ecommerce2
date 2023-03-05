@@ -9,7 +9,7 @@ function valuetext(value) {
 }
 
 function FilterPrice() {
-  const { value, handleChange, isChecked } = useContext(AppContext)
+  const { value, handleChange, isChecked, resetPage } = useContext(AppContext);
 
   return (
     <>
@@ -50,6 +50,7 @@ function FilterPrice() {
           getAriaLabel={() => "Minimum distance"}
           value={value}
           onChange={handleChange}
+          onMouseUp={resetPage}
           valueLabelDisplay="auto"
           getAriaValueText={valuetext}
           disableSwap

@@ -187,7 +187,7 @@ function Product() {
         >
           <SimilarProduct {...product} />
         </div>
-      ));
+      )).slice(0,8);
   }
 
   const navigateToLogin = () => {

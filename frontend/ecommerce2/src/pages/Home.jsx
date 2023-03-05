@@ -13,7 +13,6 @@ import FilterPriceResponsive from "../components/FilterPriceResponsive";
 import Article from "../components/Article";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@mui/material";
-import { width } from "@mui/system";
 
 const listBanner = [
   {
@@ -44,8 +43,16 @@ function Home() {
   const viewedProducts = localStorage.getItem("viewed products");
   const list = JSON.parse(viewedProducts);
   const listViewProduct = list?.filter((element) => element !== null);
-  const set = new Set(listViewProduct);
-  const viewedProduct = [...set];
+
+  const uniqueArray = listViewProduct?.filter((value, index) => {
+    const _value = JSON.stringify(value);
+    return (
+      index ===
+      listViewProduct.findIndex((obj) => {
+        return JSON.stringify(obj) === _value;
+      })
+    );
+  });
 
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
@@ -57,6 +64,7 @@ function Home() {
       setLoading(false);
     }, 300);
   }, []);
+  console.log(uniqueArray);
 
   return (
     <>
@@ -473,7 +481,7 @@ function Home() {
             <Loading />
           ) : (
             <>
-              {viewedProduct?.slice(0, 8).map((lastProduct, index) => (
+              {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
                 <ViewedProduct
                   {...lastProduct}
                   key={index}
