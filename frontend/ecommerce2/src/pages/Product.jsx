@@ -218,7 +218,7 @@ function Product() {
                 .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
                 .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
                 .replace(/đ/g, "d")
-                .replace(/\s/g, "-")}/trang-${page}`}
+                .replace(/\s/g, "-")}`}
             >
               {product.category}
             </Link>
@@ -265,7 +265,7 @@ function Product() {
                 .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
                 .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
                 .replace(/đ/g, "d")
-                .replace(/\s/g, "-")}/trang-${page}`}
+                .replace(/\s/g, "-")}`}
             >
               {product.category}
             </Link>
@@ -330,7 +330,7 @@ function Product() {
                 <p className="big-phone:text-4xl small-phone:text-2xl text-center mb-4">
                   Thông tin sản phẩm
                 </p>
-                <div className="flex flex-col big-tablet:justify-between laptop:justify-start galaxy-fold:justify-start py-4 big-phone:px-8 small-phone:px-0 h-full">
+                <div className="flex flex-col big-tablet:justify-around laptop:justify-start galaxy-fold:justify-start py-4 big-phone:px-8 small-phone:px-0 h-full">
                   <div className="text-xl">
                     <div className="flex flex-col big-phone:py-4 px-2 small-phone:py-0">
                       <p className="big-phone:text-3xl small-phone:text-xl">
@@ -380,7 +380,7 @@ function Product() {
                     <br />
                     <p>Nhà phân phối: {product.brand}</p>
                   </div>
-                  <div className="my-4 flex flex-col">
+                  <div className="my-4 flex flex-col justify-center items-center">
                     {!user ? (
                       <button
                         className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"
@@ -391,7 +391,7 @@ function Product() {
                     ) : (
                       <>
                         <button
-                          className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"
+                          className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 bg-[#132C33] my-4 button"
                           onClick={(e) =>
                             addToCart({
                               userId: user._id,
@@ -406,7 +406,7 @@ function Product() {
                       </>
                     )}
                     {user && user.isAdmin && (
-                      <button className="button bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 big-tablet:w-6/12 tablet:w-8/12 small-phone:w-full">
+                      <button className="button bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 small-phone:w-full">
                         <Link to={`/product/${product._id}/edit`}>
                           Sửa thông tin sản phẩm
                         </Link>
@@ -439,7 +439,7 @@ function Product() {
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
-                <div className="w-8/12 border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7] flex flex-col justify-center items-center">
+                <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7] flex flex-col justify-center items-center">
                   <p className="text-3xl text-center mb-8 text-[#51C4D3]">
                     ĐẶC ĐIỂM NỔI BẬT
                   </p>
@@ -455,7 +455,9 @@ function Product() {
                   ></div>
                   <button
                     className={
-                      open ? "button w-3/12 hidden" : "button w-3/12 block my-4"
+                      open
+                        ? "button tablet:w-3/12 small-phone:w-6/12 hidden"
+                        : "button tablet:w-3/12 small-phone:w-6/12 block my-4"
                     }
                     onClick={handleClick}
                   >
@@ -463,7 +465,9 @@ function Product() {
                   </button>
                   <button
                     className={
-                      open ? "button w-3/12 block my-4" : "button w-3/12 hidden"
+                      open
+                        ? "button tablet:w-3/12 small-phone:w-6/12 block my-4"
+                        : "button tablet:w-3/12 small-phone:w-6/12 hidden"
                     }
                     onClick={handleClick}
                   >
@@ -472,7 +476,7 @@ function Product() {
                 </div>
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <div className="w-8/12 border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7]">
+                <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7]">
                   <p className="text-3xl text-center mb-8 text-[#51C4D3]">
                     THÔNG SỐ KỸ THUẬT
                   </p>
@@ -490,8 +494,8 @@ function Product() {
                     <button
                       className={
                         open1
-                          ? "button w-3/12 hidden"
-                          : "button w-3/12 block my-4"
+                          ? "button tablet:w-3/12 small-phone:w-6/12 hidden"
+                          : "button tablet:w-3/12 small-phone:w-6/12 block my-4"
                       }
                       onClick={handleClick1}
                     >
@@ -500,8 +504,8 @@ function Product() {
                     <button
                       className={
                         open1
-                          ? "button w-3/12 block my-4"
-                          : "button w-3/12 hidden"
+                          ? "button tablet:w-3/12 small-phone:w-6/12 block my-4"
+                          : "button tablet:w-3/12 small-phone:w-6/12 hidden"
                       }
                       onClick={handleClick1}
                     >

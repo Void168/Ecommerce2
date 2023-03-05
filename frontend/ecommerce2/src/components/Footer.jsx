@@ -9,7 +9,8 @@ function Footer() {
         location.pathname === "/login" ||
         location.pathname === "/register" ||
         location.pathname === "/dashboard" ||
-        location.pathname === "/cart"
+        location.pathname === "/cart" ||
+        location.pathname === "*"
           ? "bg-[#132C33] big-tablet:block small-phone:hidden text-[#D8E3E7]"
           : "bg-[#132C33] text-[#D8E3E7]"
       }

@@ -88,10 +88,12 @@ function SearchPage() {
   const [options, setOptions] = useState([...array]);
   useEffect(() => {
     setLoading(true);
+    setOptions([...array]);
+    resetPage();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [searchName]);
 
   const optionsArray = options.map((s) => s.value);
   const handleChange = (selectedOption) => {
@@ -110,7 +112,7 @@ function SearchPage() {
 
   return (
     <div className="big-phone:container big-phone:mx-auto">
-      <div className="container mx-auto">
+      <div className="big-phone:container big-phone:mx-auto">
         {loading ? (
           <Loading />
         ) : (

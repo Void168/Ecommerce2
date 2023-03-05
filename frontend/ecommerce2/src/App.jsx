@@ -31,6 +31,7 @@ import Profile from './pages/Profile';
 import EditArticle from "./pages/EditArticle";
 import Loading from "./components/Loading";
 import Chart from "./pages/Chart";
+import NotFoundPage from "./pages/NotFoundPage";
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -105,14 +106,11 @@ function App() {
               )}
 
               <Route path="/san-pham/:id" element={<Product />} />
-              <Route
-                path={`/danh-muc/:category`}
-                element={<Category />}
-              />
+              <Route path={`/danh-muc/:category`} element={<Category />} />
               {user && <Route path="/cart" element={<Cart />} />}
               <Route path="/order/:id" element={<OrderDetail />}></Route>
 
-              <Route path="*" element={<Loading />} />
+              <Route path="*" element={<NotFoundPage />} />
               {user && (
                 <>
                   <Route path="/orders" element={<Order />} />

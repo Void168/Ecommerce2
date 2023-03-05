@@ -11,16 +11,16 @@ function ViewedProduct({ _id, name, category, price, pictures, discount }) {
           src={pictures[0]?.url}
           alt="product-pic"
         />
-        <p className="font-bold truncate">{name}</p>
-        <div bg="warning" text="dark">
+        <p className="truncate">{name}</p>
+        <p className="truncate">
           {category}
-        </div>
-        <div className="truncate">
+        </p>
+        <p className="truncate">
           {(price * 24000).toLocaleString("it-IT", {
             style: "currency",
             currency: "VND",
           })}
-        </div>
+        </p>
       </div>
     </Link>
   );

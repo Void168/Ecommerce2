@@ -110,7 +110,6 @@ function Order() {
                       {page === 1 ? (
                         <>
                           {orders
-                            .slice(orders.length - 8, orders.length)
                             .map((order) => (
                               <tr>
                                 <td className="truncate big-tablet:w-64 tablet:w-8">
