@@ -73,6 +73,7 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         value,
+        setValue,
         handleChange,
         page,
         changeIndex,

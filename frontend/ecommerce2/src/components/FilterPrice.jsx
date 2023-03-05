@@ -1,15 +1,20 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../context/AppContext'
-import Box from '@mui/material/Box'
-import Slider from '@mui/material/Slider'
-import sort from '../sort.js'
+import React, { useContext, useEffect } from "react";
+import { AppContext } from "../context/AppContext";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import sort from "../sort.js";
 
 function valuetext(value) {
-  return value
+  return value;
 }
 
 function FilterPrice() {
-  const { value, handleChange, isChecked, resetPage } = useContext(AppContext);
+  const { value, handleChange, isChecked, resetPage, setValue } =
+    useContext(AppContext);
+  
+  useEffect(() => {
+    setValue([0, 100000000]);
+  }, []);
 
   return (
     <>
@@ -86,4 +91,4 @@ function FilterPrice() {
   );
 }
 
-export default FilterPrice
+export default FilterPrice;

@@ -244,7 +244,7 @@ function Chart() {
               </div>
             </div>
             <div className="col-span-4 grid big-desktop:grid-rows-4 small-phone:grid-rows-1 gap-4 big-phone:block small-phone:hidden">
-              <div className="row-span-1 grid big-desktop:grid-cols-4 small-phone:grid-cols-2 small-phone:grid-rows-2 big-desktop:grid-rows-1 gap-2">
+              <div className="row-span-1 grid big-desktop:grid-cols-4 small-phone:grid-cols-2 small-phone:grid-rows-2 big-desktop:grid-rows-1 gap-2 mb-4">
                 <div className="dashboard__month">
                   <p className="text-center">
                     Tổng doanh thu tháng {filterMonth}:

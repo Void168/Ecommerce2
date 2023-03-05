@@ -43,6 +43,12 @@ function Home() {
   const viewedProducts = localStorage.getItem("viewed products");
   const list = JSON.parse(viewedProducts);
   const listViewProduct = list?.filter((element) => element !== null);
+  const listProduct = products
+    .filter(
+      (filteredProduct) =>
+        value[0] / 24000 <= filteredProduct.price &&
+        filteredProduct.price <= value[1] / 24000
+    )
 
   const uniqueArray = listViewProduct?.filter((value, index) => {
     const _value = JSON.stringify(value);
@@ -64,7 +70,6 @@ function Home() {
       setLoading(false);
     }, 300);
   }, []);
-  console.log(uniqueArray);
 
   return (
     <>
@@ -230,29 +235,17 @@ function Home() {
                       <>
                         {gender === "newest" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
-                              .slice(0, 8)
-                              .map((product, index) => (
-                                <ProductPreview
-                                  {...product}
-                                  data-value={index}
-                                  key={product._id}
-                                />
-                              ))}
+                            {listProduct.slice(0, 8).map((product, index) => (
+                              <ProductPreview
+                                {...product}
+                                data-value={index}
+                                key={product._id}
+                              />
+                            ))}
                           </>
                         ) : gender === "oldest" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .slice(products.length - 8, products.length)
                               .map((product) => (
                                 <ProductPreview
@@ -265,12 +258,7 @@ function Home() {
                           </>
                         ) : gender === "lowtohigh" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortPrice)
                               .slice(0, 8)
                               .map((product) => (
@@ -283,12 +271,7 @@ function Home() {
                           </>
                         ) : gender === "hightolow" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortPrice)
                               .reverse()
                               .slice(0, 8)
@@ -302,12 +285,7 @@ function Home() {
                           </>
                         ) : gender === "atoz" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortAlphabet)
                               .slice(0, 8)
                               .map((product) => (
@@ -320,12 +298,7 @@ function Home() {
                           </>
                         ) : gender === "ztoa" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .slice(0, 8)
                               .sort(sortAlphabet)
                               .reverse()
@@ -339,23 +312,13 @@ function Home() {
                           </>
                         ) : null}
                       </>
-                    ) : products.filter(
-                        (filteredProduct) =>
-                          value[0] / 24000 <=
-                          filteredProduct.price <=
-                          value[1] / 24000
-                      ).length === 0 ? (
+                    ) : listProduct.length === 0 ? (
                       <div>Bạn hãy điều chỉnh lại giá nhé</div>
                     ) : (
                       <>
                         {gender === "newest" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .slice(8 * (page - 1), 8 * page)
                               .map((product) => (
                                 <ProductPreview
@@ -367,12 +330,7 @@ function Home() {
                           </>
                         ) : gender === "oldest" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .slice(
                                 8 * (Math.round(products.length / 8) - page),
                                 8 * (Math.round(products.length / 8) - page + 1)
@@ -388,12 +346,7 @@ function Home() {
                           </>
                         ) : gender === "lowtohigh" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortPrice)
                               .slice(8 * (page - 1), 8 * page)
                               .map((product) => (
@@ -406,12 +359,7 @@ function Home() {
                           </>
                         ) : gender === "hightolow" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortPrice)
                               .reverse()
                               .slice(8 * (page - 1), 8 * page)
@@ -425,12 +373,7 @@ function Home() {
                           </>
                         ) : gender === "atoz" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortAlphabet)
                               .slice(8 * (page - 1), 8 * page)
                               .map((product) => (
@@ -443,12 +386,7 @@ function Home() {
                           </>
                         ) : gender === "ztoa" ? (
                           <>
-                            {products
-                              .filter(
-                                (filteredProduct) =>
-                                  value[0] / 24000 <= filteredProduct.price &&
-                                  filteredProduct.price <= value[1] / 24000
-                              )
+                            {listProduct
                               .sort(sortAlphabet)
                               .reverse()
                               .slice(8 * (page - 1), 8 * page)
