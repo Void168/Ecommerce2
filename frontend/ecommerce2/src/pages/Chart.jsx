@@ -138,7 +138,6 @@ function Chart() {
   };
 
   const totalArray = Object.values(orders.map((order) => order.total));
-  console.log(totalArray);
 
   return (
     <>

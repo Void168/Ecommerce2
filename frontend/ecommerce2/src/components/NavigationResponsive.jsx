@@ -204,7 +204,16 @@ function NavigationResponsive() {
               {categories.map((category) => (
                 <div key={category._id} onClick={handleClose}>
                   <Link
-                    to={`/category/${category.name.toLocaleLowerCase()}`}
+                    to={`/danh-muc/${category.name
+                      .toLocaleLowerCase()
+                      .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                      .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                      .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                      .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                      .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                      .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                      .replace(/đ/g, "d")
+                      .replace(/\s/g, "-")}`}
                     className="dropdown__categories--element"
                   >
                     <div className="big-phone:p-4 galaxy-fold:p-2 flex flex-col justify-center">
@@ -236,7 +245,7 @@ function NavigationResponsive() {
         }
       >
         {user?.isAdmin ? (
-          <ul className="p-4 flex flex-col justify-around h-screen absolute z-50 w-full bg-[#126E82] text-white">
+          <ul className="p-4 flex flex-col justify-around h-screen absolute z-50 w-full bg-[#132C33] text-white">
             <div className="mb-4">
               <DoubleArrowIcon
                 onClick={handleOpenAccount}
@@ -344,7 +353,7 @@ function NavigationResponsive() {
             : "fixed w-full translate-x-full duration-300 top-0"
         }
       >
-        <ul className="bg-[#126E82] p-4 flex flex-col h-screen">
+        <ul className="bg-[#132C33] p-4 flex flex-col h-screen">
           <div className="mb-4">
             <DoubleArrowIcon onClick={handleOpenMore} className="text-white" />
           </div>
@@ -398,7 +407,7 @@ function NavigationResponsive() {
       <div
         className={
           openNoti
-            ? "fixed w-full p-4 z-50 duration-300 transition-transform ease-in-out h-screen bg-[#126E82] top-0 overflow-y-auto"
+            ? "fixed w-full p-4 z-50 duration-300 transition-transform ease-in-out h-screen bg-[#132C33] top-0 overflow-y-auto"
             : "fixed w-full p-4 translate-x-full duration-300 scroll-auto h-screen top-0"
         }
       >
@@ -428,7 +437,9 @@ function NavigationResponsive() {
                 </div>
               ))
             ) : (
-              <span>Không có thông báo mới</span>
+              <span className="text-white text-2xl">
+                Không có thông báo mới
+              </span>
             )}
           </>
         ) : null}

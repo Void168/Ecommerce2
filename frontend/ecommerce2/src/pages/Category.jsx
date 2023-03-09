@@ -101,7 +101,7 @@ function Category() {
       setLoading(false);
     }, 500);
   }, [categoryName?.name]);
-  
+
   return (
     <div className="container mx-auto">
       {loading ? (
@@ -122,29 +122,14 @@ function Category() {
               onChange={handleSearch}
             />
           </div>
+          {listProductSearch.length > 0 ? (
+            <p className="mt-4 text-xl">
+              Có {listProductSearch.length} sản phẩm
+            </p>
+          ) : null}
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
             <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
               <FilterPrice />
-              {productsSearch.filter(
-                (filteredProduct) =>
-                  value[0] / 24000 <= filteredProduct.price &&
-                  filteredProduct.price <= value[1] / 24000 &&
-                  filteredProduct.category === categoryName?.name
-              ).length > 0 ? (
-                <p className="text-white px-4 mt-8 text-2xl text-center">
-                  Có{" "}
-                  {
-                    productsSearch.filter(
-                      (filteredProduct) =>
-                        value[0] / 24000 <= filteredProduct.price &&
-                        filteredProduct.price <= value[1] / 24000 &&
-                        filteredProduct.category === categoryName?.name &&
-                        optionsArray.includes(filteredProduct.brand)
-                    ).length
-                  }{" "}
-                  sản phẩm
-                </p>
-              ) : null}
             </div>
             <div className="container mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
               <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
