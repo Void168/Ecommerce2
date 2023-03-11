@@ -12,6 +12,7 @@ function Profile() {
   const { id } = useParams();
   const {
     number,
+    setNumber,
     chosenProvince,
     chosenDistrict,
     chosenWard,
@@ -48,8 +49,6 @@ function Profile() {
       })
       .catch((e) => console.log(e));
   }, [id]);
-
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -98,12 +97,14 @@ function Profile() {
 
   useEffect(() => {
     setLoading(true);
+    setNumber("");
+    setChosenProvince("");
+    setChosenDistrict("");
+    setChosenWard("");
     setTimeout(() => {
       setLoading(false);
     }, 500);
   }, [isSuccess]);
-
-  console.log(address);
 
   return (
     <div className="big-phone:container big-phone:mx-auto min-h-max my-8">
@@ -196,6 +197,7 @@ function Profile() {
                     type="text"
                     placeholder="Nhập địa chỉ"
                     value={fullAddress}
+                    disabled
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>

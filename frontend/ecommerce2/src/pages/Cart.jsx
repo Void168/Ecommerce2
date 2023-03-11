@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import CartResponsive from "../components/CartResponsive";
+import { AppContext } from "../context/AppContext";
 
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_KEY}`);
 
@@ -25,6 +26,12 @@ function Cart() {
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
+  const {
+    setNumber,
+    setChosenProvince,
+    setChosenDistrict,
+    setChosenWard,
+  } = useContext(AppContext); 
 
   let cart = products.filter((product) => userCartObj[product._id] != null);
 
@@ -32,7 +39,6 @@ function Cart() {
     style: "currency",
     currency: "VND",
   });
-  console.log(subTotal)
 
   const handleDecrease = (product) => {
     const quantity = user.cart.count;
@@ -42,6 +48,10 @@ function Cart() {
 
   useEffect(() => {
     setLoading(true);
+    setNumber("")
+    setChosenProvince("");
+    setChosenDistrict("");
+    setChosenWard("");
     setTimeout(() => {
       setLoading(false);
     }, 300);
