@@ -12,15 +12,22 @@ function ViewedProduct({ _id, name, category, price, pictures, discount }) {
           alt="product-pic"
         />
         <p className="truncate">{name}</p>
-        <p className="truncate">
-          {category}
-        </p>
-        <p className="truncate">
-          {(price * 24000).toLocaleString("it-IT", {
-            style: "currency",
-            currency: "VND",
-          })}
-        </p>
+        <p className="truncate">{category}</p>
+          <p className="truncate line-through">
+            {(price * 24000).toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </p>
+          <p className="truncate text-red-500">
+            {((price * 24000 * (100 - discount)) / 100).toLocaleString(
+              "it-IT",
+              {
+                style: "currency",
+                currency: "VND",
+              }
+            )}
+          </p>
       </div>
     </Link>
   );

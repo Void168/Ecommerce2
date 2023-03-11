@@ -18,12 +18,18 @@ function SimilarProduct({ _id, name, category, price, pictures, discount }) {
         </div>
         <p className="font-bold truncate">{name}</p>
         <div className="truncate">{category}</div>
-        <div className="truncate">
+        <p className="truncate line-through">
           {(price * 24000).toLocaleString("it-IT", {
             style: "currency",
             currency: "VND",
           })}
-        </div>
+        </p>
+        <p className="truncate text-red-500">
+          {((price * 24000 * (100 - discount)) / 100).toLocaleString("it-IT", {
+            style: "currency",
+            currency: "VND",
+          })}
+        </p>
       </div>
     </Link>
   );

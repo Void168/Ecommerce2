@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateProfileMutation } from "../services/appApi";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import { Alert, Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
+import SelectAddress from "../components/SelectAddress";
+import { AppContext } from "../context/AppContext";
 
 function Profile() {
   const { id } = useParams();
+  const {
+    number,
+    chosenProvince,
+    chosenDistrict,
+    chosenWard,
+    setChosenProvince,
+    setChosenDistrict,
+    setChosenWard,
+  } = useContext(AppContext);
+  const fullAddress =
+    number + ", " + chosenWard + ", " + chosenDistrict + ", " + chosenProvince;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +49,8 @@ function Profile() {
       .catch((e) => console.log(e));
   }, [id]);
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email) {
@@ -46,7 +61,7 @@ function Profile() {
       password,
       avatar,
       phone,
-      address,
+      address: fullAddress,
     });
   };
 
@@ -87,6 +102,8 @@ function Profile() {
       setLoading(false);
     }, 500);
   }, [isSuccess]);
+
+  console.log(address);
 
   return (
     <div className="big-phone:container big-phone:mx-auto min-h-max my-8">
@@ -169,12 +186,16 @@ function Profile() {
                 </div>
                 <div>
                   <label>Địa chỉ</label>
-                  <br />
+                  <p className="text-sm"> ({address})</p>
+                  <label>Thay đổi địa chỉ</label>
+                </div>
+                <div className="mt-4">
+                  <SelectAddress />
                   <input
                     className="w-full"
                     type="text"
                     placeholder="Nhập địa chỉ"
-                    value={address}
+                    value={fullAddress}
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>

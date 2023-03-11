@@ -33,13 +33,10 @@ function Navigation() {
     setOpen(false);
   };
 
-  const unreadNotifications = user?.notifications?.reduce(
-    (account, current) => {
-      if (current.status === "chưa đọc") return account;
-      return account;
-    },
-    0
-  );
+  const unreadNotifications = user?.notifications.filter(
+    (noti) => noti.status === "chưa đọc"
+  ).length;
+
   const activeLink =
     "border-b-2 border-[#51C4D3] text-[#51C4D3] desktop:p-4 big-tablet:px-2 big-tablet:py-4 desktop:text-lg big-tablet:text-base";
   const normalLink =
@@ -224,26 +221,28 @@ function Navigation() {
                       {user ? <></> : null}
                       {user?.notifications?.length > 0 ? (
                         user?.notifications.map((notification) => (
-                          <div className="border-b border-[#132C33] py-2">
-                            <p
-                              className={`notification-${notification.status}`}
-                              key={user._id}
-                            ></p>
-                            {notification.message}
-                            <br />
-                            <p>
-                              vào lúc{" "}
-                              {notification.time.split("T")[1].slice(0, 8) +
-                                " " +
-                                "ngày" +
-                                " " +
-                                notification.time
-                                  .slice(0, 10)
-                                  .toString()
-                                  .split("-")
-                                  .reverse()
-                                  .join("-")}
-                            </p>
+                          <div className="border-[#132C33] border-b">
+                            <p>{notification.message}</p>
+                            <div className="py-2 flex flex-row justify-around text-xs items-center">
+                              <div
+                                className="px-4 py-1 bg-red-500 text-white rounded-full"
+                                key={user._id}
+                              >
+                                {notification.status}
+                              </div>
+                              <p>
+                                {notification.time.split("T")[1].slice(0, 8) +
+                                  " " +
+                                  "ngày" +
+                                  " " +
+                                  notification.time
+                                    .slice(0, 10)
+                                    .toString()
+                                    .split("-")
+                                    .reverse()
+                                    .join("-")}
+                              </p>
+                            </div>
                           </div>
                         ))
                       ) : (

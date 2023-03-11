@@ -14,7 +14,7 @@ function OrderDetail() {
   }, [id, order]);
 
   // const object = JSON.parse(JSON.stringify(order?.products));
-  // console.log(object);e
+  // console.log(object);
 
   return (
     <div>

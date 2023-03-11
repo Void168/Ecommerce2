@@ -101,7 +101,7 @@ userRouter.post('/:id/updateNotifications', async (req, res) => {
   try {
     const user = await User.findById(id)
     user.notifications.forEach((notif) => {
-      notif.status = 'đọc'
+      notif.status = 'Đã đọc'
     })
     user.markModified('notifications')
     await user.save()

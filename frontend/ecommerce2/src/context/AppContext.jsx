@@ -9,6 +9,13 @@ export const AppProvider = ({ children }) => {
   const products = useSelector((state) => state.products);
   const [gender, setGender] = useState("newest");
   const [viewedProducts, setViewedProducts] = useState([]);
+  const [province, setProvince] = useState([]);
+  const [district, setDistrict] = useState([]);
+  const [ward, setWard] = useState([]);
+  const [number, setNumber] = useState("");
+  const [chosenProvince, setChosenProvince] = useState("");
+  const [chosenDistrict, setChosenDistrict] = useState("");
+  const [chosenWard, setChosenWard] = useState("");
 
   const isChecked = (e) => {
     setGender(e.target.value);
@@ -85,6 +92,20 @@ export const AppProvider = ({ children }) => {
         sortAlphabet,
         viewedProducts,
         setViewedProducts,
+        number,
+        setNumber,
+        province,
+        setProvince,
+        district,
+        setDistrict,
+        ward,
+        setWard,
+        chosenProvince,
+        setChosenProvince,
+        chosenDistrict,
+        setChosenDistrict,
+        chosenWard,
+        setChosenWard,
       }}
     >
       {children}

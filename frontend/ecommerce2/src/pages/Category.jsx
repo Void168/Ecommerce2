@@ -122,14 +122,14 @@ function Category() {
               onChange={handleSearch}
             />
           </div>
-          {listProductSearch.length > 0 ? (
-            <p className="mt-4 text-xl">
-              Có {listProductSearch.length} sản phẩm
-            </p>
-          ) : null}
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
             <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
               <FilterPrice />
+              {listProductSearch.length > 0 ? (
+                <p className="mt-4 text-2xl text-white text-center px-4">
+                  Có {listProductSearch.length} sản phẩm
+                </p>
+              ) : null}
             </div>
             <div className="container mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
               <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
