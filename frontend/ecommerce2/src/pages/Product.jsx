@@ -12,7 +12,7 @@ import {
 } from "../services/appApi";
 import ToastMessage from "../components/ToastMessage";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper";
+import { Autoplay, Pagination, Navigation, EffectCoverflow } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -300,7 +300,7 @@ function Product() {
           <Loading />
         ) : (
           <>
-            <div className="my-8 grid grid-cols-5">
+            <div className="my-8 grid grid-cols-5 bg-watched text-white p-12">
               <div className="big-tablet:col-span-2 galaxy-fold:col-span-5 small-phone:mb-8 ">
                 <div>
                   <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
@@ -355,7 +355,7 @@ function Product() {
                       </div>
                     </div>
 
-                    <span className="my-4 text-xl text-black">Giá gốc: </span>
+                    <span className="my-4 text-xl">Giá gốc: </span>
                     <span className="laptop:text-3xl tablet:text-2xl my-4 text-[#126E82] line-through">
                       {(product.price * 24000).toLocaleString("it-IT", {
                         style: "currency",
@@ -363,7 +363,7 @@ function Product() {
                       })}
                     </span>
                     <p className="laptop:text-3xl tablet:text-2xl my-4 text-red-500">
-                      <span className="my-4 text-xl text-black">Còn: </span>
+                      <span className="my-4 text-xl">Còn: </span>
                       {(
                         ((product.price * (100 - product.discount)) / 100) *
                         24000
@@ -618,7 +618,7 @@ function Product() {
             <div>
               <p className="neon__text">Sản phẩm tương tự</p>
               {similarProducts.length > 2 ? (
-                <div className="flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
+                <div className="bg-watched flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
                   <Swiper
                     watchSlidesProgress={true}
                     slidesPerView={5}
@@ -629,9 +629,23 @@ function Product() {
                     pagination={{
                       clickable: true,
                     }}
-                    navigation={true}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    className="shadow-sm outline-0 bg-[#D8E3E7] bg-opacity-70"
+                    effect={"coverflow"}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    coverflowEffect={{
+                      rotate: 50,
+                      stretch: 0,
+                      depth: 100,
+                      modifier: 1,
+                      slideShadows: true,
+                    }}
+                    modules={[
+                      Autoplay,
+                      Pagination,
+                      Navigation,
+                      EffectCoverflow,
+                    ]}
+                    className="shadow-sm outline-0 bg-[#D8E3E7] bg-opacity-10"
                   >
                     {similarProducts.map((product) => (
                       <SwiperSlide key={product.id}>{product}</SwiperSlide>
@@ -646,9 +660,7 @@ function Product() {
                     delay: 2500,
                     disableOnInteraction: false,
                   }}
-                  pagination={{
-                    clickable: true,
-                  }}
+                  pagination={true}
                   navigation={true}
                   modules={[Autoplay, Pagination, Navigation]}
                   className="shadow-sm outline-0 bg-[#D8E3E7] bg-opacity-70"

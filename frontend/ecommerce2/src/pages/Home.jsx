@@ -223,7 +223,7 @@ function Home() {
             <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
               <FilterPriceResponsive />
             </div>
-            <div className="bg-[#132C33] p-4 rounded-lg shadow-sm">
+            <div className="bg-product p-4 rounded-lg shadow-sm">
               <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1">
                 {loading ? (
                   <div className=" col-span-4 relative h-screen flex justify-center items-center text-center w-full">
@@ -414,7 +414,7 @@ function Home() {
       {/* last products */}
       <p className="neon__text">Sản phẩm đã xem</p>
       <div className="container mx-auto">
-        <div className="grid laptop:grid-cols-8 gap-4 bg-[#132C33] px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+        <div className="grid laptop:grid-cols-8 gap-4 bg-watched px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
           {loading ? (
             <Loading />
           ) : (

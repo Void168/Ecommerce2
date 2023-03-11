@@ -143,7 +143,7 @@ function Category() {
                     {productsSearch.length === 0 ? (
                       <p>Không tìm thấy sản phẩm phù hợp</p>
                     ) : (
-                      <div className="rounded-lg shadow-sm bg-[#132C33] py-4">
+                      <div className="rounded-lg shadow-sm bg-product py-4">
                         <Select
                           defaultValue={[...array]}
                           isMulti

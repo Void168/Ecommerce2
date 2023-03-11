@@ -27,6 +27,8 @@ module.exports = {
         asus:
           "url('https://images5.alphacoders.com/312/thumb-1920-312869.jpg')",
         jbl: "url('https://images.alphacoders.com/888/888018.jpg')",
+        product: "url('https://free4kwallpapers.com/uploads/originals/2021/02/04/future-tech-city-wallpaper.jpg')",
+        watched: "url('https://c4.wallpaperflare.com/wallpaper/109/664/851/black-texture-wallpaper-preview.jpg')"
       },
       colors: {
         'nav-color':

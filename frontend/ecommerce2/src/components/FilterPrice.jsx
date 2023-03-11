@@ -36,7 +36,7 @@ function FilterPrice() {
               />
               <label
                 htmlFor={radio.id}
-                className="sort__label laptop:px-2 laptop:py-1 desktop:px-8 desktop:py-4"
+                className="sort__label hover:bg-[#126E82] hover:text-white laptop:px-2 laptop:py-1 desktop:px-8 desktop:py-4"
                 key={radio._id}
               >
                 {radio.title}

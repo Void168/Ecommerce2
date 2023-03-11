@@ -324,10 +324,6 @@ body {
   }
 }
 
-.control-arrow {
-  background-color: #132c33 !important;
-}
-
 .MuiAvatar-root img {
   width: 2rem !important;
   height: 2rem !important;
@@ -390,4 +386,8 @@ profile .MuiAvatar-root img {
 canvas{
   width: 100% !important;
   height: max-content !important;
+}
+
+.carousel .thumb {
+    border: none !important;
 }

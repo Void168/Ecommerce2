@@ -78,7 +78,7 @@ function ProductPreview({
         </Link>
         <div className="laptop:block small-phone:hidden">
           <Link to={`/san-pham/${_id}`}>
-            <div className="add-to-cart container mx-auto absolute top-0 left-0 w-full h-full bg-black rounded-lg inset-4 opacity-50 hover:duration-150 ease-in-out"></div>
+            <div className="add-to-cart container mx-auto absolute top-0 left-0 w-full h-full bg-black rounded-lg inset-4 opacity-50 hover:duration-150 hover:shadow-slate-100 hover:shadow-xl ease-in-out"></div>
           </Link>
           <button
             className="button1 absolute inset-x-10 inset-y-36 max-h-max"

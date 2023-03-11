@@ -154,7 +154,7 @@ function Navigation() {
                           <img
                             src={category.img}
                             alt="category"
-                            className="w-32 h-32 rounded-lg shadow-sm ml-2 "
+                            className="w-32 h-32 rounded-lg shadow-sm ml-2 hover:shadow-blue-900 hover:shadow-2xl ease-in-out duration-200"
                           />
                           <p className="mt-1">{category.name}</p>
                         </div>
@@ -283,23 +283,21 @@ function Navigation() {
                   </NavLink>
                   {user?.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
-                      <div className="bg-[#D8E3E7] rounded-b-3xl p-2">
-                        <li className="my-1">
+                      <div className="bg-[#D8E3E7] rounded-b-3xl shadow-sm text-base text-center">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
-                        <li className="my-1">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
                           <Link to="/dashboard">Quản lý</Link>
                         </li>
-                        <li className="my-1">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
                           <Link to="/chart">Thống kê</Link>
                         </li>
-                        <li className=" text-center">
-                          <button
-                            onClick={signoutHandler}
-                            className="bg-[#132C33] button"
-                          >
-                            Đăng xuất
-                          </button>
+                        <li
+                          className="cursor-pointer hover:bg-[#126E82] hover:text-white hover:rounded-b-2xl"
+                          onClick={signoutHandler}
+                        >
+                          Đăng xuất
                         </li>
                       </div>
                     </ul>
