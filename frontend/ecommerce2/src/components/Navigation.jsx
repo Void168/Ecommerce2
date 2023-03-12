@@ -9,7 +9,6 @@ import { Avatar } from "@mui/material";
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
-  const { page } = useContext(AppContext);
   const inputRef = useRef(null);
   const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
@@ -25,10 +24,7 @@ function Navigation() {
     dispatch(logout());
     localStorage.removeItem("viewed products");
   };
-  const handleOpen = () => {
-    if (open) setOpen(false);
-    else setOpen(true);
-  };
+
   const handleClose = () => {
     setOpen(false);
   };

@@ -110,6 +110,7 @@ function Order() {
                       {page === 1 ? (
                         <>
                           {orders
+                            .slice(orders.length - 8, orders.length)
                             .map((order) => (
                               <tr>
                                 <td className="truncate big-tablet:w-64 tablet:w-8">
@@ -200,14 +201,15 @@ function Order() {
                                   </button>
                                 </td>
                               </tr>
-                            ))}
+                            ))
+                            .reverse()}
                         </>
                       )}
                     </>
                   ) : (
                     <>
                       {orders
-                        .slice(0, 8)
+                        .slice(orders.length - 8, orders.length)
                         .filter(
                           (order) =>
                             order.date > dayStart.toISOString().split("T")[0] &&

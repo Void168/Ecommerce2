@@ -152,7 +152,8 @@ function Cart() {
                                   {(
                                     ((item.price * (100 - item.discount)) /
                                       100) *
-                                    24000
+                                    24000 *
+                                    user.cart[item._id]
                                   ).toLocaleString("it-IT", {
                                     style: "currency",
                                     currency: "VND",

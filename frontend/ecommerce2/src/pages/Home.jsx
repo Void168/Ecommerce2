@@ -43,6 +43,7 @@ function Home() {
   const viewedProducts = localStorage.getItem("viewed products");
   const list = JSON.parse(viewedProducts);
   const listViewProduct = list?.filter((element) => element !== null);
+  
   const listProduct = products
     .filter(
       (filteredProduct) =>

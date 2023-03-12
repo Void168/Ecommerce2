@@ -60,7 +60,6 @@ function a11yProps(index) {
 
 function Product() {
   const { id } = useParams();
-  const { page } = useContext(AppContext);
   const user = useSelector((state) => state.user);
   const products = useSelector((state) => state.products);
   const [product, setProduct] = useState(null);
@@ -73,7 +72,8 @@ function Product() {
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
 
-  const { viewedProducts, setViewedProducts } = useContext(AppContext);
+  const { viewedProducts, setViewedProducts, favProducts, setFavProducts } =
+    useContext(AppContext);
 
   useEffect(() => {
     setViewedProducts((viewedProduct) => [product, ...viewedProduct]);
@@ -117,6 +117,28 @@ function Product() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const addToFav = () => {
+    setFavProducts((favProduct) => [product, ...favProduct]);
+  };
+  localStorage.setItem("fav products", JSON.stringify(favProducts));
+  const favItems = localStorage.getItem("fav products");
+  const list = JSON.parse(favItems);
+  const listFavProduct = list?.filter((element) => element !== null);
+
+  const uniqueArray = listFavProduct?.filter((value, index) => {
+    const _value = JSON.stringify(value);
+    return (
+      index ===
+      listFavProduct.findIndex((obj) => {
+        return JSON.stringify(obj) === _value;
+      })
+    );
+  });
+
+  const removeFromFav = () => {
+      setFavProducts([...favProducts.filter((fav) => fav._id !== id)]);
+  }
 
   useEffect(() => {
     axios.get(`/products/${id}`).then(({ data }) => {
@@ -187,7 +209,8 @@ function Product() {
         >
           <SimilarProduct {...product} />
         </div>
-      )).slice(0,8);
+      ))
+      .slice(0, 8);
   }
 
   const navigateToLogin = () => {
@@ -300,7 +323,25 @@ function Product() {
           <Loading />
         ) : (
           <>
-            <div className="my-8 grid grid-cols-5 bg-watched text-white p-12">
+            <div className="my-8 grid grid-cols-5 bg-watched text-white p-12 relative">
+              {uniqueArray.map((arr) => arr._id).includes(id) ? (
+                <div
+                  className="absolute right-0 px-2 py-1 bg-[#D8E3E7] text-black rounded-bl-lg shadow-sm cursor-pointer hover:bg-red-300 hover:text-white ease-in-out duration-200"
+                  onClick={removeFromFav}
+                >
+                  Xóa khỏi yêu thích{" "}
+                  <i className="fa-solid fa-heart-crack text-red-800"></i>
+                </div>
+              ) : (
+                <div
+                  className="absolute right-0 px-2 py-1 bg-[#D8E3E7] text-black rounded-bl-lg shadow-sm cursor-pointer hover:bg-red-300 hover:text-white ease-in-out duration-200"
+                  onClick={addToFav}
+                >
+                  Thêm vào yêu thích{" "}
+                  <i className="fa-solid fa-heart text-red-800"></i>
+                </div>
+              )}
+
               <div className="big-tablet:col-span-2 galaxy-fold:col-span-5 small-phone:mb-8 ">
                 <div>
                   <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
@@ -356,7 +397,7 @@ function Product() {
                     </div>
 
                     <span className="my-4 text-xl">Giá gốc: </span>
-                    <span className="laptop:text-3xl tablet:text-2xl my-4 text-[#126E82] line-through">
+                    <span className="laptop:text-3xl tablet:text-2xl my-4 text-[#51C4D3] line-through">
                       {(product.price * 24000).toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
@@ -371,7 +412,7 @@ function Product() {
                         style: "currency",
                         currency: "VND",
                       })}
-                      <span className="my-4 text-xl text-black">
+                      <span className="my-4 text-xl text-white">
                         {" "}
                         (Giảm {product.discount}%)
                       </span>
@@ -380,7 +421,7 @@ function Product() {
                     <br />
                     <p>Nhà phân phối: {product.brand}</p>
                   </div>
-                  <div className="my-4 flex flex-col justify-center items-center">
+                  <div className="my-4 flex flex-col">
                     {!user ? (
                       <button
                         className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"

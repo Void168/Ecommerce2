@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
   const products = useSelector((state) => state.products);
   const [gender, setGender] = useState("newest");
   const [viewedProducts, setViewedProducts] = useState([]);
+  const [favProducts, setFavProducts] = useState([])
   const [province, setProvince] = useState([]);
   const [district, setDistrict] = useState([]);
   const [ward, setWard] = useState([]);
@@ -106,6 +107,8 @@ export const AppProvider = ({ children }) => {
         setChosenDistrict,
         chosenWard,
         setChosenWard,
+        favProducts,
+        setFavProducts,
       }}
     >
       {children}

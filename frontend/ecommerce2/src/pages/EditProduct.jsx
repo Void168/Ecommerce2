@@ -75,7 +75,6 @@ function EditProduct() {
     );
     widget.open();
   };
-console.log(longDescription)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
