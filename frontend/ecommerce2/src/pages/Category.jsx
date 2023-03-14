@@ -17,9 +17,20 @@ import categories from "../categories";
 
 function Category() {
   const { category } = useParams();
+  const {
+    value,
+    page,
+    changeIndex,
+    gender,
+    resetPage,
+    sortPrice,
+    sortAlphabet,
+    products,
+    loading,
+    setLoading,
+  } = useContext(AppContext);
+
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const products = useSelector((state) => state.products);
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
   }, [dispatch]);
@@ -55,17 +66,17 @@ function Category() {
   
   const [options, setOptions] = useState([...array]);
   const optionsArray = options.map((s) => s.value);
-
-  const {
-    value,
-    page,
-    changeIndex,
-    gender,
-    resetPage,
-    sortPrice,
-    sortAlphabet,
-  } = useContext(AppContext);
   
+  const listProductSearchFirstPage = productsSearch
+    .filter(
+      (filteredProduct) =>
+        filteredProduct.category === categoryName?.name &&
+        value[0] / 24000 <= filteredProduct.price &&
+        filteredProduct.price <= value[1] / 24000 &&
+        optionsArray.includes(filteredProduct.brand)
+    )
+    .slice(0, 8);
+
   const listProductSearch = productsSearch.filter(
     (filteredProduct) =>
       filteredProduct.category === categoryName?.name &&
@@ -73,6 +84,7 @@ function Category() {
       filteredProduct.price <= value[1] / 24000 &&
       optionsArray.includes(filteredProduct.brand)
   );
+
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
@@ -159,15 +171,15 @@ function Category() {
                               <>
                                 {gender === "newest" ? (
                                   <>
-                                    {listProductSearch
-                                      .slice(0, 8)
-                                      .map((product) => (
+                                    {listProductSearchFirstPage.map(
+                                      (product) => (
                                         <ProductPreview
                                           {...product}
                                           key={product._id}
                                           product={product}
                                         />
-                                      ))}
+                                      )
+                                    )}
                                   </>
                                 ) : gender === "oldest" ? (
                                   <>
@@ -187,9 +199,8 @@ function Category() {
                                   </>
                                 ) : gender === "lowtohigh" ? (
                                   <>
-                                    {listProductSearch
+                                    {listProductSearchFirstPage
                                       .sort(sortPrice)
-                                      .slice(0, 8)
                                       .map((product) => (
                                         <ProductPreview
                                           {...product}
@@ -200,10 +211,9 @@ function Category() {
                                   </>
                                 ) : gender === "hightolow" ? (
                                   <>
-                                    {listProductSearch
+                                    {listProductSearchFirstPage
                                       .sort(sortPrice)
                                       .reverse()
-                                      .slice(0, 8)
                                       .map((product) => (
                                         <ProductPreview
                                           {...product}
@@ -214,9 +224,8 @@ function Category() {
                                   </>
                                 ) : gender === "atoz" ? (
                                   <>
-                                    {listProductSearch
+                                    {listProductSearchFirstPage
                                       .sort(sortAlphabet)
-                                      .slice(0, 8)
                                       .map((product) => (
                                         <ProductPreview
                                           {...product}
@@ -227,8 +236,7 @@ function Category() {
                                   </>
                                 ) : gender === "ztoa" ? (
                                   <>
-                                    {listProductSearch
-                                      .slice(0, 8)
+                                    {listProductSearchFirstPage
                                       .sort(sortAlphabet)
                                       .reverse()
                                       .map((product) => (
@@ -241,15 +249,15 @@ function Category() {
                                   </>
                                 ) : (
                                   <>
-                                    {listProductSearch
-                                      .slice(0, 8)
-                                      .map((product) => (
+                                    {listProductSearchFirstPage.map(
+                                      (product) => (
                                         <ProductPreview
                                           {...product}
                                           key={product._id}
                                           product={product}
                                         />
-                                      ))}
+                                      )
+                                    )}
                                   </>
                                 )}
                               </>

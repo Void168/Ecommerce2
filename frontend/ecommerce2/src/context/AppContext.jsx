@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+  const articles = useSelector((state) => state.articles);
+  const products = useSelector((state) => state.products);
+  const user = useSelector((state) => state.user);
   const [value, setValue] = useState([0, 100000000]);
   const [page, setPage] = useState(1);
-  const products = useSelector((state) => state.products);
   const [gender, setGender] = useState("newest");
   const [viewedProducts, setViewedProducts] = useState([]);
-  const [favProducts, setFavProducts] = useState([])
+  const [favProducts, setFavProducts] = useState([]);
   const [province, setProvince] = useState([]);
   const [district, setDistrict] = useState([]);
   const [ward, setWard] = useState([]);
@@ -77,9 +80,27 @@ export const AppProvider = ({ children }) => {
     return 0;
   };
 
+  const convert = (string) => {
+    const convertString = string
+      .toLocaleLowerCase()
+      .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+      .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+      .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+      .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+      .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+      .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+      .replace(/đ/g, "d")
+    return convertString;
+  };
+
   return (
     <AppContext.Provider
       value={{
+        loading,
+        setLoading,
+        articles,
+        user,
+        products,
         value,
         setValue,
         handleChange,
@@ -109,6 +130,7 @@ export const AppProvider = ({ children }) => {
         setChosenWard,
         favProducts,
         setFavProducts,
+        convert,
       }}
     >
       {children}

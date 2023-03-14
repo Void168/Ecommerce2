@@ -341,14 +341,13 @@ profile .MuiAvatar-root img {
 }
 
 ::-webkit-scrollbar-track {
-  background: #132c33;
+  background: #D8E3E7;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
-    rgba(216, 227, 231, 1) 0%,
-    rgba(81, 196, 211, 1) 100%,
+    rgba(81, 196, 211, 1) 0%,
     rgba(19, 44, 51, 1) 100%
   );
   border-radius: 100vw;

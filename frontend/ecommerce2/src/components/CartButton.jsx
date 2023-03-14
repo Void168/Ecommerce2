@@ -1,10 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 const CartButton = () => {
   const location = useLocation();
-  const user = useSelector((state) => state.user);
+  const { user } = useContext(AppContext);
 
   return (
     <Link

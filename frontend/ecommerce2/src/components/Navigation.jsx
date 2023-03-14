@@ -1,7 +1,7 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { AppContext } from "../context/AppContext.jsx";
 import { NavLink, useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice.js";
 import categories from "../categories.js";
 import axios from "../axios";
@@ -10,14 +10,13 @@ import { Avatar } from "@mui/material";
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
   const inputRef = useRef(null);
-  const user = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bellRef = useRef(null);
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
   const [open, setOpen] = useState(false);
+  const { user, setLoading } = useContext(AppContext);
 
   const signoutHandler = () => {
     navigate("/login");

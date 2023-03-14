@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import Box from "@mui/material/Box";
@@ -19,6 +19,7 @@ import {
 } from "chart.js";
 import axios from "../axios";
 import Loading from "../components/Loading";
+import { AppContext } from "../context/AppContext";
 
 ChartJS.register(
   CategoryScale,
@@ -33,8 +34,7 @@ ChartJS.register(
 function Chart() {
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
-  const articles = useSelector((state) => state.articles);
-  const products = useSelector((state) => state.products);
+  const { products, articles} = useContext(AppContext)
   const [loading, setLoading] = useState(false);
   const [filterMonth, setFilterMonth] = useState("");
   const [filterYear, setFilterYear] = useState("");
@@ -138,6 +138,12 @@ function Chart() {
   };
 
   const totalArray = Object.values(orders.map((order) => order.total));
+  const filteredOrder = orders.filter((order) => order.date === today);
+  const filteredOrderByMonth = orders.filter(
+    (order) =>
+      order.date.slice(5, 7) === filterMonth &&
+      order.date.slice(0, 4) === filterYear
+  );
 
   return (
     <>
@@ -207,8 +213,7 @@ function Chart() {
               <div>
                 <span>Doanh thu hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
-                  {orders
-                    .filter((order) => order.date === today)
+                  {filteredOrder
                     .map((order) => order.total)
                     .reduce((a, c) => a + c, 0)
                     .toLocaleString("it-IT", {
@@ -220,15 +225,13 @@ function Chart() {
               <div>
                 <span>Số đơn hàng hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
-                  {orders.filter((order) => order.date === today).length} đơn
-                  hàng
+                  {filteredOrder.length} đơn hàng
                 </div>
               </div>
               <div>
                 <span>Số sản phẩm được bán hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
-                  {orders
-                    .filter((order) => order.date === today)
+                  {filteredOrder
                     .map((order) => order.count)
                     .reduce((a, c) => a + c, 0)}{" "}
                   sản phẩm
@@ -291,24 +294,10 @@ function Chart() {
                   <p className="text-center">Số đơn hàng đã giao:</p>
                   <p className="big-desktop:text-2xl mt-4">
                     <i className="fa-solid fa-cart-shopping text-red-500"></i>{" "}
-                    <span>
-                      {
-                        orders.filter(
-                          (order) =>
-                            order.date.slice(5, 7) === filterMonth &&
-                            order.date.slice(0, 4) === filterYear
-                        ).length
-                      }{" "}
-                      đơn hàng
-                    </span>
+                    <span>{filteredOrderByMonth.length} đơn hàng</span>
                     <p className="big-desktop:text-base big-tablet:text-sm">
                       ( Với{" "}
-                      {orders
-                        .filter(
-                          (order) =>
-                            order.date.slice(5, 7) === filterMonth &&
-                            order.date.slice(0, 4) === filterYear
-                        )
+                      {filteredOrderByMonth
                         .map((order) => order.count)
                         .reduce((a, c) => a + c, 0)}{" "}
                       sản phẩm được bán )
@@ -320,7 +309,7 @@ function Chart() {
                   <p className="big-desktop:text-2xl mt-4">
                     <i className="fa-solid fa-person text-[#132C33]"></i>{" "}
                     {(
-                      listTotal.reduce((a, c) => a + c, 0) / users.length
+                      listTotal.reduce((a, c) => a + c, 0) / orders.length
                     ).toLocaleString("it-IT", {
                       style: "currency",
                       currency: "VND",

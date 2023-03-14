@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDeleteProductMutation } from "../services/appApi";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
+import { AppContext } from "../context/AppContext";
 
 function ProductList() {
-  const products = useSelector((state) => state.products);
-  const user = useSelector((state) => state.user);
+    const { user, products } = useContext(AppContext);
   const [deleteProduct, { isLoading, isSuccess }] = useDeleteProductMutation();
   const [page, setPage] = useState(1);
 
@@ -25,7 +24,7 @@ function ProductList() {
         <button className="bg-[#132C33] button">
           <Link to="/new-product">Tạo sản phẩm mới</Link>
         </button>
-        <div className="overflow-x-auto h-screen">
+        <div className="overflow-x-auto h-screen my-8">
           <table className="w-full my-4 table-fixed tablet:text-base small-phone:text-xs">
             <thead>
               <tr>

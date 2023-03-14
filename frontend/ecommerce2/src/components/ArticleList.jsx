@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDeleteArticleMutation } from "../services/appApi";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Article from "./Article";
+import { AppContext } from "../context/AppContext";
 
 function ArticleList() {
-  const articles = useSelector((state) => state.articles);
-  const user = useSelector((state) => state.user);
-    const [loading, setLoading] = useState(false);
+  const {
+    articles,
+    user,
+    setLoading,
+  } = useContext(AppContext);
   const [deleteArticle, { isLoading, isSuccess }] = useDeleteArticleMutation();
   const [page, setPage] = useState(1);
   const today = new Date().toISOString();

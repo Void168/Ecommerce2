@@ -5,7 +5,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import { Navigate, useNavigate } from 'react-router-dom'
 import Loading from "../components/Loading";
@@ -17,14 +16,14 @@ import {
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
-import { useState } from "react";
+import {  useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_KEY}`);
 
 function CartResponsive() {
-  const user = useSelector((state) => state.user);
-  const products = useSelector((state) => state.products);
-  const [loading, setLoading] = useState(false);
+
+  const { products, user, loading, setLoading } = useContext(AppContext);
   const userCartObj = user.cart;
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
   const [increaseCart] = useIncreaseCartProductMutation();

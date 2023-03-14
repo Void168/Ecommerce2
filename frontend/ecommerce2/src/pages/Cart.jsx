@@ -19,10 +19,7 @@ import { AppContext } from "../context/AppContext";
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_KEY}`);
 
 function Cart() {
-  const user = useSelector((state) => state.user);
-  const products = useSelector((state) => state.products);
   const [loading, setLoading] = useState(false);
-  const userCartObj = user.cart;
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
@@ -31,8 +28,11 @@ function Cart() {
     setChosenProvince,
     setChosenDistrict,
     setChosenWard,
+    user,
+    products,
   } = useContext(AppContext); 
-
+  
+  const userCartObj = user.cart;
   let cart = products.filter((product) => userCartObj[product._id] != null);
 
   const subTotal = user.cart.total.toLocaleString("it-IT", {

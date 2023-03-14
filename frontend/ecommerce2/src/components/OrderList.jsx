@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "../axios";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Loading from "./Loading";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-  const products = useSelector((state) => state.products);
+  const { products } = useContext(AppContext);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -114,15 +115,18 @@ function OrderList() {
                                   )}
                                 </td>
                                 <td>
-                                  <span
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => showOrder(products)}
-                                  >
-                                    Xem đơn hàng <i className="fa fa-eye"></i>
-                                  </span>
+                                  <Link to={`/order/${order._id}`}>
+                                    <span
+                                      style={{ cursor: "pointer" }}
+                                      onClick={() => showOrder(products)}
+                                    >
+                                      Xem đơn hàng <i className="fa fa-eye"></i>
+                                    </span>
+                                  </Link>
                                 </td>
                               </tr>
-                            ))}
+                            ))
+                            .reverse()}
                         </>
                       ) : (
                         <>

@@ -11,19 +11,11 @@ import Select from "react-select";
 function SearchPage() {
   const [loading, setLoading] = useState(false);
   const products = useSelector((state) => state.products);
-  const { page, changeIndex, value, resetPage } = useContext(AppContext);
+  const { page, changeIndex, value, resetPage, convert } =
+    useContext(AppContext);
   const { searchName } = useParams();
 
-  const convertVietnamese = searchName
-    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-    .replace(/đ/g, "d")
-    .replace(/\s/g, "")
-    .replaceAll("-", "");
+  const convertSearchName = convert(searchName.replace(/\s/g, ""));
 
   const productsSearch = products.filter(
     (filteredProduct) =>
@@ -37,7 +29,7 @@ function SearchPage() {
         .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
         .replace(/đ/g, "d")
         .replace(/\s/g, "")
-        .includes(convertVietnamese) ||
+        .includes(convertSearchName) ||
       filteredProduct.category
         .toLocaleLowerCase()
         .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
@@ -48,8 +40,8 @@ function SearchPage() {
         .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
         .replace(/đ/g, "d")
         .replace(/\s/g, "")
-        .includes(convertVietnamese) ||
-      convertVietnamese
+        .includes(convertSearchName) ||
+      convertSearchName
         .toLocaleLowerCase()
         .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
         .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
@@ -71,7 +63,7 @@ function SearchPage() {
         .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
         .replace(/đ/g, "d")
         .replace(/\s/g, "")
-        .includes(convertVietnamese)
+        .includes(convertSearchName)
   );
   const listCategories = productsSearch.map((product) => product.category);
 
@@ -109,6 +101,9 @@ function SearchPage() {
       resetPage();
     }
   };
+  const searchList = productsSearch.filter((filteredProduct) =>
+    optionsArray.includes(filteredProduct.category)
+  );
 
   return (
     <div className="big-phone:container big-phone:mx-auto">
@@ -140,25 +135,17 @@ function SearchPage() {
                 <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-product p-4 shadow-sm rounded-lg">
                   {page === 1 ? (
                     <>
-                      {productsSearch
-                        .filter((filteredProduct) =>
-                          optionsArray.includes(filteredProduct.category)
-                        )
-                        .slice(0, 8)
-                        .map((product) => (
-                          <SearchProducts
-                            {...product}
-                            key={product._id}
-                            product={product}
-                          />
-                        ))}
+                      {searchList.slice(0, 8).map((product) => (
+                        <SearchProducts
+                          {...product}
+                          key={product._id}
+                          product={product}
+                        />
+                      ))}
                     </>
                   ) : (
                     <>
-                      {productsSearch
-                        .filter((filteredProduct) =>
-                          optionsArray.includes(filteredProduct.category)
-                        )
+                      {searchList
                         .slice(8 * (page - 1), 8 * page)
                         .map((product) => (
                           <SearchProducts
@@ -172,11 +159,7 @@ function SearchPage() {
                 </div>
                 <Stack spacing={2} className="p-4 rounded-lg">
                   <Pagination
-                    count={Math.ceil(
-                      productsSearch.filter((filteredProduct) =>
-                        optionsArray.includes(filteredProduct.category)
-                      ).length / 8
-                    )}
+                    count={Math.ceil(searchList.length / 8)}
                     color="primary"
                     onChange={changeIndex}
                   />

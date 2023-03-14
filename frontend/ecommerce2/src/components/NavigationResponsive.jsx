@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppContext } from "../context/AppContext";
 import { logout, resetNotifications } from "../features/userSlice.js";
 import categories from "../categories.js";
@@ -26,8 +26,7 @@ function NavigationResponsive() {
   const [openMore, setOpenMore] = useState(false);
   const [openNoti, setOpenNoti] = useState(false);
   const [loading, setLoading] = useState(false);
-  const user = useSelector((state) => state.user);
-  const { list } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const inputRef = useRef(null);
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);

@@ -72,8 +72,13 @@ function Product() {
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
 
-  const { viewedProducts, setViewedProducts, favProducts, setFavProducts } =
-    useContext(AppContext);
+  const {
+    viewedProducts,
+    setViewedProducts,
+    favProducts,
+    setFavProducts,
+    convert,
+  } = useContext(AppContext);
 
   useEffect(() => {
     setViewedProducts((viewedProduct) => [product, ...viewedProduct]);
@@ -137,8 +142,8 @@ function Product() {
   });
 
   const removeFromFav = () => {
-      setFavProducts([...favProducts.filter((fav) => fav._id !== id)]);
-  }
+    setFavProducts([...favProducts.filter((fav) => fav._id !== id)]);
+  };
 
   useEffect(() => {
     axios.get(`/products/${id}`).then(({ data }) => {
@@ -162,16 +167,8 @@ function Product() {
     );
   }
 
-  const convertVietnameseName = product.brand
-    .toLocaleLowerCase()
-    .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-    .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-    .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-    .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-    .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-    .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-    .replace(/đ/g, "d")
-    .replace(/\s/g, "");
+ const convertCategoryName = convert(product.category).replace(/\s/g, "");
+ const convertBrandName = convert(product.brand).replace(/\s/g, "");
 
   let similarProducts = [];
   if (similar) {
@@ -188,7 +185,7 @@ function Product() {
             .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
             .replace(/đ/g, "d")
             .replace(/\s/g, "")
-            .includes(convertVietnameseName) ||
+            .includes(convertBrandName) ||
           filteredProduct.brand
             .toLocaleLowerCase()
             .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
@@ -199,7 +196,7 @@ function Product() {
             .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
             .replace(/đ/g, "d")
             .replace(/\s/g, "")
-            .includes(convertVietnameseName)
+            .includes(convertBrandName)
       )
       .map((product, index) => (
         <div
@@ -230,37 +227,13 @@ function Product() {
 
             <i className="fas fa-caret-right"></i>
 
-            <Link
-              className="px-2"
-              to={`/danh-muc/${product.category
-                .toLocaleLowerCase()
-                .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-                .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-                .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-                .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-                .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-                .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-                .replace(/đ/g, "d")
-                .replace(/\s/g, "-")}`}
-            >
+            <Link className="px-2" to={`/danh-muc/${convertCategoryName}`}>
               {product.category}
             </Link>
 
             <i className="fas fa-caret-right"></i>
 
-            <Link
-              className="px-2"
-              to={`/search/${product.brand
-                .toLocaleLowerCase()
-                .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-                .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-                .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-                .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-                .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-                .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-                .replace(/đ/g, "d")
-                .replace(/\s/g, "")}`}
-            >
+            <Link className="px-2" to={`/search/${convertBrandName}`}>
               {product.brand}
             </Link>
 
@@ -277,37 +250,13 @@ function Product() {
 
             <i className="fas fa-caret-right"></i>
 
-            <Link
-              className="px-2"
-              to={`/danh-muc/${product.category
-                .toLocaleLowerCase()
-                .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-                .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-                .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-                .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-                .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-                .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-                .replace(/đ/g, "d")
-                .replace(/\s/g, "-")}`}
-            >
+            <Link className="px-2" to={`/danh-muc/${convertCategoryName}`}>
               {product.category}
             </Link>
 
             <i className="fas fa-caret-right"></i>
 
-            <Link
-              className="px-2"
-              to={`/search/${product.brand
-                .toLocaleLowerCase()
-                .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
-                .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
-                .replace(/ì|í|ị|ỉ|ĩ/g, "i")
-                .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
-                .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
-                .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-                .replace(/đ/g, "d")
-                .replace(/\s/g, "")}`}
-            >
+            <Link className="px-2" to={`/search/${convertBrandName}`}>
               {product.brand}
             </Link>
 
@@ -374,7 +323,7 @@ function Product() {
                 <div className="flex flex-col big-tablet:justify-around laptop:justify-start galaxy-fold:justify-start py-4 big-phone:px-8 small-phone:px-0 h-full">
                   <div className="text-xl">
                     <div className="flex flex-col big-phone:py-4 px-2 small-phone:py-0">
-                      <p className="big-phone:text-3xl small-phone:text-xl">
+                      <p className="big-phone:text-2xl small-phone:text-xl">
                         {product.name}
                       </p>
                       <div className="flex flex-row big-phone:text-xl small-phone:text-sm">
