@@ -20,6 +20,7 @@ function NewArticles() {
     { isError, error, isLoading, isSuccess },
   ] = useCreateArticleMutation()
 
+  // Submit create articles
   const handleSubmit = (e) => {
     e.preventDefault()
     if (
@@ -44,6 +45,7 @@ function NewArticles() {
     )
   }
 
+  // Choose image
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -62,6 +64,7 @@ function NewArticles() {
     widget.open()
   }
 
+  // Remove image
   const handleRemoveImg = (imgObj) => {
     setImageToRemove(imgObj.public_id)
     axios
@@ -88,16 +91,20 @@ function NewArticles() {
         <Loading />
       ) : (
         <>
+          {/* Form create article */}
           <form
             onSubmit={handleSubmit}
             className="form__create--product p-2 w-full grid grid-cols-5"
           >
             <div className="col-span-2 p-4">
               <strong className="text-3xl">Tạo bài viết mới</strong>
+              {/* Alert when submit create */}
               {isSuccess && (
                 <alert variant="success">Tạo bài viết thành công</alert>
               )}
               {isError && <alert variant="error">Tạo bài viết thất bại</alert>}
+
+              {/* Article's title */}
               <div>
                 <label>Tiêu đề bài viết</label>
                 <br />
@@ -110,6 +117,8 @@ function NewArticles() {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
+
+              {/* Article's description */}
               <div>
                 <label>Mô tả</label>
                 <br />
@@ -122,6 +131,8 @@ function NewArticles() {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
+
+              {/* Article's content */}
               <div>
                 <label>Nội dung</label>
                 <br />
@@ -134,6 +145,8 @@ function NewArticles() {
                   onChange={(e) => setContent(e.target.value)}
                 />
               </div>
+
+              {/* Article's day start */}
               <div md={6}>
                 <label>Ngày đăng</label>
                 <br />
@@ -145,6 +158,8 @@ function NewArticles() {
                   className="w-6/12 bg-white"
                 />
               </div>
+
+              {/* Article's day end */}
               <div md={6}>
                 <label>Ngày hết hạn</label>
                 <br />
@@ -154,6 +169,8 @@ function NewArticles() {
                 />
                 {date > expire ? <div>Ngày không hợp lệ</div> : null}
               </div>
+
+              {/* Button submit */}
               <div className="text-center">
                 <button
                   type="submit"
@@ -163,7 +180,9 @@ function NewArticles() {
                   Xác nhận
                 </button>
               </div>
-            </div>
+              </div>
+              
+              {/* Choose Image */}
             <div className="col-span-3 p-4">
               <div className="text-center">
                 <button onClick={showWidget} className="bg-[#132C33] button">

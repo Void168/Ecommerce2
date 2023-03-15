@@ -10,6 +10,7 @@ function ProductList() {
   const [deleteProduct, { isLoading, isSuccess }] = useDeleteProductMutation();
   const [page, setPage] = useState(1);
 
+  // Handle delete product
   const handleDeleteProduct = (id) => {
     if (window.confirm("Chắc chắn xóa sản phẩm này?")) {
       deleteProduct({ product_id: id, user_id: user._id });
@@ -21,9 +22,13 @@ function ProductList() {
         Vui lòng sử dụng thiết bị lớn hơn để quản lý
       </p>
       <div className="big-phone:container big-phone:mx-auto small-phone:m-0 big-phone:block small-phone:hidden">
+
+        {/* Create product button*/}
         <button className="bg-[#132C33] button">
           <Link to="/new-product">Tạo sản phẩm mới</Link>
         </button>
+
+        {/* Table list of products */}
         <div className="overflow-x-auto h-screen my-8">
           <table className="w-full my-4 table-fixed tablet:text-base small-phone:text-xs">
             <thead>
@@ -35,6 +40,7 @@ function ProductList() {
               </tr>
             </thead>
             <tbody>
+              {/* First page of pagination */}
               {page === 1 ? (
                 <>
                   {products
@@ -83,6 +89,7 @@ function ProductList() {
                 </>
               ) : (
                 <>
+                {/* Other page of pagination */}
                   {products
                     .slice(
                       8 * (Math.round(products.length / 8) - page),
@@ -102,6 +109,8 @@ function ProductList() {
                         <td>{product.price}</td>
                         <td>
                           <div className="flex flex-col">
+
+                            {/* Delete product button */}
                             <button
                               onClick={() =>
                                 handleDeleteProduct(product._id, user._id)
@@ -111,6 +120,8 @@ function ProductList() {
                             >
                               Xóa sản phẩm
                             </button>
+
+                            {/* Edit product button */}
                             <button className="bg-[#132C33] mt-6 button">
                               <Link
                                 to={`/product/${product._id}/edit`}
@@ -129,6 +140,7 @@ function ProductList() {
           </table>
         </div>
 
+        {/* Pagination */}
         <Stack
           spacing={2}
           className="p-1 rounded-lg big-phone:block small-phone:hidden"

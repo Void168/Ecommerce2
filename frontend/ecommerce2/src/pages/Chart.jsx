@@ -34,16 +34,20 @@ ChartJS.register(
 function Chart() {
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
-  const { products, articles} = useContext(AppContext)
+  const { products, articles } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [filterMonth, setFilterMonth] = useState("");
   const [filterYear, setFilterYear] = useState("");
+
+  // Get Day, Mouth, Year
   const currentMonth = new Date().getMonth().toString();
   const currentYear = new Date().getFullYear().toString();
   const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     setLoading(true);
+
+    // Get orders
     axios
       .get("/orders")
       .then(({ data }) => {
@@ -53,6 +57,8 @@ function Chart() {
       .catch((e) => {
         setLoading(false);
       });
+
+    // Get users
     axios
       .get("/users")
       .then(({ data }) => {
@@ -72,6 +78,7 @@ function Chart() {
     }, 500);
   }, []);
 
+  // Title of chart
   const options = {
     responsive: true,
     plugins: {
@@ -85,6 +92,7 @@ function Chart() {
     },
   };
 
+  // Array of days in month
   let labels = [];
   const listTotal = orders
     .filter(
@@ -101,6 +109,7 @@ function Chart() {
     )
     .map((order) => order.total);
 
+  // Remove duplicate days in array of days
   const groupByDate = orders.reduce((group, order) => {
     const { date } = order;
     group[date] = group[date] ?? [];
@@ -116,6 +125,7 @@ function Chart() {
     .map((s) => s.slice(8, 10));
   labels = filterDay;
 
+  // Calculate Revenue of month
   let array = [];
   labels.forEach((item) => {
     const total = orders
@@ -125,6 +135,7 @@ function Chart() {
     array.push(total);
   });
 
+  // Data of chart
   const data = {
     labels,
     datasets: [
@@ -137,6 +148,7 @@ function Chart() {
     ],
   };
 
+  // Get Revenues and filter by month
   const totalArray = Object.values(orders.map((order) => order.total));
   const filteredOrder = orders.filter((order) => order.date === today);
   const filteredOrderByMonth = orders.filter(
@@ -159,6 +171,7 @@ function Chart() {
               <div>
                 <span>Doanh thu theo tháng: {""}</span>
                 <Box sx={{ minWidth: 120 }}>
+                  {/* Choose Month */}
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label" className="my-4">
                       Tháng
@@ -188,6 +201,8 @@ function Chart() {
                   </FormControl>
                 </Box>
               </div>
+
+              {/* Choose Year */}
               <div>
                 <span>Doanh thu theo năm: {""}</span>
                 <Box sx={{ minWidth: 120 }}>
@@ -210,6 +225,8 @@ function Chart() {
                   </FormControl>
                 </Box>
               </div>
+
+              {/* Today revenue */}
               <div>
                 <span>Doanh thu hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
@@ -222,12 +239,16 @@ function Chart() {
                     })}
                 </div>
               </div>
+
+              {/* Amount of orders today */}
               <div>
                 <span>Số đơn hàng hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
                   {filteredOrder.length} đơn hàng
                 </div>
               </div>
+
+              {/* Amount of products sold today */}
               <div>
                 <span>Số sản phẩm được bán hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
@@ -237,6 +258,8 @@ function Chart() {
                   sản phẩm
                 </div>
               </div>
+
+              {/* Amount of new articles today */}
               <div>
                 <span>Số bài viết mới: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
@@ -245,8 +268,11 @@ function Chart() {
                 </div>
               </div>
             </div>
+
+            {/* Others information */}
             <div className="col-span-4 grid big-desktop:grid-rows-4 small-phone:grid-rows-1 gap-4 big-phone:block small-phone:hidden">
               <div className="row-span-1 grid big-desktop:grid-cols-4 small-phone:grid-cols-2 small-phone:grid-rows-2 big-desktop:grid-rows-1 gap-2 mb-4">
+                {/* Total Renenue month */}
                 <div className="dashboard__month">
                   <p className="text-center">
                     Tổng doanh thu tháng {filterMonth}:
@@ -290,6 +316,8 @@ function Chart() {
                     )}
                   </p>
                 </div>
+
+                {/* Total orders month */}
                 <div className="dashboard__month">
                   <p className="text-center">Số đơn hàng đã giao:</p>
                   <p className="big-desktop:text-2xl mt-4">
@@ -304,6 +332,8 @@ function Chart() {
                     </p>
                   </p>
                 </div>
+
+                {/* Average of orders */}
                 <div className="dashboard__month">
                   <p className="text-center">Trung bình một đơn hàng:</p>{" "}
                   <p className="big-desktop:text-2xl mt-4">
@@ -330,6 +360,8 @@ function Chart() {
                     })}
                   </p>
                 </div>
+
+                {/* New Users month */}
                 <div className="dashboard__month">
                   <p className="text-center">Người dùng mới:</p>
                   <p className="big-desktop:text-2xl mt-4">
@@ -343,7 +375,9 @@ function Chart() {
                     }
                   </p>
                 </div>
-              </div>
+                </div>
+                
+                {/* Display Chart */}
               <div className=" p-8 bg-[#D8E3E7] rounded-lg big-desktop:row-span-3 small-phone:row-span-1 shadow-sm">
                 <div className="w-full max-h-min">
                   <Line options={options} data={data} />

@@ -15,28 +15,27 @@ function Navigation() {
   const bellRef = useRef(null);
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
-  const [open, setOpen] = useState(false);
   const { user, setLoading } = useContext(AppContext);
 
+  // Sign out
   const signoutHandler = () => {
     navigate("/login");
     dispatch(logout());
     localStorage.removeItem("viewed products");
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  // Unread notifications
   const unreadNotifications = user?.notifications.filter(
     (noti) => noti.status === "chưa đọc"
   ).length;
 
+  // Active link navbar
   const activeLink =
     "border-b-2 border-[#51C4D3] text-[#51C4D3] desktop:p-4 big-tablet:px-2 big-tablet:py-4 desktop:text-lg big-tablet:text-base";
   const normalLink =
     "p-4 hover:text-[#51C4D3] ease-in-out duration-200 desktop:text-lg big-tablet:text-base";
 
+  // Display count of unread notifications
   const handleToggleNotifications = () => {
     const position = bellRef.current.getBoundingClientRect();
     setBellPos(position);
@@ -48,6 +47,7 @@ function Navigation() {
       axios.post(`/users/${user._id}/updateNotifications`);
   };
 
+  // Fixed navbar when scroll to Y=200
   const setFixed = () => {
     if (window.scrollY >= 200) {
       setNavbar(true);
@@ -57,11 +57,13 @@ function Navigation() {
   };
   window.addEventListener("scroll", setFixed);
 
+  // Get value of search field when keydown
   const pressKey = (e) => {
     e.preventDefault();
     document.addEventListener("keydown", navigateSearch, true);
   };
 
+  // Nativate to search page when press Enter key
   const navigateSearch = (e) => {
     if (e.key === "Enter" && inputRef.current.value !== null) {
       navigate(
@@ -84,6 +86,7 @@ function Navigation() {
     if (e.key === "Enter" && inputRef.current.value === null) navigate("/");
   };
 
+  // Nativate to search page when click Search button
   const clickSearch = () => {
     if (inputRef.current.value !== null) {
       navigate(
@@ -116,14 +119,18 @@ function Navigation() {
       }
     >
       <ul className="justify-around bg-[#132C33] p-4 flex">
+        {/* Logo */}
         <div className="laptop:w-1/12 galaxy-fold:w-0">
           <Link className="h-10" to="/">
             <img src="../images/sfsff.png" alt="logo" />
           </Link>
         </div>
+
+        {/* Menu navbar */}
         <div className="flex justify-evenly big-desktop:w-8/12 laptop:w-9/12 big-tablet:w-full">
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
+              {/* Categories */}
               <div className="mt-3 dropdown__categories">
                 <NavLink className="p-4 mb-2 hover:bg-[#D8E3E7] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base">
                   Danh mục
@@ -143,7 +150,6 @@ function Navigation() {
                           .replace(/đ/g, "d")
                           .replace(/\s/g, "-")}`}
                         className="dropdown__categories--element"
-                        onClick={handleClose}
                       >
                         <div className="mt-2 p-6 text-center">
                           <img
@@ -159,6 +165,7 @@ function Navigation() {
                 </div>
               </div>
 
+              {/* About */}
               <NavLink
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
@@ -167,6 +174,8 @@ function Navigation() {
               >
                 Về chúng tôi
               </NavLink>
+
+              {/* Promo */}
               <NavLink
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
@@ -175,6 +184,8 @@ function Navigation() {
               >
                 Khuyến mãi
               </NavLink>
+
+              {/* Payment information */}
               <NavLink
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
@@ -183,6 +194,8 @@ function Navigation() {
               >
                 Thanh toán
               </NavLink>
+
+              {/* Shipping Information */}
               <NavLink
                 className={({ isActive }) =>
                   isActive ? activeLink : normalLink
@@ -191,6 +204,8 @@ function Navigation() {
               >
                 Vận chuyển
               </NavLink>
+
+              {/* Notification */}
               {user ? (
                 <NavLink
                   onClick={handleToggleNotifications}
@@ -204,7 +219,8 @@ function Navigation() {
                     ref={bellRef}
                     data-count={unreadNotifications || null}
                   ></i>
-                  {/* notifications */}
+
+                  {/* List of notifications */}
                   {user ? (
                     <div
                       className={
@@ -248,6 +264,7 @@ function Navigation() {
                 </NavLink>
               ) : null}
 
+              {/* No Login yet */}
               {!user ? (
                 <NavLink
                   className={({ isActive }) =>
@@ -258,6 +275,7 @@ function Navigation() {
                   Đăng nhập
                 </NavLink>
               ) : (
+                // Logged in
                 <div
                   className={
                     user
@@ -265,10 +283,12 @@ function Navigation() {
                       : "mt-4 dropdown__profile relative"
                   }
                 >
+                  {/* Navigate to profile page */}
                   <NavLink
                     className="profile w-full flex flex-row justify-center items-center p-2 hover:bg-[#D8E3E7] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
                     to={`/profile/${user._id}/edit`}
                   >
+                    {/* Avatar and user's name */}
                     <Avatar
                       alt={`${user.name}`}
                       src={`${user?.avatar?.at(-1)?.url}`}
@@ -276,18 +296,27 @@ function Navigation() {
                     &nbsp;
                     {user.name}&nbsp; <i className="fa-solid fa-caret-down" />
                   </NavLink>
+
+                  {/* When user is admin */}
                   {user?.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
                       <div className="bg-[#D8E3E7] rounded-b-3xl shadow-sm text-base text-center">
+                        {/* Navigate to orders page */}
                         <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
+
+                        {/* Navigate to dashboard page */}
                         <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
                           <Link to="/dashboard">Quản lý</Link>
                         </li>
+
+                        {/* Navigate to chart page */}
                         <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
                           <Link to="/chart">Thống kê</Link>
                         </li>
+
+                        {/*Sign out and navigate to login page */}
                         <li
                           className="cursor-pointer hover:bg-[#126E82] hover:text-white hover:rounded-b-2xl"
                           onClick={signoutHandler}
@@ -297,6 +326,7 @@ function Navigation() {
                       </div>
                     </ul>
                   ) : (
+                    // User is not an admin
                     <ul className="flex flex-col text-black absolute z-10 w-48">
                       <div className="bg-[#51C4D3] rounded-b-3xl p-2">
                         <li>
@@ -313,7 +343,9 @@ function Navigation() {
                 </div>
               )}
             </li>
+
             <li className="items-center flex flex-row">
+              {/* Search field */}
               <div className="desktop:w-6/12 big-tablet:w-5/12 relative">
                 <input
                   className="mt-2 mx-2 p-1 rounded w-full"
@@ -326,6 +358,7 @@ function Navigation() {
                 </span>
               </div>
 
+              {/* Others Information */}
               <div className="desktop:w-6/12 pl-8 laptop:w-7/12 big-tablet:w-8/12">
                 <ul className="flex flex-row justify-around text-white desktop:text-base laptop:text-sm big-tablet:text-xs">
                   <li>SĐT: 0123456789</li>
@@ -337,8 +370,11 @@ function Navigation() {
             </li>
           </ul>
         </div>
+
+        {/* Cart button when using large devices */}
         <div className="relative p-4">
           <NavLink to="/cart">
+            {/* Cart count */}
             {user?.cart?.count > 0 && (
               <span
                 className="

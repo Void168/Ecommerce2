@@ -33,13 +33,18 @@ function NavigationResponsive() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Active link navbar
   const activeLink =
     "bg-[#51C4D3] text-black big-tablet:px-2 tablet:p-4 shadow-sm";
   const normalLink = "py-12 px-4 ease-in-out duration-200";
 
   const bellRef = useRef(null);
 
+  // Handle open 4 kind of menus
+  // menu categories
   const handleOpen = () => setOpen(true);
+
+  // menu account
   const handleOpenAccount = () => {
     if (!openAccount) {
       setOpenAccount(true);
@@ -48,6 +53,7 @@ function NavigationResponsive() {
     }
   };
 
+  // menu more
   const handleOpenMore = () => {
     if (!openMore) {
       setOpenMore(true);
@@ -56,6 +62,16 @@ function NavigationResponsive() {
     }
   };
 
+  // menu notification
+  const handleOpenNoti = () => {
+    if (!openNoti) {
+      setOpenNoti(true);
+    } else {
+      setOpenNoti(false);
+    }
+  };
+
+  // Handle close menu
   const handleClose = () => {
     setOpen(false);
     setOpenAccount(false);
@@ -63,18 +79,36 @@ function NavigationResponsive() {
     setValue(0);
   };
 
+  // Get value of search field when keydown
   const pressKey = (e) => {
     e.preventDefault();
     document.addEventListener("keydown", navigateSearch, true);
   };
 
+  // Nativate to search page when press Enter key
   const navigateSearch = (e) => {
     if (e.key === "Enter" && inputRef.current.value !== null) {
-      navigate(`/search/${inputRef.current.value}`);
+      navigate(
+        `/search/${inputRef.current.value
+          .toLocaleLowerCase()
+          .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+          .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+          .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+          .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+          .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+          .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+          .replace(/đ/g, "d")
+          .replace(/\s/g, "-")}`
+      );
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
     if (e.key === "Enter" && inputRef.current.value === null) navigate("/");
   };
 
+  // Nativate to search page when click Search button
   const clickSearch = () => {
     if (inputRef.current.value !== null) {
       setOpen(false);
@@ -84,25 +118,20 @@ function NavigationResponsive() {
     }
   };
 
+  // Nativate to home page and close all menu
   const homeClick = () => {
     setOpenAccount(false);
     setOpenMore(false);
     navigate("/");
   };
 
-  const handleOpenNoti = () => {
-    if (!openNoti) {
-      setOpenNoti(true);
-    } else {
-      setOpenNoti(false);
-    }
-  };
-
+  // Sign out
   const signoutHandler = () => {
     navigate("/login");
     dispatch(logout());
   };
 
+  // Unread notifications
   const unreadNotifications = user?.notifications?.reduce(
     (account, current) => {
       if (current.status === "chưa đọc") return account;
@@ -111,6 +140,7 @@ function NavigationResponsive() {
     0
   );
 
+  // Display count of unread notifications
   const handleToggleNotifications = () => {
     const position = bellRef.current.getBoundingClientRect();
     setBellPos(position);
@@ -127,6 +157,7 @@ function NavigationResponsive() {
   return (
     <>
       <Box className="fixed overscroll-x-auto shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0 ">
+        {/* Bottom Navigation */}
         <BottomNavigation
           showLabels
           value={value}
@@ -173,12 +204,15 @@ function NavigationResponsive() {
             onClick={handleOpenMore}
           />
         </BottomNavigation>
+
         {user ? (
           <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute inset-x-3/4 bottom-8 text-sm z-50">
             {unreadNotifications}
           </span>
         ) : null}
       </Box>
+
+      {/* Categories */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -236,6 +270,8 @@ function NavigationResponsive() {
           </Typography>
         </Box>
       </Modal>
+
+      {/* Account Menu */}
       <div
         className={
           openAccount
@@ -243,6 +279,8 @@ function NavigationResponsive() {
             : "fixed w-full translate-x-full duration-300 top-0"
         }
       >
+
+        {/* User is admin */}
         {user?.isAdmin ? (
           <ul className="p-4 flex flex-col justify-around h-screen absolute z-50 w-full bg-[#132C33] text-white">
             <div className="mb-4">
@@ -322,6 +360,8 @@ function NavigationResponsive() {
             </div>
           </ul>
         ) : (
+            
+            // User is not admin
           <ul className="flex flex-col text-black absolute z-50">
             <li onClick={handleToggleNotifications} className="relative">
               <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
@@ -345,6 +385,8 @@ function NavigationResponsive() {
           </ul>
         )}
       </div>
+
+      {/* Menu more */}
       <div
         className={
           openMore
@@ -402,7 +444,9 @@ function NavigationResponsive() {
           </ul>
         </ul>
       </div>
-      {/* notifications */}
+
+
+      {/* Menu notifications */}
       <div
         className={
           openNoti

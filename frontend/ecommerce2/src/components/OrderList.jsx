@@ -26,6 +26,7 @@ function OrderList() {
       });
   }, []);
 
+  // Get shipping status
   const markShipped = (orderId, ownerId) => {
     axios
       .patch(`/orders/${orderId}/mark-shipped`, { ownerId })
@@ -85,6 +86,7 @@ function OrderList() {
                                 </td>
                                 <td>{order.address}</td>
                                 <td className="tablet:pr-2">
+                                  {/* Button mark shipped */}
                                   {order.status === "Đang xử lý" ? (
                                     <>
                                       <button
@@ -114,6 +116,8 @@ function OrderList() {
                                     <div bg="success">Đã giao hàng</div>
                                   )}
                                 </td>
+
+                                {/* Watch product */}
                                 <td>
                                   <Link to={`/order/${order._id}`}>
                                     <span
@@ -130,6 +134,7 @@ function OrderList() {
                         </>
                       ) : (
                         <>
+                          {/* Display list of orders */}
                           {orders
                             .slice(
                               8 * (Math.round(orders.length / 8) - page),
@@ -196,6 +201,7 @@ function OrderList() {
                   </table>
                 </div>
 
+                {/* Pagination */}
                 <Stack spacing={2} className="p-1 rounded-lg">
                   <Pagination
                     count={Math.round(orders.length / 8)}

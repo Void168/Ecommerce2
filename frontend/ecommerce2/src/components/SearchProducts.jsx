@@ -6,13 +6,18 @@ function SearchProducts(props) {
   return (
     <Link to={`/san-pham/${product._id}`}>
       <div className="p-4 shadow-sm rounded-lg bg-[#D8E3E7] w-full max-h-max">
+        {/* Search product Image */}
         <img
           variant="top"
           className="shadow-sm rounded-lg mb-4 w-full hover:scale-105 ease-in-out duration-300"
           src={product.pictures[0]?.url}
           alt="product-pic"
         />
+
+        {/* Search product name */}
         <p className="font-bold truncate">{product.name}</p>
+
+        {/* Search product category */}
         <div
           bg="warning"
           text="dark"

@@ -34,6 +34,8 @@ function Category() {
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
   }, [dispatch]);
+
+  // Replace "-" of category's name
   const categoryName = categories.find(
     (cateName) =>
       cateName.name
@@ -49,13 +51,19 @@ function Category() {
   );
 
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Search products search list
   const productsSearch = products.filter(
     (product) =>
       product.category === categoryName?.name &&
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Remove duplicate element in product brand's array
   const set = new Set(productsSearch.map((product) => product.brand));
   const arrayValues = [...set];
+
+  // Create new array of product's brand
   const array = [];
   arrayValues.forEach(function (v, i) {
     let obj = {};
@@ -63,10 +71,12 @@ function Category() {
     obj.label = arrayValues[i];
     array.push(obj);
   });
-  
+
+  // Options array
   const [options, setOptions] = useState([...array]);
   const optionsArray = options.map((s) => s.value);
-  
+
+  // List of search products (first page)
   const listProductSearchFirstPage = productsSearch
     .filter(
       (filteredProduct) =>
@@ -77,6 +87,7 @@ function Category() {
     )
     .slice(0, 8);
 
+  // List of search products (others page)
   const listProductSearch = productsSearch.filter(
     (filteredProduct) =>
       filteredProduct.category === categoryName?.name &&
@@ -85,17 +96,19 @@ function Category() {
       optionsArray.includes(filteredProduct.brand)
   );
 
+  // Handle search
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
   };
-  
+
+  // Handle options
   const handleChange = (selectedOption) => {
     setOptions(selectedOption);
     if (
       productsSearch.filter(
         (filteredProduct) =>
-        value[0] / 24000 <= filteredProduct.price &&
+          value[0] / 24000 <= filteredProduct.price &&
           filteredProduct.price <= value[1] / 24000 &&
           filteredProduct.category === categoryName?.name &&
           optionsArray.includes(filteredProduct.brand)
@@ -104,7 +117,7 @@ function Category() {
       resetPage();
     }
   };
-  
+
   useEffect(() => {
     setLoading(true);
     setOptions([...array]);
@@ -137,6 +150,8 @@ function Category() {
           <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
             <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
               <FilterPrice />
+
+              {/* List of search products length */}
               {listProductSearch.length > 0 ? (
                 <p className="mt-4 text-2xl text-white text-center px-4">
                   Có {listProductSearch.length} sản phẩm
@@ -152,9 +167,11 @@ function Category() {
                   <Loading />
                 ) : (
                   <>
+                    {/* Not Found Any Product */}
                     {productsSearch.length === 0 ? (
                       <p>Không tìm thấy sản phẩm phù hợp</p>
                     ) : (
+                      // Find products
                       <div className="rounded-lg shadow-sm bg-product py-4">
                         <Select
                           defaultValue={[...array]}
@@ -169,6 +186,7 @@ function Category() {
                           <>
                             {page === 1 ? (
                               <>
+                                {/* Filter price by newest (default) */}
                                 {gender === "newest" ? (
                                   <>
                                     {listProductSearchFirstPage.map(
@@ -183,6 +201,7 @@ function Category() {
                                   </>
                                 ) : gender === "oldest" ? (
                                   <>
+                                    {/* Filter price by oldest */}
                                     {listProductSearch
                                       .slice(
                                         productsSearch.length - 8,
@@ -199,6 +218,7 @@ function Category() {
                                   </>
                                 ) : gender === "lowtohigh" ? (
                                   <>
+                                    {/* Filter price by low to high */}
                                     {listProductSearchFirstPage
                                       .sort(sortPrice)
                                       .map((product) => (
@@ -211,6 +231,7 @@ function Category() {
                                   </>
                                 ) : gender === "hightolow" ? (
                                   <>
+                                    {/* Filter price by high to low */}
                                     {listProductSearchFirstPage
                                       .sort(sortPrice)
                                       .reverse()
@@ -224,6 +245,7 @@ function Category() {
                                   </>
                                 ) : gender === "atoz" ? (
                                   <>
+                                    {/* Filter price by A to Z */}
                                     {listProductSearchFirstPage
                                       .sort(sortAlphabet)
                                       .map((product) => (
@@ -236,6 +258,7 @@ function Category() {
                                   </>
                                 ) : gender === "ztoa" ? (
                                   <>
+                                    {/* Filter price by Z to A */}
                                     {listProductSearchFirstPage
                                       .sort(sortAlphabet)
                                       .reverse()
@@ -249,6 +272,7 @@ function Category() {
                                   </>
                                 ) : (
                                   <>
+                                    {/* Filter price by default */}
                                     {listProductSearchFirstPage.map(
                                       (product) => (
                                         <ProductPreview
@@ -261,7 +285,8 @@ function Category() {
                                   </>
                                 )}
                               </>
-                            ) : productsSearch.filter(
+                            ) : //Not Found any products by filter price
+                            productsSearch.filter(
                                 (filteredProduct) =>
                                   value[0] / 24000 <=
                                   filteredProduct.price <=
@@ -272,6 +297,7 @@ function Category() {
                               <>
                                 {gender === "newest" ? (
                                   <>
+                                    {/* Filter price by newest */}
                                     {listProductSearch
                                       .slice(8 * (page - 1), 8 * page)
                                       .map((product) => (
@@ -284,6 +310,7 @@ function Category() {
                                   </>
                                 ) : gender === "oldest" ? (
                                   <>
+                                    {/* Filter price by oldest */}
                                     {listProductSearch
                                       .slice(
                                         8 *
@@ -309,6 +336,7 @@ function Category() {
                                   </>
                                 ) : gender === "lowtohigh" ? (
                                   <>
+                                    {/* Filter price by low to high */}
                                     {listProductSearch
                                       .sort(sortPrice)
                                       .slice(8 * (page - 1), 8 * page)
@@ -322,6 +350,7 @@ function Category() {
                                   </>
                                 ) : gender === "hightolow" ? (
                                   <>
+                                    {/* Filter price by high to low */}
                                     {listProductSearch
                                       .sort(sortPrice)
                                       .reverse()
@@ -336,6 +365,7 @@ function Category() {
                                   </>
                                 ) : gender === "atoz" ? (
                                   <>
+                                    {/* Filter price by A to Z */}
                                     {listProductSearch
                                       .sort(sortAlphabet)
                                       .slice(8 * (page - 1), 8 * page)
@@ -349,6 +379,7 @@ function Category() {
                                   </>
                                 ) : gender === "ztoa" ? (
                                   <>
+                                    {/* Filter price by Z to A */}
                                     {listProductSearch
                                       .sort(sortAlphabet)
                                       .reverse()
@@ -363,6 +394,7 @@ function Category() {
                                   </>
                                 ) : (
                                   <>
+                                    {/* Filter price by default */}
                                     {listProductSearch
                                       .slice(8 * (page - 1), 8 * page)
                                       .map((product) => (
@@ -378,6 +410,8 @@ function Category() {
                             )}
                           </>
                         </div>
+
+                        {/* Pagination */}
                         <Stack spacing={2} className="p-4 rounded-lg">
                           <Pagination
                             count={Math.ceil(listProductSearch.length / 8)}

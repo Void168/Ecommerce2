@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppContext } from "../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import { updateProducts } from "../features/productSlice";
@@ -14,6 +14,7 @@ import Article from "../components/Article";
 import Carousel from "react-material-ui-carousel";
 import { Paper } from "@mui/material";
 
+// List image of carousel
 const listBanner = [
   {
     url: "https://wallpaperaccess.com/full/187273.jpg",
@@ -35,22 +36,25 @@ const listBanner = [
 function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const products = useSelector((state) => state.products);
-  const articles = useSelector((state) => state.articles);
   const [loading, setLoading] = useState(false);
-  const { value, page, gender, sortPrice, sortAlphabet } =
+  const { value, page, gender, sortPrice, sortAlphabet, products, articles } =
     useContext(AppContext);
+
+  // Get viewed products on local storage
   const viewedProducts = localStorage.getItem("viewed products");
   const list = JSON.parse(viewedProducts);
-  const listViewProduct = list?.filter((element) => element !== null);
-  
-  const listProduct = products
-    .filter(
-      (filteredProduct) =>
-        value[0] / 24000 <= filteredProduct.price &&
-        filteredProduct.price <= value[1] / 24000
-    )
 
+  // Filter remove null elements
+  const listViewProduct = list?.filter((element) => element !== null);
+
+  // Filter list of products by price
+  const listProduct = products.filter(
+    (filteredProduct) =>
+      value[0] / 24000 <= filteredProduct.price &&
+      filteredProduct.price <= value[1] / 24000
+  );
+
+  // Filter duplicate products in list of products
   const uniqueArray = listViewProduct?.filter((value, index) => {
     const _value = JSON.stringify(value);
     return (
@@ -81,6 +85,7 @@ function Home() {
           <div className="grid big-phone:grid-cols-3 small-phone:grid-rows-1 p-4 w-full gap-1">
             <div className="grid big-phone:grid-rows-3 small-phone:grid-rows-4 gap-1 big-phone:col-span-2 small-phone:row-span-1">
               <div className="small-phone:row-span-2 p-3 h-full">
+                {/* Carousel */}
                 <Carousel>
                   {listBanner.map((item, i) => (
                     <Paper>
@@ -93,6 +98,8 @@ function Home() {
                   ))}
                 </Carousel>
               </div>
+
+              {/* Brand banner */}
               <div className="grid grid-cols-2 gap-1 small-phone:row-span-2 big-phone:row-span-1">
                 <div className="card__zoom">
                   <div
@@ -202,10 +209,14 @@ function Home() {
           </>
         )}
       </div>
+
+      {/* Main home page */}
       <p className="neon__text">Sản phẩm nổi bật</p>
       <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">
         <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
           <FilterPrice />
+
+          {/* Length of product after filter or sort */}
           <p className="text-white px-4 my-8  big-desktop:text-2xl desktop:text-xl text-center">
             Có{" "}
             {
@@ -234,6 +245,7 @@ function Home() {
                   <>
                     {page === 1 ? (
                       <>
+                        {/* Filter price by newest (default) */}
                         {gender === "newest" ? (
                           <>
                             {listProduct.slice(0, 8).map((product, index) => (
@@ -246,6 +258,7 @@ function Home() {
                           </>
                         ) : gender === "oldest" ? (
                           <>
+                            {/* Filter price by oldest */}
                             {listProduct
                               .slice(products.length - 8, products.length)
                               .map((product) => (
@@ -259,6 +272,7 @@ function Home() {
                           </>
                         ) : gender === "lowtohigh" ? (
                           <>
+                            {/* Filter price by low to high */}
                             {listProduct
                               .sort(sortPrice)
                               .slice(0, 8)
@@ -272,6 +286,7 @@ function Home() {
                           </>
                         ) : gender === "hightolow" ? (
                           <>
+                            {/* Filter price by high to low */}
                             {listProduct
                               .sort(sortPrice)
                               .reverse()
@@ -286,6 +301,7 @@ function Home() {
                           </>
                         ) : gender === "atoz" ? (
                           <>
+                            {/* Filter price by A to Z */}
                             {listProduct
                               .sort(sortAlphabet)
                               .slice(0, 8)
@@ -299,6 +315,7 @@ function Home() {
                           </>
                         ) : gender === "ztoa" ? (
                           <>
+                            {/* Filter price by Z to A */}
                             {listProduct
                               .slice(0, 8)
                               .sort(sortAlphabet)
@@ -319,6 +336,7 @@ function Home() {
                       <>
                         {gender === "newest" ? (
                           <>
+                            {/* Filter price by newest */}
                             {listProduct
                               .slice(8 * (page - 1), 8 * page)
                               .map((product) => (
@@ -331,6 +349,7 @@ function Home() {
                           </>
                         ) : gender === "oldest" ? (
                           <>
+                            {/* Filter price by oldest */}
                             {listProduct
                               .slice(
                                 8 * (Math.round(products.length / 8) - page),
@@ -347,6 +366,7 @@ function Home() {
                           </>
                         ) : gender === "lowtohigh" ? (
                           <>
+                            {/* Filter price by low to high */}
                             {listProduct
                               .sort(sortPrice)
                               .slice(8 * (page - 1), 8 * page)
@@ -360,6 +380,7 @@ function Home() {
                           </>
                         ) : gender === "hightolow" ? (
                           <>
+                            {/* Filter price by high to low */}
                             {listProduct
                               .sort(sortPrice)
                               .reverse()
@@ -374,6 +395,7 @@ function Home() {
                           </>
                         ) : gender === "atoz" ? (
                           <>
+                            {/* Filter price by A to Z */}
                             {listProduct
                               .sort(sortAlphabet)
                               .slice(8 * (page - 1), 8 * page)
@@ -387,6 +409,7 @@ function Home() {
                           </>
                         ) : gender === "ztoa" ? (
                           <>
+                            {/* Filter price by Z to A */}
                             {listProduct
                               .sort(sortAlphabet)
                               .reverse()
@@ -405,6 +428,8 @@ function Home() {
                   </>
                 )}
               </div>
+
+              {/* Pagination */}
               <div className="text-sm">
                 <Paginate />
               </div>
@@ -412,6 +437,7 @@ function Home() {
           </div>
         </div>
       </div>
+      
       {/* last products */}
       <p className="neon__text">Sản phẩm đã xem</p>
       <div className="container mx-auto">

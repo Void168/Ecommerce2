@@ -21,6 +21,8 @@ function FilterPrice() {
       <p className="desktop:text-3xl laptop:text-xl text-center mt-4 text-white">
         Sắp xếp
       </p>
+
+      {/* List of choices */}
       <div className="container mx-auto my-8 rounded-lg">
         <div className="container mx-auto flex flex-col">
           {sort.map((radio) => (
@@ -45,6 +47,8 @@ function FilterPrice() {
           ))}
         </div>
       </div>
+
+      {/* Filter Price */}
       <p className="desktop:text-2xl laptop:text-xl text-center my-4 text-white">
         Kéo để chọn mức giá
       </p>

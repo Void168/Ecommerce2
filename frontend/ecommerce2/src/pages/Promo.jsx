@@ -27,6 +27,7 @@ function Promo() {
   return (
     <div className="big-phone:container big-phone:mx-auto">
       <p className="text-3xl text-center">Khuyến mãi</p>
+      {/* Articles list */}
       {loading ? (
         <Loading />
       ) : (
@@ -56,6 +57,8 @@ function Promo() {
           )}
         </div>
       )}
+
+      {/* Pagination */}
       <Stack spacing={2} className="p-1 rounded-lg mt-4 small-phone:mb-20">
         <Pagination
           count={Math.round(articles.length / 6)}

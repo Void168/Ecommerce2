@@ -14,7 +14,7 @@ function NewProducts() {
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
   const [discount, setDiscount] = useState(0);
-  const [specifications, setSpecifications] = useState("")
+  const [specifications, setSpecifications] = useState("");
   const [images, setImages] = useState([]);
   const [imageToRemove, setImageToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,7 @@ function NewProducts() {
   const [createProduct, { isError, error, isLoading, isSuccess }] =
     useCreateProductMutation();
 
+  // Submit create products
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -36,17 +37,26 @@ function NewProducts() {
     ) {
       return alert("Vui lòng điền vào form hoặc quay lại");
     }
-    createProduct({ name, description, longDescription, specifications, price, category, brand, discount, images }).then(
-      ({ data }) => {
-        if (data.length > 0) {
-          setTimeout(() => {
-            navigate("/dashboard");
-          }, 1500);
-        }
+    createProduct({
+      name,
+      description,
+      longDescription,
+      specifications,
+      price,
+      category,
+      brand,
+      discount,
+      images,
+    }).then(({ data }) => {
+      if (data.length > 0) {
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1500);
       }
-    );
+    });
   };
 
+  // Choose image
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -65,6 +75,7 @@ function NewProducts() {
     widget.open();
   };
 
+  // Remove image
   const handleRemoveImg = (imgObj) => {
     setImageToRemove(imgObj.public_id);
     axios
@@ -93,6 +104,7 @@ function NewProducts() {
       ) : (
         <>
           <div className="flex laptop:flex-row small-phone:flex-col">
+            {/* Form create product */}
             <form
               onSubmit={handleSubmit}
               className="form__create--product p-2 w-full grid grid-cols-5"
@@ -103,12 +115,16 @@ function NewProducts() {
                     Tạo sản phẩm mới
                   </strong>
                 </div>
+
+                {/* Alert when submit create */}
                 {isSuccess && (
                   <alert variant="success">Tạo sản phẩm thành công</alert>
                 )}
                 {isError && (
                   <alert variant="error">Tạo sản phẩm thất bại</alert>
                 )}
+
+                {/* Product's title */}
                 <div>
                   <label>Tên sản phẩm</label>
                   <br />
@@ -121,6 +137,8 @@ function NewProducts() {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
+
+                {/* Product's description */}
                 <div>
                   <label>Mô tả ngắn</label>
                   <br />
@@ -133,6 +151,8 @@ function NewProducts() {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
+
+                {/* Product's long description */}
                 <div className="laptop:col-span-2">
                   <label>Mô tả chi tiết</label>
                   <br />
@@ -143,6 +163,8 @@ function NewProducts() {
                     className="bg-white h-96 mb-8"
                   />
                 </div>
+
+                {/* Product's specifications */}
                 <div className="laptop:col-span-2">
                   <label>Thông số kỹ thuật</label>
                   <br />
@@ -153,6 +175,8 @@ function NewProducts() {
                     className="bg-white h-96 mb-8"
                   />
                 </div>
+
+                {/* Product's price */}
                 <div>
                   <label>Giá tiền</label>
                   <br />
@@ -165,6 +189,8 @@ function NewProducts() {
                     onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
+
+                {/* Product's brand */}
                 <div>
                   <label>Thương hiệu</label>
                   <br />
@@ -177,6 +203,8 @@ function NewProducts() {
                     onChange={(e) => setBrand(e.target.value)}
                   />
                 </div>
+
+                {/* Product's discount */}
                 <div>
                   <label>Giảm giá</label>
                   <br />
@@ -189,6 +217,8 @@ function NewProducts() {
                     onChange={(e) => setDiscount(e.target.value)}
                   />
                 </div>
+
+                {/* Product's category */}
                 <div onChange={(e) => setCategory(e.target.value)}>
                   <label>Danh mục</label>
                   <br />
@@ -199,6 +229,8 @@ function NewProducts() {
                     ))}
                   </select>
                 </div>
+
+                {/* Button submit */}
                 <div className="text-center">
                   <button
                     type="submit"
@@ -209,6 +241,8 @@ function NewProducts() {
                   </button>
                 </div>
               </div>
+
+              {/* Choose Image */}
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -242,6 +276,8 @@ function NewProducts() {
               </div>
             </form>
           </div>
+
+          {/* Button submit */}
           <div className="flex justify-center">
             <button
               type="submit"

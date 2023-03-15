@@ -5,6 +5,7 @@ const ScrollToTopButton = () => {
   const { y: pageYOffset } = useWindowScroll()
   const [visible, setVisibility] = useState(false)
 
+  // Display scroll to top button when scroll to Y>600
   useEffect(() => {
     if (pageYOffset > 600) {
       setVisibility(true)

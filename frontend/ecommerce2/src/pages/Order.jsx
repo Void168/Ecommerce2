@@ -16,8 +16,11 @@ function Order() {
   const [dayEnd, setDayEnd] = useState(new Date());
   const { page, changeIndex } = useContext(AppContext);
   const [submit, setSubmit] = useState(false);
+
   useEffect(() => {
     setLoading(true);
+
+    // Get user's orders
     axios
       .get(`/users/${user._id}/orders`)
       .then(({ data }) => {
@@ -33,6 +36,7 @@ function Order() {
     }, 1000);
   }, [user._id]);
 
+  // Amount page of pagination
   let count = Math.ceil(orders.length / 8);
 
   if (orders.length === 0) {
@@ -41,6 +45,7 @@ function Order() {
     );
   }
 
+  // Choose day
   const setDay = () => {
     setSubmit(true);
     setLoading(true);
@@ -49,6 +54,7 @@ function Order() {
     }, 1000);
   };
 
+  // Change count when selected day start and day end
   if (submit === true) {
     count = Math.ceil(
       orders.filter(
@@ -59,12 +65,14 @@ function Order() {
     );
   }
 
+  // Filter orders in day range
   const filteredOrder = orders.filter(
     (order) =>
       dayStart.toISOString().split("T")[0] <= order.date &&
       order.date <= dayEnd.toISOString().split("T")[0]
   );
 
+  // 2 slice parameters
   let firstNumber =
     filteredOrder.length -
     8 * (-Math.ceil(filteredOrder.length / 8) + page + 3);
@@ -76,13 +84,12 @@ function Order() {
     filteredOrder.length -
     8 * (-Math.ceil(filteredOrder.length / 8) + page + 2);
   
-  console.log(count);
-
   return (
     <div className="big-tablet:container big-tablet:mx-auto">
       <p className="text-center text-3xl mb-4">Đơn hàng của bạn</p>
       <div className="grid grid-cols-4">
         <div className="container mx-auto laptop:col-span-1 small-phone:col-span-4 flex laptop:flex-col laptop:justify-start big-phone:flex-row small-phone:flex-col small-phone:justify-center">
+          {/* Date picker */}
           <div className="mx-4">
             <p>Chọn ngày bắt đầu</p>
             <DatePicker
@@ -114,7 +121,8 @@ function Order() {
           {loading ? (
             <Loading />
           ) : (
-            <div className="overflow-x-auto">
+              <div className="overflow-x-auto">
+                {/* Table of orders */}
               <table
                 responsive
                 striped
@@ -234,7 +242,8 @@ function Order() {
                       )}
                     </>
                   ) : (
-                    <>
+                        <>
+                          {/* Select the right date */}
                       {dayStart > dayEnd ? (
                         <div className="w-full">
                           Ngày bắt đầu phải nhỏ hơn ngày kết thúc
@@ -350,7 +359,9 @@ function Order() {
                     </>
                   )}
                 </tbody>
-              </table>
+                </table>
+                
+                {/* Pagination */}
               <Stack spacing={2} className="p-4 rounded-lg">
                 <Pagination
                   count={count}

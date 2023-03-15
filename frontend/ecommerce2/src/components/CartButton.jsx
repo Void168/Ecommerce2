@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
+// Show when access website with small device
 const CartButton = () => {
   const location = useLocation();
   const { user } = useContext(AppContext);

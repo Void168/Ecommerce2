@@ -16,26 +16,30 @@ import {
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
-import {  useContext } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
+// Stripe key
 const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_KEY}`);
 
 function CartResponsive() {
-
   const { products, user, loading, setLoading } = useContext(AppContext);
+
+  // Get users cart
   const userCartObj = user.cart;
+  let cart = products.filter((product) => userCartObj[product._id] != null);
+
   const [removeFromCart, { isLoading }] = useRemoveFromCartMutation();
   const [increaseCart] = useIncreaseCartProductMutation();
   const [decreaseCart] = useDecreaseCartProductMutation();
 
-  let cart = products.filter((product) => userCartObj[product._id] != null);
 
   const subTotal = user.cart.total.toLocaleString("it-IT", {
     style: "currency",
     currency: "VND",
   });
 
+  // Handle decrease that quantity must be better than 0
   const handleDecrease = (product) => {
     const quantity = user.cart.count;
     if (quantity <= 0) return alert("Số lượng phải lớn hơn 0");
@@ -55,6 +59,7 @@ function CartResponsive() {
         <Loading />
       ) : (
         <>
+          {/* Empty cart */}
           {cart.length === 0 ? (
             <div>
               <p className="text-xl mt-8">
@@ -66,6 +71,7 @@ function CartResponsive() {
             </div>
           ) : (
             <>
+              {/*Not empty cart */}
               <p className="text-center text-3xl mb-8">Giỏ hàng của bạn</p>
               <Accordion className="bg-[#D8E3E7]">
                 <AccordionSummary
@@ -75,6 +81,7 @@ function CartResponsive() {
                 >
                   <Typography>Thông tin sản phẩm trong giỏ hàng</Typography>
                 </AccordionSummary>
+                {/* Table of items in cart */}
                 <AccordionDetails className="overflow-y-auto h-96">
                   <Typography>
                     {cart.length > 0 && (
@@ -96,6 +103,7 @@ function CartResponsive() {
                               {/* loop through cart products */}
                               {cart.map((item) => (
                                 <tr key={item}>
+                                  {/* Image of item */}
                                   <td className="small-phone:p-1">
                                     <img
                                       src={item.pictures[0].url}
@@ -103,6 +111,8 @@ function CartResponsive() {
                                       alt="cart-item"
                                     />
                                   </td>
+
+                                  {/* Price of item change to VND */}
                                   <td className="big-phone:block small-phone:hidden border-none big-tablet:my-6 tablet:my-2 big-phone:my-10">
                                     {(item.price * 24000).toLocaleString(
                                       "it-IT",
@@ -112,6 +122,8 @@ function CartResponsive() {
                                       }
                                     )}
                                   </td>
+
+                                  {/* Increase and decrease amount of item */}
                                   <td className="small-phone:p-1">
                                     <span className="flex justify-around">
                                       <i
@@ -137,6 +149,8 @@ function CartResponsive() {
                                       ></i>
                                     </span>
                                   </td>
+
+                                  {/*Total price of item change to VND */}
                                   <td className="small-phone:p-1">
                                     {(
                                       item.price *
@@ -147,6 +161,8 @@ function CartResponsive() {
                                       currency: "VND",
                                     })}
                                   </td>
+
+                                  {/* Remove from cart button */}
                                   <td className="small-phone:p-1">
                                     {!isLoading && (
                                       <button
@@ -176,6 +192,8 @@ function CartResponsive() {
                   </Typography>
                 </AccordionDetails>
               </Accordion>
+
+              {/* Display bill */}
               <Accordion className="bg-[#D8E3E7]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -239,6 +257,8 @@ function CartResponsive() {
                   </Typography>
                 </AccordionDetails>
               </Accordion>
+
+              {/* Checkout form */}
               <Accordion className="bg-[#D8E3E7]">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}

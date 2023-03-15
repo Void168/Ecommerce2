@@ -19,6 +19,7 @@ function SelectAddress() {
     setNumber,
   } = useContext(AppContext);
 
+  // Get province info from api
   useEffect(() => {
     const provinceFetch = async () => {
       axios.get("https://vapi.vnappmob.com/api/province/").then(({ data }) => {
@@ -28,10 +29,12 @@ function SelectAddress() {
     provinceFetch();
   }, [setProvince]);
 
+  // Get districts of chosen province
   const filterDistrict = province?.find(
     (x) => x.province_name === chosenProvince
   );
 
+  // Get districts of chosen province from api
   useEffect(() => {
     const districtFetch = async () => {
       axios
@@ -45,8 +48,10 @@ function SelectAddress() {
     districtFetch();
   }, [filterDistrict?.province_id, setDistrict]);
 
+  // Get wards of chosen district
   const filterWard = district?.find((x) => x.district_name === chosenDistrict);
 
+  // Get wards of chosen district from api
   useEffect(() => {
     const districtFetch = async (province_id) => {
       axios
@@ -62,6 +67,7 @@ function SelectAddress() {
 
   return (
     <div>
+      {/* Number */}
       <div>
         <label>Số nhà</label>
         <input
@@ -72,6 +78,8 @@ function SelectAddress() {
           onChange={(e) => setNumber(e.target.value)}
         />
       </div>
+
+      {/* Chosen province */}
       <div>
         <label>Tỉnh thành</label>
         <select
@@ -86,6 +94,8 @@ function SelectAddress() {
           ))}
         </select>
       </div>
+
+      {/* Chosen district */}
       <div>
         <label>Quận/Huyện</label>
         <select onChange={(e) => setChosenDistrict(e.target.value)}>
@@ -97,6 +107,8 @@ function SelectAddress() {
           ))}
         </select>
       </div>
+
+      {/* Chosen ward */}
       <div>
         <label>Phường/Xã</label>
         <select onChange={(e) => setChosenWard(e.target.value)}>

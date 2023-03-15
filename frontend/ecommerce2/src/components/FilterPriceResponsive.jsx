@@ -31,6 +31,8 @@ function FilterPriceResponsive() {
             <p className="tablet:text-3xl text-center tablet:mt-4 text-white small-phone:text-xl small-phone:m-0">
               Sắp xếp sản phẩm
             </p>
+
+            {/* List of choices */}
             <div className="container mx-auto big-phone:my-8 small-phone:my-4 rounded-lg">
               <div className="container mx-auto flex flex-col">
                 {sort.map((radio) => (
@@ -55,6 +57,8 @@ function FilterPriceResponsive() {
                 ))}
               </div>
             </div>
+
+            {/* Filter Price */}
             <p className="text-2xl text-center my-4 text-white small-phone:text-xl">
               Kéo để chọn mức giá
             </p>

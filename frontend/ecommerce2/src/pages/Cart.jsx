@@ -30,8 +30,9 @@ function Cart() {
     setChosenWard,
     user,
     products,
-  } = useContext(AppContext); 
-  
+  } = useContext(AppContext);
+
+  // Get users cart
   const userCartObj = user.cart;
   let cart = products.filter((product) => userCartObj[product._id] != null);
 
@@ -40,15 +41,17 @@ function Cart() {
     currency: "VND",
   });
 
+  // Handle decrease that quantity must be better than 0
   const handleDecrease = (product) => {
     const quantity = user.cart.count;
     if (quantity <= 0) return alert("Số lượng phải lớn hơn 0");
     decreaseCart(product);
   };
 
+  // Reset cart infomations
   useEffect(() => {
     setLoading(true);
-    setNumber("")
+    setNumber("");
     setChosenProvince("");
     setChosenDistrict("");
     setChosenWard("");
@@ -69,6 +72,7 @@ function Cart() {
           <Loading />
         ) : (
           <>
+            {/* Empty cart */}
             {cart.length === 0 ? (
               <div className="h-screen">
                 <p className="text-xl mt-8">
@@ -79,13 +83,16 @@ function Cart() {
                 </p>
               </div>
             ) : (
+              // Not empty cart
               <div className=" grid grid-cols-3 gap-4">
                 <div className="col-span-2">
+                  {/* Checkout form */}
                   <Elements stripe={stripePromise}>
                     <CheckoutForm />
                   </Elements>
                   {cart.length > 0 && (
                     <div className="flex flex-row px-2">
+                      {/* Table of items in cart */}
                       <div className="w-full">
                         <table
                           responsive="sm"
@@ -104,6 +111,7 @@ function Cart() {
                             {/* loop through cart products */}
                             {cart.map((item) => (
                               <tr key={item}>
+                                {/* Image of item */}
                                 <td>
                                   <Link to={`/san-pham/${item._id}`}>
                                     <img
@@ -113,6 +121,8 @@ function Cart() {
                                     />
                                   </Link>
                                 </td>
+
+                                {/* Price of item change to VND */}
                                 <td>
                                   {(
                                     ((item.price * (100 - item.discount)) /
@@ -123,6 +133,8 @@ function Cart() {
                                     currency: "VND",
                                   })}
                                 </td>
+
+                                {/* Increase and decrease amount of item */}
                                 <td>
                                   <span className="flex justify-around">
                                     <i
@@ -148,6 +160,8 @@ function Cart() {
                                     ></i>
                                   </span>
                                 </td>
+
+                                {/*Total price of item change to VND */}
                                 <td>
                                   {(
                                     ((item.price * (100 - item.discount)) /
@@ -159,6 +173,8 @@ function Cart() {
                                     currency: "VND",
                                   })}
                                 </td>
+
+                                {/* Remove from cart button */}
                                 <td>
                                   {!isLoading && (
                                     <button
@@ -186,6 +202,8 @@ function Cart() {
                     </div>
                   )}
                 </div>
+
+                {/* Display bill */}
                 <div className="col-span-1">
                   <div className="relative">
                     <span className="absolute">

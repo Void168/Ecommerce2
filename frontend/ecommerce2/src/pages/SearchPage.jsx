@@ -15,8 +15,10 @@ function SearchPage() {
     useContext(AppContext);
   const { searchName } = useParams();
 
+  // convert vietnamese name to english
   const convertSearchName = convert(searchName.replace(/\s/g, ""));
 
+  // Search product list
   const productsSearch = products.filter(
     (filteredProduct) =>
       filteredProduct.name
@@ -65,10 +67,15 @@ function SearchPage() {
         .replace(/\s/g, "")
         .includes(convertSearchName)
   );
+
+  // List of categories
   const listCategories = productsSearch.map((product) => product.category);
 
+  // Remove duplicate elements
   const set = new Set(listCategories);
   const arrayValues = [...set];
+
+  // Create array of selected options
   const array = [];
   arrayValues.forEach(function (v, i) {
     let obj = {};
@@ -87,6 +94,7 @@ function SearchPage() {
     }, 1000);
   }, [searchName]);
 
+  // Get value when change options
   const optionsArray = options.map((s) => s.value);
   const handleChange = (selectedOption) => {
     setOptions(selectedOption);
@@ -101,6 +109,8 @@ function SearchPage() {
       resetPage();
     }
   };
+
+  // Search products list when change options
   const searchList = productsSearch.filter((filteredProduct) =>
     optionsArray.includes(filteredProduct.category)
   );
@@ -111,7 +121,8 @@ function SearchPage() {
         {loading ? (
           <Loading />
         ) : (
-          <div>
+            <div>
+              {/* Search products list length */}
             {productsSearch.length === 0 &&
             optionsArray.includes(listCategories) ? (
               <div className="h-screen">
@@ -122,7 +133,9 @@ function SearchPage() {
                 <p>
                   Có {productsSearch.length} kết quả cho{" "}
                   {searchName.replaceAll("-", " ")}
-                </p>
+                    </p>
+                    
+                    {/* Options list */}
                 <Select
                   defaultValue={[...array]}
                   isMulti
@@ -131,7 +144,9 @@ function SearchPage() {
                   className="basic-multi-select mx-4"
                   classNamePrefix="select"
                   onChange={handleChange}
-                />
+                    />
+                    
+                    {/* Search products list */}
                 <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-product p-4 shadow-sm rounded-lg">
                   {page === 1 ? (
                     <>
@@ -156,7 +171,9 @@ function SearchPage() {
                         ))}
                     </>
                   )}
-                </div>
+                    </div>
+                    
+                    {/* Pagination */}
                 <Stack spacing={2} className="p-4 rounded-lg">
                   <Pagination
                     count={Math.ceil(searchList.length / 8)}

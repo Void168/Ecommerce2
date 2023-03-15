@@ -5,7 +5,6 @@ import Loading from "../components/Loading";
 import { useLoginMutation } from "../services/appApi";
 import TextField from "@mui/material/TextField";
 import MuiAlert from "@mui/material/Alert";
-import { useDispatch } from "react-redux";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -29,6 +28,7 @@ function Login() {
     }, 500);
   }, []);
 
+  // Toggle show/hide password
   const ShowHidePassword = () => {
     if (!showPassword) {
       setShowPassword(true);
@@ -37,6 +37,7 @@ function Login() {
     }
   };
 
+  // Close modal
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -45,6 +46,7 @@ function Login() {
     setOpen(false);
   };
 
+  // Open modal
   const openPopup = () => {
     if (!showPopup) {
       setShowPopup(true);
@@ -53,21 +55,22 @@ function Login() {
     }
   };
 
+  // Handle submit
   const submitHandler = (e) => {
     e.preventDefault();
     login({ email, password });
     if (error) {
       setOpen(true);
       navigate("/login");
-    } 
-    
+    }
   };
-  console.log(open);
+
   return (
     <>
       <div>
         {error && open && (
           <div className="container mx-auto w-full flex justify-center">
+            {/* Alert when submit */}
             <Alert
               onClose={handleClose}
               severity="error"
@@ -78,6 +81,7 @@ function Login() {
           </div>
         )}
       </div>
+
       <div className="grid grid-cols-4 w-full justify-center big-tablet:container big-tablet:mx-auto big-tablet:my-12">
         {loading ? (
           <div className="relative h-screen flex justify-center items-center text-center w-full col-span-4">
@@ -85,6 +89,7 @@ function Login() {
           </div>
         ) : (
           <>
+            {/* Login form */}
             <div className="big-tablet:w-full big-tablet:col-span-2 small-phone:col-span-4 tablet:w-6/12 big-phone:w-8/12 big-tablet:m-0 tablet:my-16 tablet:mx-20 big-phone:my-8 big-phone:mx-auto small-phone:mx-10 small-phone:my-10">
               <form
                 onSubmit={submitHandler}
@@ -93,6 +98,7 @@ function Login() {
                 <div className="small-phone:text-3xl tablet:text-5xl text-center mb-8">
                   Đăng nhập
                 </div>
+                {/* Login email */}
                 <div className="form__element">
                   <label htmlFor="email">Email</label>
                   <br />
@@ -108,6 +114,8 @@ function Login() {
                     required
                   ></TextField>
                 </div>
+
+                {/* Login password */}
                 <div className="relative form__element">
                   <label htmlFor="password">Mật khẩu</label>
                   <br />
@@ -134,12 +142,16 @@ function Login() {
                     </span>
                   </div>
                 </div>
+
+                {/* Button submit */}
                 <div className="form__element text-center small-phone:m-0">
                   <button type="submit" className="w-8/12 bg-[#132C33] button">
                     Xác Nhận
                   </button>
-                </div>
+                  </div>
+                  
                 <div className="big-phone:mt-10 small-phone:mt-4">
+                  {/* Navigate to Register page */}
                   <div className="form__element small-phone:p-0 small-phone:m-0">
                     Chưa có tài khoản? {""}
                     <Link to="/register">Đăng ký</Link>

@@ -22,6 +22,8 @@ function EditArticle() {
     useUpdateArticleMutation();
 
   useEffect(() => {
+
+    // Get article
     axios
       .get("/articles/" + id)
       .then(({ data }) => {
@@ -36,6 +38,7 @@ function EditArticle() {
       .catch((e) => console.log(e));
   }, [id]);
 
+  // Submit change
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !description || !content || !expire || !images.length) {
@@ -58,6 +61,7 @@ function EditArticle() {
     });
   };
 
+  // Upload image
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -76,6 +80,7 @@ function EditArticle() {
     widget.open();
   };
 
+  // Remove image
   const handleRemoveImg = (imgObj) => {
     setImageToRemove(imgObj.public_id);
     axios
@@ -94,12 +99,11 @@ function EditArticle() {
       setLoading(false);
     }, 500);
   }, []);
-    
-    console.log(expire)
 
     return (
       <>
         <div className="text-center">
+          {/* Alert when update */}
           {isSuccess && (
             <Alert
               variant="success"
@@ -117,6 +121,8 @@ function EditArticle() {
             </Alert>
           )}
         </div>
+
+        {/* Update form */}
         <div className="container mx-auto">
           {loading ? (
             <Loading />
@@ -128,6 +134,8 @@ function EditArticle() {
               >
                 <div className="col-span-2 p-4">
                   <strong className="text-3xl">Chỉnh sửa bài viết</strong>
+
+                  {/* Article's Title */}
                   <div>
                     <label>Tiêu đề bài viết</label>
                     <br />
@@ -140,6 +148,8 @@ function EditArticle() {
                       onChange={(e) => setTitle(e.target.value)}
                     />
                   </div>
+
+                  {/* Article's Description */}
                   <div>
                     <label>Mô tả</label>
                     <br />
@@ -152,6 +162,8 @@ function EditArticle() {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
+
+                  {/* Article's Content */}
                   <div>
                     <label>Nội dung</label>
                     <br />
@@ -164,6 +176,8 @@ function EditArticle() {
                       onChange={(e) => setContent(e.target.value)}
                     />
                   </div>
+
+                  {/* Article's Day start */}
                   <div md={6}>
                     <label>Ngày đăng</label>
                     <br />
@@ -175,6 +189,8 @@ function EditArticle() {
                       className="w-6/12 bg-white"
                     />
                   </div>
+
+                  {/* Article's Day end */}
                   <div md={6}>
                     <label>Ngày hết hạn</label>
                     <br />
@@ -186,6 +202,8 @@ function EditArticle() {
                     />
                     {date > expire ? <div>Ngày không hợp lệ</div> : null}
                   </div>
+
+                  {/* Button Submit */}
                   <div className="text-center">
                     <button
                       type="submit"
@@ -195,7 +213,9 @@ function EditArticle() {
                       Xác nhận
                     </button>
                   </div>
-                </div>
+                  </div>
+                  
+                  {/* Choose Image */}
                 <div className="col-span-3 p-4">
                   <div className="text-center">
                     <button

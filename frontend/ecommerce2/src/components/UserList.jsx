@@ -3,9 +3,7 @@ import axios from "../axios";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import Loading from "./Loading";
-import { Link } from "react-router-dom";
 import { useDeleteUserMutation } from "../services/appApi";
-import { useSelector } from "react-redux";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -13,6 +11,7 @@ function UserList() {
   const [page, setPage] = useState(1);
   const [deleteUser, { isLoading, isSuccess }] = useDeleteUserMutation();
 
+  // Handle delete user
   const handleDeleteUser = (id) => {
     if (window.confirm("Chắc chắn xóa tài khoản này?")) {
       deleteUser({ user_id: id });
@@ -21,6 +20,8 @@ function UserList() {
 
   useEffect(() => {
     setLoading(true);
+
+    // Get users data
     axios
       .get("/users")
       .then(({ data }) => {
@@ -44,8 +45,10 @@ function UserList() {
         ) : (
           <>
             {users?.length === 0 ? (
+              // No account except admin
               <h2 className="py-2 text-center">Chưa có tài khoản nào</h2>
             ) : (
+              // Have accounts
               <div className="overflow-y-auto max-h-max">
                 <table className="w-full my-4 table-fixed tablet:text-xs big-tablet:text-sm laptop:text-base">
                   <thead>
@@ -56,7 +59,8 @@ function UserList() {
                       <th>Các đơn hàng</th>
                     </tr>
                   </thead>
-                  <tbody>
+                      <tbody>
+                        {/* List of accounts */}
                     {page === 1 ? (
                       <>
                         {users.slice(0, 8).map((user) => (
@@ -94,7 +98,9 @@ function UserList() {
                   </tbody>
                 </table>
               </div>
-            )}
+              )}
+              
+              {/* Pagination */}
             <Stack spacing={2} className="p-1 rounded-lg">
               <Pagination
                 count={Math.round(users.length / 8)}

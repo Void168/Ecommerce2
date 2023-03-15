@@ -36,6 +36,8 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    // Get user
     axios
       .get("/users/" + id)
       .then(({ data }) => {
@@ -50,6 +52,8 @@ function Profile() {
       .catch((e) => console.log(e));
   }, [id]);
 
+
+  // Submit change
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email) {
@@ -64,6 +68,7 @@ function Profile() {
     });
   };
 
+  // Remove Image
   const handleRemoveImg = (imgObj) => {
     setAvatarToRemove(imgObj.public_id);
     axios
@@ -77,6 +82,7 @@ function Profile() {
       .catch((e) => console.log(e));
   };
 
+  // Choose image
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -113,6 +119,7 @@ function Profile() {
       ) : (
         <>
           <div className="text-center">
+            {/* Alert when submit update */}
             {isSuccess && (
               <Alert
                 variant="success"
@@ -131,6 +138,7 @@ function Profile() {
             )}
           </div>
           <div className="flex laptop:flex-row small-phone:flex-col">
+            {/* Update form */}
             <form
               onSubmit={handleSubmit}
               className="form__create--user p-2 w-full grid grid-cols-5"
@@ -141,6 +149,8 @@ function Profile() {
                     Thông tin tài khoản
                   </strong>
                 </div>
+
+                {/* User's name */}
                 <div>
                   <label>Tên</label>
                   <br />
@@ -152,6 +162,8 @@ function Profile() {
                     disabled
                   />
                 </div>
+
+                {/* User's email */}
                 <div>
                   <label>Email</label>
                   <br />
@@ -163,6 +175,8 @@ function Profile() {
                     value={email}
                   />
                 </div>
+
+                {/* User's password */}
                 <div>
                   <label>Đổi Mật khẩu</label>
                   <br />
@@ -174,6 +188,8 @@ function Profile() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
+
+                {/* User's phone */}
                 <div>
                   <label>Số điện thoại</label>
                   <br />
@@ -185,12 +201,16 @@ function Profile() {
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
+
+                {/* User's address */}
                 <div>
                   <label>Địa chỉ</label>
                   <p className="text-sm"> ({address})</p>
-                  <label>Thay đổi địa chỉ</label>
                 </div>
+
+                {/* User's address change */}
                 <div className="mt-4">
+                  <label>Thay đổi địa chỉ</label>
                   <SelectAddress />
                   <input
                     className="w-full"
@@ -201,6 +221,8 @@ function Profile() {
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
+
+                {/* Button submit */}
                 <div className="text-center">
                   <button
                     type="submit"
@@ -211,6 +233,8 @@ function Profile() {
                   </button>
                 </div>
               </div>
+
+                {/* Choose Avatar */}
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -257,7 +281,9 @@ function Profile() {
                 </div>
               </div>
             </form>
-          </div>
+            </div>
+            
+            {/* Button submit */}
           <div className="flex justify-center">
             <button
               type="submit"

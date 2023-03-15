@@ -5,9 +5,16 @@ export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+
+  // get Articles
   const articles = useSelector((state) => state.articles);
+
+  // get Products
   const products = useSelector((state) => state.products);
+
+  // get Users
   const user = useSelector((state) => state.user);
+
   const [value, setValue] = useState([0, 100000000]);
   const [page, setPage] = useState(1);
   const [gender, setGender] = useState("newest");
@@ -21,10 +28,12 @@ export const AppProvider = ({ children }) => {
   const [chosenDistrict, setChosenDistrict] = useState("");
   const [chosenWard, setChosenWard] = useState("");
 
+  // Check radio button sort products
   const isChecked = (e) => {
     setGender(e.target.value);
   };
 
+  // page number of pagination
   const count = Math.ceil(
     products.filter(
       (filteredProduct) =>
@@ -33,8 +42,10 @@ export const AppProvider = ({ children }) => {
     ).length / 8
   );
 
+  // Min distance of slider (filter price)
   const minDistance = 100000;
 
+  // Change index page of pagination
   const changeIndex = (event, index) => {
     setPage(index);
   };
@@ -56,10 +67,12 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Reset page of pagination when navigate
   const resetPage = () => {
     setPage(1);
   };
 
+  // Sort price products methods
   const sortPrice = (a, b) => {
     if (a.price < b.price) {
       return -1;
@@ -70,6 +83,7 @@ export const AppProvider = ({ children }) => {
     return 0;
   };
 
+  // Sort name products methods
   const sortAlphabet = (a, b) => {
     if (a.name < b.name) {
       return -1;
@@ -80,6 +94,7 @@ export const AppProvider = ({ children }) => {
     return 0;
   };
 
+  // Convert vietnamese string to normal string
   const convert = (string) => {
     const convertString = string
       .toLocaleLowerCase()
@@ -89,7 +104,7 @@ export const AppProvider = ({ children }) => {
       .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
       .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
       .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
-      .replace(/đ/g, "d")
+      .replace(/đ/g, "d");
     return convertString;
   };
 

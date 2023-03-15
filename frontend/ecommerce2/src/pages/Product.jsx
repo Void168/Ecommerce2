@@ -24,7 +24,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import NotFoundPage from './NotFoundPage'
 
+// Props of Tabs MUI
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -80,6 +82,7 @@ function Product() {
     convert,
   } = useContext(AppContext);
 
+  // Save items to local storage to display viewed products
   useEffect(() => {
     setViewedProducts((viewedProduct) => [product, ...viewedProduct]);
   }, [product, setViewedProducts]);
@@ -90,6 +93,7 @@ function Product() {
   const [createReview, { isError, isSuccess1 }] = useCreateReviewMutation();
   const navigate = useNavigate();
 
+  // Submit reviews (not finished yet)
   const submitHandler = (e) => {
     e.preventDefault();
     if (comment && rating) {
@@ -111,26 +115,35 @@ function Product() {
     }
   };
 
+  // Toggle open read more features
   const handleClick = (e) => {
     setOpen(!open);
   };
 
+  // Toggle open read more details
   const handleClick1 = (e) => {
     setOpen1(!open1);
   };
 
+  // Handle change tab
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  // Add product to favourite (just on local storage, not backend)
   const addToFav = () => {
     setFavProducts((favProduct) => [product, ...favProduct]);
   };
+
+  // Save favourite product to local storage 
   localStorage.setItem("fav products", JSON.stringify(favProducts));
   const favItems = localStorage.getItem("fav products");
   const list = JSON.parse(favItems);
+
+  // Remove null elements in list of favourite products
   const listFavProduct = list?.filter((element) => element !== null);
 
+  // Remove duplicate elements
   const uniqueArray = listFavProduct?.filter((value, index) => {
     const _value = JSON.stringify(value);
     return (
@@ -141,11 +154,13 @@ function Product() {
     );
   });
 
+  // Remove product from favourite products
   const removeFromFav = () => {
     setFavProducts([...favProducts.filter((fav) => fav._id !== id)]);
   };
 
   useEffect(() => {
+    // Get product
     axios.get(`/products/${id}`).then(({ data }) => {
       setProduct(data.product);
       setSimilar(data.similar);
@@ -159,17 +174,20 @@ function Product() {
     }, 300);
   }, [id, isSuccess1]);
 
+  // Not Found product
   if (!product) {
     return (
       <div className="container mx-auto">
-        <Loading />
+        <NotFoundPage />
       </div>
     );
   }
 
- const convertCategoryName = convert(product.category).replace(/\s/g, "");
- const convertBrandName = convert(product.brand).replace(/\s/g, "");
+  // Convert vietnamese name to english
+  const convertCategoryName = convert(product.category).replace(/\s/g, "");
+  const convertBrandName = convert(product.brand).replace(/\s/g, "");
 
+  // create list of similar products
   let similarProducts = [];
   if (similar) {
     similarProducts = products
@@ -214,11 +232,13 @@ function Product() {
     navigate("/login");
   };
 
+  // List pictures of product
   const listPic = product.pictures;
 
   return (
     <>
       <div className="flex justify-center">
+        {/* Directional bar */}
         <div className="big-tablet:block small-phone:hidden fixed truncate big-tablet:bottom-0 big-tablet:text-base small-phone:text-xs z-50 bg-gradient-to-r from-[#132C33] to-[#126E82] text-white w-full big-tablet:container big-tablet:max-auto p-2  ring-offset-slate-900 ring-offset-4 ring ring-[#D8E3E7] big-tablet:rounded-t-lg small-phone:rounded-t-none small-phone:rounded-b-lg big-tablet:rounded-b-none">
           <div className="flex flex-row justify-between">
             <Link to="/" className="px-2">
@@ -272,6 +292,7 @@ function Product() {
           <Loading />
         ) : (
           <>
+            {/* Add/ Remove to favourite products */}
             <div className="my-8 grid grid-cols-5 bg-watched text-white p-12 relative">
               {uniqueArray.map((arr) => arr._id).includes(id) ? (
                 <div
@@ -295,6 +316,7 @@ function Product() {
                 <div>
                   <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
                     <div className="flex big-phone:flex-row justify-between big-phone:col-span-4 small-phone:col-span-5 ">
+                      {/* Display images of product */}
                       <Carousel className="w-full">
                         {listPic.map((img, index) => (
                           <div>
@@ -316,6 +338,7 @@ function Product() {
                 </div>
               </div>
 
+              {/* Product informations */}
               <div className="big-tablet:col-span-3 small-phone:col-span-5">
                 <p className="big-phone:text-4xl small-phone:text-2xl text-center mb-4">
                   Thông tin sản phẩm
@@ -323,9 +346,12 @@ function Product() {
                 <div className="flex flex-col big-tablet:justify-around laptop:justify-start galaxy-fold:justify-start py-4 big-phone:px-8 small-phone:px-0 h-full">
                   <div className="text-xl">
                     <div className="flex flex-col big-phone:py-4 px-2 small-phone:py-0">
+                      {/* Product's name */}
                       <p className="big-phone:text-2xl small-phone:text-xl">
                         {product.name}
                       </p>
+
+                      {/* Product's rating */}
                       <div className="flex flex-row big-phone:text-xl small-phone:text-sm">
                         (<span>Đánh giá</span>
                         &nbsp;
@@ -345,6 +371,7 @@ function Product() {
                       </div>
                     </div>
 
+                    {/* Product's price change to VND */}
                     <span className="my-4 text-xl">Giá gốc: </span>
                     <span className="laptop:text-3xl tablet:text-2xl my-4 text-[#51C4D3] line-through">
                       {(product.price * 24000).toLocaleString("it-IT", {
@@ -361,16 +388,24 @@ function Product() {
                         style: "currency",
                         currency: "VND",
                       })}
+
+                      {/* Product's discount */}
                       <span className="my-4 text-xl text-white">
                         {" "}
                         (Giảm {product.discount}%)
                       </span>
                     </p>
+
+                    {/* Product's description */}
                     <p>{product.description}</p>
                     <br />
+
+                    {/* Product's brand */}
                     <p>Nhà phân phối: {product.brand}</p>
                   </div>
+
                   <div className="my-4 flex flex-col">
+                    {/* Not logged in yet */}
                     {!user ? (
                       <button
                         className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"
@@ -380,6 +415,8 @@ function Product() {
                       </button>
                     ) : (
                       <>
+                        {/* Logged in */}
+                        {/* Add to cart button */}
                         <button
                           className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 bg-[#132C33] my-4 button"
                           onClick={(e) =>
@@ -395,7 +432,10 @@ function Product() {
                         </button>
                       </>
                     )}
+
+                    {/* User is admin */}
                     {user && user.isAdmin && (
+                      // Edit product button -> navigate to edit product page
                       <button className="button bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 small-phone:w-full">
                         <Link to={`/product/${product._id}/edit`}>
                           Sửa thông tin sản phẩm
@@ -405,6 +445,7 @@ function Product() {
                   </div>
                 </div>
 
+                {/* Toast message if add to cart successfully */}
                 {isSuccess && (
                   <ToastMessage
                     bg="info"
@@ -416,6 +457,8 @@ function Product() {
                 )}
               </div>
             </div>
+
+            {/* Tabs */}
             <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
@@ -423,11 +466,16 @@ function Product() {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
+                  {/* Feature Tab title */}
                   <Tab label="Mô tả" {...a11yProps(0)} />
+                  {/* Specifications Tab title */}
                   <Tab label="Thông số kỹ thuật" {...a11yProps(1)} />
+                  {/* Review Tab title */}
                   <Tab label="Bình luận" {...a11yProps(2)} />
                 </Tabs>
               </Box>
+
+              {/* Feature Tab */}
               <TabPanel value={value} index={0}>
                 <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7] flex flex-col justify-center items-center">
                   <p className="text-3xl text-center mb-8 text-[#51C4D3]">
@@ -465,6 +513,8 @@ function Product() {
                   </button>
                 </div>
               </TabPanel>
+
+              {/* Specifications Tab */}
               <TabPanel value={value} index={1}>
                 <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7]">
                   <p className="text-3xl text-center mb-8 text-[#51C4D3]">
@@ -504,6 +554,8 @@ function Product() {
                   </div>
                 </div>
               </TabPanel>
+
+              {/* Review Tab */}
               <TabPanel value={value} index={2}>
                 <div className="big-phone:container big-phone:mx-auto my-8 grid big-tablet:grid-cols-2 small-phone:grid-cols-1 gap-8">
                   <div className="container mx-auto bg-[#132C33] p-4 big-tablet:col-span-1 rounded-lg shadow-sm">
@@ -604,7 +656,9 @@ function Product() {
                   </div>
                 </div>
               </TabPanel>
-            </Box>
+              </Box>
+
+              {/* List of similar products */}
             <div>
               <p className="neon__text">Sản phẩm tương tự</p>
               {similarProducts.length > 2 ? (

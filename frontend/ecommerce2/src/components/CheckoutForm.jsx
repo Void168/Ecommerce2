@@ -23,12 +23,16 @@ function CheckoutForm() {
   const [isOpen, setIsOpen] = useState(false);
   const { number, chosenProvince, chosenDistrict, chosenWard } =
     useContext(AppContext);
+  
   const fullAddress =
     number + ", " + chosenWard + ", " + chosenDistrict + ", " + chosenProvince;
+  
+  // Handle open to fill other address
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
 
+  // Handle payment by stripe
   const handlePay = async (e) => {
     e.preventDefault();
     if (!stripe || !elements || user.cart.count <= 0) return;
@@ -91,7 +95,6 @@ function CheckoutForm() {
     }
   };
 
-  console.log(fullAddress);
   return (
     <div className="big-tablet:my-4 p-2">
       <form
@@ -99,6 +102,8 @@ function CheckoutForm() {
         className="flex flex-col w-full px-8 shadow-sm rounded-lg cart-payment"
       >
         {alertMessage && <p>{alertMessage}</p>}
+
+        {/* Name */}
         <div md={6}>
           <label>Họ tên</label>
           <br />
@@ -110,6 +115,8 @@ function CheckoutForm() {
             className="w-6/12 bg-white small-phone:w-full"
           />
         </div>
+
+        {/* Email */}
         <div md={6}>
           <label>Email</label>
           <br />
@@ -121,9 +128,12 @@ function CheckoutForm() {
             className="w-6/12 bg-white small-phone:w-full"
           />
         </div>
+
+        {/* Address */}
         <div>
           {isOpen === false ? (
             <>
+              {/* Default address */}
               <label>Địa chỉ</label>
               <div className="flex flex-row">
                 <input
@@ -147,6 +157,7 @@ function CheckoutForm() {
             </>
           ) : (
             <>
+              {/* Other address */}
               <SelectAddress />
               <label>Địa chỉ</label>
               <input
@@ -168,6 +179,8 @@ function CheckoutForm() {
             </>
           )}
         </div>
+
+        {/* Phone */}
         <div md={5}>
           <label className="small-phone:text-gray-400 tablet:text-black">
             Điện thoại
@@ -182,6 +195,8 @@ function CheckoutForm() {
             className="w-6/12 small-phone:w-full"
           />
         </div>
+
+        {/* Card Information */}
         <label
           htmlFor="card-element"
           className="small-phone:text-gray-400 tablet:text-black"
@@ -189,6 +204,8 @@ function CheckoutForm() {
           Thông tin thanh toán
         </label>
         <CardElement className="w-6/12 shadow-sm p-2 rounded-md bg-white small-phone:w-full" />
+
+        {/* Payment submit button */}
         {user ? (
           <div className="text-center">
             <button

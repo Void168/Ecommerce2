@@ -29,6 +29,7 @@ function Signup() {
     }, 300);
   }, []);
 
+  // Toggle show/hide password
   const ShowHidePassword = () => {
     if (!showPassword) {
       setShowPassword(true);
@@ -37,6 +38,7 @@ function Signup() {
     }
   };
 
+  // Open modal
   const openPopup = () => {
     if (!showPopup) {
       setShowPopup(true);
@@ -45,6 +47,7 @@ function Signup() {
     }
   };
 
+  // Close modal
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -53,12 +56,13 @@ function Signup() {
     setOpen(false);
   };
 
+  // Handle submit
   const submitHandler = (e) => {
     e.preventDefault();
     signup({ name, email, password });
     if (password !== comfirmPassword) {
       alert("Mật khẩu xác nhận không đúng!");
-    } 
+    }
     if (error) {
       navigate("/register");
       setOpen(true);
@@ -67,6 +71,7 @@ function Signup() {
 
   return (
     <div className="grid grid-cols-4 w-full justify-center big-tablet:container big-tablet:mx-auto big-tablet:my-4">
+      {/* Alert when submit */}
       {error && open && (
         <Alert
           onClose={handleClose}
@@ -82,6 +87,7 @@ function Signup() {
         </div>
       ) : (
         <>
+          {/* Register form */}
           <div className="big-tablet:w-full big-tablet:col-span-2 small-phone:col-span-4 tablet:w-6/12 big-phone:w-8/12 big-tablet:m-0 tablet:my-16 tablet:mx-20 big-phone:my-8 big-phone:mx-auto small-phone:mx-10 small-phone:my-10">
             <form
               onSubmit={submitHandler}
@@ -91,6 +97,7 @@ function Signup() {
                 Đăng ký
               </div>
 
+              {/* Register name */}
               <div>
                 <label htmlFor="name">Tên</label>
                 <br />
@@ -104,7 +111,8 @@ function Signup() {
                   required
                 ></input>
               </div>
-              <div></div>
+
+              {/* Register email */}
               <div className="form__element">
                 <label htmlFor="email">Email</label>
                 <br />
@@ -118,6 +126,8 @@ function Signup() {
                   required
                 ></input>
               </div>
+
+              {/* Register password */}
               <div className="relative form__element">
                 <label htmlFor="password">Mật khẩu</label>
                 <br />
@@ -142,6 +152,8 @@ function Signup() {
                   </span>
                 </div>
               </div>
+
+              {/* Register comfirm password */}
               <div className="relative form__element">
                 <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
                 <br />
@@ -168,11 +180,15 @@ function Signup() {
                   </span>
                 </div>
               </div>
+
+              {/* Button submit */}
               <div className="form__element text-center small-phone:m-0">
                 <button type="submit" className="w-8/12 bg-[#132C33] button">
                   Xác Nhận
                 </button>
               </div>
+
+              {/* Navigate to Login page */}
               <div>
                 <div className="form__element">
                   Đã có tài khoản? {""}
@@ -184,6 +200,7 @@ function Signup() {
               </div>
             </form>
           </div>
+
           <div className="col-span-2">
             <img
               className="h-full rounded-none small-phone:hidden big-tablet:block shadow-sm"

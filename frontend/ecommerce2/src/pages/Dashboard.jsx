@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import OrderList from "../components/OrderList";
 import PropTypes from "prop-types";
@@ -10,8 +9,8 @@ import Box from "@mui/material/Box";
 import UserList from "../components/UserList";
 import Loading from "../components/Loading";
 import ArticleList from "../components/ArticleList";
-import { AppContext } from "../context/AppContext";
 
+// Props of Tabs MUI
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,6 +48,7 @@ function Dashboard() {
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  // Handle change tab
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -89,15 +89,22 @@ function Dashboard() {
           </div>
         ) : (
           <>
+            {/* Product list tab */}
             <TabPanel value={value} index={0}>
               <ProductList />
             </TabPanel>
+
+            {/* Order list tab */}
             <TabPanel value={value} index={1}>
               <OrderList />
             </TabPanel>
+
+            {/* User list tab */}
             <TabPanel value={value} index={2}>
               <UserList />
             </TabPanel>
+
+            {/* Article list tab */}
             <TabPanel value={value} index={3}>
               <ArticleList />
             </TabPanel>

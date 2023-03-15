@@ -4,7 +4,6 @@ import { useUpdateProductMutation } from "../services/appApi";
 import axios from "../axios";
 import categories from "../categories";
 import Loading from "../components/Loading";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import EditText from "../components/EditText";
 
@@ -27,6 +26,7 @@ function EditProduct() {
     useUpdateProductMutation();
 
   useEffect(() => {
+    // Get product
     axios
       .get("/products/" + id)
       .then(({ data }) => {
@@ -34,7 +34,7 @@ function EditProduct() {
         setName(product.name);
         setDescription(product.description);
         setLongDescription(product.longDescription);
-        setSpecifications(product.specifications)
+        setSpecifications(product.specifications);
         setCategory(product.category);
         setRating(product.rating);
         setImages(product.pictures);
@@ -45,6 +45,7 @@ function EditProduct() {
       .catch((e) => console.log(e));
   }, [id]);
 
+  // Remove image
   const handleRemoveImg = (imgObj) => {
     setImageToRemove(imgObj.public_id);
     axios
@@ -58,6 +59,7 @@ function EditProduct() {
       .catch((e) => console.log(e));
   };
 
+  // Choose image
   const showWidget = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
@@ -75,6 +77,8 @@ function EditProduct() {
     );
     widget.open();
   };
+
+  // Submit change
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -126,6 +130,7 @@ function EditProduct() {
       ) : (
         <>
           <div className="text-center">
+            {/* Alert when update */}
             {isSuccess && (
               <alert
                 variant="success"
@@ -143,6 +148,8 @@ function EditProduct() {
               </alert>
             )}
           </div>
+
+          {/* Update form */}
           <div className="flex laptop:flex-row small-phone:flex-col">
             <form
               onSubmit={handleSubmit}
@@ -156,6 +163,8 @@ function EditProduct() {
                         Điều chỉnh sản phẩm
                       </strong>
                     </div>
+
+                    {/* Product's Title */}
                     <div>
                       <label>Tên sản phẩm</label>
                       <br />
@@ -168,6 +177,8 @@ function EditProduct() {
                         onChange={(e) => setName(e.target.value)}
                       />
                     </div>
+
+                    {/* Product's Description */}
                     <div>
                       <label>Mô tả</label>
                       <br />
@@ -181,6 +192,7 @@ function EditProduct() {
                       />
                     </div>
 
+                    {/* Product's Price */}
                     <div>
                       <label>Giá tiền</label>
                       <br />
@@ -193,6 +205,8 @@ function EditProduct() {
                         onChange={(e) => setPrice(e.target.value)}
                       />
                     </div>
+
+                    {/* Product's Brand */}
                     <div>
                       <label>Thương hiệu</label>
                       <br />
@@ -205,6 +219,8 @@ function EditProduct() {
                         onChange={(e) => setBrand(e.target.value)}
                       />
                     </div>
+
+                    {/* Product's Discount */}
                     <div>
                       <label>Giảm giá</label>
                       <br />
@@ -217,6 +233,8 @@ function EditProduct() {
                         onChange={(e) => setDiscount(e.target.value)}
                       />
                     </div>
+
+                    {/* Product's Category */}
                     <div onChange={(e) => setCategory(e.target.value)}>
                       <label>Danh mục</label>
                       <br />
@@ -227,6 +245,8 @@ function EditProduct() {
                         ))}
                       </select>
                     </div>
+
+                    {/* Product's Rating */}
                     <div>
                       <label>Đánh giá</label>
                       <br />
@@ -239,6 +259,8 @@ function EditProduct() {
                       />
                     </div>
                   </div>
+
+                  {/* Choose image */}
                   <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                     <div className="text-center">
                       <div className="flex justify-center">
@@ -275,6 +297,7 @@ function EditProduct() {
               </div>
 
               <div className="grid grid-cols-4 gap-8 max-h-max">
+                {/* Product's long description */}
                 <div className="laptop:col-span-2">
                   <label>Mô tả chi tiết</label>
                   <br />
@@ -286,6 +309,7 @@ function EditProduct() {
                   />
                 </div>
                 <div className="laptop:col-span-2 max-h-max">
+                  {/* Product's specifications */}
                   <label>Thông số kỹ thuật</label>
                   <br />
                   <EditText
@@ -296,6 +320,8 @@ function EditProduct() {
                   />
                 </div>
               </div>
+
+              {/* Button Submit */}
               <div className="flex justify-center">
                 <button
                   type="submit"
