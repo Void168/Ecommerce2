@@ -1,18 +1,29 @@
 import { Pagination, Stack } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import SearchProducts from "../components/SearchProducts";
 import { AppContext } from "../context/AppContext";
 import Select from "react-select";
+import FilterPrice from "../components/FilterPrice";
+import FilterPriceResponsive from "../components/FilterPriceResponsive";
 
 function SearchPage() {
-  const [loading, setLoading] = useState(false);
-  const products = useSelector((state) => state.products);
-  const { page, changeIndex, value, resetPage, convert } =
-    useContext(AppContext);
+  const {
+    page,
+    gender,
+    changeIndex,
+    value,
+    resetPage,
+    convert,
+    sortPrice,
+    sortAlphabet,
+    products,
+    loading,
+    setLoading,
+  } = useContext(AppContext);
+
   const { searchName } = useParams();
 
   // convert vietnamese name to english
@@ -117,74 +128,290 @@ function SearchPage() {
 
   return (
     <div className="big-phone:container big-phone:mx-auto">
-      <div className="big-phone:container big-phone:mx-auto">
-        {loading ? (
-          <Loading />
-        ) : (
+      <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
+        <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
+          <FilterPrice />
+
+          {/* List of search products length */}
+          {searchList.length > 0 ? (
+            <p className="mt-4 text-2xl text-white text-center px-4">
+              Có {searchList.length} sản phẩm
+            </p>
+          ) : null}
+        </div>
+        <div className="container mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
+          <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
+            <FilterPriceResponsive />
+          </div>
+          {loading ? (
+            <Loading />
+          ) : (
             <div>
               {/* Search products list length */}
-            {productsSearch.length === 0 &&
-            optionsArray.includes(listCategories) ? (
-              <div className="h-screen">
-                <p>Hãy tìm kiếm lại và chắc chắn là bạn nhập từ có nghĩa ^^</p>
-              </div>
-            ) : (
-              <>
-                <p>
-                  Có {productsSearch.length} kết quả cho{" "}
-                  {searchName.replaceAll("-", " ")}
-                    </p>
-                    
-                    {/* Options list */}
-                <Select
-                  defaultValue={[...array]}
-                  isMulti
-                  name="colors"
-                  options={array}
-                  className="basic-multi-select mx-4"
-                  classNamePrefix="select"
-                  onChange={handleChange}
-                    />
-                    
-                    {/* Search products list */}
-                <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-product p-4 shadow-sm rounded-lg">
-                  {page === 1 ? (
-                    <>
-                      {searchList.slice(0, 8).map((product) => (
-                        <SearchProducts
-                          {...product}
-                          key={product._id}
-                          product={product}
-                        />
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {searchList
-                        .slice(8 * (page - 1), 8 * page)
-                        .map((product) => (
-                          <SearchProducts
-                            {...product}
-                            key={product._id}
-                            product={product}
-                          />
-                        ))}
-                    </>
-                  )}
-                    </div>
-                    
-                    {/* Pagination */}
-                <Stack spacing={2} className="p-4 rounded-lg">
-                  <Pagination
-                    count={Math.ceil(searchList.length / 8)}
-                    color="primary"
-                    onChange={changeIndex}
+              {productsSearch.length === 0 &&
+              optionsArray.includes(listCategories) ? (
+                <div className="h-screen">
+                  <p>
+                    Hãy tìm kiếm lại và chắc chắn là bạn nhập từ có nghĩa ^^
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <p>
+                    Có {productsSearch.length} kết quả cho{" "}
+                    {searchName.replaceAll("-", " ")}
+                  </p>
+
+                  {/* Options list */}
+                  <Select
+                    defaultValue={[...array]}
+                    isMulti
+                    name="colors"
+                    options={array}
+                    className="basic-multi-select mx-4"
+                    classNamePrefix="select"
+                    onChange={handleChange}
                   />
-                </Stack>
-              </>
-            )}
-          </div>
-        )}
+
+                  {/* Search products list */}
+                  <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 bg-product p-4 shadow-sm rounded-lg">
+                    <>
+                      {page === 1 ? (
+                        <>
+                          {/* Filter price by newest (default) */}
+                          {gender === "newest" ? (
+                            <>
+                              {searchList.slice(0, 8).map((product) => (
+                                <SearchProducts
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                            </>
+                          ) : gender === "oldest" ? (
+                            <>
+                              {/* Filter price by oldest */}
+                              {searchList
+                                .slice(
+                                  productsSearch.length - 8,
+                                  productsSearch.length
+                                )
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))
+                                .reverse()}
+                            </>
+                          ) : gender === "lowtohigh" ? (
+                            <>
+                              {/* Filter price by low to high */}
+                              {searchList
+                                .slice(0, 8)
+                                .sort(sortPrice)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "hightolow" ? (
+                            <>
+                              {/* Filter price by high to low */}
+                              {searchList
+                                .sort(sortPrice)
+                                .slice(0, 8)
+                                .reverse()
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "atoz" ? (
+                            <>
+                              {/* Filter price by A to Z */}
+                              {searchList
+                                .slice(0, 8)
+                                .sort(sortAlphabet)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "ztoa" ? (
+                            <>
+                              {/* Filter price by Z to A */}
+                              {searchList
+                                .slice(0, 8)
+                                .sort(sortAlphabet)
+                                .reverse()
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : (
+                            <>
+                              {/* Filter price by default */}
+                              {searchList.slice(0, 8).map((product) => (
+                                <SearchProducts
+                                  {...product}
+                                  key={product._id}
+                                  product={product}
+                                />
+                              ))}
+                            </>
+                          )}
+                        </>
+                      ) : //Not Found any products by filter price
+                      productsSearch.filter(
+                          (filteredProduct) =>
+                            value[0] / 24000 <=
+                            filteredProduct.price <=
+                            value[1] / 24000
+                        ).length === 0 ? (
+                        <div>Bạn hãy điều chỉnh lại giá nhé</div>
+                      ) : (
+                        <>
+                          {gender === "newest" ? (
+                            <>
+                              {/* Filter price by newest */}
+                              {searchList
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "oldest" ? (
+                            <>
+                              {/* Filter price by oldest */}
+                              {searchList
+                                .slice(
+                                  8 *
+                                    (Math.round(productsSearch.length / 8) -
+                                      page),
+                                  8 *
+                                    (Math.round(productsSearch.length / 8) -
+                                      page +
+                                      1)
+                                )
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))
+                                .reverse()}
+                            </>
+                          ) : gender === "lowtohigh" ? (
+                            <>
+                              {/* Filter price by low to high */}
+                              {searchList
+                                .sort(sortPrice)
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "hightolow" ? (
+                            <>
+                              {/* Filter price by high to low */}
+                              {searchList
+                                .sort(sortPrice)
+                                .reverse()
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "atoz" ? (
+                            <>
+                              {/* Filter price by A to Z */}
+                              {searchList
+                                .sort(sortAlphabet)
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "ztoa" ? (
+                            <>
+                              {/* Filter price by Z to A */}
+                              {searchList
+                                .sort(sortAlphabet)
+                                .reverse()
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : (
+                            <>
+                              {/* Filter price by default */}
+                              {searchList
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <SearchProducts
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          )}
+                        </>
+                      )}
+                    </>
+                  </div>
+
+                  {/* Pagination */}
+                  <Stack spacing={2} className="p-4 rounded-lg">
+                    <Pagination
+                      count={Math.ceil(searchList.length / 8)}
+                      color="primary"
+                      onChange={changeIndex}
+                    />
+                  </Stack>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

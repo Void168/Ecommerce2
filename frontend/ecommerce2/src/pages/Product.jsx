@@ -24,7 +24,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import NotFoundPage from './NotFoundPage'
 
 // Props of Tabs MUI
 function TabPanel(props) {
@@ -178,7 +177,7 @@ function Product() {
   if (!product) {
     return (
       <div className="container mx-auto">
-        <NotFoundPage />
+        <Loading />
       </div>
     );
   }
@@ -241,19 +240,28 @@ function Product() {
         {/* Directional bar */}
         <div className="big-tablet:block small-phone:hidden fixed truncate big-tablet:bottom-0 big-tablet:text-base small-phone:text-xs z-50 bg-gradient-to-r from-[#132C33] to-[#126E82] text-white w-full big-tablet:container big-tablet:max-auto p-2  ring-offset-slate-900 ring-offset-4 ring ring-[#D8E3E7] big-tablet:rounded-t-lg small-phone:rounded-t-none small-phone:rounded-b-lg big-tablet:rounded-b-none">
           <div className="flex flex-row justify-between">
-            <Link to="/" className="px-2">
+            <Link
+              to="/"
+              className="px-2 hover:text-red-400 duration-200 ease-in-out"
+            >
               Trang chủ
             </Link>
 
             <i className="fas fa-caret-right"></i>
 
-            <Link className="px-2" to={`/danh-muc/${convertCategoryName}`}>
+            <Link
+              className="px-2 hover:text-red-400 duration-200 ease-in-out"
+              to={`/danh-muc/${convertCategoryName}`}
+            >
               {product.category}
             </Link>
 
             <i className="fas fa-caret-right"></i>
 
-            <Link className="px-2" to={`/search/${convertBrandName}`}>
+            <Link
+              className="px-2 hover:text-red-400 duration-200 ease-in-out"
+              to={`/search/${convertBrandName}`}
+            >
               {product.brand}
             </Link>
 
@@ -478,7 +486,7 @@ function Product() {
               {/* Feature Tab */}
               <TabPanel value={value} index={0}>
                 <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7] flex flex-col justify-center items-center">
-                  <p className="text-3xl text-center mb-8 text-[#51C4D3]">
+                  <p className="text-3xl text-center mb-8 text-[#126E82]">
                     ĐẶC ĐIỂM NỔI BẬT
                   </p>
                   <div
@@ -517,7 +525,7 @@ function Product() {
               {/* Specifications Tab */}
               <TabPanel value={value} index={1}>
                 <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7]">
-                  <p className="text-3xl text-center mb-8 text-[#51C4D3]">
+                  <p className="text-3xl text-center mb-8 text-[#126E82]">
                     THÔNG SỐ KỸ THUẬT
                   </p>
                   <div
@@ -656,9 +664,9 @@ function Product() {
                   </div>
                 </div>
               </TabPanel>
-              </Box>
+            </Box>
 
-              {/* List of similar products */}
+            {/* List of similar products */}
             <div>
               <p className="neon__text">Sản phẩm tương tự</p>
               {similarProducts.length > 2 ? (

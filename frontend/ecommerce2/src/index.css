@@ -95,8 +95,8 @@
     @apply text-2xl;
   }
 
-  .dashboard__month{
-    @apply row-span-1 rounded-lg  p-4 shadow-sm bg-[#126E82] text-white
+  .dashboard__month {
+    @apply row-span-1 rounded-lg  p-4 shadow-sm bg-[#126E82] text-white;
   }
 }
 
@@ -116,10 +116,14 @@ body {
 }
 .dropdown__categories .dropdown__categories--element {
   display: none;
+  transition: display 0.3s ease-in-out;
+  transition: opacity 200ms, display 200ms;
+  opacity: 0;
 }
 
 .dropdown__categories:hover .dropdown__categories--element {
   display: block;
+  opacity: 1;
 }
 
 .alice-carousel__prev-btn,
@@ -341,7 +345,7 @@ profile .MuiAvatar-root img {
 }
 
 ::-webkit-scrollbar-track {
-  background: #D8E3E7;
+  background: #d8e3e7;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -378,15 +382,40 @@ profile .MuiAvatar-root img {
   color: #fff !important;
 }
 
-.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root{
- border-color: #fff !important;
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  border-color: #fff !important;
 }
 
-canvas{
+canvas {
   width: 100% !important;
   height: max-content !important;
 }
 
 .carousel .thumb {
-    border: none !important;
+  border: none !important;
+}
+
+.navlink {
+  color: #fff;
+  position: relative;
+  text-decoration: none;
+}
+
+.navlink::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(270deg, rgba(216,227,231,1) 0%, rgba(81,196,211,1) 50%, rgba(18,110,130,1) 100%);
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.navlink:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
 }

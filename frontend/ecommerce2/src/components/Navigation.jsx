@@ -31,9 +31,9 @@ function Navigation() {
 
   // Active link navbar
   const activeLink =
-    "border-b-2 border-[#51C4D3] text-[#51C4D3] desktop:p-4 big-tablet:px-2 big-tablet:py-4 desktop:text-lg big-tablet:text-base";
+    "relative before:content-[''] before:absolute before:w-full before:h-1 before:bottom-1 before:left-0 before:rounded before:bg-[#51C4D3] text-[#51C4D3] desktop:p-4 big-tablet:px-2 big-tablet:py-4 desktop:text-lg big-tablet:text-base";
   const normalLink =
-    "p-4 hover:text-[#51C4D3] ease-in-out duration-200 desktop:text-lg big-tablet:text-base";
+    "navlink hover:text-[#51C4D3] duration-300 p-4 text-white desktop:text-lg big-tablet:text-base";
 
   // Display count of unread notifications
   const handleToggleNotifications = () => {
@@ -132,7 +132,7 @@ function Navigation() {
             <li className="text-white flex justify-between text-xl">
               {/* Categories */}
               <div className="mt-3 dropdown__categories">
-                <NavLink className="p-4 mb-2 hover:bg-[#D8E3E7] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg big-tablet:text-base">
+                <NavLink className="hover:text-[#51C4D3] p-4 mb-2 navlink ease-in-out duration-300 desktop:text-lg big-tablet:text-base">
                   Danh mục
                 </NavLink>
                 <div className="grid absolute text-black bg-[#D8E3E7] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm ease-in-out duration-200">
@@ -155,7 +155,7 @@ function Navigation() {
                           <img
                             src={category.img}
                             alt="category"
-                            className="w-32 h-32 rounded-lg shadow-sm ml-2 hover:shadow-blue-900 hover:shadow-2xl ease-in-out duration-200"
+                            className="w-32 h-32 rounded-lg shadow-sm ml-2 hover:shadow-[#126E82] hover:shadow-2xl ease-in-out duration-200"
                           />
                           <p className="mt-1">{category.name}</p>
                         </div>
@@ -285,7 +285,7 @@ function Navigation() {
                 >
                   {/* Navigate to profile page */}
                   <NavLink
-                    className="profile w-full flex flex-row justify-center items-center p-2 hover:bg-[#D8E3E7] hover:text-black rounded-3xl hover:shadow-sm ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
+                    className="hover:text-[#51C4D3] p-2 navlink profile w-full flex flex-row justify-center items-center ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
                     to={`/profile/${user._id}/edit`}
                   >
                     {/* Avatar and user's name */}
@@ -372,19 +372,19 @@ function Navigation() {
         </div>
 
         {/* Cart button when using large devices */}
-        <div className="relative p-4">
+        <div className="relative p-2">
           <NavLink to="/cart">
             {/* Cart count */}
             {user?.cart?.count > 0 && (
               <span
                 className="
-              bg-[#D8E3E7] px-3 py-1 rounded-full absolute z-10 top-0 left-8"
+              bg-[#D8E3E7] px-3 py-1 rounded-full absolute z-10 top-0 left-6"
               >
                 {user?.cart?.count}
               </span>
             )}
             <i className="fas fa-shopping-cart laptop:text-3xl big-tablet:text-base text-[#d35164]" />
-            <span className="text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">
+            <span className="navlink hover:text-[#51C4D3] p-2 duration-300 ease-in-out text-white ml-2 desktop:text-lg laptop:text-base big-tablet:text-base laptop:inline big-tablet:hidden">
               Giỏ hàng
             </span>
           </NavLink>
