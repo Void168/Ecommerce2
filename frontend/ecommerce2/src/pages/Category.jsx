@@ -134,7 +134,7 @@ function Category() {
       ) : (
         <>
           <div>
-            <p className="text-center font-bold text-3xl my-2">
+            <p className="text-center font-bold text-4xl my-2">
               {categoryName?.name}
             </p>
           </div>
