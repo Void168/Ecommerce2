@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useSignupMutation } from "../services/appApi";
 import MuiAlert from "@mui/material/Alert";
-import { useDispatch } from "react-redux";
+import Tooltip from "@mui/material/Tooltip";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -18,6 +19,10 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
+  const registerPassword = useRef(null);
+  const lowerCaseLetters = /[a-z]/g;
+  const upperCaseLetters = /[A-Z]/g;
+  const numbers = /[0-9]/g;
 
   const [signup, { error, isLoading, isError }] = useSignupMutation();
   const navigate = useNavigate();
@@ -63,7 +68,7 @@ function Signup() {
     if (password !== comfirmPassword) {
       alert("Mật khẩu xác nhận không đúng!");
     }
-    if (error) {
+    if (error || registerPassword?.current?.value?.length < 8) {
       navigate("/register");
       setOpen(true);
     }
@@ -130,9 +135,17 @@ function Signup() {
               {/* Register password */}
               <div className="relative form__element">
                 <label htmlFor="password">Mật khẩu</label>
+                <Tooltip
+                  title="Mật khẩu phải có ít nhất 8 ký tự, ký tự đầu tiên viết hoa
+                      và ít nhất 1 ký tự là số"
+                  arrow
+                >
+                  <HelpOutlineIcon />
+                </Tooltip>
                 <br />
                 <div className="flex flex-row">
                   <input
+                    ref={registerPassword}
                     className="w-full"
                     type={showPassword === true ? "password" : "text"}
                     id="password"
@@ -156,6 +169,12 @@ function Signup() {
               {/* Register comfirm password */}
               <div className="relative form__element">
                 <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
+                <Tooltip
+                  title="Mật khẩu xác nhận phải giống với mật khẩu đăng ký"
+                  arrow
+                >
+                  <HelpOutlineIcon />
+                </Tooltip>
                 <br />
                 <div className="flex flex-row">
                   <input
@@ -181,11 +200,63 @@ function Signup() {
                 </div>
               </div>
 
+              <ul className="text-lg mb-8">
+                {registerPassword?.current?.value?.match(lowerCaseLetters) ? (
+                  <li className="text-lime-500">
+                    <i class="fa-solid fa-check mr-10"></i>
+                    <span>Có ký tự viết thường</span>
+                  </li>
+                ) : (
+                  <li className="text-rose-400">
+                    <i class="fa-solid fa-xmark mr-10"></i>
+                    <span>Có ký tự viết thường</span>
+                  </li>
+                )}
+                {registerPassword?.current?.value?.match(upperCaseLetters) ? (
+                  <li className="text-lime-500">
+                    <i class="fa-solid fa-check mr-10"></i>
+                    <span>Có ký tự viết hoa</span>
+                  </li>
+                ) : (
+                  <li className="text-rose-400">
+                    <i class="fa-solid fa-xmark mr-10"></i>
+                    <span>Có ký tự viết hoa</span>
+                  </li>
+                )}
+                {registerPassword?.current?.value?.match(numbers) ? (
+                  <li className="text-lime-500">
+                    <i class="fa-solid fa-check mr-10"></i>
+                    <span>Có ký tự là số</span>
+                  </li>
+                ) : (
+                  <li className="text-rose-400">
+                    <i className="fa-solid fa-xmark mr-10"></i>
+                    <span>Có ký tự là số</span>
+                  </li>
+                )}
+                {registerPassword?.current?.value?.length >= 8 ? (
+                  <li className="text-lime-500">
+                    <i class="fa-solid fa-check mr-10"></i>
+                    <span>Mật khẩu từ 8 ký tự trở lên</span>
+                  </li>
+                ) : (
+                  <li className="text-rose-400">
+                    <i class="fa-solid fa-xmark mr-10"></i>
+                    <span>Mật khẩu từ 8 ký tự trở lên</span>
+                  </li>
+                )}
+              </ul>
+
               {/* Button submit */}
               <div className="form__element text-center small-phone:m-0">
-                <button type="submit" className="w-8/12 bg-[#132C33] button">
-                  Xác Nhận
-                </button>
+                {registerPassword?.current?.value?.length > 8 &&
+                registerPassword?.current?.value?.match(lowerCaseLetters) &&
+                registerPassword?.current?.value?.match(upperCaseLetters) &&
+                registerPassword?.current?.value?.match(numbers) ? (
+                  <button type="submit" className="w-8/12 bg-[#132C33] button">
+                    Xác Nhận
+                  </button>
+                ) : null}
               </div>
 
               {/* Navigate to Login page */}

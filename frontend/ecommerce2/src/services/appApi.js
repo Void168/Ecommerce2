@@ -26,10 +26,10 @@ export const appApi = createApi({
 
     // delete user
     deleteUser: builder.mutation({
-      query: ({ user_id }) => ({
+      query: ({ user_id, user }) => ({
         url: `/users/${user_id}`,
         body: {
-          user_id,
+          user,
         },
         method: 'DELETE',
       }),

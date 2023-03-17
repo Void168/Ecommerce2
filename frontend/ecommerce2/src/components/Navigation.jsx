@@ -25,7 +25,7 @@ function Navigation() {
   };
 
   // Unread notifications
-  const unreadNotifications = user?.notifications.filter(
+  const unreadNotifications = user?.notifications?.filter(
     (noti) => noti.status === "chưa đọc"
   ).length;
 

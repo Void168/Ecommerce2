@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import validator from 'validator';
 
 const UserSchema = mongoose.Schema(
   {
@@ -23,6 +24,7 @@ const UserSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, 'Bắt buộc'],
+      min:8,
     },
     isAdmin: {
       type: Boolean,
@@ -63,6 +65,7 @@ const UserSchema = mongoose.Schema(
 UserSchema.statics.findByCredentials = async function (email, password) {
   const user = await User.findOne({ email })
   if (!user) throw new Error('Sai thông tin đăng nhập')
+  // if (!validator.isStrongPassword(password)) throw new Error('Mật khẩu không đủ mạnh')
   const isSamePassword = bcrypt.compareSync(password, user.password)
   if (isSamePassword) return user
   throw new Error('Sai thông tin đăng nhập')

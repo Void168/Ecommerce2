@@ -21,6 +21,6 @@
     "mongoose": "^6.8.4",
     "socket.io": "^4.5.4",
     "stripe": "^11.6.0",
-    "validator": "^13.7.0"
+    "validator": "^13.9.0"
   }
 }
