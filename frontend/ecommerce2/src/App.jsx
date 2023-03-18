@@ -1,6 +1,6 @@
 import Navigation from "./components/Navigation";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import {  AppContext, AppProvider } from "./context/AppContext";
+import { AppProvider } from "./context/AppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -13,7 +13,7 @@ import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import Dashboard from "./pages/Dashboard";
 import EditProduct from "./pages/EditProduct";
-import {  useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { addNotification } from "./features/userSlice";
 import ScrollToTop from "./components/ScrollToTop";
@@ -27,7 +27,7 @@ import NewAriticles from "./pages/NewArticles";
 import NavigationResponsive from "./components/NavigationResponsive";
 import CartButton from "./components/CartButton";
 import SearchPage from "./pages/SearchPage";
-import Profile from './pages/Profile';
+import Profile from "./pages/Profile";
 import EditArticle from "./pages/EditArticle";
 import Loading from "./components/Loading";
 import Chart from "./pages/Chart";
@@ -38,11 +38,10 @@ window.onbeforeunload = function () {
 };
 
 function App() {
-  const user = useSelector((state) => state.user); 
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const {page} = useContext(AppContext)
 
   useEffect(() => {
     const socket = io("http://localhost:8080");
@@ -64,78 +63,82 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  if ((user && location.pathname === "/login") || (user && location.pathname === "/register")) {
+  if (
+    (user && location.pathname === "/login") ||
+    (user && location.pathname === "/register")
+  ) {
     navigate("/");
   }
-    return (
-      <AppProvider>
-        <div className="bg-[#D8E3E7]">
-          <CartButton />
-          <ScrollToTop />
-          <header>
-            <Navigation />
-            <NavigationResponsive />
-          </header>
-          <main
-            className={
-              location.pathname === "/login" ||
-              location.pathname === "/register"
-                ? "py-8 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max bg-fixed"
-                : "py-8 bg-main w-full bg-fixed"
-            }
-          >
-            <div className="flex justify-center">
-              <img
-                src="/images/logo.png"
-                alt="mini-logo"
-                className="big-tablet:hidden small-phone:block shadow-none"
-              />
-            </div>
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/promo" element={<Promo />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/shipping" element={<Shipping />} />
-              <Route path="/search/:searchName" element={<SearchPage />} />
-              {!user && (
-                <>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Signup />} />
-                </>
-              )}
+  return (
+    <AppProvider>
+      <div className="bg-[#D8E3E7]">
+        <CartButton />
+        <ScrollToTop />
+        <header>
+          <Navigation />
+          <NavigationResponsive />
+        </header>
+        <main
+          className={
+            location.pathname === "/login" || location.pathname === "/register"
+              ? "py-8 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max bg-fixed"
+              : `${
+                  location.pathname.includes('san-pham') ? "pb-8" : "py-8"
+                } bg-main w-full bg-fixed`
+          }
+        >
+          <div className="flex justify-center">
+            <img
+              src="/images/logo.png"
+              alt="mini-logo"
+              className="big-tablet:hidden small-phone:block shadow-none"
+            />
+          </div>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/promo" element={<Promo />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/search/:searchName" element={<SearchPage />} />
+            {!user && (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Signup />} />
+              </>
+            )}
 
-              <Route path="/san-pham/:id" element={<Product />} />
-              <Route path={`/danh-muc/:category`} element={<Category />} />
-              {user && <Route path="/cart" element={<Cart />} />}
-              <Route path="/order/:id" element={<OrderDetail />}></Route>
+            <Route path="/san-pham/:id" element={<Product />} />
+            <Route path={`/danh-muc/:category`} element={<Category />} />
+            {user && <Route path="/cart" element={<Cart />} />}
+            <Route path="/order/:id" element={<OrderDetail />}></Route>
 
-              <Route path="*" element={<NotFoundPage />} />
-              {user && (
-                <>
-                  <Route path="/orders" element={<Order />} />
-                  <Route path="/profile/:id/edit" element={<Profile />} />
-                </>
-              )}
-              {user && user.isAdmin && (
-                <>
-                  <Route path="/new-product" element={<NewProducts />} />
-                  <Route path="/new-article" element={<NewAriticles />} />
-                  <Route path="/dashboard" element={<Dashboard />}></Route>
-                  <Route path="/product/:id/edit" element={<EditProduct />} />
-                  <Route path="/article/:id/edit" element={<EditArticle />} />
-                  <Route path="/chart/" element={<Chart />} />
-                </>
-              )}
-            </Routes>
-            <ScrollToTopButton />
-          </main>
-          <footer>
-            <Footer />
-          </footer>
-        </div>
-      </AppProvider>
-    );
+            <Route path="*" element={<NotFoundPage />} />
+            {user && (
+              <>
+                <Route path="/orders" element={<Order />} />
+                <Route path="/profile/:id/edit" element={<Profile />} />
+              </>
+            )}
+            {user && user.isAdmin && (
+              <>
+                <Route path="/new-product" element={<NewProducts />} />
+                <Route path="/new-article" element={<NewAriticles />} />
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/product/:id/edit" element={<EditProduct />} />
+                <Route path="/article/:id/edit" element={<EditArticle />} />
+                <Route path="/chart/" element={<Chart />} />
+              </>
+            )}
+          </Routes>
+          <ScrollToTopButton />
+        </main>
+        <footer>
+          <Footer />
+        </footer>
+      </div>
+    </AppProvider>
+  );
 }
 
 export default App;

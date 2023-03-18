@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "../axios";
@@ -73,8 +73,8 @@ function Product() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
-  const status = useRef(null)
-  console.log(status.current.innerHTML);
+  const location = useLocation();
+  console.log(location.pathname);
 
   const {
     viewedProducts,
@@ -82,6 +82,7 @@ function Product() {
     favProducts,
     setFavProducts,
     convert,
+    USD_VND_EXCHANGE_RATE,
   } = useContext(AppContext);
 
   // Save items to local storage to display viewed products
@@ -241,12 +242,13 @@ function Product() {
   const backGround = categories
     .filter((category) => category.name === product.category)
     .map((x) => (
-      <div className={`${x.background} w-full h-96 bg-contain opacity-80`} ></div>
+      <div
+        className={`${x.background} w-full h-96 bg-contain opacity-80`}
+      ></div>
     ));
 
   return (
     <>
-      <div ref={status}>Còn hàng</div>
       <div className="flex justify-center">
         {backGround}
         {/* Directional bar */}
@@ -394,20 +396,22 @@ function Product() {
                         </span>
                       </div>
                     </div>
-
                     {/* Product's price change to VND */}
                     <span className="my-4 text-xl">Giá gốc: </span>
                     <span className="laptop:text-3xl tablet:text-2xl my-4 text-[#51C4D3] line-through">
-                      {(product.price * 24000).toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
+                      {(product.price * USD_VND_EXCHANGE_RATE).toLocaleString(
+                        "it-IT",
+                        {
+                          style: "currency",
+                          currency: "VND",
+                        }
+                      )}
                     </span>
                     <p className="laptop:text-3xl tablet:text-2xl my-4 text-red-500">
                       <span className="my-4 text-xl">Còn: </span>
                       {(
                         ((product.price * (100 - product.discount)) / 100) *
-                        24000
+                        USD_VND_EXCHANGE_RATE
                       ).toLocaleString("it-IT", {
                         style: "currency",
                         currency: "VND",
@@ -419,13 +423,26 @@ function Product() {
                         (Giảm {product.discount}%)
                       </span>
                     </p>
-
                     {/* Product's description */}
                     <p>{product.description}</p>
                     <br />
-
                     {/* Product's brand */}
                     <p>Nhà phân phối: {product.brand}</p>
+                    <br />
+                    {/* Product's status */}
+                    <p>
+                      Trạng thái:
+                      <span
+                        className={
+                          product.status === "Còn hàng"
+                            ? "text-lime-500"
+                            : "text-rose-500"
+                        }
+                      >
+                        {" "}
+                        {product.status}
+                      </span>
+                    </p>
                   </div>
 
                   <div className="my-4 flex flex-col">

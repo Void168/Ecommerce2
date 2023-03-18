@@ -20,6 +20,8 @@ function EditProduct() {
   const [brand, setBrand] = useState("");
   const [discount, setDiscount] = useState(0);
   const [status, setStatus] = useState("");
+  const [stockingActive, setStockingActive] = useState(true);
+  const [outOfStockActive, setOutOfStockActive] = useState(false);
   const [imageToRemove, setImageToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -51,23 +53,21 @@ function EditProduct() {
   }, [id]);
 
   console.log(status);
-  const [stockingActive, setStockingActive] = useState(true);
-  const [outOfStockActive, setOutOfStockActive] = useState(false);
 
   console.log(stockingActive);
   console.log(outOfStockActive);
 
-    const getStatusStocking = () => {
-      setStatus(stocking.current.innerHTML);
-      setStockingActive(true);
-      setOutOfStockActive(false);
-    };
+  const getStatusStocking = () => {
+    setStatus(stocking.current.innerHTML);
+    setStockingActive(true);
+    setOutOfStockActive(false);
+  };
 
-    const getStatusOutofStock = () => {
-      setStatus(outOfStock.current.innerHTML);
-      setStockingActive(false);
-      setOutOfStockActive(true);
-    };
+  const getStatusOutofStock = () => {
+    setStatus(outOfStock.current.innerHTML);
+    setStockingActive(false);
+    setOutOfStockActive(true);
+  };
 
   // Remove image
   const handleRemoveImg = (imgObj) => {
@@ -151,7 +151,7 @@ function EditProduct() {
     setTimeout(() => {
       setLoading(false);
     }, 500);
-  }, []);
+  }, [status]);
 
   return (
     <div className="big-phone:container big-phone:mx-auto min-h-max my-8">
