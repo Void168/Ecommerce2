@@ -19,6 +19,7 @@ export const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [gender, setGender] = useState("newest");
   const [viewedProducts, setViewedProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [favProducts, setFavProducts] = useState([]);
   const [province, setProvince] = useState([]);
   const [district, setDistrict] = useState([]);
@@ -127,6 +128,8 @@ export const AppProvider = ({ children }) => {
         articles,
         user,
         products,
+        orders,
+        setOrders,
         value,
         setValue,
         handleChange,

@@ -67,7 +67,7 @@ function Navigation() {
   const navigateSearch = (e) => {
     if (e.key === "Enter" && inputRef.current.value !== null) {
       navigate(
-        `/search/${inputRef.current.value
+        `/tim-kiem/${inputRef.current.value
           .toLocaleLowerCase()
           .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
           .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
@@ -90,7 +90,7 @@ function Navigation() {
   const clickSearch = () => {
     if (inputRef.current.value !== null) {
       navigate(
-        `/search/${inputRef.current.value
+        `/tim-kiem/${inputRef.current.value
           .toLocaleLowerCase()
           .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
           .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")

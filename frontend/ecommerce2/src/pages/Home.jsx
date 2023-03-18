@@ -238,7 +238,7 @@ function Home() {
           </p>
         </div>
 
-        <div className="laptop:col-span-3 galaxy-fold:col-span-4 px-4">
+        <div className="laptop:col-span-3 galaxy-fold:col-span-4 pl-4">
           <div className="big-phone:container mx-auto">
             <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
               <FilterPriceResponsive />
@@ -448,23 +448,23 @@ function Home() {
 
       {/* last products */}
       <p className="neon__text">Sản phẩm đã xem</p>
-      <div className="container mx-auto">
-        <div className="grid laptop:grid-cols-8 gap-4 bg-watched px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
-          {loading ? (
+      <div className="container mx-auto bg-watched">
+        {loading ? (
+          <div className="flex justify-center items-center text-center max-h-96">
             <Loading />
-          ) : (
-            <>
-              {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
-                <ViewedProduct
-                  {...lastProduct}
-                  key={index}
-                  product={lastProduct}
-                  className="min-h-max"
-                />
-              ))}
-            </>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="grid laptop:grid-cols-8 gap-4 px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+            {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
+              <ViewedProduct
+                {...lastProduct}
+                key={index}
+                product={lastProduct}
+                className="min-h-max"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

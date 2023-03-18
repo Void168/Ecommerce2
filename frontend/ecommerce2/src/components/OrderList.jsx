@@ -8,9 +8,8 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 function OrderList() {
-  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { products } = useContext(AppContext);
+  const { products, orders, setOrders } = useContext(AppContext);
   const [page, setPage] = useState(1);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
-import React, { useContext, useRef, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "../axios";
@@ -73,8 +73,7 @@ function Product() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
-  const location = useLocation();
-  console.log(location.pathname);
+  const [count, setCount] = useState([]);
 
   const {
     viewedProducts,
@@ -83,6 +82,8 @@ function Product() {
     setFavProducts,
     convert,
     USD_VND_EXCHANGE_RATE,
+    orders,
+    setOrders,
   } = useContext(AppContext);
 
   // Save items to local storage to display viewed products
@@ -168,6 +169,16 @@ function Product() {
       setProduct(data.product);
       setSimilar(data.similar);
     });
+
+    axios
+      .get("/orders")
+      .then(({ data }) => {
+        setLoading(false);
+        setOrders(data);
+      })
+      .catch((e) => {
+        setLoading(false);
+      });
   }, [id]);
 
   useEffect(() => {
@@ -176,6 +187,37 @@ function Product() {
       setLoading(false);
     }, 300);
   }, [id, isSuccess1]);
+
+  useEffect(() => {
+    const idList = async () => {
+      // Get Array of items in orders
+      const orderItems = orders.map((order) => order.products);
+      const newArray = orderItems.map(({ total, count, ...id }) => id);
+      const arrayNumber = Object.entries(newArray).flat();
+      for (let i = 0; i < arrayNumber.length; i++) {
+        arrayNumber.splice(i, 1);
+      }
+
+      // Get id and count of items in orders
+      const idList = arrayNumber
+        .map(Object.entries)
+        .flat(1)
+        .filter((id) => id[0].includes("63d"));
+
+      // Get id and count of items in orders have the same id with watching product
+      const count = idList.filter((x) => x[0] === id);
+
+      // Calculate number of watching product has been sold
+      const result = count.reduce(function (r, a) {
+        a.forEach(function (b, i) {
+          r[i] = (r[i] || 0) + b;
+        });
+        return r;
+      }, []);
+      setCount(result[1]);
+    };
+    idList();
+  }, [orders]);
 
   // Not Found product
   if (!product) {
@@ -246,7 +288,7 @@ function Product() {
         className={`${x.background} w-full h-96 bg-contain opacity-80`}
       ></div>
     ));
-
+  
   return (
     <>
       <div className="flex justify-center">
@@ -274,7 +316,7 @@ function Product() {
 
             <Link
               className="px-2 hover:text-red-400 duration-200 ease-in-out"
-              to={`/search/${convertBrandName}`}
+              to={`/tim-kiem/${convertBrandName}`}
             >
               {product.brand}
             </Link>
@@ -298,7 +340,7 @@ function Product() {
 
             <i className="fas fa-caret-right"></i>
 
-            <Link className="px-2" to={`/search/${convertBrandName}`}>
+            <Link className="px-2" to={`/tim-kiem/${convertBrandName}`}>
               {product.brand}
             </Link>
 
@@ -443,6 +485,8 @@ function Product() {
                         {product.status}
                       </span>
                     </p>
+                    <br />
+                    <p>Đã bán: {count} sản phẩm</p>
                   </div>
 
                   <div className="my-4 flex flex-col">
@@ -458,19 +502,29 @@ function Product() {
                       <>
                         {/* Logged in */}
                         {/* Add to cart button */}
-                        <button
-                          className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 bg-[#132C33] my-4 button"
-                          onClick={(e) =>
-                            addToCart({
-                              userId: user._id,
-                              productId: id,
-                              price: product.price,
-                              image: product.pictures[0].url,
-                            })
-                          }
-                        >
-                          Thêm vào giỏ
-                        </button>
+                        {product.status === "Còn hàng" ? (
+                          <button
+                            className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 bg-[#132C33] my-4 button"
+                            onClick={(e) =>
+                              addToCart({
+                                userId: user._id,
+                                productId: id,
+                                price: product.price,
+                                image: product.pictures[0].url,
+                              })
+                            }
+                          >
+                            Thêm vào giỏ
+                          </button>
+                        ) : (
+                          <div className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 flex flex-row justify-around bg-rose-500 shadow-sm rounded-lg my-4 text-center px-4 py-2">
+                            <i className="fa-solid fa-phone text-4xl"></i>
+                            <div>
+                              <p>Liên hệ số điện thoại 0123456789</p>
+                              <p> để nhận thông báo khi có hàng</p>
+                            </div>
+                          </div>
+                        )}
                       </>
                     )}
 
@@ -478,7 +532,7 @@ function Product() {
                     {user && user.isAdmin && (
                       // Edit product button -> navigate to edit product page
                       <button className="button bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 small-phone:w-full">
-                        <Link to={`/product/${product._id}/edit`}>
+                        <Link to={`/san-pham/${product._id}/chinh-sua`}>
                           Sửa thông tin sản phẩm
                         </Link>
                       </button>

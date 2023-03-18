@@ -26,6 +26,7 @@ function OrderDetail() {
       const idList = Object.keys(order?.products).filter((id) =>
         id.includes("63d")
       );
+
       setId([...idList]);
     };
     idList();
@@ -45,8 +46,6 @@ function OrderDetail() {
         for (let i = 0; i < arrayNumber.length; i++) {
           arrayNumber.splice(i + 1, 1);
         }
-
-      console.log(arrayNumber);
       setCount([...arrayNumber]);
     };
     listCount();

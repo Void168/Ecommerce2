@@ -100,7 +100,7 @@ function App() {
             <Route path="/promo" element={<Promo />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/shipping" element={<Shipping />} />
-            <Route path="/search/:searchName" element={<SearchPage />} />
+            <Route path="/tim-kiem/:searchName" element={<SearchPage />} />
             {!user && (
               <>
                 <Route path="/login" element={<Login />} />
@@ -125,7 +125,7 @@ function App() {
                 <Route path="/new-product" element={<NewProducts />} />
                 <Route path="/new-article" element={<NewAriticles />} />
                 <Route path="/dashboard" element={<Dashboard />}></Route>
-                <Route path="/product/:id/edit" element={<EditProduct />} />
+                <Route path="/san-pham/:id/chinh-sua" element={<EditProduct />} />
                 <Route path="/article/:id/edit" element={<EditArticle />} />
                 <Route path="/chart/" element={<Chart />} />
               </>
