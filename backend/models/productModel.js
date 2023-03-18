@@ -49,6 +49,7 @@ const ProductSchema = mongoose.Schema(
     rating: { type: Number, required: false, default: 0 },
     numReview: { type: Number, required: false, default: 0 },
     reviews: [reviewSchema],
+    status: { type: String, required: true, default: 'Còn hàng' },
   },
   { minimize: false },
 )

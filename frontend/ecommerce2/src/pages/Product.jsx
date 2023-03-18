@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -24,6 +24,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import categories from "../categories";
 
 // Props of Tabs MUI
 function TabPanel(props) {
@@ -72,6 +73,8 @@ function Product() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
+  const status = useRef(null)
+  console.log(status.current.innerHTML);
 
   const {
     viewedProducts,
@@ -134,7 +137,7 @@ function Product() {
     setFavProducts((favProduct) => [product, ...favProduct]);
   };
 
-  // Save favourite product to local storage 
+  // Save favourite product to local storage
   localStorage.setItem("fav products", JSON.stringify(favProducts));
   const favItems = localStorage.getItem("fav products");
   const list = JSON.parse(favItems);
@@ -234,9 +237,18 @@ function Product() {
   // List pictures of product
   const listPic = product.pictures;
 
+  // Choose background by category
+  const backGround = categories
+    .filter((category) => category.name === product.category)
+    .map((x) => (
+      <div className={`${x.background} w-full h-96 bg-contain opacity-80`} ></div>
+    ));
+
   return (
     <>
+      <div ref={status}>Còn hàng</div>
       <div className="flex justify-center">
+        {backGround}
         {/* Directional bar */}
         <div className="big-tablet:block small-phone:hidden fixed truncate big-tablet:bottom-0 big-tablet:text-base small-phone:text-xs z-50 bg-gradient-to-r from-[#132C33] to-[#126E82] text-white w-full big-tablet:container big-tablet:max-auto p-2  ring-offset-slate-900 ring-offset-4 ring ring-[#D8E3E7] big-tablet:rounded-t-lg small-phone:rounded-t-none small-phone:rounded-b-lg big-tablet:rounded-b-none">
           <div className="flex flex-row justify-between">
@@ -325,7 +337,11 @@ function Product() {
                   <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
                     <div className="flex big-phone:flex-row justify-between big-phone:col-span-4 small-phone:col-span-5 ">
                       {/* Display images of product */}
-                      <Carousel className="w-full">
+                      <Carousel
+                        className="w-full"
+                        autoPlay={true}
+                        infiniteLoop={true}
+                      >
                         {listPic.map((img, index) => (
                           <div>
                             <img
@@ -334,7 +350,7 @@ function Product() {
                               alt="gallery"
                               style={{
                                 border:
-                                  selected === img ? "2px solid #132C33" : "",
+                                  selected === img ? "2px solid #51C4D3" : "",
                               }}
                               className="w-full bg-[#fff] ease-in-out duration-300 small-phone:col-span-4 rounded-lg"
                             />

@@ -22,6 +22,7 @@ function SearchPage() {
     products,
     loading,
     setLoading,
+    USD_VND_EXCHANGE_RATE,
   } = useContext(AppContext);
 
   const { searchName } = useParams();
@@ -112,8 +113,8 @@ function SearchPage() {
     if (
       productsSearch.filter(
         (filteredProduct) =>
-          value[0] / 24000 <= filteredProduct.price &&
-          filteredProduct.price <= value[1] / 24000 &&
+          value[0] / USD_VND_EXCHANGE_RATE <= filteredProduct.price &&
+          filteredProduct.price <= value[1] / USD_VND_EXCHANGE_RATE &&
           optionsArray.includes(filteredProduct.category)
       ).length <= 9
     ) {
@@ -280,9 +281,9 @@ function SearchPage() {
                       ) : //Not Found any products by filter price
                       productsSearch.filter(
                           (filteredProduct) =>
-                            value[0] / 24000 <=
+                            value[0] / USD_VND_EXCHANGE_RATE <=
                             filteredProduct.price <=
-                            value[1] / 24000
+                            value[1] / USD_VND_EXCHANGE_RATE
                         ).length === 0 ? (
                         <div>Bạn hãy điều chỉnh lại giá nhé</div>
                       ) : (

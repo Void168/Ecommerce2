@@ -1,7 +1,8 @@
 import axios from "../axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
+import { AppContext } from "../context/AppContext";
 
 function OrderDetail() {
   const { id } = useParams();
@@ -10,6 +11,9 @@ function OrderDetail() {
   const [pId, setId] = useState([]);
   const [products, setProducts] = useState([]);
   const [count, setCount] = useState([]);
+  const {
+    USD_VND_EXCHANGE_RATE,
+  } = useContext(AppContext);
 
   useEffect(() => {
     axios.get("/orders/" + id).then(({ data }) => {
@@ -105,7 +109,7 @@ function OrderDetail() {
                               Đơn giá:{" "}
                               {(
                                 (product.price *
-                                  24000 *
+                                  USD_VND_EXCHANGE_RATE *
                                   (100 - product.discount)) /
                                 100
                               ).toLocaleString("it-IT", {
@@ -126,7 +130,7 @@ function OrderDetail() {
                           {(
                             (product.count *
                               product.price *
-                              24000 *
+                              USD_VND_EXCHANGE_RATE *
                               (100 - product.discount)) /
                             100
                           ).toLocaleString("it-IT", {

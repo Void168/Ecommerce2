@@ -80,8 +80,8 @@ function App() {
             className={
               location.pathname === "/login" ||
               location.pathname === "/register"
-                ? "py-8 px-4 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max bg-fixed"
-                : "py-8 px-4 bg-main w-full bg-fixed"
+                ? "py-8 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max bg-fixed"
+                : "py-8 bg-main w-full bg-fixed"
             }
           >
             <div className="flex justify-center">

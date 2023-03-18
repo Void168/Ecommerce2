@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -34,7 +33,8 @@ ChartJS.register(
 function Chart() {
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
-  const { products, articles } = useContext(AppContext);
+  const { exchangePrice, articles } =
+    useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [filterMonth, setFilterMonth] = useState("");
   const [filterYear, setFilterYear] = useState("");
@@ -100,14 +100,16 @@ function Chart() {
         order.date.slice(5, 7) === filterMonth &&
         order.date.slice(0, 4) === filterYear
     )
-    .map((order) => order.total);
+    .map((order) => order.total)
+    .reduce((a, c) => a + c, 0);
   const listTotalLastMonth = orders
     .filter(
       (order) =>
         order.date.slice(5, 7) === "0" + (Number(filterMonth) - 1).toString() &&
         order.date.slice(0, 4) === filterYear
     )
-    .map((order) => order.total);
+    .map((order) => order.total)
+    .reduce((a, c) => a + c, 0);
 
   // Remove duplicate days in array of days
   const groupByDate = orders.reduce((group, order) => {
@@ -157,6 +159,18 @@ function Chart() {
       order.date.slice(0, 4) === filterYear
   );
 
+  const totalOrders = exchangePrice(
+    filteredOrder.map((order) => order.total).reduce((a, c) => a + c, 0)
+  );
+
+  // Exchange prices
+  const listTotalExchanged = exchangePrice(listTotal);
+
+  const averageExchanged = exchangePrice(listTotal / orders.length);
+
+  const maxExchanged = exchangePrice(Math.max(...totalArray));
+
+  const minExchanged = exchangePrice(Math.min(...totalArray))
   return (
     <>
       <div className="grid big-desktop:grid-cols-5 gap-5 shadow-sm bg-[#132C33] p-8">
@@ -230,13 +244,7 @@ function Chart() {
               <div>
                 <span>Doanh thu hôm nay: {""}</span>
                 <div className="bg-white px-2 py-1 text-black shadow-sm rounded-md my-4">
-                  {filteredOrder
-                    .map((order) => order.total)
-                    .reduce((a, c) => a + c, 0)
-                    .toLocaleString("it-IT", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                  {totalOrders}
                 </div>
               </div>
 
@@ -279,35 +287,21 @@ function Chart() {
                   </p>
                   <p className="big-desktop:text-2xl mt-4">
                     <i className="fa-solid fa-wallet text-amber-300"></i>{" "}
-                    {listTotal
-                      .reduce((a, c) => a + c, 0)
-                      .toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
+                    {listTotalExchanged}
                   </p>
                   <p className="text-base">
-                    {listTotal.reduce((a, c) => a + c, 0) >
-                    listTotalLastMonth.reduce((a, c) => a + c, 0) ? (
+                    {listTotal > listTotalLastMonth ? (
                       <p className="big-desktop:text-base big-tablet:text-sm">
                         <i className="fa-solid fa-up-right text-green-500"></i>(
-                        +{" "}
-                        {Math.round(
-                          (listTotal.reduce((a, c) => a + c, 0) /
-                            listTotalLastMonth.reduce((a, c) => a + c, 0)) *
-                            100
-                        )}{" "}
-                        % so với tháng trước )
+                        + {Math.round((listTotal / listTotalLastMonth) * 100)} %
+                        so với tháng trước )
                       </p>
-                    ) : listTotal.reduce((a, c) => a + c, 0) <
-                      listTotalLastMonth.reduce((a, c) => a + c, 0) ? (
+                    ) : listTotal < listTotalLastMonth ? (
                       <p className="big-desktop:text-base big-tablet:text-sm">
                         <i className="fa-regular fa-down"></i>( -{" "}
                         {100 -
                           Math.round(
-                            (listTotal.reduce((a, c) => a + c, 0) /
-                              listTotalLastMonth.reduce((a, c) => a + c, 0)) *
-                              100
+                            (listTotal / listTotalLastMonth) * 100
                           )}{" "}
                         % so với tháng trước )
                       </p>
@@ -338,26 +332,13 @@ function Chart() {
                   <p className="text-center">Trung bình một đơn hàng:</p>{" "}
                   <p className="big-desktop:text-2xl mt-4">
                     <i className="fa-solid fa-person text-[#132C33]"></i>{" "}
-                    {(
-                      listTotal.reduce((a, c) => a + c, 0) / orders.length
-                    ).toLocaleString("it-IT", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    {averageExchanged}
                   </p>
                   <p className="big-desktop:text-base big-tablet:text-sm mt-4">
-                    Đơn hàng lớn nhất:{" "}
-                    {Math.max(...totalArray).toLocaleString("it-IT", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    Đơn hàng lớn nhất: {maxExchanged}
                   </p>
                   <p className="big-desktop:text-base big-tablet:text-sm mt-4">
-                    Đơn hàng bé nhất:{" "}
-                    {Math.min(...totalArray).toLocaleString("it-IT", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    Đơn hàng bé nhất: {minExchanged}
                   </p>
                 </div>
 
@@ -375,9 +356,9 @@ function Chart() {
                     }
                   </p>
                 </div>
-                </div>
-                
-                {/* Display Chart */}
+              </div>
+
+              {/* Display Chart */}
               <div className=" p-8 bg-[#D8E3E7] rounded-lg big-desktop:row-span-3 small-phone:row-span-1 shadow-sm">
                 <div className="w-full max-h-min">
                   <Line options={options} data={data} />

@@ -37,8 +37,16 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { value, page, gender, sortPrice, sortAlphabet, products, articles } =
-    useContext(AppContext);
+  const {
+    value,
+    page,
+    gender,
+    sortPrice,
+    sortAlphabet,
+    products,
+    articles,
+    USD_VND_EXCHANGE_RATE,
+  } = useContext(AppContext);
 
   // Get viewed products on local storage
   const viewedProducts = localStorage.getItem("viewed products");
@@ -50,8 +58,8 @@ function Home() {
   // Filter list of products by price
   const listProduct = products.filter(
     (filteredProduct) =>
-      value[0] / 24000 <= filteredProduct.price &&
-      filteredProduct.price <= value[1] / 24000
+      value[0] / USD_VND_EXCHANGE_RATE <= filteredProduct.price &&
+      filteredProduct.price <= value[1] / USD_VND_EXCHANGE_RATE
   );
 
   // Filter duplicate products in list of products
@@ -222,8 +230,8 @@ function Home() {
             {
               products.filter(
                 (filteredProduct) =>
-                  value[0] / 24000 <= filteredProduct.price &&
-                  filteredProduct.price <= value[1] / 24000
+                  value[0] / USD_VND_EXCHANGE_RATE <= filteredProduct.price &&
+                  filteredProduct.price <= value[1] / USD_VND_EXCHANGE_RATE
               ).length
             }{" "}
             sản phẩm
@@ -437,7 +445,7 @@ function Home() {
           </div>
         </div>
       </div>
-      
+
       {/* last products */}
       <p className="neon__text">Sản phẩm đã xem</p>
       <div className="container mx-auto">

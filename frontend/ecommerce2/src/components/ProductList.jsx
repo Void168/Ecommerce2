@@ -6,7 +6,7 @@ import Pagination from "@mui/material/Pagination";
 import { AppContext } from "../context/AppContext";
 
 function ProductList() {
-    const { user, products } = useContext(AppContext);
+  const { user, products, USD_VND_EXCHANGE_RATE } = useContext(AppContext);
   const [deleteProduct, { isLoading, isSuccess }] = useDeleteProductMutation();
   const [page, setPage] = useState(1);
 
@@ -22,7 +22,6 @@ function ProductList() {
         Vui lòng sử dụng thiết bị lớn hơn để quản lý
       </p>
       <div className="big-phone:container big-phone:mx-auto small-phone:m-0 big-phone:block small-phone:hidden">
-
         {/* Create product button*/}
         <button className="bg-[#132C33] button">
           <Link to="/new-product">Tạo sản phẩm mới</Link>
@@ -58,7 +57,9 @@ function ProductList() {
                         <td className="truncate">{product._id}</td>
                         <td className="truncate">{product.name}</td>
                         <td className="truncate">
-                          {(product.price * 24000).toLocaleString("it-IT", {
+                          {(
+                            product.price * USD_VND_EXCHANGE_RATE
+                          ).toLocaleString("it-IT", {
                             style: "currency",
                             currency: "VND",
                           })}
@@ -75,10 +76,7 @@ function ProductList() {
                               Xóa sản phẩm
                             </button>
                             <button className="bg-[#132C33] mt-6 button">
-                              <Link
-                                to={`/product/${product._id}/edit`}
-                                target="_blank"
-                              >
+                              <Link to={`/product/${product._id}/edit`}>
                                 Chỉnh sửa
                               </Link>
                             </button>
@@ -89,7 +87,7 @@ function ProductList() {
                 </>
               ) : (
                 <>
-                {/* Other page of pagination */}
+                  {/* Other page of pagination */}
                   {products
                     .slice(
                       8 * (Math.round(products.length / 8) - page),
@@ -109,7 +107,6 @@ function ProductList() {
                         <td>{product.price}</td>
                         <td>
                           <div className="flex flex-col">
-
                             {/* Delete product button */}
                             <button
                               onClick={() =>
@@ -122,13 +119,13 @@ function ProductList() {
                             </button>
 
                             {/* Edit product button */}
-                            <button className="bg-[#132C33] mt-6 button">
-                              <Link
-                                to={`/product/${product._id}/edit`}
-                              >
+                            <Link
+                              to={`/product/${product._id}/edit`}
+                            >
+                              <button className="bg-[#132C33] mt-6 button w-full">
                                 Chỉnh sửa
-                              </Link>
-                            </button>
+                              </button>
+                            </Link>
                           </div>
                         </td>
                       </tr>

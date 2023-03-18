@@ -30,16 +30,15 @@ function Cart() {
     setChosenWard,
     user,
     products,
+    USD_VND_EXCHANGE_RATE,
+    exchangePrice,
   } = useContext(AppContext);
 
   // Get users cart
   const userCartObj = user.cart;
   let cart = products.filter((product) => userCartObj[product._id] != null);
 
-  const subTotal = user.cart.total.toLocaleString("it-IT", {
-    style: "currency",
-    currency: "VND",
-  });
+  const subTotal = exchangePrice(user.cart.total);
 
   // Handle decrease that quantity must be better than 0
   const handleDecrease = (product) => {
@@ -127,7 +126,7 @@ function Cart() {
                                   {(
                                     ((item.price * (100 - item.discount)) /
                                       100) *
-                                    24000
+                                    USD_VND_EXCHANGE_RATE
                                   ).toLocaleString("it-IT", {
                                     style: "currency",
                                     currency: "VND",
@@ -166,7 +165,7 @@ function Cart() {
                                   {(
                                     ((item.price * (100 - item.discount)) /
                                       100) *
-                                    24000 *
+                                    USD_VND_EXCHANGE_RATE *
                                     user.cart[item._id]
                                   ).toLocaleString("it-IT", {
                                     style: "currency",

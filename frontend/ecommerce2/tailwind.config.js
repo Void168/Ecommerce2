@@ -19,6 +19,13 @@ module.exports = {
         bg: "url('/src/background/bg-login.jpg')",
         main: "url('/src/background/bg-main.jpg')",
         promo: "url('/src/background/bg-promo.jpg')",
+        cellphone: "url('https://www.androidauthority.com/wp-content/uploads/2020/12/Walli-screenshot-2021.jpg')",
+        tablet: "url('https://i0.wp.com/9to5mac.com/wp-content/uploads/sites/6/2021/04/ipad-pro-wallpaper.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1')",
+        laptop: "url('https://c1.wallpaperflare.com/preview/811/367/789/technology-computer-creative-design.jpg')",
+        watch: "url('https://images.hindustantimes.com/img/2022/07/14/1600x900/Collage_Maker-14-Jul-2022-12.23-PM_1657781633185_1657781662467_1657781662467.jpg')",
+        sound: "url('https://wallpaperaccess.com/full/1876893.jpg')",
+        accessory: "url('https://images.pexels.com/photos/1841841/pexels-photo-1841841.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')",
+        house: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHTGKRL4robU4JRqVVj0YrmCqSm9mok_d1xbmuks7jnOvw9V13fpgeSgsCPD7wQyI_bes&usqp=CAU')",
         apple:
           "url('https://wallpapers.com/images/file/full-hd-apple-in-3d-soft-blue-7eumqvd2821gj3zr.jpg')",
         samsung: "url('https://cdn.wallpapersafari.com/76/68/7F8uTy.jpg')",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateProductMutation } from "../services/appApi";
 import axios from "../axios";
@@ -19,11 +19,15 @@ function EditProduct() {
   const [rating, setRating] = useState("");
   const [brand, setBrand] = useState("");
   const [discount, setDiscount] = useState(0);
+  const [status, setStatus] = useState("");
   const [imageToRemove, setImageToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const [updateProduct, { isError, error, isLoading, isSuccess }] =
     useUpdateProductMutation();
+  const stocking = useRef(null);
+  const outOfStock = useRef(null);
 
   useEffect(() => {
     // Get product
@@ -40,10 +44,30 @@ function EditProduct() {
         setImages(product.pictures);
         setPrice(product.price);
         setBrand(product.brand);
+        setStatus(product.status);
         setDiscount(product.discount);
       })
       .catch((e) => console.log(e));
   }, [id]);
+
+  console.log(status);
+  const [stockingActive, setStockingActive] = useState(true);
+  const [outOfStockActive, setOutOfStockActive] = useState(false);
+
+  console.log(stockingActive);
+  console.log(outOfStockActive);
+
+    const getStatusStocking = () => {
+      setStatus(stocking.current.innerHTML);
+      setStockingActive(true);
+      setOutOfStockActive(false);
+    };
+
+    const getStatusOutofStock = () => {
+      setStatus(outOfStock.current.innerHTML);
+      setStockingActive(false);
+      setOutOfStockActive(true);
+    };
 
   // Remove image
   const handleRemoveImg = (imgObj) => {
@@ -87,7 +111,6 @@ function EditProduct() {
       !longDescription ||
       !specifications ||
       !price ||
-      !category ||
       !brand ||
       !images.length
     ) {
@@ -105,6 +128,7 @@ function EditProduct() {
         rating,
         brand,
         discount,
+        status,
       }).then(({ data }) => {
         if (data.length > 0) {
           setTimeout(() => {
@@ -116,6 +140,13 @@ function EditProduct() {
   };
 
   useEffect(() => {
+    if (status === "Còn hàng") {
+      setStockingActive(true);
+      setOutOfStockActive(false);
+    } else {
+      setStockingActive(false);
+      setOutOfStockActive(true);
+    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -257,6 +288,34 @@ function EditProduct() {
                         disabled
                         onChange={(e) => setRating(e.target.value)}
                       />
+                    </div>
+
+                    {/* Product's Status */}
+                    <div className="flex flex-row justify-evenly">
+                      <div
+                        ref={stocking}
+                        onClick={getStatusStocking}
+                        className={
+                          (stockingActive && status === "Còn hàng") ||
+                          stockingActive
+                            ? "px-4 py-2 bg-lime-500 text-white shadow-sm rounded-lg cursor-pointer ring-2 ring-offset-2 ring-lime-500 scale-125"
+                            : "px-4 py-2 bg-lime-500 text-white shadow-sm rounded-lg cursor-pointer hover:scale-110 hover:ring-2 hover:ring-offset-2 hover:ring-lime-500 ease-in-out duration-200"
+                        }
+                      >
+                        Còn hàng
+                      </div>
+                      <div
+                        ref={outOfStock}
+                        onClick={getStatusOutofStock}
+                        className={
+                          (outOfStockActive && status === "Hết hàng") ||
+                          outOfStockActive
+                            ? "px-4 py-2 bg-rose-500 text-white shadow-sm rounded-lg cursor-pointer ring-2 ring-offset-2 ring-rose-500 scale-125"
+                            : "px-4 py-2 bg-rose-500 text-white shadow-sm rounded-lg cursor-pointer hover:scale-110 hover:ring-2 hover:ring-offset-2 hover:ring-rose-500 ease-in-out duration-200"
+                        }
+                      >
+                        Hết hàng
+                      </div>
                     </div>
                   </div>
 

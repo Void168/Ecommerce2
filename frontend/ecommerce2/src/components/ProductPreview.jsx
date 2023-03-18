@@ -1,6 +1,6 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 import { useAddToCartMutation } from "../services/appApi";
 import Rating from "./Rating";
 import ToastMessage from "./ToastMessage";
@@ -14,7 +14,8 @@ function ProductPreview({
   discount,
   rating,
 }) {
-  const user = useSelector((state) => state.user);
+  const { user, USD_VND_EXCHANGE_RATE, exchangePrice } = useContext(AppContext);
+  const priceByVND = exchangePrice(price * USD_VND_EXCHANGE_RATE);
   const [addToCart, { isSuccess }] = useAddToCartMutation();
 
   return (
@@ -59,25 +60,20 @@ function ProductPreview({
           {/* Product price change to VND */}
           <div className="flex big-desktop:flex-row big-tablet:flex-col tablet:flex-row small-phone:flex-col tablet:justify-between small-phone:justify-start small-phone:items-center">
             <div className="big-phone:py-4 flex flex-col big-desktop:justify-start big-tablet:justify-center big-tablet:items-center">
-              <div className="truncate line-through">
-                {(price * 24000).toLocaleString("it-IT", {
+              <div className="truncate line-through">{priceByVND}</div>
+              <div className="truncate text-red-500">
+                {(
+                  (price * USD_VND_EXCHANGE_RATE * (100 - discount)) /
+                  100
+                ).toLocaleString("it-IT", {
                   style: "currency",
                   currency: "VND",
                 })}
               </div>
-              <div className="truncate text-red-500">
-                {((price * 24000 * (100 - discount)) / 100).toLocaleString(
-                  "it-IT",
-                  {
-                    style: "currency",
-                    currency: "VND",
-                  }
-                )}
-              </div>
             </div>
 
             <div className="flex flex-col justify-center items-center">
-            {/* Product rating */}
+              {/* Product rating */}
               <Rating rating={rating}></Rating>
               {/* Product discount */}
               {discount > 0 ? (

@@ -1,12 +1,14 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 import { useAddToCartMutation } from "../services/appApi";
 
 function SearchProducts(props) {
   const { product } = props;
-  const user = useSelector((state) => state.user);
   const [addToCart, { isSuccess }] = useAddToCartMutation();
+    const { user, USD_VND_EXCHANGE_RATE, exchangePrice } =
+      useContext(AppContext);
+  const price = exchangePrice(product.price * USD_VND_EXCHANGE_RATE);
 
   return (
     <Link to={`/san-pham/${product._id}`}>
@@ -31,12 +33,7 @@ function SearchProducts(props) {
         >
           {product.category}
         </div>
-        <div className="truncate">
-          {(product.price * 24000).toLocaleString("it-IT", {
-            style: "currency",
-            currency: "VND",
-          })}
-        </div>
+        <div className="truncate">{price}</div>
 
         <div className="laptop:block small-phone:hidden">
           <Link to={`/san-pham/${product._id}`}>

@@ -404,8 +404,12 @@ canvas {
   height: max-content !important;
 }
 
-.carousel .thumb {
+.carousel .thumb{
   border: none !important;
+}
+
+.carousel .thumb.selected, .carousel .thumb:hover {
+  border: 3px solid #51C4D3 !important;
 }
 
 .navlink {

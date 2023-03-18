@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 
 function SimilarProduct({ _id, name, category, price, pictures, discount }) {
+  const { USD_VND_EXCHANGE_RATE, exchangePrice } = useContext(AppContext);
+  const exchangedPrice = exchangePrice(price * USD_VND_EXCHANGE_RATE);
   return (
     <Link to={`/san-pham/${_id}`}>
       <div className="px-2 py-4 shadow-sm bg-[#D8E3E7]  flex flex-col justify-center big-phone:text-base small-phone:text-xs">
@@ -27,14 +30,12 @@ function SimilarProduct({ _id, name, category, price, pictures, discount }) {
         <div className="truncate">{category}</div>
 
         {/* Similar product price change to VND */}
-        <p className="truncate line-through">
-          {(price * 24000).toLocaleString("it-IT", {
-            style: "currency",
-            currency: "VND",
-          })}
-        </p>
+        <p className="truncate line-through">{exchangedPrice}</p>
         <p className="truncate text-red-500">
-          {((price * 24000 * (100 - discount)) / 100).toLocaleString("it-IT", {
+          {(
+            (price * USD_VND_EXCHANGE_RATE * (100 - discount)) /
+            100
+          ).toLocaleString("it-IT", {
             style: "currency",
             currency: "VND",
           })}

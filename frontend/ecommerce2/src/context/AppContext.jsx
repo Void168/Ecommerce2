@@ -27,6 +27,15 @@ export const AppProvider = ({ children }) => {
   const [chosenProvince, setChosenProvince] = useState("");
   const [chosenDistrict, setChosenDistrict] = useState("");
   const [chosenWard, setChosenWard] = useState("");
+  const USD_VND_EXCHANGE_RATE = 24000;
+
+  const exchangePrice = (num) => {
+    const price = num.toLocaleString("it-IT", {
+      style: "currency",
+      currency: "VND",
+    });
+    return price;
+  };
 
   // Check radio button sort products
   const isChecked = (e) => {
@@ -111,6 +120,8 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        USD_VND_EXCHANGE_RATE,
+        exchangePrice,
         loading,
         setLoading,
         articles,

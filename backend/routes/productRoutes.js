@@ -41,6 +41,7 @@ productRouter.post('/', async (req, res) => {
       rating,
       numReview,
       images: pictures,
+      status
     } = req.body
     const product = await Product.create({
       name,
@@ -54,6 +55,7 @@ productRouter.post('/', async (req, res) => {
       discount,
       rating,
       numReview,
+      status
     })
     const products = await Product.find()
     res.status(200).json(products)
@@ -78,6 +80,7 @@ productRouter.patch('/:id', async (req, res) => {
       rating,
       numReview,
       images: pictures,
+      status,
     } = req.body
     const product = await Product.findByIdAndUpdate(id, {
       name,
@@ -91,6 +94,7 @@ productRouter.patch('/:id', async (req, res) => {
       discount,
       rating,
       numReview,
+      status
     })
     const products = await Product.find()
     res.status(200).json(products)

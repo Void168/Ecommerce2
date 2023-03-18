@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 import categories from "../categories";
@@ -16,11 +16,28 @@ function NewProducts() {
   const [discount, setDiscount] = useState(0);
   const [specifications, setSpecifications] = useState("");
   const [images, setImages] = useState([]);
+  const [status, setStatus] = useState("");
   const [imageToRemove, setImageToRemove] = useState(null);
+  const [stockingActive, setStockingActive] = useState(true)
+  const [outOfStockActive, setOutOfStockActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [createProduct, { isError, error, isLoading, isSuccess }] =
     useCreateProductMutation();
+  const stocking = useRef(null)
+  const outOfStock = useRef(null);
+
+  const getStatusStocking = () => {
+    setStatus(stocking.current.innerHTML);
+    setStockingActive(true);
+    setOutOfStockActive(false);
+  }
+
+  const getStatusOutofStock = () => {
+    setStatus(outOfStock.current.innerHTML);
+    setStockingActive(false);
+    setOutOfStockActive(true);
+  };
 
   // Submit create products
   const handleSubmit = (e) => {
@@ -31,7 +48,6 @@ function NewProducts() {
       !longDescription ||
       !specifications ||
       !price ||
-      !category ||
       !brand ||
       !images.length
     ) {
@@ -47,6 +63,7 @@ function NewProducts() {
       brand,
       discount,
       images,
+      status,
     }).then(({ data }) => {
       if (data.length > 0) {
         setTimeout(() => {
@@ -228,6 +245,32 @@ function NewProducts() {
                       <option value={category.name}>{category.name}</option>
                     ))}
                   </select>
+                </div>
+
+                {/* Product's status */}
+                <div className="flex flex-row justify-evenly">
+                  <div
+                    ref={stocking}
+                    onClick={getStatusStocking}
+                    className={
+                      stockingActive
+                        ? "px-4 py-2 bg-lime-500 text-white shadow-sm rounded-lg cursor-pointer ring-2 ring-offset-2 ring-lime-500"
+                        : "px-4 py-2 bg-lime-500 text-white shadow-sm rounded-lg cursor-pointer hover:scale-110 ease-in-out duration-200"
+                    }
+                  >
+                    Còn hàng
+                  </div>
+                  <div
+                    ref={outOfStock}
+                    onClick={getStatusOutofStock}
+                    className={
+                      outOfStockActive
+                        ? "px-4 py-2 bg-rose-500 text-white shadow-sm rounded-lg cursor-pointer ring-2 ring-offset-2 ring-rose-500"
+                        : "px-4 py-2 bg-rose-500 text-white shadow-sm rounded-lg cursor-pointer hover:scale-110 ease-in-out duration-200"
+                    }
+                  >
+                    Hết hàng
+                  </div>
                 </div>
 
                 {/* Button submit */}
