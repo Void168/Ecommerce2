@@ -37,6 +37,7 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [pId, setPId] = useState([]);
   const {
     value,
     page,
@@ -46,6 +47,9 @@ function Home() {
     products,
     articles,
     USD_VND_EXCHANGE_RATE,
+    orders,
+    setOrders,
+    bestSeller,
   } = useContext(AppContext);
 
   // Get viewed products on local storage
@@ -75,6 +79,15 @@ function Home() {
 
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
+    axios
+      .get("/orders")
+      .then(({ data }) => {
+        setLoading(false);
+        setOrders(data);
+      })
+      .catch((e) => {
+        setLoading(false);
+      });
   }, [dispatch]);
 
   useEffect(() => {
@@ -83,6 +96,52 @@ function Home() {
       setLoading(false);
     }, 300);
   }, []);
+
+  useEffect(() => {
+    const idList = async () => {
+      // Get Array of items in orders
+      const orderItems = orders.map((order) => order.products);
+      const newArray = orderItems.map(({ total, count, ...id }) => id);
+      const arrayNumber = Object.entries(newArray).flat();
+      for (let i = 0; i < arrayNumber.length; i++) {
+        arrayNumber.splice(i, 1);
+      }
+
+      // Get id and count of items in orders
+      const idList = arrayNumber
+        .map(Object.entries)
+        .flat(1)
+        .filter((id) => id[0].includes("63d"));
+      setPId(idList);
+    };
+    idList();
+  }, [orders]);
+
+  let array = [];
+  pId.forEach((x) => {
+    array.push(x[0]);
+    return x;
+  });
+
+  const occurrences = array.reduce(function (acc, curr) {
+    return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
+  }, {});
+
+  const object = Object.entries(occurrences);
+  object.sort(function (a, b) {
+    return b[1] - a[1];
+  });
+
+  let res = [];
+  res.push(object);
+  const sortBestSeller = res.map((x) => x.map((a) => a[0])).flat(1);
+  bestSeller.push(sortBestSeller);
+
+  const names = bestSeller[0]
+    .slice(0, 8)
+    .map((id) => products.find((el) => el._id === id));
+
+  console.log(names);
 
   return (
     <>
@@ -217,7 +276,26 @@ function Home() {
           </>
         )}
       </div>
-
+      {/* Best Seller */}
+      <p className="neon__text">Sản phẩm bán chạy</p>
+      <div className="container mx-auto bg-watched">
+        {loading ? (
+          <div className="flex justify-center items-center text-center max-h-96">
+            <Loading />
+          </div>
+        ) : (
+          <div className="grid laptop:grid-cols-8 gap-4 px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+            {names.map((bestSeller, index) => (
+              <ViewedProduct
+                {...bestSeller}
+                key={index}
+                product={bestSeller}
+                className="min-h-max"
+              />
+            ))}
+          </div>
+        )}
+      </div>
       {/* Main home page */}
       <p className="neon__text">Sản phẩm nổi bật</p>
       <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">

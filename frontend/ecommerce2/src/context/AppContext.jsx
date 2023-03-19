@@ -29,6 +29,7 @@ export const AppProvider = ({ children }) => {
   const [chosenDistrict, setChosenDistrict] = useState("");
   const [chosenWard, setChosenWard] = useState("");
   const USD_VND_EXCHANGE_RATE = 24000;
+  let bestSeller = []
 
   const exchangePrice = (num) => {
     const price = num.toLocaleString("it-IT", {
@@ -160,6 +161,7 @@ export const AppProvider = ({ children }) => {
         favProducts,
         setFavProducts,
         convert,
+        bestSeller,
       }}
     >
       {children}

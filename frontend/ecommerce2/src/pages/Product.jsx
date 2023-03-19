@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -74,6 +74,7 @@ function Product() {
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [count, setCount] = useState([]);
+  const [pId, setPId] = useState([]);
 
   const {
     viewedProducts,
@@ -188,6 +189,7 @@ function Product() {
     }, 300);
   }, [id, isSuccess1]);
 
+  // Number of sold
   useEffect(() => {
     const idList = async () => {
       // Get Array of items in orders
@@ -203,7 +205,7 @@ function Product() {
         .map(Object.entries)
         .flat(1)
         .filter((id) => id[0].includes("63d"));
-
+      setPId(idList);
       // Get id and count of items in orders have the same id with watching product
       const count = idList.filter((x) => x[0] === id);
 
@@ -288,7 +290,7 @@ function Product() {
         className={`${x.background} w-full h-96 bg-contain opacity-80`}
       ></div>
     ));
-  
+
   return (
     <>
       <div className="flex justify-center">

@@ -137,7 +137,7 @@ function Navigation() {
                 </NavLink>
                 <div className="grid absolute text-black bg-[#D8E3E7] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm ease-in-out duration-200">
                   {categories.map((category) => (
-                    <div key={category.id} className>
+                    <div key={category.id}>
                       <Link
                         to={`/danh-muc/${category.name
                           .toLocaleLowerCase()
@@ -231,8 +231,11 @@ function Navigation() {
                     >
                       {user ? <></> : null}
                       {user?.notifications?.length > 0 ? (
-                        user?.notifications.map((notification) => (
-                          <div className="border-[#132C33] border-b">
+                        user?.notifications.map((notification, id) => (
+                          <div
+                            className="border-[#132C33] border-b"
+                            key={user?.notifications?.id}
+                          >
                             <p>{notification.message}</p>
                             <div className="py-2 flex flex-row justify-around text-xs items-center">
                               <div

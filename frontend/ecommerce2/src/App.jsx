@@ -82,8 +82,8 @@ function App() {
           className={
             location.pathname === "/login" || location.pathname === "/register"
               ? "py-8 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max bg-fixed"
-              : `${
-                  location.pathname.includes('san-pham') ? "pb-8" : "py-8"
+              : `${location.pathname.includes("san-pham") ? "pb-8" : "py-8"} ${
+                  location.pathname.includes("/") ? "px-8" : ""
                 } bg-main w-full bg-fixed`
           }
         >
@@ -125,7 +125,10 @@ function App() {
                 <Route path="/new-product" element={<NewProducts />} />
                 <Route path="/new-article" element={<NewAriticles />} />
                 <Route path="/dashboard" element={<Dashboard />}></Route>
-                <Route path="/san-pham/:id/chinh-sua" element={<EditProduct />} />
+                <Route
+                  path="/san-pham/:id/chinh-sua"
+                  element={<EditProduct />}
+                />
                 <Route path="/article/:id/edit" element={<EditArticle />} />
                 <Route path="/chart/" element={<Chart />} />
               </>

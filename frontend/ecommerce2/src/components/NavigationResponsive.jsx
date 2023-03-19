@@ -279,7 +279,6 @@ function NavigationResponsive() {
             : "fixed w-full translate-x-full duration-300 top-0"
         }
       >
-
         {/* User is admin */}
         {user?.isAdmin ? (
           <ul className="p-4 flex flex-col justify-around h-screen absolute z-50 w-full bg-[#132C33] text-white">
@@ -360,8 +359,7 @@ function NavigationResponsive() {
             </div>
           </ul>
         ) : (
-            
-            // User is not admin
+          // User is not admin
           <ul className="flex flex-col text-black absolute z-50">
             <li onClick={handleToggleNotifications} className="relative">
               <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-2 top-1 text-sm">
@@ -445,7 +443,6 @@ function NavigationResponsive() {
         </ul>
       </div>
 
-
       {/* Menu notifications */}
       <div
         className={
@@ -460,8 +457,11 @@ function NavigationResponsive() {
         {user ? (
           <>
             {user?.notifications?.length > 0 ? (
-              user?.notifications?.map((notification) => (
-                <div className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base">
+              user?.notifications?.map((notification, id) => (
+                <div
+                  key={user?.notifications?.id}
+                  className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base"
+                >
                   {/* <p
                 className={`notification-${notification.status}`}
                 key={notification._id}
