@@ -53,7 +53,7 @@ function Payment() {
                 style={{
                   backgroundImage: `url('https://www.shutterstock.com/shutterstock/videos/1066066966/thumb/12.jpg')`,
                 }}
-                data-aos="fade-up"
+                data-aos="fade-up-right"
               >
                 <p className="text-4xl mb-8 text-center text-black">
                   Thanh toán tiền mặt
@@ -72,7 +72,7 @@ function Payment() {
                 style={{
                   backgroundImage: `url('https://www.shutterstock.com/image-photo/credit-card-close-shot-selective-260nw-567634105.jpg')`,
                 }}
-                data-aos="fade-up"
+                data-aos="fade-up-left"
               >
                 <p className="text-4xl mb-8 text-center text-black">
                   Thanh toán thẻ ATM nội địa - Internet Banking
@@ -112,7 +112,7 @@ function Payment() {
                 style={{
                   backgroundImage: `url('https://magicpay.net/wp-content/uploads/2013/03/iStock_000009824865_ExtraSmall.jpg')`,
                 }}
-                data-aos="fade-up"
+                data-aos="fade-up-right"
               >
                 <p className="text-4xl mb-8 text-center text-black">
                   Thanh toán thẻ quốc tế Visa, Master, JCB​
@@ -129,7 +129,7 @@ function Payment() {
                 style={{
                   backgroundImage: `url('https://thumbs.dreamstime.com/b/icon-payment-installment-red-rectangular-frame-vector-illustration-installments-border-loan-zero-percent-drawing-picture-79979560.jpg')`,
                 }}
-                data-aos="fade-up"
+                data-aos="fade-up-left"
               >
                 <p className="text-4xl mb-8 text-center text-black">
                   Thanh toán trả góp
