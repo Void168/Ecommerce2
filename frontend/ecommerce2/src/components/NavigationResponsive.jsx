@@ -24,6 +24,7 @@ function NavigationResponsive() {
   const [open, setOpen] = useState(false);
   const [openAccount, setOpenAccount] = useState(false);
   const [openMore, setOpenMore] = useState(false);
+  const [visible, setVisible] = useState(10);
   const [openNoti, setOpenNoti] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(AppContext);
@@ -43,6 +44,11 @@ function NavigationResponsive() {
   // Handle open 4 kind of menus
   // menu categories
   const handleOpen = () => setOpen(true);
+
+
+  const showMoreNotifications = () => {
+    setVisible((prevValue) => prevValue + 5);
+  };
 
   // menu account
   const handleOpenAccount = () => {
@@ -457,33 +463,50 @@ function NavigationResponsive() {
         {user ? (
           <>
             {user?.notifications?.length > 0 ? (
-              user?.notifications?.map((notification, id) => (
-                <div
-                  key={user?.notifications?.id}
-                  className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base"
-                >
-                  {/* <p
+              user?.notifications
+                .slice(
+                  user?.notifications?.length - visible > 0
+                    ? user?.notifications?.length - visible
+                    : 0,
+                  user?.notifications?.length
+                )
+                ?.map((notification, id) => (
+                  <div
+                    key={user?.notifications?.id}
+                    className="border-b border-[#D8E3E7] p-2 text-white h-24 tablet:text-xl galaxy-fold:text-base"
+                  >
+                    {/* <p
                 className={`notification-${notification.status}`}
                 key={notification._id}
               ></p> */}
-                  {notification.message} vào lúc{" "}
-                  {notification.time.split("T")[1].slice(0, 8) +
-                    " " +
-                    "ngày" +
-                    " " +
-                    notification.time
-                      .slice(0, 10)
-                      .toString()
-                      .split("-")
-                      .reverse()
-                      .join("-")}
-                </div>
-              ))
+                    {notification.message} vào lúc{" "}
+                    {notification.time.split("T")[1].slice(0, 8) +
+                      " " +
+                      "ngày" +
+                      " " +
+                      notification.time
+                        .slice(0, 10)
+                        .toString()
+                        .split("-")
+                        .reverse()
+                        .join("-")}
+                  </div>
+                ))
             ) : (
               <span className="text-white text-2xl">
                 Không có thông báo mới
               </span>
             )}
+            <div className="flex justify-center">
+              {user?.notifications?.length - visible < 0 ? null : (
+                <button
+                  onClick={showMoreNotifications}
+                  className="text-white text-lg mt-4"
+                >
+                  Xem thêm
+                </button>
+              )}
+            </div>
           </>
         ) : null}
       </div>

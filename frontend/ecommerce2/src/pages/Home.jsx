@@ -5,6 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { updateProducts } from "../features/productSlice";
 import axios from "../axios";
 import ProductPreview from "../components/ProductPreview";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation, EffectCoverflow } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import Loading from "../components/Loading";
 import Paginate from "../components/Paginate";
 import ViewedProduct from "../components/ViewedProduct";
@@ -141,8 +146,6 @@ function Home() {
     .slice(0, 8)
     .map((id) => products.find((el) => el._id === id));
 
-  console.log(names);
-
   return (
     <>
       {loading ? (
@@ -172,35 +175,35 @@ function Home() {
                   <div
                     alt="banner"
                     className="card__zoom--image bg-apple"
-                    onClick={() => navigate("/search/apple")}
+                    onClick={() => navigate("/tim-kiem/apple")}
                   />
                 </div>
                 <div className="card__zoom">
                   <div
                     alt="banner"
                     className="card__zoom--image bg-samsung"
-                    onClick={() => navigate("/search/samsung")}
+                    onClick={() => navigate("/tim-kiem/samsung")}
                   />
                 </div>
                 <div className="card__zoom small-phone:block big-phone:hidden">
                   <div
                     alt="banner"
                     className="card__zoom--image bg-xiaomi"
-                    onClick={() => navigate("/search/xiaomi")}
+                    onClick={() => navigate("/tim-kiem/xiaomi")}
                   />
                 </div>
                 <div className="card__zoom small-phone:block big-phone:hidden">
                   <div
                     alt="banner"
                     className="card__zoom--image bg-asus"
-                    onClick={() => navigate("/search/asus")}
+                    onClick={() => navigate("/tim-kiem/asus")}
                   />
                 </div>
                 <div className="card__zoom small-phone:block big-phone:hidden">
                   <div
                     alt="banner"
                     className="card__zoom--image bg-jbl"
-                    onClick={() => navigate("/search/jbl")}
+                    onClick={() => navigate("/tim-kiem/jbl")}
                   />
                 </div>
               </div>
@@ -210,21 +213,21 @@ function Home() {
                 <div
                   alt="banner"
                   className="card__zoom--image bg-xiaomi"
-                  onClick={() => navigate("/search/xiaomi")}
+                  onClick={() => navigate("/tim-kiem/xiaomi")}
                 />
               </div>
               <div className="card__zoom">
                 <div
                   alt="banner"
                   className="card__zoom--image bg-asus"
-                  onClick={() => navigate("/search/asus")}
+                  onClick={() => navigate("/tim-kiem/asus")}
                 />
               </div>
               <div className="card__zoom">
                 <div
                   alt="banner"
                   className="card__zoom--image bg-jbl"
-                  onClick={() => navigate("/search/jbl")}
+                  onClick={() => navigate("/tim-kiem/jbl")}
                 />
               </div>
             </div>
@@ -284,15 +287,57 @@ function Home() {
             <Loading />
           </div>
         ) : (
-          <div className="grid laptop:grid-cols-8 gap-4 px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
-            {names.map((bestSeller, index) => (
-              <ViewedProduct
-                {...bestSeller}
-                key={index}
-                product={bestSeller}
-                className="min-h-max"
-              />
-            ))}
+          <div className="px-4 py-8 my-8 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+            <Swiper
+              watchSlidesProgress={true}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+              }}
+              navigation={true}
+              grabCursor={true}
+              spaceBetween={30}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
+              className="shadow-sm outline-0"
+            >
+              {/* {names.map((product) => (
+                <SwiperSlide key={product.id}>{product}</SwiperSlide>
+              ))} */}
+              {names.map((bestSeller, index) => (
+                <SwiperSlide>
+                  <ViewedProduct
+                    {...bestSeller}
+                    key={index}
+                    product={bestSeller}
+                    className="min-h-max"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         )}
       </div>
@@ -318,7 +363,7 @@ function Home() {
 
         <div className="laptop:col-span-3 galaxy-fold:col-span-4 pl-4">
           <div className="big-phone:container mx-auto">
-            <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
+            <div className="fixed z-20 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
               <FilterPriceResponsive />
             </div>
             <div className="bg-product p-4 rounded-lg shadow-sm">

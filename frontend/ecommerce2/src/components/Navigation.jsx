@@ -9,6 +9,7 @@ import { Avatar } from "@mui/material";
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
+  const [visible, setVisible] = useState(10);
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function Navigation() {
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
   const { user, setLoading } = useContext(AppContext);
+
+  const showMoreNotifications = () => {
+    setVisible((prevValue) => prevValue + 5);
+  };
 
   // Sign out
   const signoutHandler = () => {
@@ -207,11 +212,11 @@ function Navigation() {
 
               {/* Notification */}
               {user ? (
-                <NavLink
-                  onClick={handleToggleNotifications}
-                  className="relative"
-                >
-                  <span className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-1 top-2 text-sm">
+                <NavLink className="relative">
+                  <span
+                    className="bg-red-400 px-2 rounded-full w-6 h-6 absolute left-1 top-2 text-sm"
+                    onClick={handleToggleNotifications}
+                  >
                     {unreadNotifications}
                   </span>
                   <i
@@ -231,37 +236,51 @@ function Navigation() {
                     >
                       {user ? <></> : null}
                       {user?.notifications?.length > 0 ? (
-                        user?.notifications.map((notification, id) => (
-                          <div
-                            className="border-[#132C33] border-b"
-                            key={user?.notifications?.id}
-                          >
-                            <p>{notification.message}</p>
-                            <div className="py-2 flex flex-row justify-around text-xs items-center">
-                              <div
-                                className="px-4 py-1 bg-red-500 text-white rounded-full"
-                                key={user._id}
-                              >
-                                {notification.status}
+                        user?.notifications
+                          .slice(
+                            user?.notifications?.length - visible > 0
+                              ? user?.notifications?.length - visible
+                              : 0,
+                            user?.notifications?.length
+                          )
+                          ?.map((notification, id) => (
+                            <div
+                              className="border-[#132C33] border-b"
+                              key={user?.notifications?.id}
+                            >
+                              <p>{notification.message}</p>
+                              <div className="py-2 flex flex-row justify-around text-xs items-center">
+                                <div
+                                  className="px-4 py-1 bg-red-500 text-white rounded-full"
+                                  key={user._id}
+                                >
+                                  {notification.status}
+                                </div>
+                                <p>
+                                  {notification.time.split("T")[1].slice(0, 8) +
+                                    " " +
+                                    "ngày" +
+                                    " " +
+                                    notification.time
+                                      .slice(0, 10)
+                                      .toString()
+                                      .split("-")
+                                      .reverse()
+                                      .join("-")}
+                                </p>
                               </div>
-                              <p>
-                                {notification.time.split("T")[1].slice(0, 8) +
-                                  " " +
-                                  "ngày" +
-                                  " " +
-                                  notification.time
-                                    .slice(0, 10)
-                                    .toString()
-                                    .split("-")
-                                    .reverse()
-                                    .join("-")}
-                              </p>
                             </div>
-                          </div>
-                        ))
+                          ))
                       ) : (
                         <span>Không có thông báo mới</span>
                       )}
+                      <div className="flex justify-center">
+                        {user?.notifications?.length - visible < 0 ? null : (
+                          <button onClick={showMoreNotifications}>
+                            Xem thêm
+                          </button>
+                        )}
+                      </div>
                     </div>
                   ) : null}
                 </NavLink>
@@ -375,7 +394,7 @@ function Navigation() {
         </div>
 
         {/* Cart button when using large devices */}
-        <div className="relative p-2">
+        <div className="relative p-2 small-phone:hidden laptop:block">
           <NavLink to="/cart">
             {/* Cart count */}
             {user?.cart?.count > 0 && (

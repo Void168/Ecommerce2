@@ -13,7 +13,7 @@ function Payment() {
   return (
     <div className="big-phone:container big-phone:mx-auto">
       {loading ? (
-        <div className="h-screen flex justify-center items-center absolute text-center w-full">
+        <div className="h-screen flex justify-center items-center text-center w-full">
           <Loading />
         </div>
       ) : (

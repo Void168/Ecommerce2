@@ -112,18 +112,18 @@ function Shipping() {
   }, []);
   return (
     <>
-      <div className="big-phone:container big-phone:mx-auto grid grid-cols-5">
+      <div className="big-phone:container big-phone:mx-auto">
         {loading ? (
-          <div className="h-screen flex justify-center items-center absolute text-center w-full">
+          <div className="h-screen flex justify-center items-center w-full">
             <Loading />
           </div>
         ) : (
-          <>
+          <div className="grid grid-cols-5">
             <div className="col-span-1 text-white big-tablet:block small-phone:hidden">
               <div
                 className={
                   navbar
-                    ? "sticky bg-[#132C33] shadow-sm p-4 big-desktop:h-256 big-tablet:h-200 bottom-8 top-40 overflow-y-auto"
+                    ? "sticky bg-[#132C33] shadow-sm p-4 big-desktop:h-256 big-tablet:h-200 bottom-8 top-48 overflow-y-auto"
                     : "bg-[#132C33] shadow-sm p-4 h-256 overflow-y-auto"
                 }
               >
@@ -704,11 +704,14 @@ function Shipping() {
                 trì{" "}
               </p>
             </div>
-          </>
+          </div>
         )}
       </div>
       <>
-        <button onClick={handleOpen} className="fixed left-2 bottom-20 big-tablet:hidden small-phone:block button">
+        <button
+          onClick={handleOpen}
+          className="fixed left-2 bottom-20 big-tablet:hidden small-phone:block button"
+        >
           Đi đến
         </button>
         <Modal

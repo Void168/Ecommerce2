@@ -15,7 +15,7 @@ const CartButton = () => {
         location.pathname === "/login" ||
         location.pathname === "/register"
           ? "hidden"
-          : "w-12 h-12 fixed z-20 big-tablet:hidden left-2 small-phone:bottom-36 text-center text-sm cursor-pointer animate-bounce ease-in-out duration-300"
+          : "w-12 h-12 fixed z-20 laptop:hidden left-2 small-phone:bottom-36 text-center text-sm cursor-pointer animate-bounce ease-in-out duration-300"
       }
     >
       {user && user?.cart?.count > 0 && (
