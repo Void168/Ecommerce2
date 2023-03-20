@@ -83,9 +83,10 @@ function App() {
             location.pathname === "/login" || location.pathname === "/register"
               ? "py-8 w-full small-phone:bg-bg big-tablet:bg-main bg-contain bg-repeat-round max-h-max bg-fixed"
               : `${location.pathname.includes("san-pham") ? "pb-8" : "py-8"} ${
-                  location.pathname.includes("/") ? "px-8" : ""
-                } ${
-                  location.pathname.includes("about") ? "pt-0 px-0 pb-8" : ""
+                  location.pathname.includes("about") ||
+                  location.pathname.includes("payment")
+                    ? "pt-0 px-0 pb-8"
+                    : ""
                 } bg-main w-full bg-fixed`
           }
         >

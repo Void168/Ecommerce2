@@ -29,7 +29,7 @@ function About() {
                   backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/744/804/845/computer-engineering-science-tech-wallpaper-preview.jpg')`,
                 }}
               >
-                <p className="text-4xl text-center my-8">
+                <p className="text-6xl text-center my-8">
                   Giới thiệu WeirdShop
                 </p>
                 <div className="flex flex-col items-end">

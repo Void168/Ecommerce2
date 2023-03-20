@@ -328,7 +328,7 @@ function Product() {
             <span className="truncate px-2">{product.name}</span>
           </div>
         </div>
-        <div className="big-tablet:hidden small-phone:block fixed truncate big-tablet:bottom-0 small-phone:top-0 big-tablet:text-base small-phone:text-xs z-50 bg-gradient-to-r from-[#132C33] to-[#126E82] text-white w-full big-tablet:container big-tablet:max-auto p-2 ring-offset-slate-900 ring-offset-4 ring ring-[#D8E3E7] big-tablet:rounded-t-lg small-phone:rounded-b-lg">
+        <div className="big-tablet:hidden small-phone:block fixed truncate big-tablet:bottom-0 small-phone:top-0 big-tablet:text-base small-phone:text-xs z-10 bg-gradient-to-r from-[#132C33] to-[#126E82] text-white w-full big-tablet:container big-tablet:max-auto p-2 ring-offset-slate-900 ring-offset-4 ring ring-[#D8E3E7] big-tablet:rounded-t-lg small-phone:rounded-b-lg">
           <div className="flex flex-row justify-around">
             <Link to="/" className="px-2">
               Trang chủ
@@ -380,7 +380,7 @@ function Product() {
 
               <div className="big-tablet:col-span-2 galaxy-fold:col-span-5 small-phone:mb-8 ">
                 <div>
-                  <div className="tablet:p-4 big-phone:px-20 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
+                  <div className="tablet:p-4 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
                     <div className="flex big-phone:flex-row justify-between big-phone:col-span-4 small-phone:col-span-5 ">
                       {/* Display images of product */}
                       <Carousel
@@ -488,14 +488,14 @@ function Product() {
                       </span>
                     </p>
                     <br />
-                    <p>Đã bán: {count} sản phẩm</p>
+                    <p>Đã bán: {count || 0} sản phẩm</p>
                   </div>
 
                   <div className="my-4 flex flex-col">
                     {/* Not logged in yet */}
                     {!user ? (
                       <button
-                        className="big-tablet:w-6/12 tablet:w-8/12 bg-[#132C33] my-4 button"
+                        className="laptop:w-6/12 big-tablet:w-8/12 small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center shadow-sm rounded-md my-4 text-center px-4 py-2 button"
                         onClick={navigateToLogin}
                       >
                         Đăng nhập để mua hàng
@@ -506,7 +506,7 @@ function Product() {
                         {/* Add to cart button */}
                         {product.status === "Còn hàng" ? (
                           <button
-                            className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 bg-[#132C33] my-4 button"
+                            className="laptop:w-6/12 big-tablet:w-8/12 small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center shadow-sm rounded-md my-4 text-center px-4 py-2 button"
                             onClick={(e) =>
                               addToCart({
                                 userId: user._id,
@@ -519,11 +519,16 @@ function Product() {
                             Thêm vào giỏ
                           </button>
                         ) : (
-                          <div className="laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 flex flex-row justify-around bg-rose-500 shadow-sm rounded-lg my-4 text-center px-4 py-2">
-                            <i className="fa-solid fa-phone text-4xl"></i>
+                          <div className="laptop:w-6/12 big-tablet:w-8/12 small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center bg-rose-500 shadow-sm rounded-md my-4 text-center px-4 py-2">
+                            <i className="fa-solid fa-phone text-4xl big-tablet:text-2xl small-phone:hidden"></i>
                             <div>
-                              <p>Liên hệ số điện thoại 0123456789</p>
-                              <p> để nhận thông báo khi có hàng</p>
+                              <p className="desktop:text-base small-phone:text-xs">
+                                Liên hệ số điện thoại 0123456789
+                              </p>
+                              <p className="desktop:text-base small-phone:text-xs">
+                                {" "}
+                                để nhận thông báo khi có hàng
+                              </p>
                             </div>
                           </div>
                         )}
@@ -533,7 +538,7 @@ function Product() {
                     {/* User is admin */}
                     {user && user.isAdmin && (
                       // Edit product button -> navigate to edit product page
-                      <button className="button bg-[#132C33] big-tablet:mb-20 small-phone:mb-0 laptop:w-6/12 big-tablet:w-7/12 tablet:w-8/12 small-phone:w-full">
+                      <button className="laptop:w-6/12 big-tablet:w-8/12 small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center shadow-sm rounded-md my-4 text-center px-4 py-2 button small-phone:text-sm big-phone:text-base">
                         <Link to={`/san-pham/${product._id}/chinh-sua`}>
                           Sửa thông tin sản phẩm
                         </Link>
@@ -556,7 +561,7 @@ function Product() {
             </div>
 
             {/* Tabs */}
-            <Box sx={{ width: "100%" }}>
+            <Box sx={{ width: "100%" }} className="overflow-x-auto">
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
                   value={value}
@@ -575,7 +580,7 @@ function Product() {
               {/* Feature Tab */}
               <TabPanel value={value} index={0}>
                 <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7] flex flex-col justify-center items-center">
-                  <p className="text-3xl text-center mb-8 text-[#126E82]">
+                  <p className="big-phone:text-3xl small-phone:text-xl text-center mb-8 text-[#126E82]">
                     ĐẶC ĐIỂM NỔI BẬT
                   </p>
                   <div
@@ -614,14 +619,14 @@ function Product() {
               {/* Specifications Tab */}
               <TabPanel value={value} index={1}>
                 <div className="laptop:w-8/12 small-phone:w-full border-x-2 border-b-2 border-[#132C33] bg-opacity-70 rounded-b-2xl p-4 bg-[#D8E3E7]">
-                  <p className="text-3xl text-center mb-8 text-[#126E82]">
+                  <p className="big-phone:text-3xl small-phone:text-2xl text-center mb-8 text-[#126E82]">
                     THÔNG SỐ KỸ THUẬT
                   </p>
                   <div
                     className={
                       open1
-                        ? "specifications h-full transition-height ease-linear duration-300 px-12"
-                        : "specifications h-96 overflow-hidden transition-height ease-linear duration-300 px-12"
+                        ? "specifications h-full transition-height ease-linear duration-300 big-phone:px-12"
+                        : "specifications h-96 overflow-hidden transition-height ease-linear duration-300 big-phone:px-12"
                     }
                     dangerouslySetInnerHTML={{
                       __html: product?.specifications,
@@ -769,6 +774,20 @@ function Product() {
                     }}
                     pagination={{
                       clickable: true,
+                    }}
+                    breakpoints={{
+                      320: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                      },
+                      768: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                      },
+                      1024: {
+                        slidesPerView: 5,
+                        spaceBetween: 50,
+                      },
                     }}
                     effect={"coverflow"}
                     grabCursor={true}

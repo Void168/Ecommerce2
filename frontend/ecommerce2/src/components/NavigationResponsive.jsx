@@ -24,7 +24,7 @@ function NavigationResponsive() {
   const [open, setOpen] = useState(false);
   const [openAccount, setOpenAccount] = useState(false);
   const [openMore, setOpenMore] = useState(false);
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(5);
   const [openNoti, setOpenNoti] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(AppContext);
@@ -296,10 +296,10 @@ function NavigationResponsive() {
             </div>
             <ul className="w-full flex flex-col container mx-auto text-white overflow-y-auto">
               <li onClick={handleClose}>
-                <Avatar
+                <img
                   alt={`${user.name}`}
                   src={`${user?.avatar?.at(-1)?.url}`}
-                  className="mx-8"
+                  className="rounded-full h-32 w-32"
                 />
                 <span>
                   <>
@@ -357,7 +357,7 @@ function NavigationResponsive() {
               <li className="text-center flex-end mb-20" onClick={handleClose}>
                 <button
                   onClick={signoutHandler}
-                  className="bg-[#132C33] text-xl button"
+                  className="bg-[#D8E3E7] text-xl button text-black"
                 >
                   Đăng xuất
                 </button>

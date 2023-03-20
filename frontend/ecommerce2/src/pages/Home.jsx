@@ -235,8 +235,8 @@ function Home() {
         </div>
       )}
       {/* Promo */}
-      <p className="neon__text">Tin công nghệ</p>
-      <div className="grid-cols-4 big-phone:container big-phone:mx-auto my-4">
+      <div className="grid-cols-4 big-phone:container big-phone:mx-auto my-4 small-phone:mx-4">
+        <p className="neon__text">Tin công nghệ</p>
         {loading ? (
           <Loading />
         ) : (
@@ -280,14 +280,14 @@ function Home() {
         )}
       </div>
       {/* Best Seller */}
-      <p className="neon__text">Sản phẩm bán chạy</p>
-      <div className="container mx-auto bg-watched">
+      <div className="big-phone:container big-phone:mx-auto small-phone:mx-4">
+        <p className="neon__text">Sản phẩm bán chạy</p>
         {loading ? (
           <div className="flex justify-center items-center text-center max-h-96">
             <Loading />
           </div>
         ) : (
-          <div className="px-4 py-8 my-8 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+          <div className="bg-watched px-4 py-8 my-8 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
             <Swiper
               watchSlidesProgress={true}
               autoplay={{
@@ -324,9 +324,6 @@ function Home() {
               modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
               className="shadow-sm outline-0"
             >
-              {/* {names.map((product) => (
-                <SwiperSlide key={product.id}>{product}</SwiperSlide>
-              ))} */}
               {names.map((bestSeller, index) => (
                 <SwiperSlide>
                   <ViewedProduct
@@ -342,227 +339,230 @@ function Home() {
         )}
       </div>
       {/* Main home page */}
-      <p className="neon__text">Sản phẩm nổi bật</p>
-      <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">
-        <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
-          <FilterPrice />
+      <div className="big-phone:container big-phone:mx-auto small-phone:mx-4">
+        <p className="neon__text">Sản phẩm nổi bật</p>
+        <div className=" grid grid-flow-row-dense big-tablet:grid-cols-4 my-8">
+          <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
+            <FilterPrice />
 
-          {/* Length of product after filter or sort */}
-          <p className="text-white px-4 my-8  big-desktop:text-2xl desktop:text-xl text-center">
-            Có{" "}
-            {
-              products.filter(
-                (filteredProduct) =>
-                  value[0] / USD_VND_EXCHANGE_RATE <= filteredProduct.price &&
-                  filteredProduct.price <= value[1] / USD_VND_EXCHANGE_RATE
-              ).length
-            }{" "}
-            sản phẩm
-          </p>
-        </div>
+            {/* Length of product after filter or sort */}
+            <p className="text-white px-4 my-8  big-desktop:text-2xl desktop:text-xl text-center">
+              Có{" "}
+              {
+                products.filter(
+                  (filteredProduct) =>
+                    value[0] / USD_VND_EXCHANGE_RATE <= filteredProduct.price &&
+                    filteredProduct.price <= value[1] / USD_VND_EXCHANGE_RATE
+                ).length
+              }{" "}
+              sản phẩm
+            </p>
+          </div>
 
-        <div className="laptop:col-span-3 galaxy-fold:col-span-4 pl-4">
-          <div className="big-phone:container mx-auto">
-            <div className="fixed z-20 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
-              <FilterPriceResponsive />
-            </div>
-            <div className="bg-product p-4 rounded-lg shadow-sm">
-              <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1">
-                {loading ? (
-                  <div className=" col-span-4 relative h-screen flex justify-center items-center text-center w-full">
-                    <Loading />
-                  </div>
-                ) : (
-                  <>
-                    {page === 1 ? (
-                      <>
-                        {/* Filter price by newest (default) */}
-                        {gender === "newest" ? (
-                          <>
-                            {listProduct.slice(0, 8).map((product, index) => (
-                              <ProductPreview
-                                {...product}
-                                data-value={index}
-                                key={product._id}
-                              />
-                            ))}
-                          </>
-                        ) : gender === "oldest" ? (
-                          <>
-                            {/* Filter price by oldest */}
-                            {listProduct
-                              .slice(products.length - 8, products.length)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))
-                              .reverse()}
-                          </>
-                        ) : gender === "lowtohigh" ? (
-                          <>
-                            {/* Filter price by low to high */}
-                            {listProduct
-                              .sort(sortPrice)
-                              .slice(0, 8)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "hightolow" ? (
-                          <>
-                            {/* Filter price by high to low */}
-                            {listProduct
-                              .sort(sortPrice)
-                              .reverse()
-                              .slice(0, 8)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "atoz" ? (
-                          <>
-                            {/* Filter price by A to Z */}
-                            {listProduct
-                              .sort(sortAlphabet)
-                              .slice(0, 8)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "ztoa" ? (
-                          <>
-                            {/* Filter price by Z to A */}
-                            {listProduct
-                              .slice(0, 8)
-                              .sort(sortAlphabet)
-                              .reverse()
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : null}
-                      </>
-                    ) : listProduct.length === 0 ? (
-                      <div>Bạn hãy điều chỉnh lại giá nhé</div>
-                    ) : (
-                      <>
-                        {gender === "newest" ? (
-                          <>
-                            {/* Filter price by newest */}
-                            {listProduct
-                              .slice(8 * (page - 1), 8 * page)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "oldest" ? (
-                          <>
-                            {/* Filter price by oldest */}
-                            {listProduct
-                              .slice(
-                                8 * (Math.round(products.length / 8) - page),
-                                8 * (Math.round(products.length / 8) - page + 1)
-                              )
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))
-                              .reverse()}
-                          </>
-                        ) : gender === "lowtohigh" ? (
-                          <>
-                            {/* Filter price by low to high */}
-                            {listProduct
-                              .sort(sortPrice)
-                              .slice(8 * (page - 1), 8 * page)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "hightolow" ? (
-                          <>
-                            {/* Filter price by high to low */}
-                            {listProduct
-                              .sort(sortPrice)
-                              .reverse()
-                              .slice(8 * (page - 1), 8 * page)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "atoz" ? (
-                          <>
-                            {/* Filter price by A to Z */}
-                            {listProduct
-                              .sort(sortAlphabet)
-                              .slice(8 * (page - 1), 8 * page)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : gender === "ztoa" ? (
-                          <>
-                            {/* Filter price by Z to A */}
-                            {listProduct
-                              .sort(sortAlphabet)
-                              .reverse()
-                              .slice(8 * (page - 1), 8 * page)
-                              .map((product) => (
-                                <ProductPreview
-                                  {...product}
-                                  key={product._id}
-                                  product={product}
-                                />
-                              ))}
-                          </>
-                        ) : null}
-                      </>
-                    )}
-                  </>
-                )}
+          <div className="laptop:col-span-3 galaxy-fold:col-span-4 laptop:pl-4">
+            <div className="big-phone:container mx-auto">
+              <div className="fixed z-20 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
+                <FilterPriceResponsive />
               </div>
+              <div className="bg-product p-4 rounded-lg shadow-sm">
+                <div className="grid gap-4 my-4 big-tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1">
+                  {loading ? (
+                    <div className=" col-span-4 relative h-screen flex justify-center items-center text-center w-full">
+                      <Loading />
+                    </div>
+                  ) : (
+                    <>
+                      {page === 1 ? (
+                        <>
+                          {/* Filter price by newest (default) */}
+                          {gender === "newest" ? (
+                            <>
+                              {listProduct.slice(0, 8).map((product, index) => (
+                                <ProductPreview
+                                  {...product}
+                                  data-value={index}
+                                  key={product._id}
+                                />
+                              ))}
+                            </>
+                          ) : gender === "oldest" ? (
+                            <>
+                              {/* Filter price by oldest */}
+                              {listProduct
+                                .slice(products.length - 8, products.length)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))
+                                .reverse()}
+                            </>
+                          ) : gender === "lowtohigh" ? (
+                            <>
+                              {/* Filter price by low to high */}
+                              {listProduct
+                                .sort(sortPrice)
+                                .slice(0, 8)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "hightolow" ? (
+                            <>
+                              {/* Filter price by high to low */}
+                              {listProduct
+                                .sort(sortPrice)
+                                .reverse()
+                                .slice(0, 8)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "atoz" ? (
+                            <>
+                              {/* Filter price by A to Z */}
+                              {listProduct
+                                .sort(sortAlphabet)
+                                .slice(0, 8)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "ztoa" ? (
+                            <>
+                              {/* Filter price by Z to A */}
+                              {listProduct
+                                .slice(0, 8)
+                                .sort(sortAlphabet)
+                                .reverse()
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : null}
+                        </>
+                      ) : listProduct.length === 0 ? (
+                        <div>Bạn hãy điều chỉnh lại giá nhé</div>
+                      ) : (
+                        <>
+                          {gender === "newest" ? (
+                            <>
+                              {/* Filter price by newest */}
+                              {listProduct
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "oldest" ? (
+                            <>
+                              {/* Filter price by oldest */}
+                              {listProduct
+                                .slice(
+                                  8 * (Math.round(products.length / 8) - page),
+                                  8 *
+                                    (Math.round(products.length / 8) - page + 1)
+                                )
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))
+                                .reverse()}
+                            </>
+                          ) : gender === "lowtohigh" ? (
+                            <>
+                              {/* Filter price by low to high */}
+                              {listProduct
+                                .sort(sortPrice)
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "hightolow" ? (
+                            <>
+                              {/* Filter price by high to low */}
+                              {listProduct
+                                .sort(sortPrice)
+                                .reverse()
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "atoz" ? (
+                            <>
+                              {/* Filter price by A to Z */}
+                              {listProduct
+                                .sort(sortAlphabet)
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : gender === "ztoa" ? (
+                            <>
+                              {/* Filter price by Z to A */}
+                              {listProduct
+                                .sort(sortAlphabet)
+                                .reverse()
+                                .slice(8 * (page - 1), 8 * page)
+                                .map((product) => (
+                                  <ProductPreview
+                                    {...product}
+                                    key={product._id}
+                                    product={product}
+                                  />
+                                ))}
+                            </>
+                          ) : null}
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
 
-              {/* Pagination */}
-              <div className="text-sm">
-                <Paginate />
+                {/* Pagination */}
+                <div className="text-sm">
+                  <Paginate />
+                </div>
               </div>
             </div>
           </div>
@@ -570,22 +570,61 @@ function Home() {
       </div>
 
       {/* last products */}
-      <p className="neon__text">Sản phẩm đã xem</p>
-      <div className="container mx-auto bg-watched">
+      <div className="big-phone:container big-phone:mx-auto small-phone:mx-4">
+        <p className="neon__text">Sản phẩm đã xem</p>
         {loading ? (
           <div className="flex justify-center items-center text-center max-h-96">
             <Loading />
           </div>
         ) : (
-          <div className="grid laptop:grid-cols-8 gap-4 px-4 py-8 my-8 tablet:grid-cols-4 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
-            {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
-              <ViewedProduct
-                {...lastProduct}
-                key={index}
-                product={lastProduct}
-                className="min-h-max"
-              />
-            ))}
+          <div className="bg-watched px-4 py-8 my-8 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
+            <Swiper
+              watchSlidesProgress={true}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              breakpoints={{
+                320: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+              }}
+              navigation={true}
+              grabCursor={true}
+              spaceBetween={30}
+              coverflowEffect={{
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+              }}
+              modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
+              className="shadow-sm outline-0"
+            >
+              {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
+                <SwiperSlide>
+                  <ViewedProduct
+                    {...lastProduct}
+                    key={index}
+                    product={lastProduct}
+                    className="min-h-max"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         )}
       </div>

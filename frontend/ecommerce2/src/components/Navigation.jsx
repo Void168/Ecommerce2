@@ -9,7 +9,7 @@ import { Avatar } from "@mui/material";
 
 function Navigation() {
   const [navbar, setNavbar] = useState(false);
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(5);
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
