@@ -305,11 +305,7 @@ function Navigation() {
                       : "mt-4 dropdown__profile relative"
                   }
                 >
-                  {/* Navigate to profile page */}
-                  <NavLink
-                    className="hover:text-[#51C4D3] p-2 navlink profile w-full flex flex-row justify-center items-center ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base"
-                    to={`/profile/${user._id}/edit`}
-                  >
+                  <NavLink className="hover:text-[#51C4D3] p-2 navlink profile w-full flex flex-row justify-center items-center ease-in-out duration-200 hover:rounded-b-none desktop:text-lg  big-tablet:text-base">
                     {/* Avatar and user's name */}
                     <Avatar
                       alt={`${user.name}`}
@@ -323,24 +319,30 @@ function Navigation() {
                   {user?.isAdmin ? (
                     <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
                       <div className="bg-[#D8E3E7] rounded-b-3xl shadow-sm text-base text-center">
+                        {/* Navigate to profile page */}
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200 py-2">
+                          <Link to={`/profile/${user._id}/edit`}>
+                            Thông tin tài khoản
+                          </Link>
+                        </li>
                         {/* Navigate to orders page */}
-                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200 py-2">
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
 
                         {/* Navigate to dashboard page */}
-                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200 py-2">
                           <Link to="/dashboard">Quản lý</Link>
                         </li>
 
                         {/* Navigate to chart page */}
-                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200 py-2">
                           <Link to="/chart">Thống kê</Link>
                         </li>
 
                         {/*Sign out and navigate to login page */}
                         <li
-                          className="cursor-pointer hover:bg-[#126E82] hover:text-white hover:rounded-b-2xl"
+                          className="cursor-pointer hover:bg-[#126E82] hover:text-white ease-in-out duration-200 hover:rounded-b-2xl py-2"
                           onClick={signoutHandler}
                         >
                           Đăng xuất
@@ -349,15 +351,21 @@ function Navigation() {
                     </ul>
                   ) : (
                     // User is not an admin
-                    <ul className="flex flex-col text-black absolute z-10 w-48">
-                      <div className="bg-[#51C4D3] rounded-b-3xl p-2">
-                        <li>
+                    <ul className="flex flex-col text-black absolute z-10 w-48 ease-in-out duration-200">
+                      <div className="bg-[#D8E3E7] rounded-b-3xl shadow-sm text-base text-center">
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200 py-2">
+                          <Link to={`/profile/${user._id}/edit`}>
+                            Thông tin tài khoản
+                          </Link>
+                        </li>
+                        <li className="my-1 hover:bg-[#126E82] hover:text-white ease-in-out duration-200 py-2">
                           <Link to="/orders">Lịch sử mua hàng</Link>
                         </li>
-                        <li>
-                          <button onClick={signoutHandler} className="button">
-                            Đăng xuất
-                          </button>
+                        <li
+                          className="cursor-pointer hover:bg-[#126E82] hover:text-white ease-in-out duration-200 hover:rounded-b-2xl py-2"
+                          onClick={signoutHandler}
+                        >
+                          Đăng xuất
                         </li>
                       </div>
                     </ul>

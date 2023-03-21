@@ -1,15 +1,12 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "../axios";
 import Loading from "../components/Loading";
 import SimilarProduct from "../components/SimilarProduct";
 import Rating from "../components/Rating";
-import {
-  useAddToCartMutation,
-  useCreateReviewMutation,
-} from "../services/appApi";
+import { useAddToCartMutation } from "../services/appApi";
 import ToastMessage from "../components/ToastMessage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, EffectCoverflow } from "swiper";
@@ -93,26 +90,22 @@ function Product() {
   }, [product, setViewedProducts]);
   localStorage.setItem("viewed products", JSON.stringify(viewedProducts));
 
-  const dispatch = useDispatch();
   const [addToCart, { isSuccess }] = useAddToCartMutation();
-  const [createReview, { isError, isSuccess1 }] = useCreateReviewMutation();
   const navigate = useNavigate();
 
   // Submit reviews (not finished yet)
   const submitHandler = (e) => {
     e.preventDefault();
-    if (comment && rating) {
-      window.alert("Gửi nhận xét thành công");
-      dispatch(
-        createReview({ rating, comment }).then(({ data }) => {
-          if (data?.length > 0) {
-            setLoading(true);
-            setTimeout(() => {
-              setLoading(false);
-            }, 1500);
-          }
+    if (comment && rating && user) {
+      axios
+        .post(`http://localhost:8080/products/${id}/reviews`, {
+          name: user.name,
+          comment,
+          rating,
         })
-      );
+        .then(() => alert("Gửi nhận xét thành công"))
+        .then(() => window.location.reload())
+        .catch(() => alert("Gửi nhận xết thất bại!"));
       setRating("");
       setComment("");
     } else {
@@ -187,7 +180,7 @@ function Product() {
     setTimeout(() => {
       setLoading(false);
     }, 300);
-  }, [id, isSuccess1]);
+  }, [id]);
 
   // Number of sold
   useEffect(() => {
@@ -291,6 +284,10 @@ function Product() {
       ></div>
     ));
 
+  console.log(
+    product.reviews.filter((review) => review.rating === 5).length /
+      product.reviews.length
+  );
   return (
     <>
       <div className="flex justify-center">
@@ -353,13 +350,13 @@ function Product() {
         </div>
       </div>
 
-      <div className="big-phone:container big-phone:mx-auto small-phone:mx-4">
+      <div className="laptop:container laptop:mx-auto">
         {loading ? (
           <Loading />
         ) : (
           <>
             {/* Add/ Remove to favourite products */}
-            <div className="my-8 grid grid-cols-5 bg-watched text-white p-12 relative">
+            <div className="laptop:my-8 grid grid-cols-5 bg-watched text-white p-12 relative">
               {uniqueArray.map((arr) => arr._id).includes(id) ? (
                 <div
                   className="absolute right-0 px-2 py-1 bg-[#D8E3E7] text-black rounded-bl-lg shadow-sm cursor-pointer hover:bg-red-300 hover:text-white ease-in-out duration-200"
@@ -427,15 +424,21 @@ function Product() {
                         &nbsp;
                         <Rating
                           rating={
-                            product.reviews.reduce((a, c) => c.rating + a, 0) /
-                              product.reviews.length || 0
+                            (
+                              product.reviews.reduce(
+                                (a, c) => c.rating + a,
+                                0
+                              ) / product.reviews.length
+                            ).toFixed(1) || 0
                           }
                           caption=" "
                         ></Rating>
                         &nbsp;
                         <span>
-                          {product.reviews.reduce((a, c) => c.rating + a, 0) /
-                            product.reviews.length || 0}
+                          {(
+                            product.reviews.reduce((a, c) => c.rating + a, 0) /
+                            product.reviews.length
+                          ).toFixed(1) || 0}
                           )
                         </span>
                       </div>
@@ -561,7 +564,7 @@ function Product() {
             </div>
 
             {/* Tabs */}
-            <Box sx={{ width: "100%" }} className="overflow-x-auto">
+            <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
                   value={value}
@@ -659,7 +662,7 @@ function Product() {
 
               {/* Review Tab */}
               <TabPanel value={value} index={2}>
-                <div className="big-phone:container big-phone:mx-auto my-8 grid big-tablet:grid-cols-2 small-phone:grid-cols-1 gap-8">
+                <div className="my-8 grid big-tablet:grid-cols-2 small-phone:grid-cols-1 gap-8">
                   <div className="container mx-auto bg-[#132C33] p-4 big-tablet:col-span-1 rounded-lg shadow-sm">
                     <p className="text-2xl text-white text-center">
                       Viết nhận xét
@@ -694,24 +697,16 @@ function Product() {
                               </strong>
                             </label>
                             <textarea
+                              className="h-72"
                               id="comment"
                               value={comment}
                               onChange={(e) => setComment(e.target.value)}
                             ></textarea>
-                            <div>
-                              {/* <label>
-                          {loadingReviewCreate && <LoadingBox></LoadingBox>}
-                          {errorReviewCreate && (
-                            <MessageBox variant="danger">
-                              {errorReviewCreate}
-                            </MessageBox>
-                          )}
-                        </label> */}
-                            </div>
+                            <div></div>
                             <div className="text-center">
                               <button
                                 variant="contained"
-                                className="bg-[#132C33] button"
+                                className="button text-black bg-[#D8E3E7]"
                                 type="submit"
                               >
                                 Gửi đánh giá
@@ -730,29 +725,202 @@ function Product() {
                     <div className="p-2 bg-[#D8E3E7] rounded-lg">
                       <p>Bình luận ({product.reviews.length})</p>
                     </div>
-                    <div className="p-2 bg-[#D8E3E7] my-4 overflow-y-auto h-72 rounded-lg">
+                    <div className="p-2 bg-[#D8E3E7] my-4 big-phone:h-128 small-phone:h-180 rounded-lg">
                       {product.reviews.length === 0 ? (
                         <p>Chưa có đánh giá</p>
                       ) : (
-                        <ul className="rounded-lg">
-                          {product.reviews.map((review) => (
-                            <li key={review._id} className="my-8">
-                              {/* <strong>{review.name}</strong> */}
-                              <Rating rating={review.rating} caption=" ">
-                                {review.rating}
-                              </Rating>
-                              <p>
-                                {review.date
-                                  .slice(0, 10)
-                                  .toString()
-                                  .split("-")
-                                  .reverse()
-                                  .join("-")}{" "}
+                        <div className="flex flex-col justify-around">
+                          <div className="flex big-phone:flex-row small-phone:flex-col">
+                            <div className="flex flex-col big-desktop:w-5/12 big-tablet:w-4/12 big-phone:w-4/12  text-center justify-center">
+                              <p className="laptop:text-6xl big-tablet:text-4xl big-phone:text-5xl small-phone:text-6xl">
+                                {product.rating.toFixed(1)}
                               </p>
-                              <p>Nội dung: {review.comment}</p>
-                            </li>
-                          ))}
-                        </ul>
+                              <Rating
+                                rating={product.rating.toFixed(2)}
+                                caption="Đã đánh giá "
+                              >
+                                {product.rating.toFixed(2)}
+                              </Rating>
+                              <p className="laptop:text-base big-phone:text-sm">
+                                Điểm trung bình
+                              </p>
+                            </div>
+                            <div className="h-full big-desktop:w-7/12 big-phone:w-8/12 p-4 small-phone:w-full flex flex-row big-phone:justify-center items-center">
+                              <div className="flex flex-col desktop:w-8/12 big-tablet:w-5/12 small-phone:w-6/12">
+                                <div className="big-phone:w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#132C33] shadow-sm">
+                                  <div
+                                    className="bg-[#51C4D3] h-2.5 rounded-full"
+                                    style={{
+                                      width: `${
+                                        (product.reviews.filter(
+                                          (review) => review.rating === 5
+                                        ).length /
+                                          product.reviews.length) *
+                                        100
+                                      }%`,
+                                    }}
+                                  ></div>
+                                </div>
+                                <Rating rating={5} caption="Đã đánh giá ">
+                                  {5}
+                                </Rating>
+                                <div className="big-phone:w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#132C33] shadow-sm">
+                                  <div
+                                    className="bg-[#51C4D3] h-2.5 rounded-full"
+                                    style={{
+                                      width: `${
+                                        (product.reviews.filter(
+                                          (review) => review.rating === 4
+                                        ).length /
+                                          product.reviews.length) *
+                                        100
+                                      }%`,
+                                    }}
+                                  ></div>
+                                </div>
+                                <Rating rating={4} caption="Đã đánh giá ">
+                                  {4}
+                                </Rating>
+                                <div className="big-phone:w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#132C33] shadow-sm">
+                                  <div
+                                    className="bg-[#51C4D3] h-2.5 rounded-full"
+                                    style={{
+                                      width: `${
+                                        (product.reviews.filter(
+                                          (review) => review.rating === 3
+                                        ).length /
+                                          product.reviews.length) *
+                                        100
+                                      }%`,
+                                    }}
+                                  ></div>
+                                </div>
+                                <Rating rating={3} caption="Đã đánh giá ">
+                                  {3}
+                                </Rating>
+                                <div className="big-phone:w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#132C33] shadow-sm">
+                                  <div
+                                    className="bg-[#51C4D3] h-2.5 rounded-full"
+                                    style={{
+                                      width: `${
+                                        (product.reviews.filter(
+                                          (review) => review.rating === 2
+                                        ).length /
+                                          product.reviews.length) *
+                                        100
+                                      }%`,
+                                    }}
+                                  ></div>
+                                </div>
+                                <Rating rating={2} caption="Đã đánh giá ">
+                                  {2}
+                                </Rating>
+                                <div className="big-phone:w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#132C33] shadow-sm">
+                                  <div
+                                    className="bg-[#51C4D3] h-2.5 rounded-full"
+                                    style={{
+                                      width: `${
+                                        (product.reviews.filter(
+                                          (review) => review.rating === 1
+                                        ).length /
+                                          product.reviews.length) *
+                                        100
+                                      }%`,
+                                    }}
+                                  ></div>
+                                </div>
+                                <Rating rating={1} caption="Đã đánh giá ">
+                                  {1}
+                                </Rating>
+                              </div>
+                              <div className="flex flex-col desktop:w-4/12 big-tablet:w-7/12 small-phone:w-6/12 laptop:text-base big-tablet:text-sm tablet:text-base big-phone:text-sm">
+                                <div className="my-1 ml-2">
+                                  (
+                                  {
+                                    product.reviews.filter(
+                                      (review) => review.rating === 5
+                                    ).length
+                                  }{" "}
+                                  đánh giá )
+                                </div>
+                                <div className="my-1 ml-2">
+                                  (
+                                  {
+                                    product.reviews.filter(
+                                      (review) => review.rating === 4
+                                    ).length
+                                  }{" "}
+                                  đánh giá )
+                                </div>
+                                <div className="my-1 ml-2">
+                                  (
+                                  {
+                                    product.reviews.filter(
+                                      (review) => review.rating === 3
+                                    ).length
+                                  }{" "}
+                                  đánh giá )
+                                </div>
+                                <div className="my-1 ml-2">
+                                  (
+                                  {
+                                    product.reviews.filter(
+                                      (review) => review.rating === 2
+                                    ).length
+                                  }{" "}
+                                  đánh giá )
+                                </div>
+                                <div className="my-1 ml-2">
+                                  (
+                                  {
+                                    product.reviews.filter(
+                                      (review) => review.rating === 1
+                                    ).length
+                                  }{" "}
+                                  đánh giá )
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="max-h-180">
+                            <ul className="overflow-y-auto max-h-64 big-phone:p-4 small-phone:py-2 small-phone:pl-2 border-teal-900 border-x-2 border-t-2">
+                              {product.reviews.map((review) => (
+                                <li
+                                  key={review._id}
+                                  className="my-8 border-teal-900 border-b-2 p-4"
+                                >
+                                  <div className="flex laptop:flex-row big-tablet:flex-col big-phone:justify-between big-phone:flex-row small-phone:flex-col mb-4">
+                                    <p className="laptop:text-lg big-tablet:text-base">
+                                      Tên khách hàng: {review.name}
+                                    </p>
+                                    <p className="text-sm">
+                                      Ngày:{" "}
+                                      {review.date
+                                        .slice(0, 10)
+                                        .toString()
+                                        .split("-")
+                                        .reverse()
+                                        .join("-")}{" "}
+                                    </p>
+                                  </div>
+
+                                  <div className="p-4 bg-slate-300">
+                                    <div className="flex flex-row">
+                                      <p>Đánh giá</p>&nbsp;
+                                      <Rating
+                                        rating={review.rating}
+                                        caption="Đã đánh giá"
+                                      >
+                                        {review.rating}
+                                      </Rating>
+                                    </div>
+                                    <p>Nội dung: {review.comment}</p>
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>

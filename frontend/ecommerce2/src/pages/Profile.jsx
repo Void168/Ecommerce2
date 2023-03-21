@@ -7,6 +7,7 @@ import { Alert, Avatar } from "@mui/material";
 import { useSelector } from "react-redux";
 import SelectAddress from "../components/SelectAddress";
 import { AppContext } from "../context/AppContext";
+import TextField from "@mui/material/TextField";
 
 function Profile() {
   const { id } = useParams();
@@ -149,6 +150,15 @@ function Profile() {
                     Thông tin tài khoản
                   </strong>
                 </div>
+                <TextField
+                  id="standard-read-only-input"
+                  label="Tên"
+                  defaultValue={name}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                />
 
                 {/* User's name */}
                 <div>
@@ -234,7 +244,7 @@ function Profile() {
                 </div>
               </div>
 
-                {/* Choose Avatar */}
+              {/* Choose Avatar */}
               <div className="laptop:col-span-3 small-phone:col-span-5 p-4">
                 <div className="text-center">
                   <div className="flex justify-center">
@@ -281,9 +291,9 @@ function Profile() {
                 </div>
               </div>
             </form>
-            </div>
-            
-            {/* Button submit */}
+          </div>
+
+          {/* Button submit */}
           <div className="flex justify-center">
             <button
               type="submit"

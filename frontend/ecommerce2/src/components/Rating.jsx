@@ -4,7 +4,7 @@ function Rating(props) {
   const { rating } = props;
   return (
     <>
-      <div className="text-cyan-600">
+      <div className="text-[#51C4D3] laptop:text-base big-tablet:text-xs tablet:text-base big-phone:text-xs small-phone:text-sm">
         {rating <= 0 && (
           <>
             <span>
@@ -30,7 +30,7 @@ function Rating(props) {
             className={
               rating >= 1
                 ? "fas fa-star"
-                : rating >= 0.5
+                : rating >= 0.1
                 ? "fas fa-star-half-alt"
                 : "fa fa-star-o"
             }
@@ -41,7 +41,7 @@ function Rating(props) {
             className={
               rating >= 2
                 ? "fas fa-star"
-                : rating >= 1.5
+                : rating >= 1.1
                 ? "fas fa-star-half-alt"
                 : "fa fa-star-o"
             }
@@ -52,7 +52,7 @@ function Rating(props) {
             className={
               rating >= 3
                 ? "fas fa-star"
-                : rating >= 2.5
+                : rating >= 2.1
                 ? "fas fa-star-half-alt"
                 : "fa fa-star-o"
             }
@@ -63,7 +63,7 @@ function Rating(props) {
             className={
               rating >= 4
                 ? "fas fa-star"
-                : rating >= 3.5
+                : rating >= 3.1
                 ? "fas fa-star-half-alt"
                 : "fa fa-star-o"
             }
@@ -74,7 +74,7 @@ function Rating(props) {
             className={
               rating >= 5
                 ? "fas fa-star"
-                : rating >= 4.5
+                : rating >= 4.1
                 ? "fas fa-star-half-alt"
                 : "fa fa-star-o"
             }

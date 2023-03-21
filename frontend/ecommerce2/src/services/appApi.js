@@ -44,15 +44,6 @@ export const appApi = createApi({
       }),
     }),
 
-    // create review
-    createReview: builder.mutation({
-      query: (id) => ({
-        url: `/products/${id}/reviews`,
-        body: id,
-        method: 'POST',
-      }),
-    }),
-
     // add to cart
     addToCart: builder.mutation({
       query: (cartInfo) => ({
@@ -162,7 +153,6 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useCreateProductMutation,
-  useCreateReviewMutation,
   useAddToCartMutation,
   useDeleteUserMutation,
   useRemoveFromCartMutation,

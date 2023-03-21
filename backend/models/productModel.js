@@ -1,11 +1,7 @@
 import mongoose from 'mongoose'
 
 const reviewSchema = new mongoose.Schema({
-  // owner: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'User',
-  //     required: true,
-  //   },
+  name: { type: String, required: true },
   comment: { type: String, required: true },
   rating: { type: Number, required: true },
   date: {

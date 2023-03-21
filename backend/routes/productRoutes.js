@@ -182,7 +182,7 @@ productRouter.post('/increase-cart', async (req, res) => {
 })
 
 productRouter.post('/decrease-cart', async (req, res) => {
-  const { userId, productId, price } = req.body
+  const {userId, productId, price } = req.body
   try {
     const product = await Product.findById(productId)
     const user = await User.findById(userId)
@@ -202,11 +202,17 @@ productRouter.post('/decrease-cart', async (req, res) => {
 
 productRouter.post('/:id/reviews', async (req, res) => {
   const { id } = req.params
-  const { comment, rating } = req.body
+  const { name, comment, rating } = req.body
   try {
     const product = await Product.findById(id)
     if (product) {
+      if (product.reviews.find((x) => x.name === name)) {
+        return res
+          .status(400)
+          .send({ message: 'Bạn đã bình luận về sản phẩm này rồi' });
+      }
       const review = {
+        name,
         rating,
         comment,
       }
