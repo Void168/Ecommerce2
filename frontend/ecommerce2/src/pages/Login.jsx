@@ -103,7 +103,7 @@ function Login() {
                   <label htmlFor="email">Email</label>
                   <br />
                   <TextField
-                    className="w-full shadow-none small-phone:m-0"
+                    className="w-full shadow-none small-phone:m-0 px-2"
                     type="email"
                     id="email"
                     name="email"

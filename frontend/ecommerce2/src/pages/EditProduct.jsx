@@ -131,10 +131,13 @@ function EditProduct() {
         status,
       }).then(({ data }) => {
         if (data.length > 0) {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
           setTimeout(() => {
-            alert("cập nhật thành công");
             navigate(-1);
-          }, 500);
+          }, 2000);
         }
       });
   };
@@ -190,9 +193,9 @@ function EditProduct() {
                 <div className="grid grid-cols-5">
                   <div className="laptop:col-span-2 small-phone:col-span-5 p-4">
                     <div className="small-phone:text-center laptop:text-left">
-                      <strong className="text-3xl small-phone:text-2xl">
+                      <p className="text-center big-phone:text-4xl small-phone:text-2xl">
                         Điều chỉnh sản phẩm
-                      </strong>
+                      </p>
                     </div>
 
                     {/* Product's Title */}

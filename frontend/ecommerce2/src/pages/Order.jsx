@@ -79,14 +79,15 @@ function Order() {
   if (firstNumber < 0) {
     firstNumber = 0;
   }
+ 
   let lastNumber =
     filteredOrder.length -
     filteredOrder.length -
     8 * (-Math.ceil(filteredOrder.length / 8) + page + 2);
-  
+
   return (
     <div className="big-tablet:container big-tablet:mx-auto">
-      <p className="text-center text-3xl mb-4">Đơn hàng của bạn</p>
+      <p className="text-center text-4xl mb-4">Đơn hàng của bạn</p>
       <div className="grid grid-cols-4">
         <div className="container mx-auto laptop:col-span-1 small-phone:col-span-4 flex laptop:flex-col laptop:justify-start big-phone:flex-row small-phone:flex-col small-phone:justify-center">
           {/* Date picker */}

@@ -13,6 +13,7 @@ function ProductPreview({
   pictures,
   discount,
   rating,
+  status,
 }) {
   const { user, USD_VND_EXCHANGE_RATE, exchangePrice } = useContext(AppContext);
   const priceByVND = exchangePrice(price * USD_VND_EXCHANGE_RATE);
@@ -106,19 +107,25 @@ function ProductPreview({
           </Link>
 
           {/* Add to cart button */}
-          <button
-            className="button1 absolute desktop:inset-x-10 laptop:inset-x-5 inset-y-36 max-h-max big-desktop:text-base laptop:text-xs"
-            onClick={(e) =>
-              addToCart({
-                userId: user._id,
-                productId: _id,
-                price: price,
-                image: pictures[0].url,
-              })
-            }
-          >
-            Thêm vào giỏ
-          </button>
+          {status === "Hết hàng" ? (
+            <button className="button1 absolute desktop:inset-x-10 laptop:inset-x-5 inset-y-36 max-h-max big-desktop:text-base laptop:text-xs">
+              Hết hàng
+            </button>
+          ) : (
+            <button
+              className="button1 absolute desktop:inset-x-10 laptop:inset-x-5 inset-y-36 max-h-max big-desktop:text-base laptop:text-xs"
+              onClick={(e) =>
+                addToCart({
+                  userId: user._id,
+                  productId: _id,
+                  price: price,
+                  image: pictures[0].url,
+                })
+              }
+            >
+              Thêm vào giỏ
+            </button>
+          )}
         </div>
       </div>
     </>

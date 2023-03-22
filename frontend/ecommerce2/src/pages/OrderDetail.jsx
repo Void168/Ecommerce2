@@ -26,7 +26,6 @@ function OrderDetail() {
       const idList = Object.keys(order?.products).filter((id) =>
         id.includes("63d")
       );
-
       setId([...idList]);
     };
     idList();
@@ -80,7 +79,7 @@ function OrderDetail() {
                 <p className="truncate my-4">Email: {order?.email}</p>
                 <p className="truncate my-4">
                   Số điện thoại:{" "}
-                  {order?.phone.replace(order?.phone.slice(2, 8), "******")}
+                  {order?.phone?.replace(order?.phone?.slice(2, 8), "******")}
                 </p>
                 <p className="truncate my-4">Địa chỉ: {order?.address}</p>
                 <div className=" my-4">

@@ -135,7 +135,7 @@ function SearchPage() {
 
           {/* List of search products length */}
           {searchList.length > 0 ? (
-            <p className="mt-4 text-2xl text-white text-center px-4">
+            <p className="mt-4 text-2xl text-white text-center px-4 py-8">
               Có {searchList.length} sản phẩm
             </p>
           ) : null}

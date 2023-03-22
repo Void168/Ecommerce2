@@ -37,10 +37,12 @@
     @apply ml-2;
   }
 
-  tr,
-  td,
-  th {
-    @apply border-2 border-[#132C33] p-4 text-center;
+  tr{
+    @apply border-2 border-[#132C33] text-center odd:bg-[#D8E3E7] even:bg-[#126E82] even:text-white;
+  }
+
+  td{
+    @apply px-2 py-4
   }
 
   th {
@@ -285,9 +287,18 @@ body {
   box-shadow: none;
 }
 .MuiInputBase-input {
-  padding: 0.5rem 1rem !important;
   box-shadow: none;
 }
+
+.css-v4u5dn-MuiInputBase-root-MuiInput-root:after,
+.css-q0jhri-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: 2px solid #fff !important;
+}
+
+.css-1x51dt5-MuiInputBase-input-MuiInput-input{
+padding: 0.5rem 1rem !important;
+}
+
 .react-date-picker__clear-button {
   display: none !important;
 }
@@ -404,12 +415,13 @@ canvas {
   height: max-content !important;
 }
 
-.carousel .thumb{
+.carousel .thumb {
   border: none !important;
 }
 
-.carousel .thumb.selected, .carousel .thumb:hover {
-  border: 3px solid #51C4D3 !important;
+.carousel .thumb.selected,
+.carousel .thumb:hover {
+  border: 3px solid #51c4d3 !important;
 }
 
 .navlink {
@@ -441,3 +453,11 @@ canvas {
   transform-origin: left;
   transform: scaleX(1);
 }
+
+.ql-editor{
+  height: 47rem !important;
+ }
+
+.ql-container{
+  overflow-y: auto !important;
+  }

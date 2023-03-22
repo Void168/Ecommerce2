@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import { AppContext } from "../context/AppContext.jsx";
-import { NavLink, useNavigate, Link } from "react-router-dom";
+import { NavLink, useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout, resetNotifications } from "../features/userSlice.js";
 import categories from "../categories.js";
@@ -17,6 +17,7 @@ function Navigation() {
   const [bellPos, setBellPos] = useState({});
   const [display, setDisplay] = useState(false);
   const { user, setLoading } = useContext(AppContext);
+  const location = useLocation();
 
   const showMoreNotifications = () => {
     setVisible((prevValue) => prevValue + 5);
@@ -288,14 +289,26 @@ function Navigation() {
 
               {/* No Login yet */}
               {!user ? (
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? activeLink : normalLink
-                  }
-                  to="/login"
-                >
-                  Đăng nhập
-                </NavLink>
+                <>
+                  {location.pathname === "/register" ? (
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? activeLink : normalLink
+                      }
+                    >
+                      Đăng ký
+                    </NavLink>
+                  ) : (
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? activeLink : normalLink
+                      }
+                      to="/login"
+                    >
+                      Đăng nhập
+                    </NavLink>
+                  )}
+                </>
               ) : (
                 // Logged in
                 <div

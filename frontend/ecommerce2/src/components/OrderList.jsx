@@ -63,6 +63,8 @@ function OrderList() {
                         <th>Số sản phẩm</th>
                         <th>Tổng cộng</th>
                         <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
                       </tr>
                     </thead>
                     <tbody>

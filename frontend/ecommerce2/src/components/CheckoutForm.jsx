@@ -1,5 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
@@ -23,10 +23,13 @@ function CheckoutForm() {
   const [isOpen, setIsOpen] = useState(false);
   const { number, chosenProvince, chosenDistrict, chosenWard } =
     useContext(AppContext);
-  
+
   const fullAddress =
     number + ", " + chosenWard + ", " + chosenDistrict + ", " + chosenProvince;
-  
+  useEffect(() => {
+    if (!isOpen)
+      setAddress(fullAddress);
+  }, []);
   // Handle open to fill other address
   const handleOpen = () => {
     setIsOpen(!isOpen);
@@ -57,43 +60,48 @@ function CheckoutForm() {
       });
       setPaying(false);
 
-      if (paymentIntent && isOpen === false) {
-        createOrder({
-          userId: user._id,
-          cart: user.cart,
-          address,
-          phone,
-          name,
-          email,
-        }).then((res) => {
-          if (!isLoading && !isError) {
-            setAlertMessage(`Thanh toán ${paymentIntent.status}`);
-            setTimeout(() => {
-              navigate("/orders");
-            }, 2000);
-          }
-        });
-      } else {
-        createOrder({
-          userId: user._id,
-          cart: user.cart,
-          address: fullAddress,
-          phone,
-          name,
-          email,
-        }).then((res) => {
-          if (!isLoading && !isError) {
-            setAlertMessage(`Thanh toán ${paymentIntent.status}`);
-            setTimeout(() => {
-              navigate("/orders");
-            }, 2000);
-          }
-        });
+      if (paymentIntent) {
+        if (isOpen) {
+          createOrder({
+            userId: user._id,
+            cart: user.cart,
+            address: address,
+            phone: phone,
+            name,
+            email,
+          }).then((res) => {
+            if (!isLoading && !isError) {
+              setAlertMessage(`Thanh toán ${paymentIntent.status}`);
+              setTimeout(() => {
+                navigate("/orders");
+              }, 2000);
+            }
+          });
+        } else {
+          createOrder({
+            userId: user._id,
+            cart: user.cart,
+            address: address,
+            phone: phone,
+            name,
+            email,
+          }).then((res) => {
+            if (!isLoading && !isError) {
+              setAlertMessage(`Thanh toán ${paymentIntent.status}`);
+              setTimeout(() => {
+                navigate("/orders");
+              }, 2000);
+            }
+          });
+        }
       }
     } catch (e) {
       console.log(e);
     }
   };
+
+  console.log(address);
+  console.log(isOpen);
 
   return (
     <div className="big-tablet:my-4 p-2">
@@ -139,7 +147,7 @@ function CheckoutForm() {
                 <input
                   type="text"
                   placeholder="Địa chỉ"
-                  value={user.address}
+                  value={user?.address ? user?.address : address}
                   onChange={(e) => setAddress(e.target.value)}
                   className="w-6/12 small-phone:w-full"
                 />
@@ -159,15 +167,6 @@ function CheckoutForm() {
             <>
               {/* Other address */}
               <SelectAddress />
-              <label>Địa chỉ</label>
-              <input
-                className="w-full bg-white"
-                type="text"
-                placeholder="Nhập địa chỉ"
-                value={fullAddress}
-                disabled
-                onChange={(e) => setAddress(e.target.value)}
-              />
               <div className="flex flex-row items-center justify-center">
                 <div
                   className="m-4 p-2 bg-[#132C33] text-white shadow-sm text-center rounded-lg cursor-pointer big-phone:w-4/12 small-phone:w-/12"
@@ -189,7 +188,7 @@ function CheckoutForm() {
           <input
             type="phone"
             placeholder="Số điện thoại"
-            value={user.phone}
+            value={user?.phone ? user?.phone : phone}
             onChange={(e) => setPhone(e.target.value)}
             required
             className="w-6/12 small-phone:w-full"

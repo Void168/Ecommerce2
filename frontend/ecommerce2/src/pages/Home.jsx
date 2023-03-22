@@ -578,53 +578,59 @@ function Home() {
           </div>
         ) : (
           <div className="bg-watched px-4 py-8 my-8 small-phone:grid-cols-2 galaxy-fold:grid-cols-1 rounded-lg shadow-sm">
-            <Swiper
-              watchSlidesProgress={true}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                320: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 4,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 5,
-                  spaceBetween: 50,
-                },
-              }}
-              navigation={true}
-              grabCursor={true}
-              spaceBetween={30}
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-              }}
-              modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
-              className="shadow-sm outline-0"
-            >
-              {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
-                <SwiperSlide>
-                  <ViewedProduct
-                    {...lastProduct}
-                    key={index}
-                    product={lastProduct}
-                    className="min-h-max"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            {uniqueArray?.length > 0 ? (
+              <Swiper
+                watchSlidesProgress={true}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                pagination={{
+                  clickable: true,
+                }}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 50,
+                  },
+                }}
+                navigation={true}
+                grabCursor={true}
+                spaceBetween={30}
+                coverflowEffect={{
+                  rotate: 50,
+                  stretch: 0,
+                  depth: 100,
+                  modifier: 1,
+                  slideShadows: true,
+                }}
+                modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
+                className="shadow-sm outline-0"
+              >
+                {uniqueArray?.slice(0, 8).map((lastProduct, index) => (
+                  <SwiperSlide>
+                    <ViewedProduct
+                      {...lastProduct}
+                      key={index}
+                      product={lastProduct}
+                      className="min-h-max"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              <p className="text-white text-center">
+                Bạn chưa xem sản phẩm nào hoặc đã đăng xuất khỏi tài khoản trước đó
+              </p>
+            )}
           </div>
         )}
       </div>

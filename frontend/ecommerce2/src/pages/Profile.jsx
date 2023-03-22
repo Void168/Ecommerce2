@@ -3,11 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateProfileMutation } from "../services/appApi";
 import axios from "../axios";
 import Loading from "../components/Loading";
-import { Alert, Avatar } from "@mui/material";
+import {
+  Alert,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import SelectAddress from "../components/SelectAddress";
 import { AppContext } from "../context/AppContext";
 import TextField from "@mui/material/TextField";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Profile() {
   const { id } = useParams();
@@ -30,6 +37,7 @@ function Profile() {
   const [avatarToRemove, setAvatarToRemove] = useState(null);
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const user = useSelector((state) => state.user);
   const [updateProfile, { isError, error, isLoading, isSuccess }] =
     useUpdateProfileMutation();
@@ -37,7 +45,6 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     // Get user
     axios
       .get("/users/" + id)
@@ -53,6 +60,11 @@ function Profile() {
       .catch((e) => console.log(e));
   }, [id]);
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   // Submit change
   const handleSubmit = (e) => {
@@ -142,88 +154,100 @@ function Profile() {
             {/* Update form */}
             <form
               onSubmit={handleSubmit}
-              className="form__create--user p-2 w-full grid grid-cols-5"
+              className="form__create--user p-2 w-full grid grid-cols-5 bg-slate-400 shadow-sm"
             >
               <div className="laptop:col-span-2 small-phone:col-span-5 p-4">
                 <div className="small-phone:text-center laptop:text-left">
-                  <strong className="text-3xl small-phone:text-2xl">
+                  <p className="big-phone:text-4xl small-phone:text-2xl text-center">
                     Thông tin tài khoản
-                  </strong>
+                  </p>
                 </div>
-                <TextField
-                  id="standard-read-only-input"
-                  label="Tên"
-                  defaultValue={name}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  variant="standard"
-                />
-
                 {/* User's name */}
-                <div>
-                  <label>Tên</label>
-                  <br />
-                  <input
+                <div className="my-4">
+                  <TextField
+                    id="standard-read-only-input"
                     className="w-full"
-                    type="text"
-                    placeholder="Nhập tên"
-                    value={name}
-                    disabled
+                    label="Tên"
+                    defaultValue={name}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    variant="standard"
                   />
                 </div>
 
                 {/* User's email */}
-                <div>
-                  <label>Email</label>
-                  <br />
-                  <input
-                    className="w-full"
-                    as="textarea"
-                    disabled
-                    placeholder="Nhập email"
-                    value={email}
+                <div className="my-4">
+                  <TextField
+                    id="standard-read-only-input"
+                    className="w-full my-4"
+                    label="Email"
+                    defaultValue={email}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    variant="standard"
                   />
                 </div>
 
                 {/* User's password */}
-                <div>
-                  <label>Đổi Mật khẩu</label>
-                  <br />
-                  <input
-                    className="w-full"
-                    type="text"
+                <div className="my-4">
+                  {/* <TextField
+                    id="outlined-password-input"
+                    label="Đổi mật khẩu"
+                    type="password"
                     placeholder="Nhập mật khẩu mới"
-                    value={password}
+                  /> */}
+                  <InputLabel
+                    htmlFor="outlined-adornment-password"
+                    className="w-full"
+                  >
+                    Đổi mật khẩu
+                  </InputLabel>
+                  <Input
+                    id="standard-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    className="w-full"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    defaultValue={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-
                 {/* User's phone */}
-                <div>
-                  <label>Số điện thoại</label>
-                  <br />
-                  <input
+                <div className="my-4">
+                  <TextField
                     className="w-full"
-                    type="text"
-                    placeholder="Nhập số điện thoại"
-                    value={phone}
+                    id="standard-basic"
+                    label="Số điện thoại"
+                    variant="standard"
+                    defaultValue={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
 
                 {/* User's address */}
                 <div>
-                  <label>Địa chỉ</label>
+                  <label>Địa chỉ hiện tại</label>
                   <p className="text-sm"> ({address})</p>
                 </div>
 
                 {/* User's address change */}
-                <div className="mt-4">
-                  <label>Thay đổi địa chỉ</label>
+                <div className="mt-4 pt-4 border-t-2">
+                  <p className="text-center text-xl">Thay đổi địa chỉ</p>
                   <SelectAddress />
+                  <label>Hiển thị địa chỉ mới</label>
                   <input
-                    className="w-full"
+                    className="w-full bg-white"
                     type="text"
                     placeholder="Nhập địa chỉ"
                     value={fullAddress}
@@ -250,7 +274,11 @@ function Profile() {
                   <div className="flex justify-center">
                     <img
                       alt={`${user.name}`}
-                      src={`${user?.avatar?.at(-1)?.url}`}
+                      src={
+                        user?.avatar.at(-1)
+                          ? `${user?.avatar?.at(-1)?.url}`
+                          : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"
+                      }
                       className="w-32 h-32 rounded-full"
                     />
                   </div>
@@ -273,8 +301,8 @@ function Profile() {
                         <div>
                           <img
                             src={image.url}
-                            alt=""
-                            className="big-desktop:w-64 laptop:w-48 laptop:h-48 big-phone:h-32 big-phone:w-32 big-desktop:h-64 shadow-sm rounded-lg mx-4"
+                            alt="avatar"
+                            className="laptop:w-48 laptop:h-48 big-phone:h-32 big-phone:w-32 small-phone:h-24 small-phone:w-24 shadow-sm rounded-full mx-4"
                           />
                           {avatarToRemove !== image.public_id && (
                             <span>

@@ -36,6 +36,7 @@ function ProductList() {
                 <th>ID sản phẩm</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá sản phẩm</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>

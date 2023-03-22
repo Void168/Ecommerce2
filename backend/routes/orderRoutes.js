@@ -17,8 +17,8 @@ orderRouter.post('/', async (req, res) => {
       name: user.name,
       email: user.email,
       products: cart,
-      phone: user.phone,
-      address: user.address,
+      phone: user.phone || req.body.phone,
+      address: user.address || req.body.address,
     })
     order.count = cart.count
     order.total = cart.total

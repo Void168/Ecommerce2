@@ -92,22 +92,27 @@ function Product() {
 
   const [addToCart, { isSuccess }] = useAddToCartMutation();
   const navigate = useNavigate();
+  const listReviewName = product?.reviews?.map((review) => review.name);
 
   // Submit reviews (not finished yet)
   const submitHandler = (e) => {
     e.preventDefault();
-    if (comment && rating && user) {
-      axios
-        .post(`http://localhost:8080/products/${id}/reviews`, {
-          name: user.name,
-          comment,
-          rating,
-        })
-        .then(() => alert("Gửi nhận xét thành công"))
-        .then(() => window.location.reload())
-        .catch(() => alert("Gửi nhận xết thất bại!"));
-      setRating("");
-      setComment("");
+    if (comment && rating) {
+      if (!listReviewName?.includes(user.name)) {
+        axios
+          .post(`http://localhost:8080/products/${id}/reviews`, {
+            name: user.name,
+            comment,
+            rating,
+          })
+          .then(() => alert("Gửi nhận xét thành công"))
+          .then(() => window.location.reload())
+          .catch(() => alert("Gửi nhận xết thất bại!"));
+        setRating("");
+        setComment("");
+      } else {
+        alert("Bạn đã bình luận về sản phẩm này rồi");
+      }
     } else {
       alert("Hãy bình luận và chọn số sao");
     }
@@ -284,10 +289,6 @@ function Product() {
       ></div>
     ));
 
-  console.log(
-    product.reviews.filter((review) => review.rating === 5).length /
-      product.reviews.length
-  );
   return (
     <>
       <div className="flex justify-center">
@@ -424,21 +425,27 @@ function Product() {
                         &nbsp;
                         <Rating
                           rating={
-                            (
-                              product.reviews.reduce(
-                                (a, c) => c.rating + a,
-                                0
-                              ) / product.reviews.length
-                            ).toFixed(1) || 0
+                            product.reviews.length > 0
+                              ? (
+                                  product.reviews.reduce(
+                                    (a, c) => c.rating + a,
+                                    0
+                                  ) / product.reviews.length
+                                ).toFixed(1)
+                              : 0
                           }
                           caption=" "
                         ></Rating>
                         &nbsp;
                         <span>
-                          {(
-                            product.reviews.reduce((a, c) => c.rating + a, 0) /
-                            product.reviews.length
-                          ).toFixed(1) || 0}
+                          {product.reviews.length > 0
+                            ? (
+                                product.reviews.reduce(
+                                  (a, c) => c.rating + a,
+                                  0
+                                ) / product.reviews.length
+                              ).toFixed(1)
+                            : 0}
                           )
                         </span>
                       </div>
@@ -576,7 +583,10 @@ function Product() {
                   {/* Specifications Tab title */}
                   <Tab label="Thông số kỹ thuật" {...a11yProps(1)} />
                   {/* Review Tab title */}
-                  <Tab label="Bình luận" {...a11yProps(2)} />
+                  <Tab
+                    label={`Bình luận (${product.reviews.length})`}
+                    {...a11yProps(2)}
+                  />
                 </Tabs>
               </Box>
 
@@ -884,40 +894,42 @@ function Product() {
                           </div>
                           <div className="max-h-180">
                             <ul className="overflow-y-auto max-h-64 big-phone:p-4 small-phone:py-2 small-phone:pl-2 border-teal-900 border-x-2 border-t-2">
-                              {product.reviews.map((review) => (
-                                <li
-                                  key={review._id}
-                                  className="my-8 border-teal-900 border-b-2 p-4"
-                                >
-                                  <div className="flex laptop:flex-row big-tablet:flex-col big-phone:justify-between big-phone:flex-row small-phone:flex-col mb-4">
-                                    <p className="laptop:text-lg big-tablet:text-base">
-                                      Tên khách hàng: {review.name}
-                                    </p>
-                                    <p className="text-sm">
-                                      Ngày:{" "}
-                                      {review.date
-                                        .slice(0, 10)
-                                        .toString()
-                                        .split("-")
-                                        .reverse()
-                                        .join("-")}{" "}
-                                    </p>
-                                  </div>
-
-                                  <div className="p-4 bg-slate-300">
-                                    <div className="flex flex-row">
-                                      <p>Đánh giá</p>&nbsp;
-                                      <Rating
-                                        rating={review.rating}
-                                        caption="Đã đánh giá"
-                                      >
-                                        {review.rating}
-                                      </Rating>
+                              {product.reviews
+                                .map((review) => (
+                                  <li
+                                    key={review._id}
+                                    className="my-8 border-teal-900 border-b-2 p-4"
+                                  >
+                                    <div className="flex laptop:flex-row big-tablet:flex-col big-phone:justify-between big-phone:flex-row small-phone:flex-col mb-4">
+                                      <p className="laptop:text-lg big-tablet:text-base">
+                                        Tên khách hàng: {review.name}
+                                      </p>
+                                      <p className="text-sm">
+                                        Ngày:{" "}
+                                        {review.date
+                                          .slice(0, 10)
+                                          .toString()
+                                          .split("-")
+                                          .reverse()
+                                          .join("-")}{" "}
+                                      </p>
                                     </div>
-                                    <p>Nội dung: {review.comment}</p>
-                                  </div>
-                                </li>
-                              ))}
+
+                                    <div className="p-4 bg-slate-300">
+                                      <div className="flex flex-row">
+                                        <p>Đánh giá</p>&nbsp;
+                                        <Rating
+                                          rating={review.rating}
+                                          caption="Đã đánh giá"
+                                        >
+                                          {review.rating}
+                                        </Rating>
+                                      </div>
+                                      <p>Nội dung: {review.comment}</p>
+                                    </div>
+                                  </li>
+                                ))
+                                .reverse()}
                             </ul>
                           </div>
                         </div>

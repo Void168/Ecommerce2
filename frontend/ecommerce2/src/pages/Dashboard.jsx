@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import OrderList from "../components/OrderList";
 import PropTypes from "prop-types";
@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import UserList from "../components/UserList";
 import Loading from "../components/Loading";
 import ArticleList from "../components/ArticleList";
+import { AppContext } from "../context/AppContext";
 
 // Props of Tabs MUI
 function TabPanel(props) {
@@ -47,6 +48,7 @@ function a11yProps(index) {
 function Dashboard() {
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
+  const {products, orders, user, articles} = useContext(AppContext)
 
   // Handle change tab
   const handleChange = (event, newValue) => {
@@ -78,10 +80,10 @@ function Dashboard() {
           aria-label="Dashboard Tabs"
           sx={{ borderRight: 1, borderColor: "divider" }}
         >
-          <Tab label="Sản phẩm" {...a11yProps(0)} />
-          <Tab label="Đơn hàng" {...a11yProps(1)} />
+          <Tab label={`Sản phẩm (${products.length})`} {...a11yProps(0)} />
+          <Tab label={`Đơn hàng (${orders.length})`} {...a11yProps(1)} />
           <Tab label="Khách hàng" {...a11yProps(2)} />
-          <Tab label="Bài viết" {...a11yProps(3)} />
+          <Tab label={`Bài viết (${articles.length})`} {...a11yProps(3)} />
         </Tabs>
         {loading ? (
           <div className="relative h-screen flex justify-center items-center text-center w-full">

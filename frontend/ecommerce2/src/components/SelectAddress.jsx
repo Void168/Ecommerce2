@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import React, { useEffect, useContext } from "react";
 import axios from "../axios";
 import { AppContext } from "../context/AppContext";
@@ -68,12 +69,13 @@ function SelectAddress() {
   return (
     <div>
       {/* Number */}
-      <div>
-        <label>Số nhà</label>
-        <input
+      <div className="my-4">
+        <TextField
           className="w-full"
-          type="text"
+          id="standard-basic"
           placeholder="Nhập số nhà"
+          label="Số nhà"
+          variant="standard"
           value={number}
           onChange={(e) => setNumber(e.target.value)}
         />
