@@ -2,6 +2,7 @@ const userRouter = express.Router()
 import express from 'express'
 import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
+import { generateToken, isAdmin, isAuth } from '../utils.js';
 
 //Sign Up
 
@@ -9,7 +10,20 @@ userRouter.post('/signup', async (req, res) => {
   const { name, email, password } = req.body
   try {
     const user = await User.create({ name, email, password })
-    res.json(user)
+    if (user) {
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+        res.send({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          phone: user.phone,
+          isAdmin: user.isAdmin,
+          token: generateToken(user),
+        });
+        return;
+      }
+    }
   } catch (e) {
     if (e.code === 11000) return res.status(401).send('Email đã tồn tại')
   }

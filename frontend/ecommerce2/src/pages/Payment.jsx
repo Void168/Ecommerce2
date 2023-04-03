@@ -28,12 +28,12 @@ function Payment() {
             }}
             data-aos="fade-up"
           >
-            <div className="text-6xl text-center mt-4 mb-20 drop-shadow-2xl">
+            <div className="big-phone:text-6xl small-phone:text-4xl text-center mt-4 mb-20 drop-shadow-2xl">
               Phương thức thanh toán
             </div>
             <div className="flex justify-end items-end">
-              <div className="leading-8 bg-black bg-opacity-60 p-12 w-5/12 text-lg shadow-sm">
-                <p className="text-4xl text-center mb-20">
+              <div className="leading-8 bg-black bg-opacity-60 big-phone:p-12 small-phone:p-4 laptop:w-6/12 tablet:w-9/12 text-lg shadow-sm">
+                <p className="laptop:text-4xl text-center laptop:mb-20 tablet:mb-10 small-phone:text-3xl small-phone:mb-8">
                   Hướng dẫn thanh toán
                 </p>
                 <p>
@@ -46,20 +46,20 @@ function Payment() {
               </div>
             </div>
           </div>
-          <div className="container mx-auto">
-            <div className="flex justify-between">
+          <div className="container mx-auto flex flex-col justify-center">
+            <div className="flex big-tablet:justify-between small-phone:justify-center big-tablet:flex-row small-phone:flex-col">
               <div
-                className="bg-cover p-8 shadow-sm w-4/12 max-h-max"
+                className="bg-cover p-8 shadow-sm big-tablet:w-4/12 small-phone:w-full max-h-max big-tablet:mb-0 small-phone:mb-4"
                 style={{
                   backgroundImage: `url('https://www.shutterstock.com/shutterstock/videos/1066066966/thumb/12.jpg')`,
                 }}
-                data-aos="fade-up-right"
+                data-aos="fade-up"
               >
-                <p className="text-4xl mb-8 text-center text-black">
+                <p className="desktop:text-4xl big-tablet:text-2xl small-phone:text-4xl mb-8 text-center text-black">
                   Thanh toán tiền mặt
                 </p>
                 <div className="flex justify-end items-end">
-                  <p className="text-white leading-8 bg-black bg-opacity-60 p-12 text-lg w-full">
+                  <p className="text-white leading-8 bg-black bg-opacity-60 desktop:p-12 desktop:text-lg small-phone:p-4 big-tablet:text-sm w-full">
                     Quý khách có thể thanh toán tiền mặt trực tiếp khi mua hàng
                     tại Hệ thống siêu thị WeirdShop, hoặc thanh toán cho nhân
                     viên chuyển phát đối với hình thức chuyển phát COD khi mua
@@ -68,16 +68,16 @@ function Payment() {
                 </div>
               </div>
               <div
-                className="p-8 shadow-sm w-4/12 bg-cover"
+                className="p-8 shadow-sm big-tablet:w-4/12 small-phone:w-full bg-cover big-tablet:mb-0 small-phone:mb-4"
                 style={{
                   backgroundImage: `url('https://www.shutterstock.com/image-photo/credit-card-close-shot-selective-260nw-567634105.jpg')`,
                 }}
-                data-aos="fade-up-left"
+                data-aos="fade-up"
               >
-                <p className="text-4xl mb-8 text-center text-black">
+                <p className="desktop:text-4xl big-tablet:text-2xl small-phone:text-4xl mb-8 text-center text-black">
                   Thanh toán thẻ ATM nội địa - Internet Banking
                 </p>
-                <p className="text-white leading-8 bg-black bg-opacity-60 p-12 text-lg w-full">
+                <p className="text-white leading-8 bg-black bg-opacity-60 desktop:p-12 desktop:text-lg small-phone:p-4 big-tablet:text-sm w-full">
                   Quý khách có thể quẹt thanh toán bằng thẻ ATM của tất cả các
                   Ngân hàng nội địa Việt Nam trực tiếp khi mua hàng tại Hệ thống
                   showroom WeirdShop toàn quốc, hoặc thanh toán qua cổng
@@ -87,16 +87,16 @@ function Payment() {
             </div>
             <div className="flex justify-center">
               <div
-                className="bg-cover p-8 shadow-sm w-4/12"
+                className="bg-cover p-8 shadow-sm big-tablet:w-4/12 small-phone:w-full big-tablet:mb-0 small-phone:mb-4"
                 style={{
                   backgroundImage: `url('https://inkythuatso.com/uploads/images/2021/12/vnpay-logo-inkythuatso-01-13-16-26-42.jpg')`,
                 }}
                 data-aos="fade-up"
               >
-                <p className="text-4xl mb-8 text-center text-black">
+                <p className="desktop:text-4xl big-tablet:text-2xl small-phone:text-4xl mb-8 text-center text-black">
                   Thanh toán quét mã VNPAY-QR
                 </p>
-                <p className="text-white leading-8 bg-black bg-opacity-60 p-12 text-lg w-full">
+                <p className="text-white leading-8 bg-black bg-opacity-60 desktop:p-12 desktop:text-lg small-phone:p-4 big-tablet:text-sm w-full">
                   Thanh toán VNPAY-QR là hình thức thanh toán tiên phong cho xu
                   thế tiêu dùng không dùng tiền mặt tương lai. Thao tác thanh
                   toán an toàn, đơn giản, nhanh chóng và bảo mật cấp cao. Chỉ
@@ -106,18 +106,18 @@ function Payment() {
               </div>
             </div>
 
-            <div className="flex justify-between mb-8">
+            <div className="flex big-tablet:justify-between small-phone:justify-center big-tablet:flex-row small-phone:flex-col mb-8">
               <div
-                className="bg-cover p-8 shadow-sm w-4/12"
+                className="bg-cover p-8 shadow-sm big-tablet:w-4/12 small-phone:w-full big-tablet:mb-0 small-phone:mb-4"
                 style={{
                   backgroundImage: `url('https://magicpay.net/wp-content/uploads/2013/03/iStock_000009824865_ExtraSmall.jpg')`,
                 }}
-                data-aos="fade-up-right"
+                data-aos="fade-up"
               >
-                <p className="text-4xl mb-8 text-center text-black">
+                <p className="desktop:text-4xl big-tablet:text-2xl small-phone:text-4xl mb-8 text-center text-black">
                   Thanh toán thẻ quốc tế Visa, Master, JCB​
                 </p>
-                <p className="text-white leading-8 bg-black bg-opacity-60 p-12 text-lg w-full">
+                <p className="text-white leading-8 bg-black bg-opacity-60 desktop:p-12 desktop:text-lg small-phone:p-4 big-tablet:text-sm w-full">
                   WeirdShop hỗ trợ thanh toán bằng các loại thẻ thanh toán quốc
                   tế Visa, Mastercard, JCB tại tất cả hệ thống showroom
                   WeirdShop toàn quốc và website weirdshop.vn, đem đến sự thuận
@@ -125,16 +125,16 @@ function Payment() {
                 </p>
               </div>
               <div
-                className="bg-cover p-8 shadow-sm w-4/12"
+                className="bg-cover p-8 shadow-sm big-tablet:w-4/12 small-phone:w-full big-tablet:mb-0 small-phone:mb-4"
                 style={{
                   backgroundImage: `url('https://thumbs.dreamstime.com/b/icon-payment-installment-red-rectangular-frame-vector-illustration-installments-border-loan-zero-percent-drawing-picture-79979560.jpg')`,
                 }}
-                data-aos="fade-up-left"
+                data-aos="fade-up"
               >
-                <p className="text-4xl mb-8 text-center text-black">
+                <p className="desktop:text-4xl big-tablet:text-2xl small-phone:text-4xl mb-8 text-center text-black">
                   Thanh toán trả góp
                 </p>
-                <p className="text-white leading-8 bg-black bg-opacity-60 p-12 text-lg w-full">
+                <p className="text-white leading-8 bg-black bg-opacity-60 desktop:p-12 small-phone:p-4 desktop:text-lg big-tablet:text-sm w-full">
                   Quý khách có thể thanh toán trả góp qua thẻ tín dụng khi mua
                   hàng online tại website weirdshop.vn, hoặc thanh toán trả góp
                   qua thẻ tín dụng/trả góp qua công ty tài chính tại hệ thống
