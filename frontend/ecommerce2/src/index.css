@@ -292,7 +292,11 @@ body {
 
 .css-v4u5dn-MuiInputBase-root-MuiInput-root:after,
 .css-q0jhri-MuiInputBase-root-MuiInput-root:after {
-  border-bottom: 2px solid #fff !important;
+  border-bottom: 2px solid #126E82 !important;
+}
+
+.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root{
+  font-size: 1.5rem !important;
 }
 
 .css-1x51dt5-MuiInputBase-input-MuiInput-input{
@@ -399,11 +403,6 @@ profile .MuiAvatar-root img {
 
 .ql-indent-2 {
   padding-left: 4rem;
-}
-
-.MuiSelect-select,
-.MuiFormLabel-root {
-  color: #fff !important;
 }
 
 .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {

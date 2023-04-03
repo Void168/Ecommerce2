@@ -26,33 +26,39 @@ function Promo() {
 
   return (
     <div className="big-phone:container big-phone:mx-auto">
-      <p className="text-3xl text-center">Khuyến mãi</p>
+      <p className="text-5xl text-center">Bài viết</p>
       {/* Articles list */}
       {loading ? (
         <Loading />
       ) : (
-        <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 small-phone:h-full tablet:max-h-max">
+        <div className="grid laptop:grid-cols-4 big-phone:grid-cols-2 small-phone:grid-cols-1 small-phone:h-full tablet:max-h-max">
           {page === 1 ? (
             <>
-              {articles.slice(0, 6).map((newArticle) => (
-                <Article
-                  {...newArticle}
-                  key={newArticle._id}
-                  article={newArticle}
-                  className="col-span-1"
-                />
-              ))}
+              {articles
+                .slice(0, 6)
+                .map((newArticle) => (
+                  <Article
+                    {...newArticle}
+                    key={newArticle._id}
+                    article={newArticle}
+                    className="col-span-1"
+                  />
+                ))
+                .reverse()}
             </>
           ) : (
             <>
-              {articles.slice(6 * (page - 1), 6 * page).map((newArticle) => (
-                <Article
-                  {...newArticle}
-                  key={newArticle._id}
-                  article={newArticle}
-                  className="col-span-1"
-                />
-              ))}
+              {articles
+                .slice(6 * (page - 1), 6 * page)
+                .map((newArticle) => (
+                  <Article
+                    {...newArticle}
+                    key={newArticle._id}
+                    article={newArticle}
+                    className="col-span-1"
+                  />
+                ))
+                .reverse()}
             </>
           )}
         </div>

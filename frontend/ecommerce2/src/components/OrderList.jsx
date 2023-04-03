@@ -186,12 +186,14 @@ function OrderList() {
                                   )}
                                 </td>
                                 <td>
-                                  <span
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => showOrder(products)}
-                                  >
-                                    Xem đơn hàng <i className="fa fa-eye"></i>
-                                  </span>
+                                  <Link to={`/order/${order._id}`}>
+                                    <span
+                                      style={{ cursor: "pointer" }}
+                                      onClick={() => showOrder(products)}
+                                    >
+                                      Xem đơn hàng <i className="fa fa-eye"></i>
+                                    </span>
+                                  </Link>
                                 </td>
                               </tr>
                             ))

@@ -71,7 +71,7 @@ function SelectAddress() {
       {/* Number */}
       <div className="my-4">
         <TextField
-          className="w-full"
+          className="w-6/12"
           id="standard-basic"
           placeholder="Nhập số nhà"
           label="Số nhà"

@@ -241,15 +241,18 @@ function Home() {
           <Loading />
         ) : (
           <>
-            <div className="grid tablet:grid-cols-3 big-phone:grid-cols-2 small-phone:grid-cols-1 max-h-max bg-promo rounded-lg shadow-sm">
-              {articles?.slice(0, 3).map((newArticle) => (
-                <Article
-                  {...newArticle}
-                  key={newArticle._id}
-                  article={newArticle}
-                  className="col-span-1"
-                />
-              ))}
+            <div className="grid laptop:grid-cols-4 big-phone:grid-cols-2 small-phone:grid-cols-1 max-h-max">
+              {articles
+                ?.slice(articles.length - 4, articles.length)
+                .map((newArticle) => (
+                  <Article
+                    {...newArticle}
+                    key={newArticle._id}
+                    article={newArticle}
+                    className="col-span-1"
+                  />
+                ))
+                .reverse()}
             </div>
             <div className="text-center my-8">
               <Link
@@ -628,7 +631,8 @@ function Home() {
               </Swiper>
             ) : (
               <p className="text-white text-center">
-                Bạn chưa xem sản phẩm nào hoặc đã đăng xuất khỏi tài khoản trước đó
+                Bạn chưa xem sản phẩm nào hoặc đã đăng xuất khỏi tài khoản trước
+                đó
               </p>
             )}
           </div>

@@ -78,7 +78,7 @@ function FilterPrice() {
             className="w-8/12 text-right"
           />
         </div>
-        <div className="flex flex-row justify-between w-full">
+        <div className="flex flex-row justify-between w-full mb-4">
           <span className="pt-2">Đến</span>
           <input
             type="text"

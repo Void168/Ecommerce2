@@ -39,7 +39,7 @@ function Navigation() {
   const activeLink =
     "relative before:content-[''] before:absolute before:w-full before:h-1 before:bottom-1 before:left-0 before:rounded before:bg-[#51C4D3] text-[#51C4D3] desktop:p-4 big-tablet:px-2 big-tablet:py-4 desktop:text-lg big-tablet:text-base";
   const normalLink =
-    "navlink hover:text-[#51C4D3] duration-300 p-4 text-white desktop:text-lg big-tablet:text-base";
+    "navlink hover:text-[#51C4D3] duration-300 p-4 text-white desktop:text-lg big-tablet:text-sm";
 
   // Display count of unread notifications
   const handleToggleNotifications = () => {
@@ -136,9 +136,20 @@ function Navigation() {
         <div className="flex justify-evenly big-desktop:w-8/12 laptop:w-9/12 big-tablet:w-full">
           <ul className="w-full">
             <li className="text-white flex justify-between text-xl">
+              <div className="laptop:hidden big-tablet:block desktop:mt-3.5 big-tablet:mt-2.5">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                  to="/"
+                >
+                  Trang chủ
+                </NavLink>
+              </div>
+
               {/* Categories */}
-              <div className="mt-3 dropdown__categories">
-                <NavLink className="hover:text-[#51C4D3] p-4 mb-2 navlink ease-in-out duration-300 desktop:text-lg big-tablet:text-base">
+              <div className="desktop:mt-3.5 big-tablet:mt-2.5 dropdown__categories">
+                <NavLink className="hover:text-[#51C4D3] p-4 mb-2 navlink ease-in-out duration-300 desktop:text-lg big-tablet:text-sm">
                   Danh mục
                 </NavLink>
                 <div className="grid absolute text-black bg-[#D8E3E7] mt-3 border-none rounded-b-3xl grid-cols-4 rounded-r-2xl z-50 shadow-sm ease-in-out duration-200">
@@ -188,7 +199,7 @@ function Navigation() {
                 }
                 to="/promo"
               >
-                Khuyến mãi
+                Bài viết
               </NavLink>
 
               {/* Payment information */}
@@ -235,7 +246,6 @@ function Navigation() {
                           : "container mx-auto absolute text-sm w-72 bg-[#D8E3E7] z-50 p-2 mt-2 text-black rounded-lg shadow-sm overflow-auto h-48"
                       }
                     >
-                      {user ? <></> : null}
                       {user?.notifications?.length > 0 ? (
                         user?.notifications
                           .slice(

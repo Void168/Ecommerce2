@@ -95,7 +95,7 @@ function NavigationResponsive() {
   const navigateSearch = (e) => {
     if (e.key === "Enter" && inputRef.current.value !== null) {
       navigate(
-        `/search/${inputRef.current.value
+        `/tim-kiem/${inputRef.current.value
           .toLocaleLowerCase()
           .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
           .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
@@ -106,6 +106,7 @@ function NavigationResponsive() {
           .replace(/đ/g, "d")
           .replace(/\s/g, "-")}`
       );
+      handleClose()
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -117,8 +118,8 @@ function NavigationResponsive() {
   // Nativate to search page when click Search button
   const clickSearch = () => {
     if (inputRef.current.value !== null) {
-      setOpen(false);
-      navigate(`/search/${inputRef.current.value}`);
+      handleClose();
+      navigate(`/tim-kiem/${inputRef.current.value}`);
     } else {
       navigate("/");
     }
@@ -421,7 +422,7 @@ function NavigationResponsive() {
                 }
                 to="/promo"
               >
-                Khuyến mãi
+                Bài viết
               </NavLink>
               <NavLink
                 onClick={handleOpenMore}

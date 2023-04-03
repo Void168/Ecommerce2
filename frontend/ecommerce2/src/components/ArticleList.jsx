@@ -55,7 +55,7 @@ function ArticleList() {
 
                     {/* Expired Article */}
                     {today > newArticle.expire ? (
-                      <span className="absolute top-0 right-0 mt-12 mr-8 bg-red-500 text-white p-4 rounded-tr-lg">
+                      <span className="absolute top-0 right-0 mt-8 mr-4 bg-red-500 text-white p-4 rounded-tr-lg">
                         Hết hạn
                       </span>
                     ) : null}

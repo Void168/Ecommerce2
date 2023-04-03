@@ -28,7 +28,7 @@ function SearchPage() {
   const { searchName } = useParams();
 
   // convert vietnamese name to english
-  const convertSearchName = convert(searchName.replace(/\s/g, ""));
+  const convertSearchName = convert(searchName.replace(/\s/g, "").replace(/-/g, ""));
 
   // Search product list
   const productsSearch = products.filter(
