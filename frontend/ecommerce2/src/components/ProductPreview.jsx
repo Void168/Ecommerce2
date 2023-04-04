@@ -316,7 +316,7 @@ function ProductPreview({
                             Thêm vào giỏ
                           </button>
                         ) : (
-                          <div className="laptop:w-6/12 big-tablet:w-8/12 small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center bg-rose-500 shadow-sm rounded-md my-4 text-center px-4 py-2">
+                          <div className="small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center bg-rose-500 shadow-sm rounded-md my-4 text-center px-4 py-2">
                             <i className="fa-solid fa-phone text-4xl big-tablet:text-2xl small-phone:hidden"></i>
                             <div>
                               <p className="desktop:text-base small-phone:text-xs">
