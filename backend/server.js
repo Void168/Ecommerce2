@@ -11,6 +11,7 @@ import imagesRouter from './routes/imagesRoutes.js';
 import articleRouter from './routes/articleRoutes.js';
 import { Server } from 'socket.io';
 
+const PORT = process.env.PORT || 8080
 const app = express()
 dotenv.config();
 
@@ -60,8 +61,8 @@ app.post('/create-payment', cors(), async (req, res) => {
   }
 })
 
-server.listen(8080, () => {
-  console.log('listening on port', 8080)
+server.listen(PORT, () => {
+  console.log('listening on port', PORT)
 })
 
 app.set('socketio', io)
