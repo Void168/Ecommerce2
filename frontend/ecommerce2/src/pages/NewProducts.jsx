@@ -115,7 +115,6 @@ function NewProducts() {
 
   return (
     <div className="big-phone:container big-phone:mx-auto min-h-max my-8">
-      {error && <Loading />}
       {loading ? (
         <Loading />
       ) : (
