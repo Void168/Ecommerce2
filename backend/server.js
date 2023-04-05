@@ -26,7 +26,7 @@ mongoose
 mongoose.connection.on('error', (err) => console.log(err))
 
 const io = new Server(server, {
-  cors: 'http://localhost:3000',
+  cors: 'https://weird-shop.netlify.app' || 'http://localhost:3000',
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 })
 

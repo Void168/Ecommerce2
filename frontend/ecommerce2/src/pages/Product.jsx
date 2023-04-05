@@ -100,7 +100,7 @@ function Product() {
     if (comment && rating) {
       if (!listReviewName?.includes(user.name)) {
         axios
-          .post(`http://localhost:8080/products/${id}/reviews`, {
+          .post(`${process.env.REACT_APP_BASE_URL}/products/${id}/reviews`, {
             name: user.name,
             comment,
             rating,
@@ -288,6 +288,8 @@ function Product() {
         className={`${x.background} w-full h-96 bg-contain opacity-80`}
       ></div>
     ));
+
+  console.log(product);
 
   return (
     <>
