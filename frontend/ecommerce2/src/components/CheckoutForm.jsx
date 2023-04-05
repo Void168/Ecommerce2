@@ -42,7 +42,7 @@ function CheckoutForm() {
     setPaying(true);
     try {
       const { client_secret } = await fetch(
-        "http://localhost:8080/create-payment",
+        `${process.env.REACT_APP_BASE_URL}/create-payment`,
         {
           method: "POST",
           headers: {

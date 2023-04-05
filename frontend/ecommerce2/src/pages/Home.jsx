@@ -81,7 +81,7 @@ function Home() {
       })
     );
   });
-
+  
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
     axios
