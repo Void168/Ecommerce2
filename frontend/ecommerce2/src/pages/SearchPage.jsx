@@ -401,13 +401,15 @@ function SearchPage() {
                   </div>
 
                   {/* Pagination */}
-                  <Stack spacing={2} className="p-4 rounded-lg">
-                    <Pagination
-                      count={Math.ceil(searchList.length / 8)}
-                      color="primary"
-                      onChange={changeIndex}
-                    />
-                  </Stack>
+                  <div className="w-full bg-[#D8E3E7] flex justify-center mt-2 shadow-sm rounded-lg">
+                    <Stack spacing={2}>
+                      <Pagination
+                        count={Math.ceil(searchList.length / 8)}
+                        color="primary"
+                        onChange={changeIndex}
+                      />
+                    </Stack>
+                  </div>
                 </>
               )}
             </div>

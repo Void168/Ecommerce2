@@ -410,19 +410,20 @@ function Category() {
                             )}
                           </>
                         </div>
-
-                        {/* Pagination */}
-                        <Stack spacing={2} className="p-4 rounded-lg">
-                          <Pagination
-                            count={Math.ceil(listProductSearch.length / 8)}
-                            color="primary"
-                            onChange={changeIndex}
-                          />
-                        </Stack>
                       </div>
                     )}
                   </>
                 )}
+                {/* Pagination */}
+                <div className="w-full bg-[#D8E3E7] flex justify-center mt-2 shadow-sm rounded-lg">
+                  <Stack spacing={2}>
+                    <Pagination
+                      count={Math.ceil(listProductSearch.length / 8)}
+                      color="primary"
+                      onChange={changeIndex}
+                    />
+                  </Stack>
+                </div>
               </div>
             </div>
           </div>

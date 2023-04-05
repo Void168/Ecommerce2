@@ -29,7 +29,6 @@ import CartButton from "./components/CartButton";
 import SearchPage from "./pages/SearchPage";
 import Profile from "./pages/Profile";
 import EditArticle from "./pages/EditArticle";
-import Loading from "./components/Loading";
 import Chart from "./pages/Chart";
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -44,7 +43,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const socket = io("http://localhost:8080");
+    const socket = io(`${process.env.REACT_APP_BASE_URL}`);
     socket.off("notification").on("notification", (msgObj, user_id) => {
       // logic for notification
       if (user_id === user._id) {

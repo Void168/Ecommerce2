@@ -81,7 +81,7 @@ function Home() {
       })
     );
   });
-  
+
   useEffect(() => {
     axios.get("/products").then(({ data }) => dispatch(updateProducts(data)));
     axios
@@ -561,8 +561,9 @@ function Home() {
                     </>
                   )}
                 </div>
-
-                {/* Pagination */}
+              </div>
+              {/* Pagination */}
+              <div className="w-full bg-[#D8E3E7] flex justify-center mt-2 shadow-sm rounded-lg">
                 <div className="text-sm">
                   <Paginate />
                 </div>

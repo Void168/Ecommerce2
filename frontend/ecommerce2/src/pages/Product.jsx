@@ -270,7 +270,35 @@ function Product() {
           <SimilarProduct {...product} />
         </div>
       ))
-      .slice(0, 8);
+      .slice(
+        0,
+        8 ||
+          products.filter(
+            (filteredProduct) =>
+              filteredProduct.name
+                .toLocaleLowerCase()
+                .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                .replace(/đ/g, "d")
+                .replace(/\s/g, "")
+                .includes(convertBrandName) ||
+              filteredProduct.brand
+                .toLocaleLowerCase()
+                .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+                .replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+                .replace(/ì|í|ị|ỉ|ĩ/g, "i")
+                .replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+                .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+                .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+                .replace(/đ/g, "d")
+                .replace(/\s/g, "")
+                .includes(convertBrandName)
+          ).length
+      );
   }
 
   const navigateToLogin = () => {
@@ -289,7 +317,7 @@ function Product() {
       ></div>
     ));
 
-  console.log(product);
+  console.log(similarProducts);
 
   return (
     <>
@@ -945,11 +973,10 @@ function Product() {
             {/* List of similar products */}
             <div>
               <p className="neon__text">Sản phẩm tương tự</p>
-              {similarProducts.length > 2 ? (
+              {similarProducts.length > 0 ? (
                 <div className="bg-watched flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
                   <Swiper
                     watchSlidesProgress={true}
-                    slidesPerView={5}
                     autoplay={{
                       delay: 2500,
                       disableOnInteraction: false,
@@ -994,23 +1021,6 @@ function Product() {
                     ))}
                   </Swiper>
                 </div>
-              ) : similarProducts.length <= 2 && similarProducts.length > 1 ? (
-                <Swiper
-                  watchSlidesProgress={true}
-                  slidesPerView={5}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                  }}
-                  pagination={true}
-                  navigation={true}
-                  modules={[Autoplay, Pagination, Navigation]}
-                  className="shadow-sm outline-0 bg-[#D8E3E7] bg-opacity-70"
-                >
-                  {similarProducts.map((product) => (
-                    <SwiperSlide key={product.id}>{product}</SwiperSlide>
-                  ))}
-                </Swiper>
               ) : (
                 <div className="flex justify-center items-center flex-wrap big-tablet:w-full small-phone:w-full big-phone:mx-auto big-phone:container">
                   <p>Chưa có sản phẩm tương tự</p>
