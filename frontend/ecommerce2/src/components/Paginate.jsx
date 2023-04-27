@@ -5,6 +5,7 @@ import { AppContext } from '../context/AppContext'
 function Paginate() {
   const { count, changeIndex, page } = useContext(AppContext)
 
+
   return (
     <Stack spacing={2} className="p-1 rounded-lg">
       <Pagination
@@ -12,6 +13,7 @@ function Paginate() {
         page={page}
         color="primary"
         onChange={changeIndex}
+        size="small"
       />
     </Stack>
   );

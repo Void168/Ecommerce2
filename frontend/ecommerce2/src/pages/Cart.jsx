@@ -61,7 +61,7 @@ function Cart() {
 
   return (
     <>
-      <div className="big-phone:container big-phone:mx-auto laptop:hidden h-screen overflow-y-auto">
+      <div className="big-phone:container big-phone:mx-auto laptop:hidden h-screen overflow-y-auto mb-16">
         <CartResponsive />
       </div>
       <div className="container mx-auto small-phone:hidden laptop:block">

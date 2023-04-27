@@ -6,9 +6,8 @@ import { useAddToCartMutation } from "../services/appApi";
 function SearchProducts(props) {
   const { product } = props;
   const [addToCart, { isSuccess }] = useAddToCartMutation();
-    const { user, USD_VND_EXCHANGE_RATE, exchangePrice } =
-      useContext(AppContext);
-  const price = exchangePrice(product.price * USD_VND_EXCHANGE_RATE);
+  const { user, USD_VND_EXCHANGE_RATE, exchangePrice } = useContext(AppContext);
+  const priceByVND = exchangePrice(product.price * USD_VND_EXCHANGE_RATE);
 
   return (
     <Link to={`/san-pham/${product._id}`}>
@@ -33,7 +32,35 @@ function SearchProducts(props) {
         >
           {product.category}
         </div>
-        <div className="truncate">{price}</div>
+        <div className="truncate line-through">{product.price}</div>
+
+        <div className="flex big-desktop:flex-row big-tablet:flex-col tablet:flex-row small-phone:flex-col tablet:justify-between small-phone:justify-start small-phone:items-center">
+          <div className="big-desktop:py-4 flex flex-col big-desktop:justify-start big-tablet:justify-center big-tablet:items-center big-desktop:text-base small-phone:text-lg">
+            <div className="truncate line-through">{priceByVND}</div>
+            <div className="truncate text-red-500">
+              {(
+                (product.price *
+                  USD_VND_EXCHANGE_RATE *
+                  (100 - product.discount)) /
+                100
+              ).toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center items-center">
+            {/* Product rating */}
+            {/* <Rating rating={rating}></Rating> */}
+            {/* Product discount */}
+            {product.discount > 0 ? (
+              <div className="p-1 text-xs border-t border-[#132C33]">
+                Giảm giá {product.discount}%
+              </div>
+            ) : null}
+          </div>
+        </div>
 
         <div className="laptop:block small-phone:hidden">
           <Link to={`/san-pham/${product._id}`}>

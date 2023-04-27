@@ -128,7 +128,7 @@ function Category() {
   }, [categoryName?.name]);
 
   return (
-    <div className="container mx-auto">
+    <div className="big-phone:container big-phone:mx-auto">
       {loading ? (
         <Loading />
       ) : (
@@ -147,7 +147,7 @@ function Category() {
               onChange={handleSearch}
             />
           </div>
-          <div className="container mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
+          <div className="big-phone:container big-phone:mx-auto grid grid-flow-row-dense grid-cols-4 my-8">
             <div className="w-full bg-[#132C33] col-span-1 rounded-lg shadow-sm max-h-max laptop:block galaxy-fold:hidden">
               <FilterPrice />
 
@@ -158,7 +158,7 @@ function Category() {
                 </p>
               ) : null}
             </div>
-            <div className="container mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
+            <div className="big-phone:container big-phone:mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
               <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
                 <FilterPriceResponsive />
               </div>

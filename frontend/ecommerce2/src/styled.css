@@ -42,25 +42,6 @@ body {
   display: none !important;
 }
 
-.MuiTab-root,
-.css-ahj2mt-MuiTypography-root,
-.react-calendar,
-.MuiBottomNavigationAction-label,
-.MuiListSubheader-root,
-.MuiListItemText-primary,
-.MuiInput-root,
-.MuiAlert-message,
-.MuiFormLabel-root,
-.MuiSelect-nativeInput,
-.css-yf8vq0-MuiSelect-nativeInput,
-.MuiSelect-select,
-.MuiInputBase-input,
-.MuiOutlinedInput-input,
-.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  font-family: "Quicksand", sans-serif !important;
-}
-
-
 .css-187mznn-MuiSlider-root {
   color: #132c33 !important;
 }
@@ -106,14 +87,6 @@ profile .MuiAvatar-root img {
   border-radius: 100%;
 }
 
-.css-wjh20t-MuiPagination-ul li button {
-  background-color: #d8e3e7;
-}
-.css-wjh20t-MuiPagination-ul li button:hover {
-  color: white;
-  background-color: #126e82;
-}
-
 .cart-payment {
   background-image: url("./background/background1.jpg");
   background-repeat: no-repeat;
@@ -147,7 +120,7 @@ profile .MuiAvatar-root img {
 .react-calendar__navigation__next-button,
 .react-calendar__navigation__next2-button,
 .react-calendar__month-view__days__day--neighboringMonth,
-.react-calendar__month-view__days__day {
+ {
   background-color: #132c33 !important;
 }
 
@@ -197,13 +170,6 @@ profile .MuiAvatar-root img {
   background-color: #fff;
   width: 100%;
   height: 3px;
-}
-
-
-@media (min-width: 280px) {
-  .MuiBottomNavigationAction-label {
-    font-size: 12px !important;
-  }
 }
 
 .item__name {

@@ -11,6 +11,20 @@ import { PersistGate } from 'redux-persist/integration/react'
 import persistStore from 'redux-persist/es/persistStore'
 import { BrowserRouter } from 'react-router-dom'
 import Loading from './components/Loading'
+import { createTheme, ThemeProvider } from '@mui/material';
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Quicksand',
+      'sans-serif',
+    ].join(','),
+  },
+  BottomNavigationActionLabel: {
+    fontSize: '10px',
+  }
+});
 
 // store to persit
 const persistedStore = persistStore(store)
@@ -20,8 +34,10 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
     <React.StrictMode>
-      <PersistGate loading={<Loading />} persistor={persistedStore}>
-        <App />
+        <PersistGate loading={<Loading />} persistor={persistedStore}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
       </PersistGate>
     </React.StrictMode>
     ,

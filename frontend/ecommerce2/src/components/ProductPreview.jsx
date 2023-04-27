@@ -170,16 +170,16 @@ function ProductPreview({
         aria-describedby="modal-modal-description"
         className="duration-300 flex justify-center items-center"
       >
-        <Box className=" container mx-auto w-full rounded-lg">
+        <Box className="container mx-auto w-full rounded-lg tablet:overflow-hidden small-phone:overflow-y-scroll">
           <Typography id="modal-modal-description">
-            <div className="grid tablet:grid-cols-3 p-2 small-phone:grid-cols-3 bg-watched mt-3 border-none rounded-xl z-50 shadow-sm text-white galaxy-fold:max-h-max">
-              <div className="col-span-1">
-                <div>
+            <div className="tablet:grid tablet:grid-cols-3 p-2 small-phone:flex small-phone:flex-col bg-watched border-none rounded-xl shadow-sm text-white">
+              <div className="tablet:col-span-1">
+                <div className="container mx-auto">
                   <div className="tablet:p-4 big-phone:grid-cols-1 small-phone:grid small-phone:grid-cols-5 small-phone:gap-10">
                     <div className="flex big-phone:flex-row justify-between big-phone:col-span-4 small-phone:col-span-5 ">
                       {/* Display images of product */}
                       <Carousel
-                        className="w-full"
+                        className="w-8/12 mx-auto"
                         autoPlay={true}
                         infiniteLoop={true}
                       >
@@ -202,7 +202,7 @@ function ProductPreview({
                   </div>
                 </div>
               </div>
-              <div className="col-span-2 flex flex-col justify-center items-center">
+              <div className="tablet:col-span-2 flex flex-col justify-center items-center">
                 <p className="big-phone:text-4xl small-phone:text-2xl text-center mb-4">
                   Thông tin sản phẩm
                 </p>
@@ -292,7 +292,7 @@ function ProductPreview({
                     {/* Not logged in yet */}
                     {!user ? (
                       <button
-                        className="laptop:w-6/12 big-tablet:w-8/12 small-phone:w-full flex flex-row big-tablet:justify-around small-phone:justify-center shadow-sm rounded-md my-4 text-center px-4 py-2 button"
+                        className="laptop:w-8/12 big-tablet:w-10/12 small-phone:w-full big-tablet:justify-around small-phone:justify-center shadow-sm rounded-md my-4 text-center px-4 py-2 button"
                         onClick={navigateToLogin}
                       >
                         Đăng nhập để mua hàng

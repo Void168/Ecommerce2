@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { AppContext } from "../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import { updateProducts } from "../features/productSlice";
+import { updateArticles } from "../features/articleSlice";
 import axios from "../axios";
 import ProductPreview from "../components/ProductPreview";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -93,6 +94,7 @@ function Home() {
       .catch((e) => {
         setLoading(false);
       });
+    axios.get("/articles").then(({ data }) => dispatch(updateArticles(data)));
   }, [dispatch]);
 
   useEffect(() => {
@@ -327,7 +329,7 @@ function Home() {
               modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
               className="shadow-sm outline-0"
             >
-              {names.map((bestSeller, index) => (
+              {names?.map((bestSeller, index) => (
                 <SwiperSlide>
                   <ViewedProduct
                     {...bestSeller}
@@ -564,7 +566,7 @@ function Home() {
               </div>
               {/* Pagination */}
               <div className="w-full bg-[#D8E3E7] flex justify-center mt-2 shadow-sm rounded-lg">
-                <div className="text-sm">
+                <div className="text-sm overflow-x-auto">
                   <Paginate />
                 </div>
               </div>

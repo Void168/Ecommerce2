@@ -73,18 +73,21 @@ function Order() {
   );
 
   // 2 slice parameters
-  let firstNumber =
-    filteredOrder.length -
-    8 * (-Math.ceil(filteredOrder.length / 8) + page + 3);
+ 
+  let firstNumber = 8 * (Math.ceil(filteredOrder.length / 8) - page - 1);
   if (firstNumber < 0) {
     firstNumber = 0;
   }
- 
-  let lastNumber =
-    filteredOrder.length -
-    filteredOrder.length -
-    8 * (-Math.ceil(filteredOrder.length / 8) + page + 2);
 
+  let lastNumber = 8 * (Math.ceil(filteredOrder.length / 8) - page);
+   if (lastNumber < 0) {
+     lastNumber = 0;
+   }
+   if (lastNumber > filteredOrder.length) {
+     lastNumber = filteredOrder.length;
+   }
+ 
+    console.log(`${firstNumber} "and" ${lastNumber}`);
   return (
     <div className="big-tablet:container big-tablet:mx-auto">
       <p className="text-center text-4xl mb-4">Đơn hàng của bạn</p>
@@ -347,8 +350,7 @@ function Order() {
                                           </button>
                                         </td>
                                       </tr>
-                                    ))
-                                    .reverse()}
+                                    )).reverse()}
                                 </>
                               )}
                             </>

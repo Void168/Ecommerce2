@@ -140,7 +140,7 @@ function SearchPage() {
             </p>
           ) : null}
         </div>
-        <div className="container mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
+        <div className="big-phone:container big-phone:mx-auto laptop:col-span-3 galaxy-fold:col-span-4 px-4">
           <div className="fixed z-20 big-tablet:bottom-5 left-2 galaxy-fold:bottom-24 galaxy-fold:block laptop:hidden">
             <FilterPriceResponsive />
           </div>

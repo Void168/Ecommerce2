@@ -36,15 +36,14 @@ function NavigationResponsive() {
 
   // Active link navbar
   const activeLink =
-    "bg-[#51C4D3] text-black big-tablet:px-2 tablet:p-4 shadow-sm";
-  const normalLink = "py-12 px-4 ease-in-out duration-200";
+    "bg-[#51C4D3] text-2xl border-b-2 border-[#51C4D3] text-black big-tablet:px-2 tablet:p-4 shadow-md shadow-[#51C4D3] px-2 py-1 rounded-lg";
+  const normalLink = "py-12 px-4 ease-in-out duration-200 text-2xl";
 
   const bellRef = useRef(null);
 
   // Handle open 4 kind of menus
   // menu categories
   const handleOpen = () => setOpen(true);
-
 
   const showMoreNotifications = () => {
     setVisible((prevValue) => prevValue + 5);
@@ -106,7 +105,7 @@ function NavigationResponsive() {
           .replace(/đ/g, "d")
           .replace(/\s/g, "-")}`
       );
-      handleClose()
+      handleClose();
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
@@ -166,6 +165,16 @@ function NavigationResponsive() {
       <Box className="fixed overscroll-x-auto shadow-sm small-phone:w-full z-50 galaxy-fold:block big-tablet:hidden bottom-0 ">
         {/* Bottom Navigation */}
         <BottomNavigation
+          sx={{
+            "& .MuiBottomNavigationAction-label": {
+              color: "#007A78",
+              fontSize: "8px",
+            },
+            ".Mui-selected": {
+              color: "#007A78",
+              fontSize: "10px",
+            },
+          }}
           showLabels
           value={value}
           className="w-full galaxy-fold:py-8"
@@ -288,15 +297,13 @@ function NavigationResponsive() {
       >
         {/* User is admin */}
         {user?.isAdmin ? (
-          <ul className="p-4 flex flex-col justify-around h-screen absolute z-50 w-full bg-[#132C33] text-white">
-            <div className="mb-4">
-              <DoubleArrowIcon
-                onClick={handleOpenAccount}
-                className="text-white"
-              />
-            </div>
+          <ul className="p-4 h-screen absolute z-50 w-full bg-[#132C33] text-white">
+            <DoubleArrowIcon
+              onClick={handleOpenAccount}
+              className="text-white"
+            />
             <ul className="w-full flex flex-col container mx-auto text-white overflow-y-auto">
-              <li onClick={handleClose}>
+              <li onClick={handleClose} className="flex justify-center mb-8">
                 <img
                   alt={`${user.name}`}
                   src={`${user?.avatar?.at(-1)?.url}`}
@@ -323,39 +330,36 @@ function NavigationResponsive() {
                   </>
                 </span>
               </li>
-              <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
-                <NavLink
-                  to="/orders"
-                  className={({ isActive }) =>
-                    isActive ? activeLink : normalLink
-                  }
-                >
-                  Lịch sử mua hàng
-                </NavLink>
-              </li>
-              <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
-                <NavLink
-                  to={`/dashboard}`}
-                  className={({ isActive }) =>
-                    isActive ? activeLink : normalLink
-                  }
-                >
-                  Quản lý
-                </NavLink>
-              </li>
-              <li className="my-1 px-4 py-12 text-2xl" onClick={handleClose}>
-                <NavLink
-                  to="/chart"
-                  className={({ isActive }) =>
-                    isActive ? activeLink : normalLink
-                  }
-                >
-                  Thống kê
-                </NavLink>
-              </li>
+              <NavLink
+                onClick={handleClose}
+                to="/orders"
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+              >
+                Lịch sử mua hàng
+              </NavLink>
+              <NavLink
+                onClick={handleClose}
+                to={`/dashboard`}
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+              >
+                Quản lý
+              </NavLink>
+              <NavLink
+                onClick={handleClose}
+                to="/chart"
+                className={({ isActive }) =>
+                  isActive ? activeLink : normalLink
+                }
+              >
+                Thống kê
+              </NavLink>
             </ul>
-            <div>
-              <li className="text-center flex-end mb-20" onClick={handleClose}>
+            <div className="flex text-center justify-center">
+              <li onClick={handleClose}>
                 <button
                   onClick={signoutHandler}
                   className="bg-[#D8E3E7] text-xl button text-black"
@@ -404,7 +408,7 @@ function NavigationResponsive() {
             <DoubleArrowIcon onClick={handleOpenMore} className="text-white" />
           </div>
 
-          <ul className="w-full flex flex-col container mx-auto text-white overflow-y-auto">
+          <ul className="w-full flex flex-col container mx-auto text-white overflow-y-auto pr-2">
             <li className=" flex flex-col text-2xl">
               <NavLink
                 onClick={handleOpenMore}
